@@ -29,7 +29,6 @@ db.properties
 
 ### macOS template
 # General
-.DS_Store
 .AppleDouble
 .LSOverride
 
