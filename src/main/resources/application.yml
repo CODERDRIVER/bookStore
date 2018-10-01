@@ -1,0 +1,28 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    show-sql: true
+    properties:
+      javax:
+        persistence:
+#          sharedCache:
+#            mode: ENABLE_SELECTIVE
+      hibernate:
+        format_sql: true
+        enable_lazy_load_no_trans: true
+#        cache:
+#          use_second_level_cache: true
+#          use_query_cache: true
+#          region:
+#            factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+  datasource:
+    platform: org.hibernate.dialect.MySQL5Dialect
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+
+
+
