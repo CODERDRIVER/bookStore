@@ -1,7 +1,5 @@
 package com.lyears.projects.bookstore.entity;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -14,18 +12,24 @@ import java.util.Set;
 public class Reader {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Column(unique = true)
     private String email;
     private String userName;
     private String password;
 
+
     private Integer borrowNum = 3;
     private Double deposit;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reader", targetEntity = Borrow.class)
+    @OneToMany(mappedBy = "reader", targetEntity = Borrow.class)
     private Set<Borrow> borrows;
+
+    @OneToMany(mappedBy = "reader", targetEntity = Order.class)
+    private Set<Order> orders;
+
 
     @Override
     public String toString() {
@@ -93,5 +97,13 @@ public class Reader {
 
     public void setBorrows(Set<Borrow> borrows) {
         this.borrows = borrows;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 }

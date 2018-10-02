@@ -1,7 +1,8 @@
 package com.lyears.projects.bookstore.handler;
 
 import com.lyears.projects.bookstore.entity.Borrow;
-import com.lyears.projects.bookstore.service.BorrowService;
+import com.lyears.projects.bookstore.entity.Order;
+import com.lyears.projects.bookstore.service.BorrowAndOrderService;
 import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,11 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2018/10/1
  **/
 @Controller
-public class BorrowHandler {
+public class BorrowAndOrderHandler {
 
     @Autowired
-    private BorrowService borrowService;
+    private BorrowAndOrderService borrowAndOrderService;
+
 
     @PostMapping(value = "/borrow",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseBody
@@ -30,7 +32,17 @@ public class BorrowHandler {
                                         @RequestParam("readerName") String readerName,
                                         Borrow borrow) {
 
-        borrowService.saveBorrowInfoWithBookAndReader(bookName, readerName, borrow);
+        borrowAndOrderService.saveBorrowInfoWithBookAndReader(bookName, readerName, borrow);
+        return ResultUtil.successNoData(request.getRequestURL().toString());
+    }
+
+    @PostMapping(value = "/order",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @ResponseBody
+    public ResponseMessage addNewOrder(HttpServletRequest request,
+                                        @RequestParam("bookName") String bookName,
+                                        @RequestParam("readerName") String readerName) {
+
+        borrowAndOrderService.saveOrderInfoWithBookAndReader(bookName, readerName);
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 }

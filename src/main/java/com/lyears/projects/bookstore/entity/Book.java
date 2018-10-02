@@ -1,7 +1,5 @@
 package com.lyears.projects.bookstore.entity;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -14,8 +12,9 @@ import java.util.Set;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @Column(unique = true)
     private String bookName;
     private Double price;
     private String author;
@@ -24,8 +23,11 @@ public class Book {
     private String barCode;
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book", targetEntity = Borrow.class)
+    @OneToMany(mappedBy = "book", targetEntity = Borrow.class)
     private Set<Borrow> borrows;
+
+    @OneToMany(mappedBy = "book", targetEntity = Order.class)
+    private Set<Order> orders;
 
     public Integer getId() {
         return id;
@@ -81,5 +83,13 @@ public class Book {
 
     public void setBorrows(Set<Borrow> borrows) {
         this.borrows = borrows;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 }

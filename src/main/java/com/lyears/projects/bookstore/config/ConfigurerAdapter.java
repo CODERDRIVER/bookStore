@@ -12,8 +12,8 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
@@ -44,6 +44,21 @@ public class ConfigurerAdapter extends WebMvcConfigurerAdapter {
 
             @Override
             public String print(LocalDate object, Locale locale) {
+                return DateTimeFormatter.ISO_LOCAL_DATE.format(object);
+            }
+        };
+    }
+
+    @Bean
+    public Formatter<LocalDateTime> localDateTimeFormatter() {
+        return new Formatter<LocalDateTime>() {
+            @Override
+            public LocalDateTime parse(String text, Locale locale) {
+                return LocalDateTime.parse(text, DateTimeFormatter.ISO_LOCAL_DATE);
+            }
+
+            @Override
+            public String print(LocalDateTime object, Locale locale) {
                 return DateTimeFormatter.ISO_LOCAL_DATE.format(object);
             }
         };

@@ -1,8 +1,7 @@
 package com.lyears.projects.bookstore.handler;
 
 import com.lyears.projects.bookstore.entity.Reader;
-import com.lyears.projects.bookstore.service.BorrowService;
-import com.lyears.projects.bookstore.service.UserService;
+import com.lyears.projects.bookstore.service.ReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,7 @@ import java.util.Map;
 public class EmployeeHandler {
 
     @Autowired
-    private UserService userService;
+    private ReaderService userService;
 
     @GetMapping("/emps")
     public String list(@RequestParam(name = "pageNo",required = false,defaultValue = "1")String pageNoStr,
