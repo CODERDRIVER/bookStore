@@ -16,6 +16,7 @@ public enum ResultEnum {
     EMPTY_USERNAME(-5, "empty username!"),
     EMPTY_PASSWORD(-6, "empty password!"),
     ERROR_NUMBER(-7, "error number!"),
+    NO_RIGHT(-8,"no right!"),
     SUCCESS(0, "success"),
     SYSTEM_ERROR(-1000001, "system error!");
 

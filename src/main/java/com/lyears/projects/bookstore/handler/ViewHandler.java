@@ -20,5 +20,12 @@ public class ViewHandler {
         return "admin-404";
     }
 
+    @GetMapping("/")
+    public String index(){
+        return "index";
+    }
+
+
+
 
 }

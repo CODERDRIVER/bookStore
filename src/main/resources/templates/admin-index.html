@@ -28,7 +28,7 @@
 
   <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
 
-  <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+  <div class="am-collapse am-topbar-collapse" bookId="topbar-collapse">
 
     <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
       <li class="am-dropdown" data-am-dropdown>
@@ -41,20 +41,20 @@
           <li><a href="#"><span class="am-icon-power-off"></span> 退出</a></li>
         </ul>
       </li>
-      <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
+      <li class="am-hide-sm-only"><a href="javascript:;" bookId="admin-fullscreen"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
     </ul>
   </div>
 </header>
 
 <div class="am-cf admin-main">
   <!-- sidebar start -->
-  <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+  <div class="admin-sidebar am-offcanvas" bookId="admin-offcanvas">
     <div class="am-offcanvas-bar admin-offcanvas-bar">
       <ul class="am-list admin-sidebar-list">
         <li><a href="admin-index.html"><span class="am-icon-home"></span> 首页</a></li>
         <li class="admin-parent">
           <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span> 页面模块 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
-          <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
+          <ul class="am-list am-collapse admin-sidebar-sub am-in" bookId="collapse-nav">
             <li><a href="admin-user.html" class="am-cf"><span class="am-icon-check"></span> 个人资料<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
             <li><a href="admin-help.html"><span class="am-icon-puzzle-piece"></span> 帮助页</a></li>
             <li><a href="admin-gallery.html"><span class="am-icon-th"></span> 相册页面<span class="am-badge am-badge-secondary am-margin-right am-fr">24</span></a></li>
@@ -180,7 +180,7 @@
         <div class="am-u-md-6">
           <div class="am-panel am-panel-default">
             <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-1'}">文件上传<span class="am-icon-chevron-down am-fr" ></span></div>
-            <div class="am-panel-bd am-collapse am-in" id="collapse-panel-1">
+            <div class="am-panel-bd am-collapse am-in" bookId="collapse-panel-1">
               <ul class="am-list admin-content-file">
                 <li>
                   <strong><span class="am-icon-upload"></span> Kong-cetian.Mp3</strong>
@@ -202,7 +202,7 @@
           </div>
           <div class="am-panel am-panel-default">
             <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-2'}">浏览器统计<span class="am-icon-chevron-down am-fr" ></span></div>
-            <div id="collapse-panel-2" class="am-in">
+            <div bookId="collapse-panel-2" class="am-in">
               <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
                 <tbody>
                 <tr>
@@ -244,7 +244,7 @@
         <div class="am-u-md-6">
           <div class="am-panel am-panel-default">
             <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-4'}">任务 task<span class="am-icon-chevron-down am-fr" ></span></div>
-            <div id="collapse-panel-4" class="am-panel-bd am-collapse am-in">
+            <div bookId="collapse-panel-4" class="am-panel-bd am-collapse am-in">
               <ul class="am-list admin-content-task">
                 <li>
                   <div class="admin-task-meta"> Posted on 25/1/2120 by John Clark</div>
@@ -288,7 +288,7 @@
 
           <div class="am-panel am-panel-default">
             <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-3'}">最近留言<span class="am-icon-chevron-down am-fr" ></span></div>
-            <div class="am-panel-bd am-collapse am-in am-cf" id="collapse-panel-3">
+            <div class="am-panel-bd am-collapse am-in am-cf" bookId="collapse-panel-3">
               <ul class="am-comments-list admin-content-comment">
                 <li class="am-comment">
                   <a href="#"><img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96" alt="" class="am-comment-avatar" width="48" height="48"></a>

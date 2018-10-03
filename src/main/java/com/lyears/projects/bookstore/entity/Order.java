@@ -1,7 +1,7 @@
 package com.lyears.projects.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,20 +11,29 @@ import java.time.LocalDateTime;
  * @date 2018/10/2
  **/
 @Entity
-@Table(name = "book_order")
+@Table(name = "book_order", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"reader_id", "book_id"})
+})
 public class Order {
+
+    public interface IdView{}
+    public interface OrderTimeView extends IdView{}
+    public interface ReturnTimeView extends OrderTimeView{}
+    public interface StatusView extends ReturnTimeView{}
+
+    public interface ReaderView extends StatusView{}
+    public interface BookView extends ReaderView{}
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer orderId;
 
     @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "reader_id")
-    @JsonIgnore
     private Reader reader;
 
     @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
-    @JsonIgnore
     private Book book;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -34,6 +43,7 @@ public class Order {
 
     private Boolean orderStatus;
 
+    @JsonView(IdView.class)
     public Integer getOrderId() {
         return orderId;
     }
@@ -42,6 +52,7 @@ public class Order {
         this.orderId = orderId;
     }
 
+    @JsonView(ReaderView.class)
     public Reader getReader() {
         return reader;
     }
@@ -50,6 +61,7 @@ public class Order {
         this.reader = reader;
     }
 
+    @JsonView(BookView.class)
     public Book getBook() {
         return book;
     }
@@ -58,6 +70,7 @@ public class Order {
         this.book = book;
     }
 
+    @JsonView(OrderTimeView.class)
     public LocalDateTime getOrderDate() {
         return orderDate;
     }
@@ -66,6 +79,7 @@ public class Order {
         this.orderDate = orderDate;
     }
 
+    @JsonView(ReaderView.class)
     public LocalDateTime getReturnDate() {
         return returnDate;
     }
@@ -74,6 +88,7 @@ public class Order {
         this.returnDate = returnDate;
     }
 
+    @JsonView(StatusView.class)
     public Boolean getOrderStatus() {
         return orderStatus;
     }

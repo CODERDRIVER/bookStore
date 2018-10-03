@@ -1,6 +1,9 @@
 package com.lyears.projects.bookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -11,9 +14,19 @@ import java.util.Set;
 @Table(name = "book")
 public class Book {
 
+    public interface IdView{}
+    public interface NameView extends IdView{}
+    public interface PriceView extends NameView{}
+    public interface AuthorView extends PriceView{}
+    public interface TypeView extends AuthorView{}
+    public interface BarView extends TypeView{}
+
+    public interface BorrowView extends BarView{}
+    public interface OrderView extends BarView{}
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer bookId;
     @Column(unique = true)
     private String bookName;
     private Double price;
@@ -24,19 +37,20 @@ public class Book {
 
 
     @OneToMany(mappedBy = "book", targetEntity = Borrow.class)
-    private Set<Borrow> borrows;
+    private Set<Borrow> borrows = new HashSet<>();
 
     @OneToMany(mappedBy = "book", targetEntity = Order.class)
-    private Set<Order> orders;
+    private Set<Order> orders = new HashSet<>();
 
-    public Integer getId() {
-        return id;
+    @JsonView(IdView.class)
+    public Integer getBookId() {
+        return bookId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
     }
-
+    @JsonView(NameView.class)
     public String getBookName() {
         return bookName;
     }
@@ -45,6 +59,7 @@ public class Book {
         this.bookName = bookName;
     }
 
+    @JsonView(PriceView.class)
     public Double getPrice() {
         return price;
     }
@@ -53,6 +68,7 @@ public class Book {
         this.price = price;
     }
 
+    @JsonView(AuthorView.class)
     public String getAuthor() {
         return author;
     }
@@ -61,6 +77,7 @@ public class Book {
         this.author = author;
     }
 
+    @JsonView(TypeView.class)
     public String getBookType() {
         return bookType;
     }
@@ -69,6 +86,7 @@ public class Book {
         this.bookType = bookType;
     }
 
+    @JsonView(BarView.class)
     public String getBarCode() {
         return barCode;
     }
@@ -77,6 +95,7 @@ public class Book {
         this.barCode = barCode;
     }
 
+    @JsonView(BorrowView.class)
     public Set<Borrow> getBorrows() {
         return borrows;
     }
@@ -85,6 +104,7 @@ public class Book {
         this.borrows = borrows;
     }
 
+    @JsonView(OrderView.class)
     public Set<Order> getOrders() {
         return orders;
     }

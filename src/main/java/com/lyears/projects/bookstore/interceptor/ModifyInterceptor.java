@@ -1,35 +1,42 @@
 package com.lyears.projects.bookstore.interceptor;
 
-import com.auth0.jwt.interfaces.Claim;
-import com.lyears.projects.bookstore.exception.UserDefinedException;
-import com.lyears.projects.bookstore.jwt.JwtToken;
 import com.lyears.projects.bookstore.service.AdminService;
-import com.lyears.projects.bookstore.util.ResultEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 /**
  * @author fzm
  * @date 2018/9/28
  **/
 @Component
-public class AdminInterceptor implements HandlerInterceptor {
+public class ModifyInterceptor implements HandlerInterceptor {
 
     @Autowired
     private AdminService adminService;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        Cookie[] cookies = httpServletRequest.getCookies();
-        return InterceptorUtil.cookieAuthentication(httpServletRequest, cookies, adminService);
+        //不拦截get方法
+        if ("/login/admin".equals(httpServletRequest.getServletPath())) {
+            return true;
+        }else {
+            if (RequestMethod.POST.name().equalsIgnoreCase(httpServletRequest.getMethod()) || RequestMethod.PUT.name().equalsIgnoreCase(httpServletRequest.getMethod())
+                    || RequestMethod.DELETE.name().equalsIgnoreCase(httpServletRequest.getMethod())) {
+                Cookie[] cookies = httpServletRequest.getCookies();
+                return InterceptorUtil.cookieAuthentication(httpServletRequest, cookies, adminService);
+            } else {
+                return true;
+            }
+        }
     }
+
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {

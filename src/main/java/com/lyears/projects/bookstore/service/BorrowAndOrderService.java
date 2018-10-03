@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.List;
+
 /**
  * @author fzm
  * @date 2018/2/26
@@ -35,7 +38,8 @@ public class BorrowAndOrderService {
     private ReaderRepository readerRepository;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
-    public void saveBorrowInfoWithBookAndReader(String bookName, String readerName, Borrow borrow) {
+    public void saveBorrowInfoWithBookAndReader(String bookName, String readerName) {
+        Borrow borrow = new Borrow();
         Book book = bookRepository.findByBookName(bookName);
         Reader reader = readerRepository.findByUserName(readerName);
 
@@ -69,5 +73,10 @@ public class BorrowAndOrderService {
         order.setReader(reader);
         readerRepository.save(reader);
         orderRepository.save(order);
+    }
+
+    @Transactional(readOnly = true, rollbackFor = RuntimeException.class)
+    public List<Borrow> getTodayBorrow() {
+        return borrowRepository.getAllByBorrowDate(LocalDate.now());
     }
 }

@@ -18,7 +18,7 @@ import javax.sql.DataSource;
  **/
 @Configuration
 @ComponentScan
-@PropertySource(value = "classpath:db.properties")
+@PropertySource(value = "classpath:local.db.properties")
 public class JpaConfig {
 
     private final Environment environment;

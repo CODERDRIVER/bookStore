@@ -41,10 +41,13 @@ public class ReaderService {
         readerRepository.save(reader);
     }
 
-
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true,rollbackFor = RuntimeException.class)
     public Reader findByUserName(String userName) {
         return readerRepository.findByUserName(userName);
+    }
+    @Transactional(readOnly = true,rollbackFor = RuntimeException.class)
+    public Reader findByEmail(String email) {
+        return readerRepository.findByEmail(email);
     }
 
     @Transactional(readOnly = true)

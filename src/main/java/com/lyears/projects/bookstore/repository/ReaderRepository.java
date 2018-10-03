@@ -11,4 +11,5 @@ public interface ReaderRepository extends JpaRepository<Reader,Integer> {
 
     Reader findByUserName(String lastName);
 
+    Reader findByEmail(String email);
 }

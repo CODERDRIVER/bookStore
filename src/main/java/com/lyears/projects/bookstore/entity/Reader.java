@@ -1,6 +1,9 @@
 package com.lyears.projects.bookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -13,27 +16,21 @@ public class Reader {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
+    private Integer readerId;
     @Column(unique = true)
     private String email;
     private String userName;
     private String password;
-
-
     private Integer borrowNum = 3;
     private Double deposit;
-
     @OneToMany(mappedBy = "reader", targetEntity = Borrow.class)
-    private Set<Borrow> borrows;
-
+    private Set<Borrow> borrows = new HashSet<>();
     @OneToMany(mappedBy = "reader", targetEntity = Order.class)
-    private Set<Order> orders;
-
+    private Set<Order> orders = new HashSet<>();
 
     @Override
     public String toString() {
-        return "Reader{" + "id=" + id +
+        return "Reader{" + "ReaderId=" + readerId +
                 ", email='" + email + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
@@ -43,14 +40,16 @@ public class Reader {
                 '}';
     }
 
-    public Integer getId() {
-        return id;
+    @JsonView(IdView.class)
+    public Integer getReaderId() {
+        return readerId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setReaderId(Integer readerId) {
+        this.readerId = readerId;
     }
 
+    @JsonView(EmailView.class)
     public String getEmail() {
         return email;
     }
@@ -59,6 +58,7 @@ public class Reader {
         this.email = email;
     }
 
+    @JsonView(NameView.class)
     public String getUserName() {
         return userName;
     }
@@ -75,6 +75,7 @@ public class Reader {
         this.password = password;
     }
 
+    @JsonView(NumView.class)
     public Integer getBorrowNum() {
         return borrowNum;
     }
@@ -83,6 +84,7 @@ public class Reader {
         this.borrowNum = borrowNum;
     }
 
+    @JsonView(DepositView.class)
     public Double getDeposit() {
         return deposit;
     }
@@ -91,6 +93,7 @@ public class Reader {
         this.deposit = deposit;
     }
 
+    @JsonView({BorrowView.class, Borrow.StatusView.class})
     public Set<Borrow> getBorrows() {
         return borrows;
     }
@@ -99,11 +102,33 @@ public class Reader {
         this.borrows = borrows;
     }
 
+    @JsonView(OrderView.class)
     public Set<Order> getOrders() {
         return orders;
     }
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    public interface IdView {
+    }
+
+    public interface EmailView extends IdView {
+    }
+
+    public interface NameView extends EmailView {
+    }
+
+    public interface NumView extends NameView {
+    }
+
+    public interface DepositView extends NumView {
+    }
+
+    public interface BorrowView extends DepositView {
+    }
+
+    public interface OrderView extends DepositView {
     }
 }

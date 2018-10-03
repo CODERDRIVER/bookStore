@@ -17,7 +17,7 @@ import java.util.Map;
  **/
 public class JwtToken {
 
-    public static String createToken(String email, String userName) throws UnsupportedEncodingException {
+    public static String createToken(String email, String userName, String type) throws UnsupportedEncodingException {
         Map<String, Object> header = new HashMap<>(16);
         header.put("type", "jwt");
         header.put("alg", "HS256");
@@ -25,6 +25,7 @@ public class JwtToken {
                 .withHeader(header)
                 .withClaim("email", email)
                 .withClaim("userName", userName)
+                .withClaim("type", type)
                 .sign(Algorithm.HMAC256("secret"));
     }
 
