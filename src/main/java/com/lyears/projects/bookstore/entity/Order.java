@@ -1,6 +1,7 @@
 package com.lyears.projects.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
@@ -14,15 +15,9 @@ import java.time.LocalDateTime;
 @Table(name = "book_order", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"reader_id", "book_id"})
 })
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Order {
 
-    public interface IdView{}
-    public interface OrderTimeView extends IdView{}
-    public interface ReturnTimeView extends OrderTimeView{}
-    public interface StatusView extends ReturnTimeView{}
-
-    public interface ReaderView extends StatusView{}
-    public interface BookView extends ReaderView{}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,7 +38,6 @@ public class Order {
 
     private Boolean orderStatus;
 
-    @JsonView(IdView.class)
     public Integer getOrderId() {
         return orderId;
     }
@@ -52,7 +46,6 @@ public class Order {
         this.orderId = orderId;
     }
 
-    @JsonView(ReaderView.class)
     public Reader getReader() {
         return reader;
     }
@@ -61,7 +54,6 @@ public class Order {
         this.reader = reader;
     }
 
-    @JsonView(BookView.class)
     public Book getBook() {
         return book;
     }
@@ -70,7 +62,6 @@ public class Order {
         this.book = book;
     }
 
-    @JsonView(OrderTimeView.class)
     public LocalDateTime getOrderDate() {
         return orderDate;
     }
@@ -79,7 +70,6 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    @JsonView(ReaderView.class)
     public LocalDateTime getReturnDate() {
         return returnDate;
     }
@@ -88,7 +78,6 @@ public class Order {
         this.returnDate = returnDate;
     }
 
-    @JsonView(StatusView.class)
     public Boolean getOrderStatus() {
         return orderStatus;
     }

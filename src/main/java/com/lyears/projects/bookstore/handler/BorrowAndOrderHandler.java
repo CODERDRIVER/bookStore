@@ -1,5 +1,6 @@
 package com.lyears.projects.bookstore.handler;
 
+import com.lyears.projects.bookstore.entity.Borrow;
 import com.lyears.projects.bookstore.service.BorrowAndOrderService;
 import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultUtil;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author fzm
@@ -48,6 +50,19 @@ public class BorrowAndOrderHandler {
     @GetMapping("/borrows/today")
     @ResponseBody
     public ResponseMessage getTodayBorrows() {
-        return ResultUtil.success(borrowAndOrderService.getTodayBorrow(), request.getRequestURL().toString());
+
+        return ResultUtil.success(avoidStackOverflow(borrowAndOrderService.getTodayBorrow()),
+                request.getRequestURL().toString());
+    }
+
+    private List<Borrow> avoidStackOverflow(List<Borrow> borrows){
+        borrows.forEach(
+                borrow -> {
+                    borrow.getBook().setBorrows(null);
+                    borrow.getBook().setOrders(null);
+                    borrow.getReader().setBorrows(null);
+                    borrow.getReader().setOrders(null);
+                });
+        return borrows;
     }
 }
