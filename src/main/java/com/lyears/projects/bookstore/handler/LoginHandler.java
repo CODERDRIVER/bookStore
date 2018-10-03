@@ -1,16 +1,19 @@
 package com.lyears.projects.bookstore.handler;
 
 import com.lyears.projects.bookstore.entity.Administrator;
+import com.lyears.projects.bookstore.entity.Librarian;
 import com.lyears.projects.bookstore.entity.Reader;
 import com.lyears.projects.bookstore.exception.UserDefinedException;
 import com.lyears.projects.bookstore.jwt.JwtToken;
 import com.lyears.projects.bookstore.service.AdminService;
+import com.lyears.projects.bookstore.service.LibrarianService;
 import com.lyears.projects.bookstore.service.ReaderService;
 import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultEnum;
 import com.lyears.projects.bookstore.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,6 +35,9 @@ public class LoginHandler {
 
     @Autowired
     private ReaderService readerService;
+
+    @Autowired
+    private LibrarianService librarianService;
 
     @Autowired
     private HttpServletRequest request;
@@ -79,6 +85,41 @@ public class LoginHandler {
             }
         } else {
             throw new UserDefinedException(ResultEnum.USER_NOT_EXIST);
+        }
+    }
+
+    @PostMapping("/login/librarian")
+    @ResponseBody
+    public ResponseMessage login(@RequestBody Librarian librarian, HttpServletResponse response) throws UnsupportedEncodingException {
+        String email = librarian.getEmail();
+        String password = librarian.getPassword();
+
+        Librarian one = librarianService.findByEmail(email);
+        if (one != null) {
+            if (one.getPassword().equals(password)) {
+                String jwtToken = JwtToken.createToken(email, one.getUserName(), "librarian");
+                Cookie jwtTokenCookie = new Cookie("token", jwtToken);
+                jwtTokenCookie.setMaxAge(60 * 60 * 12);
+                jwtTokenCookie.setPath("/");
+                response.addCookie(jwtTokenCookie);
+                return ResultUtil.successNoData(request.getRequestURL().toString());
+            } else {
+                throw new UserDefinedException(ResultEnum.PASSWORD_ERROR);
+            }
+        } else {
+            throw new UserDefinedException(ResultEnum.USER_NOT_EXIST);
+        }
+    }
+
+    @ResponseBody
+    @GetMapping("/logout")
+    public ResponseMessage logout() {
+        Cookie token = request.getCookies()[0];
+        if (token == null) {
+            throw new UserDefinedException(ResultEnum.NEED_LOGIN);
+        } else {
+            token.setMaxAge(-1);
+            return ResultUtil.successNoData(request.getRequestURL().toString());
         }
     }
 }

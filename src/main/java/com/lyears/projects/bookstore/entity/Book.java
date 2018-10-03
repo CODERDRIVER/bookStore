@@ -1,7 +1,6 @@
 package com.lyears.projects.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -22,6 +21,7 @@ public class Book {
     @Column(unique = true)
     private String bookName;
     private Double price;
+    private Integer inventory;
     private String author;
 
     private String bookType;
@@ -41,6 +41,7 @@ public class Book {
     public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
+
     public String getBookName() {
         return bookName;
     }
@@ -55,6 +56,14 @@ public class Book {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Integer getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Integer inventory) {
+        this.inventory = inventory;
     }
 
     public String getAuthor() {

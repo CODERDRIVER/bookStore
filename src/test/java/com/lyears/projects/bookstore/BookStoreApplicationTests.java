@@ -8,6 +8,7 @@ import com.lyears.projects.bookstore.repository.BookRepository;
 import com.lyears.projects.bookstore.repository.BorrowRepository;
 import com.lyears.projects.bookstore.repository.OrderRepository;
 import com.lyears.projects.bookstore.repository.ReaderRepository;
+import com.lyears.projects.bookstore.service.BorrowAndOrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -29,6 +31,8 @@ public class BookStoreApplicationTests {
     private BorrowRepository borrowRepository;
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private BorrowAndOrderService borrowAndOrderService;
 
     @Test
     public void contextLoads() {
@@ -48,6 +52,7 @@ public class BookStoreApplicationTests {
         book.setBookType("小说");
         book.setPrice(12d);
         book.setBarCode("123456");
+        book.setInventory(20);
         bookRepository.save(book);
     }
 
@@ -55,7 +60,7 @@ public class BookStoreApplicationTests {
     public void testSaveBorrow() {
 
         Book book = bookRepository.findOne(1);
-        Reader reader = readerRepository.findOne(1);
+        Reader reader = readerRepository.findOne(2);
 
 
         Borrow borrow1 = new Borrow();
@@ -69,31 +74,45 @@ public class BookStoreApplicationTests {
         book.getBorrows().add(borrow1);
         reader.getBorrows().add(borrow1);
         reader.setBorrowNum(reader.getBorrowNum() - 1);
+        book.setInventory(book.getInventory() - 1);
 
+        bookRepository.save(book);
         readerRepository.save(reader);
         borrowRepository.save(borrow1);
     }
+
     @Test
-    public void testOrder(){
-        Book book = bookRepository.findOne(1);
-        Reader reader = readerRepository.findOne(1);
+    public void testOrder() {
 
-        Order order = new Order();
-        order.setBook(book);
-        order.setReader(reader);
+            Book book = bookRepository.findOne(1);
+            Reader reader = readerRepository.findOne(1);
 
-        order.setOrderStatus(true);
+            Order order = new Order();
+            order.setBook(book);
+            order.setReader(reader);
 
-        book.getOrders().add(order);
-        reader.getOrders().add(order);
+            order.setOrderStatus(true);
 
-        orderRepository.save(order);
+            book.getOrders().add(order);
+            reader.getOrders().add(order);
 
+            orderRepository.save(order);
     }
 
     @Test
-    public void testGet(){
+    public void testGet() {
         List<Borrow> borrows = borrowRepository.getAllByBorrowDate(LocalDate.now());
     }
+
+    @Test
+    public void testReturn() {
+        borrowAndOrderService.returnBookWithReaderName("西游记", "wan");
+    }
+
+    @Test
+    public void testCancel() {
+        borrowAndOrderService.cancelOrderWithTime(LocalDateTime.now().plusHours(3));
+    }
+
 
 }

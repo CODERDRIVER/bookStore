@@ -1,16 +1,15 @@
 package com.lyears.projects.bookstore.handler;
 
 import com.lyears.projects.bookstore.entity.Borrow;
+import com.lyears.projects.bookstore.entity.Reader;
 import com.lyears.projects.bookstore.service.BorrowAndOrderService;
+import com.lyears.projects.bookstore.service.ReaderService;
 import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -24,6 +23,9 @@ public class BorrowAndOrderHandler {
 
     @Autowired
     private BorrowAndOrderService borrowAndOrderService;
+
+    @Autowired
+    private ReaderService readerService;
 
     @Autowired
     private HttpServletRequest request;
@@ -47,13 +49,26 @@ public class BorrowAndOrderHandler {
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 
+
+
     @GetMapping("/borrows/today")
     @ResponseBody
     public ResponseMessage getTodayBorrows() {
-
+        //查看当天的借阅情况
         return ResultUtil.success(avoidStackOverflow(borrowAndOrderService.getTodayBorrow()),
                 request.getRequestURL().toString());
     }
+
+    @GetMapping("/borrows/readerName/{readerName}")
+    @ResponseBody
+    public ResponseMessage getBorrowsByReader(@PathVariable(name = "readerName")String readerName) {
+        Reader reader = readerService.findByUserName(readerName);
+        //查看一个读者的所有借阅信息
+        return ResultUtil.success(avoidStackOverflow(borrowAndOrderService.getBorrowByReader(reader)),
+                request.getRequestURL().toString());
+    }
+
+
 
     private List<Borrow> avoidStackOverflow(List<Borrow> borrows){
         borrows.forEach(

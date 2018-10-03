@@ -16,6 +16,14 @@ import java.util.Map;
  **/
 public class InterceptorUtil {
 
+    /**
+     * 检测是否有登录信息
+     * @param httpServletRequest 请求request
+     * @param cookies   登录信息
+     * @param adminService  管理员服务
+     * @return  返回是否验证成功
+     * @throws Exception    出现异常
+     */
     static boolean cookieAuthentication(HttpServletRequest httpServletRequest, Cookie[] cookies, AdminService adminService) throws Exception {
         if (cookies == null) {
             //未登录，返回异常

@@ -16,7 +16,9 @@ public enum ResultEnum {
     EMPTY_USERNAME(-5, "empty username!"),
     EMPTY_PASSWORD(-6, "empty password!"),
     ERROR_NUMBER(-7, "error number!"),
-    NO_RIGHT(-8,"no right!"),
+    NO_BOOK_STORE(-8,"no book store!"),
+    NO_RIGHT(-9,"no right!"),
+    BORROW_NOT_EXIST(-10,"borrow not exist!"),
     SUCCESS(0, "success"),
     SYSTEM_ERROR(-1000001, "system error!");
 

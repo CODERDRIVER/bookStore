@@ -24,6 +24,10 @@ public class ViewHandler {
     public String index(){
         return "index";
     }
+    @GetMapping("/body")
+    public String body(){
+        return "body";
+    }
 
 
 

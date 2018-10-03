@@ -55,7 +55,7 @@
             data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
             class="am-icon-bars"></span></button>
 
-    <div class="am-collapse am-topbar-collapse" bookId="doc-topbar-collapse">
+    <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
         <ul class="am-nav am-nav-pills am-topbar-nav">
             <li class="am-active"><a href="#">首页</a></li>
             <li><a href="#">项目</a></li>
@@ -91,12 +91,11 @@
                 </ul>
             </div>
         </div>
-
         <div class="am-topbar-right">
-            <button bookId="loginButton" class="am-btn am-btn-primary am-topbar-btn am-btn-sm am-radius" >登录</button>
+            <button id="sign-in" class="am-btn am-btn-primary am-topbar-btn am-btn-sm am-radius" >登录</button>
         </div>
 
-        <div class="am-modal am-modal-prompt" tabindex="-1" bookId="loginPrompt">
+        <div class="am-modal am-modal-prompt" tabindex="-1" id="loginPrompt">
             <div class="am-modal-dialog">
                 <div class="am-modal-hd"><h4>登 录</h4></div>
                 <div class="am-modal-bd">

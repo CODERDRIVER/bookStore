@@ -5,7 +5,7 @@
 
 //login function
 $(function () {
-    $('#loginButton').on('click', function () {
+    $('#sign-in').on('click', function () {
         $('#loginPrompt').modal({
             relatedTarget: this,
             onConfirm: function (e) {
