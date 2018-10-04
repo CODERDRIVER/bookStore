@@ -28,11 +28,19 @@
 }
 
 /* custom css style */
-.get {
+.get-full {
     background: rgb(64, 100, 133);
     color: #fff;
     text-align: center;
-    padding: 150px 0;
+    padding: 300px 0;
+    border: 0px;
+}
+
+.get-small {
+    background: rgb(64, 100, 133);
+    color: #fff;
+    text-align: center;
+    padding: 50px 0;
     border: 0px;
 }
 
