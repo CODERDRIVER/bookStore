@@ -51,25 +51,35 @@ function login(data, url, href) {
     })
 }
 
+$('#search-button').click(function () {
+    $('#backGround').removeClass("get-full").addClass("get-small")
+    loadBookPage(1, 5)
+    $('#bookPane').css("display", "block")
+});
+$('#morePage').click(function () {
+    loadBookPage(1, 10)
+})
+
 /**
  * 分页数据
  */
 $(function () {
-    loadBookPage(1)
 })
 
-function loadBookPage(pageNo) {
+function loadBookPage(pageNo, pageSize) {
     $.ajax({
         type: 'get',
-        url: 'books?pageNo=' + pageNo,
+        url: 'books?pageNo=' + pageNo + '&pageSize=' + pageSize,
         contentType: "application/json;charset=UTF-8",
         error: function () {
             alert("网络异常！")
         },
         success: function (data) {
-            for (var i = 0; i < 3; i++) {
+            $('#bookList').empty()
+            for (var i = 0; i < data.data.numberOfElements; i++) {
                 showBookInfo(data, i)
             }
+            showBookPagination(data)
         }
     })
 
@@ -79,7 +89,7 @@ function loadBookPage(pageNo) {
         var bookType = data.data.content[no].bookType
         var author = data.data.content[no].author
         var barCode = data.data.content[no].barCode
-        console.log(data.data.content[no])
+        // console.log(data.data.content[no])
         $('#bookList').append('' +
             '            <li class="am-cf am-text-truncate">\n' +
             '                <!--书籍缩略图-->\n' +
@@ -104,6 +114,38 @@ function loadBookPage(pageNo) {
             '                <p class="book-info-p am-text-middle am-text-xs">' + bookType + '</p>\n' +
             '                <p class="book-info-p am-text-middle am-text-xs">' + barCode + '</p>\n' +
             '            </li>\n')
+    }
+
+
+    function showBookPagination(data) {
+        var totalPages = data.data.totalPages;
+        var pagination = $('#bookPagination');
+        pagination.empty()
+        pagination.append('<li><a id="lastPage" href="#bookPane" onclick="">&laquo;</a></li>')
+        for (var i = 1; i < totalPages + 1; i++) {
+            if (i == pageNo) {
+                pagination.append('<li class="am-active"><a class="pageNo" href="#bookPane" onclick="return false">' + i + '</a></li>\n')
+            } else {
+                pagination.append('<li><a class="pageNo" href="#bookPane" onclick="return false">' + i + '</a></li>\n')
+            }
+        }
+        pagination.append('<li><a id="nextPage" href="#bookPane" onclick="">&raquo;</a></li>\n')
+        console.log(pageNo)
+        if (pageNo == 1) {
+            $('#lastPage').parent().addClass("am-disabled")
+        } else if (pageNo == totalPages) {
+            $('#nextPage').parent().addClass("am-disabled")
+        }
+        $('#lastPage').click(function () {
+            loadBookPage(pageNo - 1, pageSize)
+        });
+        $('#nextPage').click(function () {
+            loadBookPage(pageNo + 1, pageSize)
+        });
+        pagination.find("a.pageNo").click(function () {
+            // alert($(this).text())
+            loadBookPage($(this).text(), pageSize)
+        })
     }
 }
 

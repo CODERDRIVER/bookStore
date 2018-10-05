@@ -27,18 +27,21 @@ public class BookHandler {
 
     @GetMapping("/books")
     public ResponseMessage getAllBooks(@RequestParam(name = "pageNo", required = false, defaultValue = "1")
-                                               String pageNoStr) {
-        int pageNo = 1, pageSize = 3;
+                                               String pageNoStr,
+                                       @RequestParam(name = "pageSize", defaultValue = "3") String pageSize) {
+        int pageNo = 1;
+        int pageSizeInt = 3;
 
         try {
             pageNo = Integer.parseInt(pageNoStr);
+            pageSizeInt = Integer.parseInt(pageSize);
             if (pageNo < 1) {
                 pageNo = 1;
             }
         } catch (Exception ignored) {
 
         }
-        return ResultUtil.success(avoidStackOverflow(bookService.getAllBooks(pageNo, pageSize)),
+        return ResultUtil.success(avoidStackOverflow(bookService.getAllBooks(pageNo, pageSizeInt)),
                 request.getRequestURL().toString());
     }
 

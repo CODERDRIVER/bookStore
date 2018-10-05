@@ -101,7 +101,7 @@
     </div>
 </div>
 
-<div class="get-full">
+<div class="get-full" id="backGround">
     <div class="am-g">
         <div class="am-u-lg-12">
             <h1 class="get-title">Bibliosoft - Online Library </h1>
@@ -123,11 +123,11 @@
     </p>
 </div>
 
-<div data-am-widget="list_news" class="am-list-news am-list-news-default">
+<div id="bookPane" data-am-widget="list_news" class="am-list-news am-list-news-default" style="display: none">
     <div class="am-list-news-hd am-cf">
         <a href="###">
             <h2>Search Results</h2>
-            <span class="am-list-news-more am-fr">More &raquo;</span>
+            <span id="morePage" class="am-list-news-more am-fr">More &raquo;</span>
         </a>
     </div>
     <div class="am-list-news-bd">
@@ -199,7 +199,7 @@
                 <!--<p class="book-info-p am-text-middle am-text-xs">Book ID3</p>-->
             <!--</li>-->
         </ul>
-        <ul class="am-pagination am-pagination-centered">
+        <ul class="am-pagination am-pagination-centered" id="bookPagination">
             <li class="am-disabled"><a href="#">&laquo;</a></li>
             <li class="am-active"><a href="#">1</a></li>
             <li><a href="#">2</a></li>
