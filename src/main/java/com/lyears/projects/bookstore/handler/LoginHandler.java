@@ -1,5 +1,6 @@
 package com.lyears.projects.bookstore.handler;
 
+import com.auth0.jwt.interfaces.Claim;
 import com.lyears.projects.bookstore.entity.Administrator;
 import com.lyears.projects.bookstore.entity.Librarian;
 import com.lyears.projects.bookstore.entity.Reader;
@@ -13,15 +14,13 @@ import com.lyears.projects.bookstore.util.ResultEnum;
 import com.lyears.projects.bookstore.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 /**
  * @author fzm
@@ -120,6 +119,22 @@ public class LoginHandler {
         } else {
             token.setMaxAge(-1);
             return ResultUtil.successNoData(request.getRequestURL().toString());
+        }
+    }
+
+    @GetMapping("/login/all")
+    public String defaultLogin(@CookieValue(value = "token") String token) throws Exception {
+        Map<String, Claim> claims = JwtToken.verifyToken(token);
+
+        String type = claims.get("type").asString();
+        if ("admin".equals(type)) {
+            return "redirect:/admin";
+        } else if ("reader".equals(type)) {
+            return "redirect:/reader";
+        } else if ("librarian".equals(type)) {
+            return "redirect:/librarian";
+        } else {
+            throw new UserDefinedException(ResultEnum.NEED_LOGIN);
         }
     }
 }

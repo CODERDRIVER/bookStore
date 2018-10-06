@@ -3,33 +3,40 @@
     date: 2018-9-25
  */
 
+var cookieUtil = $.AMUI.utils.cookie;
+
 //login function
 $(function () {
+
     $('#sign-in').on('click', function () {
-        $('#loginPrompt').modal({
-            relatedTarget: this,
-            onConfirm: function (e) {
-                var data = e.data;
-                var email = data[0];
-                var password = data[1];
-                var requestData = JSON.stringify({
-                    "email": email,
-                    "password": password
-                });
-                var type = $(':input[name="loginType"]').val();
+        if (cookieUtil.get('token') != null) {
+            window.location = "login/all"
+        } else {
+            $('#loginPrompt').modal({
+                relatedTarget: this,
+                onConfirm: function (e) {
+                    var data = e.data;
+                    var email = data[0];
+                    var password = data[1];
+                    var requestData = JSON.stringify({
+                        "email": email,
+                        "password": password
+                    });
+                    var type = $(':input[name="loginType"]').val();
 
-                if (type === "admin") {
-                    login(requestData, 'login/admin', "admin-index")
-                } else if (type === "librarian") {
-                    login(requestData, 'login/librarian')
-                } else if (type === "reader") {
-                    login(requestData, 'login/reader')
+                    if (type === "admin") {
+                        login(requestData, 'login/admin', "admin")
+                    } else if (type === "librarian") {
+                        login(requestData, 'login/librarian')
+                    } else if (type === "reader") {
+                        login(requestData, 'login/reader')
+                    }
+                },
+                onCancel: function (e) {
+
                 }
-            },
-            onCancel: function (e) {
-
-            }
-        });
+            });
+        }
     });
 });
 
@@ -52,16 +59,24 @@ function login(data, url, href) {
 }
 
 $('#search-button').click(function () {
+    searchFun()
+});
+$(document).keyup(function (event) {
+    if (event.keyCode == 13) {
+        searchFun()
+    }
+});
+
+/**
+ * 加载搜索结果
+ */
+function searchFun() {
     $('#backGround').removeClass("get-full").addClass("get-small")
     var keyStr = $('#search-input').val()
-
     loadBookPage(1, 5, keyStr)
-
     $('#bookPane').css("display", "block")
-});
-$('#morePage').click(function () {
-    loadBookPage(1, 10)
-})
+}
+
 
 /**
  * 分页数据
@@ -71,6 +86,7 @@ $(function () {
 
 
 function loadBookPage(pageNo, pageSize, keyStr) {
+    console.log(keyStr)
     if (keyStr == null) {
         keyStr = ""
     }
@@ -83,9 +99,25 @@ function loadBookPage(pageNo, pageSize, keyStr) {
         },
         success: function (data) {
             $('#bookList').empty()
+            $('#bookPagination').empty()
+            //如果没有数据
             if (data.data.numberOfElements == 0) {
-                $('#bookList').append('')
+                // $('#morePage').attr('disabled', 'true')
+                $('#bookList').append('' +
+                    '        <li>\n' +
+                    '            <div>\n' +
+                    '                <strong class="am-center" style="\n' +
+                    '                padding: 50px 0 350px 0;\n' +
+                    '                text-align: center;\n' +
+                    '                font-size: larger;">\n' +
+                    '                        There is no matching results.\n' +
+                    '                </strong>\n' +
+                    '            </div>\n' +
+                    '        </li>')
             } else {
+                $('#morePage').unbind("click").bind("click", function () {
+                    loadBookPage(1, 10, $('#search-input').val())
+                });
                 for (var i = 0; i < data.data.numberOfElements; i++) {
                     showBookInfo(data, i)
                 }
@@ -93,6 +125,7 @@ function loadBookPage(pageNo, pageSize, keyStr) {
             }
         }
     })
+
 
     function showBookInfo(data, no) {
         var Name = data.data.content[no].bookName
@@ -139,21 +172,22 @@ function loadBookPage(pageNo, pageSize, keyStr) {
             }
         }
         pagination.append('<li><a id="nextPage" href="#bookPane" onclick="">&raquo;</a></li>\n')
-        console.log(pageNo)
+        // console.log(pageNo)
         if (pageNo == 1) {
             $('#lastPage').parent().addClass("am-disabled")
-        } else if (pageNo == totalPages) {
+        }
+        if (pageNo == totalPages) {
             $('#nextPage').parent().addClass("am-disabled")
         }
         $('#lastPage').click(function () {
-            loadBookPage(pageNo - 1, pageSize)
+            loadBookPage(Number(pageNo - 1), pageSize, keyStr)
         });
         $('#nextPage').click(function () {
-            loadBookPage(pageNo + 1, pageSize)
+            loadBookPage(Number(pageNo + 1), pageSize, keyStr)
         });
         pagination.find("a.pageNo").click(function () {
             // alert($(this).text())
-            loadBookPage($(this).text(), pageSize)
+            loadBookPage(Number($(this).text()), pageSize, keyStr)
         })
     }
 }

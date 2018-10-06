@@ -1,320 +1,226 @@
 <!doctype html>
-<html class="no-js" xmlns:th="http://www.thymeleaf.org">
+<html class="no-js">
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="description" content=""/>
-    <meta name="keywords" content=""/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
     <meta name="viewport"
-          content="width=device-width, initial-scale=1"/>
-    <title>Amaze UI Examples</title>
+          content="width=device-width, initial-scale=1">
+    <title>Bibliosoft</title>
 
     <!-- Set render engine for 360 browser -->
-    <meta name="renderer" content="webkit"/>
+    <meta name="renderer" content="webkit">
 
     <!-- No Baidu Siteapp-->
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
 
-    <link rel="icon" type="image/png" th:href="@{assets/i/favicon.png}"/>
+    <link rel="icon" type="image/png" href="assets/i/bookicon2.png">
 
     <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes"/>
-    <link rel="icon" sizes="192x192" th:href="@{assets/i/app-icon72x72.png}"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="assets/i/bookicon2.png">
 
     <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
-    <link rel="apple-touch-icon-precomposed" th:href="@{assets/i/app-icon72x72.png}"/>
+    <link rel="apple-touch-icon-precomposed" href="assets/i/bookicon2.png">
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png"/>
-    <meta name="msapplication-TileColor" content="#0e90d2"/>
+    <meta name="msapplication-TileImage" content="assets/i/bookicon2.png">
+    <meta name="msapplication-TileColor" content="#0e90d2">
 
-    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-    <!--
-    <link rel="canonical" href="http://www.example.com/">
-    -->
-
-    <link rel="stylesheet" th:href="@{assets/css/amazeui.min.css}"/>
-    <link rel="stylesheet" th:href="@{assets/css/app.css}"/>
+    <link rel="stylesheet" href="assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body>
-<!--[if lte IE 9]>
-<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a
-        href="http://browsehappy.com/" target="_blank">升级浏览器</a>
-    以获得更好的体验！</p>
-<![endif]-->
+<div class="container">
+<header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
+    <div class="am-container" style="max-width: unset">
+        <h1 class="am-topbar-brand">
+            <a href="#">Bibliosoft</a>
+        </h1>
 
-<header class="am-topbar">
-    <h1 class="am-topbar-brand">x
-        <a href="#">Amaze UI</a>
-    </h1>
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+                data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+                class="am-icon-bars"></span></button>
 
-    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
-            data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
-            class="am-icon-bars"></span></button>
-
-    <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
-        <ul class="am-nav am-nav-pills am-topbar-nav">
-            <li class="am-active"><a href="#">首页</a></li>
-            <li><a href="#">项目</a></li>
-            <li class="am-dropdown" data-am-dropdown="">
-                <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-                    下拉 <span class="am-icon-caret-down"></span>
-                </a>
-                <ul class="am-dropdown-content">
-                    <li class="am-dropdown-header">标题</li>
-                    <li><a href="#">1. 去月球</a></li>
-                    <li class="am-active"><a href="#">2. 去火星</a></li>
-                    <li><a href="#">3. 还是回地球</a></li>
-                    <li class="am-disabled"><a href="#">4. 下地狱</a></li>
-                    <li class="am-divider"></li>
-                    <li><a href="#">5. 桥头一回首</a></li>
-                </ul>
-            </li>
-        </ul>
-
-        <form class="am-topbar-form am-topbar-left am-form-inline" role="search">
-            <div class="am-form-group">
-                <input type="text" class="am-form-field am-input-sm" placeholder="搜索"/>
+        <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+            <div class="am-topbar-right">
+                <button id="sign-up" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Sign Up</button>
             </div>
-        </form>
 
-        <div class="am-topbar-right">
-            <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
-                <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle"
-                        data-am-dropdown-toggle="">其他 <span class="am-icon-caret-down"></span></button>
-                <ul class="am-dropdown-content am-radius">
-                    <li><a href="#">注册</a></li>
-                    <li><a href="#">登出</a></li>
-                </ul>
+            <div class="am-topbar-right">
+                <button id="sign-in" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Sign In</button>
             </div>
-        </div>
-        <div class="am-topbar-right">
-            <button id="sign-in" class="am-btn am-btn-primary am-topbar-btn am-btn-sm am-radius" >登录</button>
-        </div>
 
-        <div class="am-modal am-modal-prompt" tabindex="-1" id="loginPrompt">
-            <div class="am-modal-dialog">
-                <div class="am-modal-hd"><h4>登 录</h4></div>
-                <div class="am-modal-bd">
-                    <label style="text-align: left">邮箱：</label>
-                    <input type="text" class="am-modal-prompt-input" style="display: inline"/>
-                    <br/>
-                    <label style="text-align: left">密码：</label>
-                    <input type="password" class="am-modal-prompt-input" style="display: inline"/>
-                    <br/>
-                    <label class="am-radio"  style="display: inline">
-                        <input type="radio" name="loginType" value="admin" data-am-ucheck=""/>
-                        管理员
-                    </label>
-                    <label class="am-radio"  style="display: inline">
-                        <input type="radio" name="loginType" value="librarian" data-am-ucheck=""/>
-                        图书管理员
-                    </label>
-                    <label class="am-radio"  style="display: inline">
-                        <input type="radio" name="loginType" value="reader" data-am-ucheck=""/>
-                        读者
-                    </label>
-
-                </div>
-                <div class="am-modal-footer">
-                    <span class="am-modal-btn" data-am-modal-cancel="">取消</span>
-                    <span class="am-modal-btn" data-am-modal-confirm="">登录</span>
-                </div>
+            <div class="am-topbar-right">
+                <li class="am-dropdown am-dropdown-header" data-am-dropdown>
+                    <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                        English <span class="am-icon-caret-down"></span>
+                    </a>
+                    <ul class="am-dropdown-content">
+                        <li class="am-dropdown-header">Language Setting</li>
+                        <li><a id="English" href="#">English</a></li>
+                        <li><a id="Chinese" href="#">中文</a></li>
+                    </ul>
+                </li>
             </div>
-        </div>
 
+        </div>
     </div>
 </header>
+<div class="am-modal am-modal-prompt" tabindex="-1" id="loginPrompt">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd"><h4>登 录</h4></div>
+        <div class="am-modal-bd">
+            <label style="text-align: left">邮箱：</label>
+            <input type="text" class="am-modal-prompt-input" style="display: inline"/>
+            <br/>
+            <label style="text-align: left">密码：</label>
+            <input type="password" class="am-modal-prompt-input" style="display: inline"/>
+            <br/>
+            <label class="am-radio" style="display: inline">
+                <input type="radio" name="loginType" value="admin" data-am-ucheck=""/>
+                管理员
+            </label>
+            <label class="am-radio" style="display: inline">
+                <input type="radio" name="loginType" value="librarian" data-am-ucheck=""/>
+                图书管理员
+            </label>
+            <label class="am-radio" style="display: inline">
+                <input type="radio" name="loginType" value="reader" data-am-ucheck=""/>
+                读者
+            </label>
 
-<!-- 页面内容 开发时删除 -->
-<div class="am-g am-g-fixed am-margin-top">
-    <div class="am-u-sm-12">
-        <h1>你好世界！小可 Amaze UI 模板。</h1>
-
-        <p>这是一个基础的页面，引入 Amaze UI 的 css 、js
-            文件。如果你已经熟读文档，使用时删除内容开始开发即可。建议使用前先阅读文档，以提高开发效率。</p>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel="">取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm="">登录</span>
+        </div>
     </div>
 </div>
 
-<div class="am-g am-g-fixed am-margin-top">
-    <div class="am-u-sm-12">
-        <h1>书籍列表</h1>
+<div class="get-full" id="backGround">
+    <div class="am-g">
+        <div class="am-u-lg-12">
+            <h1 class="get-title">Bibliosoft - Online Library </h1>
+        </div>
     </div>
-    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-imgbordered"
-        data-am-gallery="{ }">
-        <li>
-            <div class="am-gallery-item">
-                <a href="http://s.amazeui.org/media/i/demos/bing-1.jpg" class="">
-                    <img class="am-radius" src="http://s.amazeui.org/media/i/demos/bing-1.jpg"  alt="远方 有一个地方 那里种有我们的梦想"/>
-                    <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
-                    <div class="am-gallery-desc">2375-09-26</div>
-                </a>
-            </div>
-        </li>
-        <li>
-            <div class="am-gallery-item">
-                <a href="http://s.amazeui.org/media/i/demos/bing-2.jpg" class="">
-                    <img class="am-radius" src="http://s.amazeui.org/media/i/demos/bing-2.jpg"  alt="某天 也许会相遇 相遇在这个好地方"/>
-                    <h3 class="am-gallery-title">某天 也许会相遇 相遇在这个好地方</h3>
-                    <div class="am-gallery-desc">2375-09-26</div>
-                </a>
-            </div>
-        </li>
-        <li>
-            <div class="am-gallery-item">
-                <a href="http://s.amazeui.org/media/i/demos/bing-3.jpg" class="">
-                    <img class="am-radius" src="http://s.amazeui.org/media/i/demos/bing-3.jpg"  alt="不要太担心 只因为我相信"/>
-                    <h3 class="am-gallery-title">不要太担心 只因为我相信</h3>
-                    <div class="am-gallery-desc">2375-09-26</div>
-                </a>
-            </div>
-        </li>
-        <li>
-            <div class="am-gallery-item">
-                <a href="http://s.amazeui.org/media/i/demos/bing-4.jpg" class="">
-                    <img class="am-radius" src="http://s.amazeui.org/media/i/demos/bing-4.jpg"  alt="终会走过这条遥远的道路"/>
-                    <h3 class="am-gallery-title">终会走过这条遥远的道路</h3>
-                    <div class="am-gallery-desc">2375-09-26</div>
-                </a>
-            </div>
-        </li>
-        <li>
-            <div class="am-gallery-item">
-                <a href="http://s.amazeui.org/media/i/demos/bing-1.jpg" class="">
-                    <img class="am-radius" src="http://s.amazeui.org/media/i/demos/bing-4.jpg"  alt="终会走过这条遥远的道路"/>
-                    <h3 class="am-gallery-title">终会走过这条遥远的道路</h3>
-                    <div class="am-gallery-desc">2375-09-26</div>
-                </a>
-            </div>
-        </li>
-    </ul>
-</div>
 
-<div class="am-g am-g-fixed am-margin-top">
-
-    <div class="am-u-sm-12">
-        <div class="am-g">
-            <div class="am-u-sm-12 am-u-md-3">
-                <a href="landing.html"><img class="am-img-thumbnail"
-                                            th:src="@{assets/i/examples/landingPage.png}"
-                                            alt="展示页面"/></a>
-            </div>
-            <div class="am-u-sm-12 am-u-md-9">
-                <h3>展示页面</h3>
-
-                <p>
-                    CSS 部分：<a class="am-badge am-badge-success" href="/css/grid">网格</a> <a
-                        class="am-badge am-badge-success" href="/css/icon">图标</a> <a
-                        class="am-badge am-badge-success" href="/css/button">按钮</a> <a
-                        class="am-badge am-badge-success" href="/css/form">表单</a> <a
-                        class="am-badge am-badge-success" href="/css/article">文章页</a> <a
-                        class="am-badge am-badge-success" href="/css/topbar">导航条</a> <a
-                        class="am-badge am-badge-success" href="/css/utility">辅助类</a><br/>
-                    JS 插件部分：<a class="am-badge am-badge-primary"
-                               href="/javascript/dropdown">下拉组件</a> <a
-                        class="am-badge am-badge-primary"
-                        href="/javascript/scrollspy">滚动侦测</a>
-                </p>
-            </div>
-        </div>
-        <div class="am-g am-margin-top">
-            <div class="am-u-sm-12 am-u-md-3">
-                <a href="login.html"><img class="am-img-thumbnail"
-                                          th:src="@{assets/i/examples/loginPage.png}"
-                                          alt="登录页面"/></a>
-            </div>
-            <div class="am-u-sm-12 am-u-md-9">
-                <h3>登录页面</h3>
-
-                <p>
-                    CSS 部分：<a class="am-badge am-badge-success" href="/css/grid">网格</a> <a
-                        class="am-badge am-badge-success" href="/css/icon">图标</a> <a
-                        class="am-badge am-badge-success" href="/css/button">按钮</a> <a
-                        class="am-badge am-badge-success" href="/css/button-group">按钮组</a> <a
-                        class="am-badge am-badge-success" href="/css/form">表单</a>
-                </p>
-            </div>
-        </div>
-        <div class="am-g am-margin-top">
-            <div class="am-u-sm-12 am-u-md-3">
-                <a href="blog.html"><img class="am-img-thumbnail"
-                                         th:src="@{assets/i/examples/blogPage.png}"
-                                         alt="博客页面"/></a>
-            </div>
-            <div class="am-u-sm-12 am-u-md-9">
-                <h3>博客页面</h3>
-
-                <p>
-                    CSS 部分：<a class="am-badge am-badge-success" href="/css/grid">网格</a> <a
-                        class="am-badge am-badge-success" href="/css/block-grid">等宽布局</a> <a
-                        class="am-badge am-badge-success" href="/css/icon">图标</a> <a
-                        class="am-badge am-badge-success" href="/css/button">按钮</a> <a
-                        class="am-badge am-badge-success" href="/css/panel">面板</a> <a
-                        class="am-badge am-badge-success" href="/css/list">列表</a> <a
-                        class="am-badge am-badge-success" href="/css/pagination">分页</a><br/>
-                    JS 插件部分：<a class="am-badge am-badge-primary"
-                               href="/css/dropdown">下拉组件</a>
-                </p>
-            </div>
-        </div>
-        <div class="am-g am-margin-top">
-            <div class="am-u-sm-12 am-u-md-3">
-                <a href="sidebar.html"><img class="am-img-thumbnail"
-                                            th:src="@{assets/i/examples/sidebarPage.png}"
-                                            alt="博客侧栏页面"/></a>
-            </div>
-            <div class="am-u-sm-12 am-u-md-9">
-                <h3>博客侧栏页面</h3>
-
-                <p>
-                    CSS 部分：<a class="am-badge am-badge-success" href="/css/grid">网格</a> <a
-                        class="am-badge am-badge-success" href="/css/article">文章页</a> <a
-                        class="am-badge am-badge-success" href="/css/comment">评论列表</a> <a
-                        class="am-badge am-badge-success" href="/css/button">按钮</a> <a
-                        class="am-badge am-badge-success" href="/css/icon">图标</a> <a
-                        class="am-badge am-badge-success" href="/css/list">列表</a> <a
-                        class="am-badge am-badge-success" href="/css/utility">辅助类</a><br/>
-                    JS 插件部分：<a class="am-badge am-badge-primary"
-                               href="/javascript/offcanvas">侧边栏组件</a>
-                </p>
-            </div>
-        </div>
-        <hr/>
-        <h2>Web 组件示例</h2>
-        <ul>
-            <li><a href="widget.basic.html">widget.basic.html</a> 使用了 <a
-                    href="http://amazeui.org/widgets">Web 组件</a> 的 HTML 结构和样式，但没用使用模板在前端渲染数据，供通过后端渲染数据的用户参考。
-            </li>
-            <li><a href="widget.html">widget.html</a> 是 Web 组件的展示，更多细节查看：<a
-                    href="http://amazeui.org/widgets">Web 组件</a></li>
-        </ul>
-        <h3>开始创建你的网页吧。</h3>
-    </div>
-</div>
-
-<footer class="am-margin-top">
-    <hr/>
-    <p class="am-text-center">
-        <small>by The AmazeUI Team.</small>
+    <p>
+        Online Library Management System
     </p>
-</footer>
-<!-- 以上页面内容 开发时删除 -->
 
-<!--[if lt IE 9]>
-<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-<script th:src="@{assets/js/amazeui.ie8polyfill.min.js}"></script>
-<![endif]-->
+    <p>
+    <div class="am-input-group am-input-group-primaray">
+        <input id="search-input" type="text" class="am-form-field"
+               placeholder="Search Books by Name, BookType, Author etc.">
+        <span class="am-input-group-btn">
+            <button id="search-button" class="am-btn am-btn-primary" type="button"><span class="am-icon-search"></span></button>
+            </span>
+    </div>
+    </p>
+</div>
+
+<div id="bookPane" data-am-widget="list_news" class="am-list-news am-list-news-default" style="display: none">
+    <div class="am-list-news-hd am-cf">
+        <a href="#bookPane">
+            <h2>Search Results</h2>
+            <span id="morePage" class="am-list-news-more am-fr">More &raquo;</span>
+        </a>
+    </div>
+    <div class="am-list-news-bd">
+        <ul class="am-list" id="bookList">
+            <!--列表 每个li为一个书籍-->
+            <!--<li class="am-cf am-text-truncate">-->
+                <!--&lt;!&ndash;书籍缩略图&ndash;&gt;-->
+                <!--<p class="am-align-left">-->
+                    <!--<img class="am-radius" src="assets/i/bookicon1.png" alt="..."-->
+                         <!--width="140" height="140">-->
+                <!--</p>-->
+                <!--&lt;!&ndash;书名作为h2标题&ndash;&gt;-->
+                <!--<h2 style="margin: 2px 0 0 0">-->
+                    <!--<strong class="am-text-middle" href="">Book Name Here</strong>-->
+                <!--</h2>-->
+                <!--&lt;!&ndash;书籍信息&ndash;&gt;-->
+                <!--<p class="am-text-top" style="margin: 0 0 0 0">by-->
+                    <!--<strong>Book Author</strong>-->
+                <!--</p>-->
+                <!--<p class="book-info-p am-text-middle am-text-sm">-->
+                    <!--Total:-->
+                    <!--<em>10</em>-->
+                    <!--Remain:-->
+                    <!--<em>2</em>-->
+                <!--</p>-->
+                <!--<p class="book-info-p am-text-middle am-text-xs">Publisher</p>-->
+                <!--<p class="book-info-p am-text-middle am-text-xs">Book ID</p>-->
+            <!--</li>-->
+
+            <!--<li class="am-cf am-text-truncate">-->
+                <!--<p class="am-align-left">-->
+                    <!--<img class="am-radius" src="assets/i/bookicon1.png" alt="..."-->
+                         <!--width="140" height="140">-->
+                <!--</p>-->
+                <!--<h2 style="margin: 2px 0 0 0">-->
+                    <!--<strong class="am-text-middle" href="">Book Name2 Here</strong>-->
+                <!--</h2>-->
+                <!--<p class="am-text-top" style="margin: 0 0 0 0">by-->
+                    <!--<strong>Book Author2</strong>-->
+                <!--</p>-->
+                <!--<p class="book-info-p am-text-middle am-text-sm">-->
+                    <!--Total:-->
+                    <!--<em>10</em>-->
+                    <!--Remain:-->
+                    <!--<em>20</em>-->
+                <!--</p>-->
+                <!--<p class="book-info-p am-text-middle am-text-xs">Publisher2</p>-->
+                <!--<p class="book-info-p am-text-middle am-text-xs">Book ID2</p>-->
+            <!--</li>-->
+
+            <!--<li class="am-cf am-text-truncate">-->
+                <!--<p class="am-align-left">-->
+                    <!--<img class="am-radius" src="assets/i/bookicon1.png" alt="..."-->
+                         <!--width="140" height="140">-->
+                <!--</p>-->
+                <!--<h2 style="margin: 2px 0 0 0">-->
+                    <!--<strong class="am-text-middle" href="">Book Name3 Here</strong>-->
+                <!--</h2>-->
+                <!--<p class="am-text-top" style="margin: 0 0 0 0">by-->
+                    <!--<strong>Book Author3</strong>-->
+                <!--</p>-->
+                <!--<p class="book-info-p am-text-middle am-text-sm">-->
+                    <!--Total:-->
+                    <!--<em>100</em>-->
+                    <!--Remain:-->
+                    <!--<em>2</em>-->
+                <!--</p>-->
+                <!--<p class="book-info-p am-text-middle am-text-xs">Publisher3</p>-->
+                <!--<p class="book-info-p am-text-middle am-text-xs">Book ID3</p>-->
+            <!--</li>-->
+        </ul>
+        <ul class="am-pagination am-pagination-centered" id="bookPagination">
+
+        </ul>
+    </div>
+</div>
+</div>
+</div>
+
+<footer class="footer">
+    <p>2018. by Team A12.</p>
+</footer>
 
 <!--[if (gte IE 9)|!(IE)]><!-->
-<script th:src="@{assets/js/jquery-3.1.1.min.js}"></script>
+<script src="assets/js/jquery-3.1.1.min.js"></script>
 <!--<![endif]-->
-<script th:src="@{assets/js/amazeui.min.js}"></script>
-
-<script th:src="@{assets/js/style.js}"></script>
-
+<!--[if lte IE 8 ]>
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/style.js"></script>
 </body>
 </html>

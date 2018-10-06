@@ -29,6 +29,7 @@ public class ConfigurerAdapter extends WebMvcConfigurerAdapter {
     public HandlerInterceptor getAdminInterceptor() {
         return new AdminInterceptor();
     }
+
     @Bean
     public HandlerInterceptor getModifyInterceptor() {
         return new ModifyInterceptor();
@@ -77,7 +78,7 @@ public class ConfigurerAdapter extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getAdminInterceptor()).addPathPatterns("/admin-index", "/admin-index.*");
+        registry.addInterceptor(getAdminInterceptor()).addPathPatterns("/admin", "/admin.*");
         registry.addInterceptor(getModifyInterceptor()).addPathPatterns("/**");
         super.addInterceptors(registry);
     }

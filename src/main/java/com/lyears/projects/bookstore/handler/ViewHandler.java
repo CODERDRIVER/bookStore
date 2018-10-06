@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ViewHandler {
 
-    @GetMapping("/admin-index")
+    @GetMapping("/admin")
     public String adminIndex(){
-        return "admin-index";
+        return "admin";
     }
 
     @GetMapping("/404")
@@ -23,10 +23,6 @@ public class ViewHandler {
     @GetMapping("/")
     public String index(){
         return "index";
-    }
-    @GetMapping("/body")
-    public String body(){
-        return "body";
     }
 
 

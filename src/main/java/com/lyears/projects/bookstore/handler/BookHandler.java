@@ -47,7 +47,7 @@ public class BookHandler {
         } else {
             bookPage = bookService.getAllBooks(pageNo, pageSize, keyStr);
         }
-        return ResultUtil.success(avoidStackOverflow(bookPage),
+        return ResultUtil.success(avoidStackOverflowInReader(bookPage),
                 request.getRequestURL().toString());
     }
 
@@ -74,6 +74,22 @@ public class BookHandler {
                                 b.getReader().setOrders(null);
                             }
                     );
+                }
+        );
+        return books;
+    }
+
+    /**
+     * 使用Stream避免栈溢出,返回给读者时不返回订单和预定数据
+     *
+     * @param books 传入的bookList
+     * @return 得到的结果
+     */
+    private Page<Book> avoidStackOverflowInReader(Page<Book> books) {
+        books.forEach(
+                r -> {
+                    r.setOrders(null);
+                    r.setBorrows(null);
                 }
         );
         return books;
