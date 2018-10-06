@@ -18,5 +18,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Override
     Page<Book> findAll(Pageable pageable);
 
+    Page<Book> findAllByAuthorContainingOrBookNameContainingOrBookTypeContaining(String author, String bookName, String bookType, Pageable pageable);
+
     Book findByBookName(String bookName);
 }

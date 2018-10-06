@@ -53,7 +53,10 @@ function login(data, url, href) {
 
 $('#search-button').click(function () {
     $('#backGround').removeClass("get-full").addClass("get-small")
-    loadBookPage(1, 5)
+    var keyStr = $('#search-input').val()
+
+    loadBookPage(1, 5, keyStr)
+
     $('#bookPane').css("display", "block")
 });
 $('#morePage').click(function () {
@@ -66,20 +69,28 @@ $('#morePage').click(function () {
 $(function () {
 })
 
-function loadBookPage(pageNo, pageSize) {
+
+function loadBookPage(pageNo, pageSize, keyStr) {
+    if (keyStr == null) {
+        keyStr = ""
+    }
     $.ajax({
         type: 'get',
-        url: 'books?pageNo=' + pageNo + '&pageSize=' + pageSize,
+        url: 'books?pageNo=' + pageNo + '&pageSize=' + pageSize + '&keyStr=' + keyStr,
         contentType: "application/json;charset=UTF-8",
         error: function () {
             alert("网络异常！")
         },
         success: function (data) {
             $('#bookList').empty()
-            for (var i = 0; i < data.data.numberOfElements; i++) {
-                showBookInfo(data, i)
+            if (data.data.numberOfElements == 0) {
+                $('#bookList').append('')
+            } else {
+                for (var i = 0; i < data.data.numberOfElements; i++) {
+                    showBookInfo(data, i)
+                }
+                showBookPagination(data)
             }
-            showBookPagination(data)
         }
     })
 
@@ -106,8 +117,6 @@ function loadBookPage(pageNo, pageSize) {
             '                    <strong>' + author + '</strong>\n' +
             '                </p>\n' +
             '                <p class="book-info-p am-text-middle am-text-sm">\n' +
-            '                    Total:\n' +
-            '                    <em>10</em>\n' +
             '                    Remain:\n' +
             '                    <em>' + inventory + '</em>\n' +
             '                </p>\n' +

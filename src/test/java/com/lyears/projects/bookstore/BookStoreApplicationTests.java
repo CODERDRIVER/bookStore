@@ -8,11 +8,13 @@ import com.lyears.projects.bookstore.repository.BookRepository;
 import com.lyears.projects.bookstore.repository.BorrowRepository;
 import com.lyears.projects.bookstore.repository.OrderRepository;
 import com.lyears.projects.bookstore.repository.ReaderRepository;
+import com.lyears.projects.bookstore.service.BookService;
 import com.lyears.projects.bookstore.service.BorrowAndOrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
@@ -33,6 +35,8 @@ public class BookStoreApplicationTests {
     private OrderRepository orderRepository;
     @Autowired
     private BorrowAndOrderService borrowAndOrderService;
+    @Autowired
+    private BookService bookService;
 
     @Test
     public void contextLoads() {
@@ -84,24 +88,31 @@ public class BookStoreApplicationTests {
     @Test
     public void testOrder() {
 
-            Book book = bookRepository.findOne(1);
-            Reader reader = readerRepository.findOne(1);
+        Book book = bookRepository.findOne(1);
+        Reader reader = readerRepository.findOne(1);
 
-            Order order = new Order();
-            order.setBook(book);
-            order.setReader(reader);
+        Order order = new Order();
+        order.setBook(book);
+        order.setReader(reader);
 
-            order.setOrderStatus(true);
+        order.setOrderStatus(true);
 
-            book.getOrders().add(order);
-            reader.getOrders().add(order);
+        book.getOrders().add(order);
+        reader.getOrders().add(order);
 
-            orderRepository.save(order);
+        orderRepository.save(order);
     }
 
     @Test
     public void testGet() {
         List<Borrow> borrows = borrowRepository.getAllByBorrowDate(LocalDate.now());
+    }
+
+    @Test
+    public void testGetBook() {
+
+        Page<Book> bookPage = bookService.getAllBooks(1,3,"小说");
+        System.out.println(bookPage.getTotalElements());
     }
 
     @Test

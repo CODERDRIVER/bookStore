@@ -26,4 +26,11 @@ public class BookService {
         return bookRepository.findAll(pageable);
     }
 
+    @Transactional(readOnly = true, rollbackFor = RuntimeException.class)
+    public Page<Book> getAllBooks(int pageNo, int pageSize, String keyStr) {
+        Pageable pageable = new PageRequest(pageNo - 1, pageSize, Sort.Direction.ASC, "bookId");
+        return bookRepository
+                .findAllByAuthorContainingOrBookNameContainingOrBookTypeContaining(keyStr, keyStr, keyStr, pageable);
+    }
+
 }
