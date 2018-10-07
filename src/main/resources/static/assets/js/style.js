@@ -7,6 +7,10 @@ var cookieUtil = $.AMUI.utils.cookie;
 
 //login function
 $(function () {
+    if (cookieUtil.get('token') != null) {
+        $('#log-out').css('display','block')
+        $('#sign-in').css('display','none')
+    }
 
     $('#sign-in').on('click', function () {
         if (cookieUtil.get('token') != null) {
@@ -22,14 +26,14 @@ $(function () {
                         "email": email,
                         "password": password
                     });
-                    var type = $(':input[name="loginType"]').val();
+                    var type = $(':input[name="loginType"]:checked').val();
 
                     if (type === "admin") {
                         login(requestData, 'login/admin', "admin")
                     } else if (type === "librarian") {
-                        login(requestData, 'login/librarian')
+                        login(requestData, 'login/librarian', 'librarian')
                     } else if (type === "reader") {
-                        login(requestData, 'login/reader')
+                        login(requestData, 'login/reader', '/')
                     }
                 },
                 onCancel: function (e) {
@@ -40,6 +44,12 @@ $(function () {
     });
 });
 
+/**
+ * 模态登录窗口
+ * @param data  登录数据
+ * @param url   登录url接口
+ * @param href  跳转页面
+ */
 function login(data, url, href) {
     $.ajax({
         type: 'post',
@@ -58,6 +68,25 @@ function login(data, url, href) {
     })
 }
 
+/**
+ * 登出按钮
+ */
+$('#log-out').click(function () {
+    $.ajax({
+        type: 'delete',
+        url: 'logout',
+        contentType: "application/json;charset=UTF-8",
+        success: function (e) {
+            if (e.code === 0) {
+                window.location.href = "/"
+            }
+        }
+    })
+})
+
+/**
+ * 搜索框点击事件
+ */
 $('#search-button').click(function () {
     searchFun()
 });
@@ -73,6 +102,7 @@ $(document).keyup(function (event) {
 function searchFun() {
     $('#backGround').removeClass("get-full").addClass("get-small")
     var keyStr = $('#search-input').val()
+    //加载分页结果
     loadBookPage(1, 5, keyStr)
     $('#bookPane').css("display", "block")
 }
@@ -81,10 +111,6 @@ function searchFun() {
 /**
  * 分页数据
  */
-$(function () {
-})
-
-
 function loadBookPage(pageNo, pageSize, keyStr) {
     console.log(keyStr)
     if (keyStr == null) {
@@ -152,6 +178,8 @@ function loadBookPage(pageNo, pageSize, keyStr) {
             '                <p class="book-info-p am-text-middle am-text-sm">\n' +
             '                    Remain:\n' +
             '                    <em>' + inventory + '</em>\n' +
+            '                <button class="am-btn am-btn-default am-btn-xs am-text-secondary am-align-right" type="button">\n' +
+            '                <span class="am-icon-clock-o"></span> Reserve</button>\n' +
             '                </p>\n' +
             '                <p class="book-info-p am-text-middle am-text-xs">' + bookType + '</p>\n' +
             '                <p class="book-info-p am-text-middle am-text-xs">' + barCode + '</p>\n' +

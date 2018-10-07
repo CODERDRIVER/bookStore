@@ -36,175 +36,192 @@
 </head>
 <body>
 <div class="container">
-<header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
-    <div class="am-container" style="max-width: unset">
-        <h1 class="am-topbar-brand">
-            <a href="#">Bibliosoft</a>
-        </h1>
+    <header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
+        <div class="am-container" style="max-width: unset">
+            <h1 class="am-topbar-brand">
+                <a href="#">Bibliosoft</a>
+            </h1>
 
-        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
-                data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
-                class="am-icon-bars"></span></button>
+            <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+                    data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+                    class="am-icon-bars"></span></button>
 
-        <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
-            <div class="am-topbar-right">
-                <button id="sign-up" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Sign Up</button>
+            <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+                <div class="am-topbar-right">
+                    <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"
+                            style="display:none;">Log out
+                    </button>
+                </div>
+
+                <div class="am-topbar-right">
+                    <button id="sign-in" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Sign In</button>
+                </div>
+
+                <div class="am-topbar-right">
+                    <li class="am-dropdown am-dropdown-header" data-am-dropdown>
+                        <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                            English <span class="am-icon-caret-down"></span>
+                        </a>
+                        <ul class="am-dropdown-content">
+                            <li class="am-dropdown-header">Language Setting</li>
+                            <li><a id="English" href="#">English</a></li>
+                            <li><a id="Chinese" href="#">中文</a></li>
+                        </ul>
+                    </li>
+                </div>
+
             </div>
+        </div>
+    </header>
+    <div class="am-modal am-modal-prompt" tabindex="-1" id="loginPrompt">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd"><h4>Sign in</h4></div>
+            <div class="am-modal-bd">
+                <form class="am-form am-form-horizontal">
+                    <div class="am-form-group">
+                        <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">email:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="email" id="doc-ipt-3" placeholder="Enter your email">
+                        </div>
+                    </div>
 
-            <div class="am-topbar-right">
-                <button id="sign-in" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Sign In</button>
+                    <div class="am-form-group">
+                        <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">password:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="password" id="doc-ipt-pwd-2" placeholder="Enter you password">
+                        </div>
+                    </div>
+                    <div class="am-radio-inline" style="padding-top: 0">
+                        <label >
+                            <input type="radio" name="loginType" value="admin" data-am-ucheck=""/>
+                            admin
+                        </label>
+                    </div>
+                    <div class="am-radio-inline" style="padding-top: 0">
+                        <label >
+                            <input type="radio" name="loginType" value="librarian" data-am-ucheck=""/>
+                            librarian
+                        </label>
+                    </div>
+                    <div class="am-radio-inline" style="padding-top: 0">
+                        <label >
+                            <input type="radio" name="loginType" value="reader" data-am-ucheck=""/>
+                            reader
+                        </label>
+                    </div>
+                </form>
+
             </div>
-
-            <div class="am-topbar-right">
-                <li class="am-dropdown am-dropdown-header" data-am-dropdown>
-                    <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-                        English <span class="am-icon-caret-down"></span>
-                    </a>
-                    <ul class="am-dropdown-content">
-                        <li class="am-dropdown-header">Language Setting</li>
-                        <li><a id="English" href="#">English</a></li>
-                        <li><a id="Chinese" href="#">中文</a></li>
-                    </ul>
-                </li>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
+                <span class="am-modal-btn" data-am-modal-confirm="">login</span>
             </div>
-
         </div>
     </div>
-</header>
-<div class="am-modal am-modal-prompt" tabindex="-1" id="loginPrompt">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd"><h4>登 录</h4></div>
-        <div class="am-modal-bd">
-            <label style="text-align: left">邮箱：</label>
-            <input type="text" class="am-modal-prompt-input" style="display: inline"/>
-            <br/>
-            <label style="text-align: left">密码：</label>
-            <input type="password" class="am-modal-prompt-input" style="display: inline"/>
-            <br/>
-            <label class="am-radio" style="display: inline">
-                <input type="radio" name="loginType" value="admin" data-am-ucheck=""/>
-                管理员
-            </label>
-            <label class="am-radio" style="display: inline">
-                <input type="radio" name="loginType" value="librarian" data-am-ucheck=""/>
-                图书管理员
-            </label>
-            <label class="am-radio" style="display: inline">
-                <input type="radio" name="loginType" value="reader" data-am-ucheck=""/>
-                读者
-            </label>
 
+    <div class="get-full" id="backGround">
+        <div class="am-g">
+            <div class="am-u-lg-12">
+                <h1 class="get-title">Bibliosoft - Online Library </h1>
+            </div>
         </div>
-        <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel="">取消</span>
-            <span class="am-modal-btn" data-am-modal-confirm="">登录</span>
-        </div>
-    </div>
-</div>
 
-<div class="get-full" id="backGround">
-    <div class="am-g">
-        <div class="am-u-lg-12">
-            <h1 class="get-title">Bibliosoft - Online Library </h1>
-        </div>
-    </div>
+        <p>
+            Online Library Management System
+        </p>
 
-    <p>
-        Online Library Management System
-    </p>
-
-    <p>
-    <div class="am-input-group am-input-group-primaray">
-        <input id="search-input" type="text" class="am-form-field"
-               placeholder="Search Books by Name, BookType, Author etc.">
-        <span class="am-input-group-btn">
+        <p>
+        <div class="am-input-group am-input-group-primaray">
+            <input id="search-input" type="text" class="am-form-field"
+                   placeholder="Search Books by Name, BookType, Author etc.">
+            <span class="am-input-group-btn">
             <button id="search-button" class="am-btn am-btn-primary" type="button"><span class="am-icon-search"></span></button>
             </span>
+        </div>
+        </p>
     </div>
-    </p>
-</div>
 
-<div id="bookPane" data-am-widget="list_news" class="am-list-news am-list-news-default" style="display: none">
-    <div class="am-list-news-hd am-cf">
-        <a href="#bookPane">
-            <h2>Search Results</h2>
-            <span id="morePage" class="am-list-news-more am-fr">More &raquo;</span>
-        </a>
-    </div>
-    <div class="am-list-news-bd">
-        <ul class="am-list" id="bookList">
-            <!--列表 每个li为一个书籍-->
-            <!--<li class="am-cf am-text-truncate">-->
+    <div id="bookPane" data-am-widget="list_news" class="am-list-news am-list-news-default" style="display: none">
+        <div class="am-list-news-hd am-cf">
+            <a href="#bookPane">
+                <h2>Search Results</h2>
+                <span id="morePage" class="am-list-news-more am-fr">More &raquo;</span>
+            </a>
+        </div>
+        <div class="am-list-news-bd">
+            <ul class="am-list" id="bookList">
+                <!--列表 每个li为一个书籍-->
+                <!--<li class="am-cf am-text-truncate">-->
                 <!--&lt;!&ndash;书籍缩略图&ndash;&gt;-->
                 <!--<p class="am-align-left">-->
-                    <!--<img class="am-radius" src="assets/i/bookicon1.png" alt="..."-->
-                         <!--width="140" height="140">-->
+                <!--<img class="am-radius" src="assets/i/bookicon1.png" alt="..."-->
+                <!--width="140" height="140">-->
                 <!--</p>-->
                 <!--&lt;!&ndash;书名作为h2标题&ndash;&gt;-->
                 <!--<h2 style="margin: 2px 0 0 0">-->
-                    <!--<strong class="am-text-middle" href="">Book Name Here</strong>-->
+                <!--<strong class="am-text-middle" href="">Book Name Here</strong>-->
                 <!--</h2>-->
                 <!--&lt;!&ndash;书籍信息&ndash;&gt;-->
                 <!--<p class="am-text-top" style="margin: 0 0 0 0">by-->
-                    <!--<strong>Book Author</strong>-->
+                <!--<strong>Book Author</strong>-->
                 <!--</p>-->
                 <!--<p class="book-info-p am-text-middle am-text-sm">-->
-                    <!--Total:-->
-                    <!--<em>10</em>-->
-                    <!--Remain:-->
-                    <!--<em>2</em>-->
+                <!--Total:-->
+                <!--<em>10</em>-->
+                <!--Remain:-->
+                <!--<em>2</em>-->
                 <!--</p>-->
                 <!--<p class="book-info-p am-text-middle am-text-xs">Publisher</p>-->
                 <!--<p class="book-info-p am-text-middle am-text-xs">Book ID</p>-->
-            <!--</li>-->
+                <!--</li>-->
 
-            <!--<li class="am-cf am-text-truncate">-->
+                <!--<li class="am-cf am-text-truncate">-->
                 <!--<p class="am-align-left">-->
-                    <!--<img class="am-radius" src="assets/i/bookicon1.png" alt="..."-->
-                         <!--width="140" height="140">-->
+                <!--<img class="am-radius" src="assets/i/bookicon1.png" alt="..."-->
+                <!--width="140" height="140">-->
                 <!--</p>-->
                 <!--<h2 style="margin: 2px 0 0 0">-->
-                    <!--<strong class="am-text-middle" href="">Book Name2 Here</strong>-->
+                <!--<strong class="am-text-middle" href="">Book Name2 Here</strong>-->
                 <!--</h2>-->
                 <!--<p class="am-text-top" style="margin: 0 0 0 0">by-->
-                    <!--<strong>Book Author2</strong>-->
+                <!--<strong>Book Author2</strong>-->
                 <!--</p>-->
                 <!--<p class="book-info-p am-text-middle am-text-sm">-->
-                    <!--Total:-->
-                    <!--<em>10</em>-->
-                    <!--Remain:-->
-                    <!--<em>20</em>-->
+                <!--Total:-->
+                <!--<em>10</em>-->
+                <!--Remain:-->
+                <!--<em>20</em>-->
                 <!--</p>-->
                 <!--<p class="book-info-p am-text-middle am-text-xs">Publisher2</p>-->
                 <!--<p class="book-info-p am-text-middle am-text-xs">Book ID2</p>-->
-            <!--</li>-->
+                <!--</li>-->
 
-            <!--<li class="am-cf am-text-truncate">-->
+                <!--<li class="am-cf am-text-truncate">-->
                 <!--<p class="am-align-left">-->
-                    <!--<img class="am-radius" src="assets/i/bookicon1.png" alt="..."-->
-                         <!--width="140" height="140">-->
+                <!--<img class="am-radius" src="assets/i/bookicon1.png" alt="..."-->
+                <!--width="140" height="140">-->
                 <!--</p>-->
                 <!--<h2 style="margin: 2px 0 0 0">-->
-                    <!--<strong class="am-text-middle" href="">Book Name3 Here</strong>-->
+                <!--<strong class="am-text-middle" href="">Book Name3 Here</strong>-->
                 <!--</h2>-->
                 <!--<p class="am-text-top" style="margin: 0 0 0 0">by-->
-                    <!--<strong>Book Author3</strong>-->
+                <!--<strong>Book Author3</strong>-->
                 <!--</p>-->
                 <!--<p class="book-info-p am-text-middle am-text-sm">-->
-                    <!--Total:-->
-                    <!--<em>100</em>-->
-                    <!--Remain:-->
-                    <!--<em>2</em>-->
+                <!--Total:-->
+                <!--<em>100</em>-->
+                <!--Remain:-->
+                <!--<em>2</em>-->
                 <!--</p>-->
                 <!--<p class="book-info-p am-text-middle am-text-xs">Publisher3</p>-->
                 <!--<p class="book-info-p am-text-middle am-text-xs">Book ID3</p>-->
-            <!--</li>-->
-        </ul>
-        <ul class="am-pagination am-pagination-centered" id="bookPagination">
+                <!--</li>-->
+            </ul>
+            <ul class="am-pagination am-pagination-centered" id="bookPagination">
 
-        </ul>
+            </ul>
+        </div>
     </div>
-</div>
 </div>
 </div>
 

@@ -35,6 +35,11 @@ public class ReaderHandler {
                 request.getRequestURL().toString());
     }
 
+    /**
+     * 注册读者
+     * @param reader    传入的读者信息
+     * @return  返回结果
+     */
     @PostMapping(value = "/reader", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseBody
     public ResponseMessage saveReader(Reader reader) {

@@ -23,18 +23,16 @@ public class ModifyInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        //不拦截get方法
-        if ("/login/admin".equals(httpServletRequest.getServletPath())) {
+
+
+        if (RequestMethod.POST.name().equalsIgnoreCase(httpServletRequest.getMethod()) || RequestMethod.PUT.name().equalsIgnoreCase(httpServletRequest.getMethod())
+                || RequestMethod.DELETE.name().equalsIgnoreCase(httpServletRequest.getMethod())) {
+            Cookie[] cookies = httpServletRequest.getCookies();
+            return InterceptorUtil.cookieAuthentication(httpServletRequest, cookies, adminService);
+        } else {
             return true;
-        }else {
-            if (RequestMethod.POST.name().equalsIgnoreCase(httpServletRequest.getMethod()) || RequestMethod.PUT.name().equalsIgnoreCase(httpServletRequest.getMethod())
-                    || RequestMethod.DELETE.name().equalsIgnoreCase(httpServletRequest.getMethod())) {
-                Cookie[] cookies = httpServletRequest.getCookies();
-                return InterceptorUtil.cookieAuthentication(httpServletRequest, cookies, adminService);
-            } else {
-                return true;
-            }
         }
+
     }
 
 

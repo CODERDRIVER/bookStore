@@ -89,7 +89,7 @@ public class LoginHandler {
 
     @PostMapping("/login/librarian")
     @ResponseBody
-    public ResponseMessage login(@RequestBody Librarian librarian, HttpServletResponse response) throws UnsupportedEncodingException {
+    public ResponseMessage login(@RequestBody Librarian librarian, HttpServletResponse response) {
         String email = librarian.getEmail();
         String password = librarian.getPassword();
 
@@ -111,19 +111,19 @@ public class LoginHandler {
     }
 
     @ResponseBody
-    @GetMapping("/logout")
-    public ResponseMessage logout() {
-        Cookie token = request.getCookies()[0];
+    @DeleteMapping("/logout")
+    public ResponseMessage logout(@CookieValue(name = "token") Cookie token, HttpServletResponse response) {
         if (token == null) {
             throw new UserDefinedException(ResultEnum.NEED_LOGIN);
         } else {
-            token.setMaxAge(-1);
+            token.setMaxAge(0);
+            response.addCookie(token);
             return ResultUtil.successNoData(request.getRequestURL().toString());
         }
     }
 
     @GetMapping("/login/all")
-    public String defaultLogin(@CookieValue(value = "token") String token) throws Exception {
+    public String defaultLogin(@CookieValue(value = "token") String token) {
         Map<String, Claim> claims = JwtToken.verifyToken(token);
 
         String type = claims.get("type").asString();

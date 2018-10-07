@@ -1,6 +1,5 @@
 package com.lyears.projects.bookstore.config;
 
-import com.lyears.projects.bookstore.interceptor.AdminInterceptor;
 import com.lyears.projects.bookstore.interceptor.ModifyInterceptor;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ErrorPage;
@@ -25,10 +24,10 @@ import java.util.Locale;
 @Configuration
 public class ConfigurerAdapter extends WebMvcConfigurerAdapter {
 
-    @Bean
+    /*@Bean
     public HandlerInterceptor getAdminInterceptor() {
         return new AdminInterceptor();
-    }
+    }*/
 
     @Bean
     public HandlerInterceptor getModifyInterceptor() {
@@ -78,8 +77,8 @@ public class ConfigurerAdapter extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getAdminInterceptor()).addPathPatterns("/admin", "/admin.*");
-        registry.addInterceptor(getModifyInterceptor()).addPathPatterns("/**");
+        //registry.addInterceptor(getAdminInterceptor()).addPathPatterns("/admin", "/admin.*");
+        registry.addInterceptor(getModifyInterceptor()).addPathPatterns("/**").excludePathPatterns("/logout", "/login/**");
         super.addInterceptors(registry);
     }
 

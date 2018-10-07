@@ -32,7 +32,7 @@ public class InterceptorUtil {
             String token = cookies[0].getValue();
             Map<String, Claim> claims = JwtToken.verifyToken(token);
             //拿到管理员用户名
-            String adminType = "admin";
+            String adminType = "librarian";
             return loginAuthentication(httpServletRequest, claims, adminType,
                     adminService.findByEmail(claims.get("email").asString()) == null);
         }
