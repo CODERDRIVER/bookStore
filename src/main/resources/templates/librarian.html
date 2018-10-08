@@ -1,0 +1,191 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bibliosoft-Librarian</title>
+
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="icon" type="image/png" href="assets/i/bookicon2.png">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="assets/i/bookicon2.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="assets/i/bookicon2.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="assets/i/bookicon2.png">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+
+    <link rel="stylesheet" href="assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
+    <div class="am-container" style="max-width: unset">
+        <h1 class="am-topbar-brand">
+            <a href="#">Bibliosoft</a>
+        </h1>
+
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+        <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+            <div class="am-topbar-right">
+                <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
+            </div>
+            <div class="am-topbar-right">
+                <li class="am-dropdown am-dropdown-header" data-am-dropdown>
+                    <a id="l" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                        Service <span class="am-icon-caret-down"></span>
+                    </a>
+                    <ul class="am-dropdown-content">
+                        <li><a id="Borrow" href="#">Borrow</a></li>
+                        <li><a id="Return" href="#">Return</a></li>
+                    </ul>
+                </li>
+            </div>
+            <div class="am-topbar-right">
+                <li class="am-dropdown am-dropdown-header" data-am-dropdown>
+                    <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                        English <span class="am-icon-caret-down"></span>
+                    </a>
+                    <ul class="am-dropdown-content">
+                        <li class="am-dropdown-header">Language Setting</li>
+                        <li><a id="English" href="#">English</a></li>
+                        <li><a id="Chinese" href="#">中文</a></li>
+                    </ul>
+                </li>
+            </div>
+            <div class="am-topbar-right">
+                <button id="lib-icon" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><span class="am-icon-user-secret"> Mr.Librarian </span></button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="am-cf admin-main">
+    <div class="admin-content">
+        <div class="get-full" id="backGround">
+            <div class="am-g">
+                <div class="am-u-lg-12">
+                    <h1 class="get-title">Bibliosoft - Online Library </h1>
+                </div>
+            </div>
+
+            <p>
+                Online Library Management System
+            </p>
+
+            <p>
+            <div class="am-input-group am-input-group-primaray">
+                <input id="search-input" type="text" class="am-form-field"
+                       placeholder="Search Books by Name, BookType, Author etc.">
+                <span class="am-input-group-btn">
+            <button id="search-button" class="am-btn am-btn-primary" type="button"><span class="am-icon-search"></span></button>
+            </span>
+            </div>
+            </p>
+        </div>
+
+        <div id="bookPane" data-am-widget="list_news" class="am-list-news am-list-news-default">
+            <div class="am-list-news-hd am-cf">
+                <a href="#" onclick="return false">
+                    <h2>Search Results</h2>
+                    <span class="am-list-news-more am-fr">
+                        <button id="addNewBook" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-add"></span> Add</button>
+                    </span>
+                </a>
+            </div>
+            <div class="am-list-news-bd">
+                <ul class="am-list" id="bookList"></ul>
+                <ul class="am-pagination am-pagination-centered" id="bookPagination"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="am-modal am-modal-prompt" tabindex="-1" id="addNewBookPrompt">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd"><h4>Add New Book</h4></div>
+            <div class="am-modal-bd">
+                <form class="am-form am-form-horizontal">
+                    <div class="am-form-group">
+                        <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">Author:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text" id="doc-ipt-3">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-2" class="am-u-sm-2 am-form-label">Name:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text" id="doc-ipt-2" >
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-1" class="am-u-sm-2 am-form-label">Type:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text" id="doc-ipt-1" >
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-4" class="am-u-sm-2 am-form-label">BarCode:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="number" id="doc-ipt-4" >
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-5" class="am-u-sm-2 am-form-label">Inventory:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="number" id="doc-ipt-5" >
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="doc-ipt-6" class="am-u-sm-2 am-form-label">Price:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="number" id="doc-ipt-6" >
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
+                <span class="am-modal-btn" data-am-modal-confirm="">login</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+
+<!--[if lt IE 9]>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="assets/js/jquery-3.1.1.min.js"></script>
+<!--<![endif]-->
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/librarian.js"></script>
+</body>
+</html>

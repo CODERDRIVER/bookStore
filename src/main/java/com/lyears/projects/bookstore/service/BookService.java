@@ -33,4 +33,9 @@ public class BookService {
                 .findAllByAuthorContainingOrBookNameContainingOrBookTypeContaining(keyStr, keyStr, keyStr, pageable);
     }
 
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void save(Book book){
+        bookRepository.save(book);
+    }
+
 }

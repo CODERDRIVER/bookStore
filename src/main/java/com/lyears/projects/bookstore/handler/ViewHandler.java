@@ -40,7 +40,7 @@ public class ViewHandler {
                 .get("type").asString().equals(type)) {
             throw new ErrorPageException(ResultEnum.NO_RIGHT);
         }
-        return "librarian-index";
+        return "librarian";
     }
 
     @GetMapping("/404")

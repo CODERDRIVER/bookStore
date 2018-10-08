@@ -21,4 +21,9 @@ public class LibrarianService {
         return librarianRepository.getByEmail(email);
     }
 
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void save(Librarian librarian){
+        librarianRepository.save(librarian);
+    }
+
 }

@@ -38,8 +38,9 @@ public class DefinedExceptionHandler {
     @ExceptionHandler(value = ErrorPageException.class)
     public ModelAndView handle(ErrorPageException e) {
         ModelAndView mav = new ModelAndView("errorPage");
-        if (e.getCode() == -1) {
+        if (e.getCode() != 0) {
             mav.addObject("errorCode", -1);
+            mav.addObject("message", e.getMessage());
         }
         return mav;
     }

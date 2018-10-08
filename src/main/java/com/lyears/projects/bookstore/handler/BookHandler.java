@@ -6,9 +6,7 @@ import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -49,6 +47,13 @@ public class BookHandler {
         }
         return ResultUtil.success(avoidStackOverflowInReader(bookPage),
                 request.getRequestURL().toString());
+    }
+
+    @PostMapping("/book")
+    @ResponseBody
+    public ResponseMessage addNewBook(@RequestBody Book book){
+        bookService.save(book);
+        return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 
     /**

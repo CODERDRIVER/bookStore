@@ -68,6 +68,53 @@
         </div>
     </header>
 
+    <div class="am-modal am-modal-prompt" tabindex="-1" id="addAccountPrompt">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd"><h4 id="prompt-title"></h4></div>
+            <div class="am-modal-bd">
+                <form class="am-form am-form-horizontal">
+                    <div class="am-form-group">
+                        <label for="doc-email" class="am-u-sm-2 am-form-label">email:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="email" id="doc-email"
+                                   placeholder="Enter your email">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-userName" class="am-u-sm-2 am-form-label">name:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text" id="doc-userName"
+                                   placeholder="Enter your name">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-pwd" class="am-u-sm-2 am-form-label">password:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="password" id="doc-pwd"
+                                   placeholder="Enter your deposit">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group" id="input-deposit">
+                        <label for="doc-deposit" class="am-u-sm-2 am-form-label">deposit:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="number" id="doc-deposit"
+                                   placeholder="Enter your deposit">
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
+                <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
+            </div>
+        </div>
+    </div>
+
     <div class="admin-content">
         <div class="admin-content-body">
             <div class="am-cf am-padding am-padding-bottom-0">
@@ -82,9 +129,11 @@
                 <div class="am-u-sm-12 am-u-md-6">
                     <div class="am-btn-toolbar">
                         <div class="am-btn-group am-btn-group-xs">
-                            <button type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span> Add
+                            <button id="addReader" type="button" class="am-btn am-btn-default"><span
+                                    class="am-icon-plus"></span> Add Reader
                             </button>
-                            <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> Save
+                            <button id="addLibrarian" type="button" class="am-btn am-btn-default"><span
+                                    class="am-icon-plus"></span> Add Librarian
                             </button>
                         </div>
                     </div>
@@ -480,6 +529,7 @@
         <![endif]-->
         <script src="assets/js/amazeui.min.js"></script>
         <script src="assets/js/style.js"></script>
+        <script src="assets/js/admin.js"></script>
     </div>
 </div>
 </body>

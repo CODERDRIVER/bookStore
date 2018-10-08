@@ -1,73 +1,46 @@
-/*
-    author: fzm
-    date: 2018-9-25
- */
-
-var cookieUtil = $.AMUI.utils.cookie;
-
-//login function
-$(function () {
-    //如果已登录，切换到注销按钮
-    if (cookieUtil.get('token') != null) {
-        $('#log-out').css('display','block')
-        $('#sign-in').css('display','none')
-    }
-
-    $('#sign-in').on('click', function () {
-        if (cookieUtil.get('token') != null) {
-            window.location = "login/all"
-        } else {
-            $('#loginPrompt').modal({
-                relatedTarget: this,
-                onConfirm: function (e) {
-                    var data = e.data;
-                    var email = data[0];
-                    var password = data[1];
-                    var requestData = JSON.stringify({
-                        "email": email,
-                        "password": password
-                    });
-                    var type = $(':input[name="loginType"]:checked').val();
-
-                    if (type === "admin") {
-                        login(requestData, 'login/admin', "admin")
-                    } else if (type === "librarian") {
-                        login(requestData, 'login/librarian', 'librarian')
-                    } else if (type === "reader") {
-                        login(requestData, 'login/reader', '/')
-                    }
-                },
-                onCancel: function (e) {
-
-                }
+$('#addNewBook').on('click', function () {
+    $('#addNewBookPrompt').modal({
+        relatedTarget: this,
+        onConfirm: function (e) {
+            var data = e.data;
+            var author = data[0];
+            var name = data[1];
+            var type = data[2];
+            var barCode = data[3];
+            var inventory = data[4];
+            var price = data[5];
+            var requestData = JSON.stringify({
+                "bookName": name,
+                "price": price,
+                "inventory": inventory,
+                "author": author,
+                "bookType": type,
+                "barCode": barCode
             });
+
+            $.ajax({
+                type: 'post',
+                url: 'book',
+                data: requestData,
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success: function (e) {
+                    console.log(e);
+                    if (e.code === 0) {
+                        loadBookPage(1, 10, $('#search-input').val())
+                    } else {
+                        alert(e.message)
+                    }
+                }
+            })
+        },
+        onCancel: function (e) {
+
         }
     });
+
 });
 
-/**
- * 模态登录窗口
- * @param data  登录数据
- * @param url   登录url接口
- * @param href  跳转页面
- */
-function login(data, url, href) {
-    $.ajax({
-        type: 'post',
-        url: url,
-        data: data,
-        dataType: "json",
-        contentType: "application/json;charset=UTF-8",
-        success: function (e) {
-            console.log(e);
-            if (e.code === 0) {
-                window.location.href = href
-            } else {
-                alert(e.message)
-            }
-        }
-    })
-}
 
 /**
  * 登出按钮
@@ -84,7 +57,6 @@ $('#log-out').click(function () {
         }
     })
 })
-
 /**
  * 搜索框点击事件
  */
@@ -104,10 +76,9 @@ function searchFun() {
     $('#backGround').removeClass("get-full").addClass("get-small")
     var keyStr = $('#search-input').val()
     //加载分页结果
-    loadBookPage(1, 5, keyStr)
+    loadBookPage(1, 10, keyStr)
     $('#bookPane').css("display", "block")
 }
-
 
 /**
  * 分页数据
@@ -142,9 +113,9 @@ function loadBookPage(pageNo, pageSize, keyStr) {
                     '            </div>\n' +
                     '        </li>')
             } else {
-                $('#morePage').unbind("click").bind("click", function () {
-                    loadBookPage(1, 10, $('#search-input').val())
-                });
+                // $('#morePage').unbind("click").bind("click", function () {
+                //     loadBookPage(1, 10, $('#search-input').val())
+                // });
                 for (var i = 0; i < data.data.numberOfElements; i++) {
                     showBookInfo(data, i)
                 }
@@ -179,8 +150,6 @@ function loadBookPage(pageNo, pageSize, keyStr) {
             '                <p class="book-info-p am-text-middle am-text-sm">\n' +
             '                    Remain:\n' +
             '                    <em>' + inventory + '</em>\n' +
-            '                <button class="am-btn am-btn-default am-btn-xs am-text-secondary am-align-right" type="button">\n' +
-            '                <span class="am-icon-clock-o"></span> Reserve</button>\n' +
             '                </p>\n' +
             '                <p class="book-info-p am-text-middle am-text-xs">' + bookType + '</p>\n' +
             '                <p class="book-info-p am-text-middle am-text-xs">' + barCode + '</p>\n' +
@@ -220,5 +189,3 @@ function loadBookPage(pageNo, pageSize, keyStr) {
         })
     }
 }
-
-

@@ -1,6 +1,7 @@
 package com.lyears.projects.bookstore.interceptor;
 
 import com.lyears.projects.bookstore.service.AdminService;
+import com.lyears.projects.bookstore.service.LibrarianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ModifyInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private AdminService adminService;
+    private LibrarianService librarianService;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
@@ -28,7 +29,7 @@ public class ModifyInterceptor implements HandlerInterceptor {
         if (RequestMethod.POST.name().equalsIgnoreCase(httpServletRequest.getMethod()) || RequestMethod.PUT.name().equalsIgnoreCase(httpServletRequest.getMethod())
                 || RequestMethod.DELETE.name().equalsIgnoreCase(httpServletRequest.getMethod())) {
             Cookie[] cookies = httpServletRequest.getCookies();
-            return InterceptorUtil.cookieAuthentication(httpServletRequest, cookies, adminService);
+            return InterceptorUtil.cookieAuthentication(httpServletRequest, cookies, librarianService);
         } else {
             return true;
         }
