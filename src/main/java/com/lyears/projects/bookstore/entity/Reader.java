@@ -1,6 +1,7 @@
 package com.lyears.projects.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name = "reader")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
 public class Reader {
 
     @Id
@@ -21,9 +23,12 @@ public class Reader {
     @Column(unique = true)
     private String email;
     private String userName;
+    @Column(columnDefinition = "varchar(25) default 12345678")
     private String password;
-    private Integer borrowNum = 3;
-    private Double deposit;
+    private Integer borrowNum = 0;
+    private String phoneNumber;    //电话号码
+    private Double paidFine; //已经交过的罚金
+    private Double unPaidFine; //未交过的罚金
     @OneToMany(mappedBy = "reader", targetEntity = Borrow.class)
     private Set<Borrow> borrows = new HashSet<>();
     @OneToMany(mappedBy = "reader", targetEntity = Order.class)
@@ -36,73 +41,7 @@ public class Reader {
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", borrowNum=" + borrowNum +
-                ", deposit=" + deposit +
                 ", borrows=" + borrows +
                 '}';
     }
-
-    public Integer getReaderId() {
-        return readerId;
-    }
-
-    public void setReaderId(Integer readerId) {
-        this.readerId = readerId;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Integer getBorrowNum() {
-        return borrowNum;
-    }
-
-    public void setBorrowNum(Integer borrowNum) {
-        this.borrowNum = borrowNum;
-    }
-
-    public Double getDeposit() {
-        return deposit;
-    }
-
-    public void setDeposit(Double deposit) {
-        this.deposit = deposit;
-    }
-
-    public Set<Borrow> getBorrows() {
-        return borrows;
-    }
-
-    public void setBorrows(Set<Borrow> borrows) {
-        this.borrows = borrows;
-    }
-
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
-    }
-
 }

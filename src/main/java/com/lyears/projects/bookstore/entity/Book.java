@@ -21,17 +21,23 @@ public class Book {
     @Column(unique = true)
     private String bookName;
     private Double price;
-    private Integer inventory;
+    private Integer inventory;  //库存
+    private String location;    //位置 楼层+书架+区号
     private String author;
 
     private String bookType;
     private String barCode;
 
+    private  Integer status;    //用来表示书籍的状态  正常  借出  预约中
 
-    @OneToMany(mappedBy = "book", targetEntity = Borrow.class)
+    private String bookUrl; //图片url
+    private String description; //描述
+
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     private Set<Borrow> borrows = new HashSet<>();
 
-    @OneToMany(mappedBy = "book", targetEntity = Order.class)
+    @OneToMany(mappedBy = "book",fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     private Set<Order> orders = new HashSet<>();
 
     public Integer getBookId() {
@@ -104,5 +110,37 @@ public class Book {
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getBookUrl() {
+        return bookUrl;
+    }
+
+    public void setBookUrl(String bookUrl) {
+        this.bookUrl = bookUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

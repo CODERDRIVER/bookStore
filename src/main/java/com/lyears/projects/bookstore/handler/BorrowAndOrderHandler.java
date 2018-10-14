@@ -59,6 +59,11 @@ public class BorrowAndOrderHandler {
                 request.getRequestURL().toString());
     }
 
+    /**
+     * 查看所有读者的借阅信息
+     * @param readerName
+     * @return
+     */
     @GetMapping("/borrows/readerName/{readerName}")
     @ResponseBody
     public ResponseMessage getBorrowsByReader(@PathVariable(name = "readerName")String readerName) {

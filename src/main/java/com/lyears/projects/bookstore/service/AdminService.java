@@ -4,6 +4,7 @@ import com.lyears.projects.bookstore.entity.Administrator;
 import com.lyears.projects.bookstore.entity.Librarian;
 import com.lyears.projects.bookstore.entity.Reader;
 import com.lyears.projects.bookstore.repository.AdminRepository;
+import com.lyears.projects.bookstore.repository.BookRepository;
 import com.lyears.projects.bookstore.repository.LibrarianRepository;
 import com.lyears.projects.bookstore.repository.ReaderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class AdminService {
     private ReaderRepository readerRepository;
     @Autowired
     private LibrarianRepository librarianRepository;
+    @Autowired
+    private BookRepository bookRepository;
 
     @Transactional(readOnly = true, rollbackFor = RuntimeException.class)
     public Administrator findByEmail(String email) {
@@ -47,5 +50,41 @@ public class AdminService {
                 librarian -> accountMap.put("librarian", librarian)
         );
         return accountMap;
+    }
+
+    /**
+     * 更改所有的书籍罚金
+     */
+    public int updateBookFine(double fine)
+    {
+        int status = bookRepository.updateBookFine(fine);
+        return status;
+    }
+
+    /**
+     * 更改所有书籍的归还期限
+     */
+    public int updateBookReturnDate(int days)
+    {
+        return bookRepository.updateBookReturnDate(days);
+    }
+
+    /**
+     * 更爱所有读者创建账户时需要缴纳的保证金
+     */
+    public int updateReaderDeposit(double deposit)
+    {
+        return readerRepository.updateReaderDeposit(deposit);
+    }
+
+    /**
+     * 根据邮箱更新密码
+     * @param email
+     * @param password
+     * @return
+     */
+    public int updatePasswordByEmail(String email,String password)
+    {
+        return  adminRepository.updatePasswordByEmail(email, password);
     }
 }

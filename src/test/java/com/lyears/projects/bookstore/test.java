@@ -1,9 +1,14 @@
 package com.lyears.projects.bookstore;
 
+import com.lyears.projects.bookstore.util.BarcodeUtil;
+import com.lyears.projects.bookstore.util.DateUtil;
+import org.junit.Test;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Date;
 
 /**
  * @author fzm
@@ -34,5 +39,20 @@ public class test {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Test
+    public void test() {
+        Date date = new Date();
+        System.out.println(date);
+        Date beginDayOfMonth = DateUtil.getBeginDayOfMonth();
+        System.out.println(beginDayOfMonth);
+    }
+
+    @Test
+    public void testBarcode()
+    {
+        String msg = "123456789";
+        BarcodeUtil.generateFile(msg,"test.png");
     }
 }

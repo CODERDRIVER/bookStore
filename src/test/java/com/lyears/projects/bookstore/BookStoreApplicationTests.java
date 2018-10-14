@@ -15,6 +15,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
@@ -38,16 +40,29 @@ public class BookStoreApplicationTests {
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
+
+
     @Test
     public void contextLoads() {
     }
 
+//    @Test
+    public void testMail()
+    {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("1187697635@qq.com");
+        message.setTo("2454779230@qq.com");
+        message.setSubject("主题：密码修改");
+        message.setText("你的密码为123456");
+        javaMailSender.send(message);
+    }
     @Test
     public void testSave() {
         Reader reader = new Reader();
         reader.setEmail("fan@qq.com");
         reader.setPassword("123456");
-        reader.setDeposit(300d);
         reader.setUserName("fan");
         readerRepository.save(reader);
         Book book = new Book();

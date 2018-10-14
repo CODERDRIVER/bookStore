@@ -4,6 +4,8 @@ import com.lyears.projects.bookstore.entity.Reader;
 import com.lyears.projects.bookstore.exception.ErrorPageException;
 import com.lyears.projects.bookstore.exception.UserDefinedException;
 import com.lyears.projects.bookstore.jwt.JwtToken;
+import com.lyears.projects.bookstore.service.ConstantsService;
+import com.lyears.projects.bookstore.service.IncomeService;
 import com.lyears.projects.bookstore.service.ReaderService;
 import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultEnum;
@@ -26,6 +28,12 @@ public class ReaderHandler {
 
     @Autowired
     private ReaderService readerService;
+
+    @Autowired
+    private IncomeService incomeService;
+
+    @Autowired
+    private ConstantsService constantsService;
 
     @Autowired
     private HttpServletRequest request;
@@ -55,7 +63,13 @@ public class ReaderHandler {
                 .get("type").asString().equals(type)) {
             throw new UserDefinedException(ResultEnum.NO_RIGHT);
         }
+        /**
+         * 图书馆输入income表，增加deposit元
+         */
         readerService.save(reader);
+        // 查询当前的保证金是多少元
+        double deposit = constantsService.getDeposit();
+        incomeService.addIncome(deposit);
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 

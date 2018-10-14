@@ -87,6 +87,12 @@ public class LoginHandler {
         }
     }
 
+    /**
+     * 超级管理员登录
+     * @param librarian
+     * @param response
+     * @return
+     */
     @PostMapping("/login/librarian")
     @ResponseBody
     public ResponseMessage login(@RequestBody Librarian librarian, HttpServletResponse response) {

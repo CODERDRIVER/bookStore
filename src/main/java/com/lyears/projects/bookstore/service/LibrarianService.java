@@ -26,4 +26,13 @@ public class LibrarianService {
         librarianRepository.save(librarian);
     }
 
+    /**
+     * 根据图书馆管理员邮箱删除该用户
+     */
+    public void deleteByEmail(String email)
+    {
+        Librarian librarian = new Librarian();
+        librarian.setEmail(email);
+        librarianRepository.delete(librarian);
+    }
 }

@@ -27,7 +27,7 @@ public class Order {
     @JoinColumn(name = "reader_id")
     private Reader reader;
 
-    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
     private Book book;
 

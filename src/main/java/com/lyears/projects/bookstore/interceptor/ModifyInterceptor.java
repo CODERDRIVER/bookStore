@@ -29,6 +29,7 @@ public class ModifyInterceptor implements HandlerInterceptor {
         if (RequestMethod.POST.name().equalsIgnoreCase(httpServletRequest.getMethod()) || RequestMethod.PUT.name().equalsIgnoreCase(httpServletRequest.getMethod())
                 || RequestMethod.DELETE.name().equalsIgnoreCase(httpServletRequest.getMethod())) {
             Cookie[] cookies = httpServletRequest.getCookies();
+            System.out.println(cookies);
             return InterceptorUtil.cookieAuthentication(httpServletRequest, cookies, librarianService);
         } else {
             return true;

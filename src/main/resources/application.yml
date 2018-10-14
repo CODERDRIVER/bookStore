@@ -23,6 +23,20 @@ spring:
   thymeleaf:
     cache: false
     mode: LEGACYHTML5
+  mail:
+    host: smtp.qq.com
+    username: 1187697635@qq.com
+    password: omzpbrwtziqwjabb
+    properties:
+      mail:
+        smtp:
+          auth:true
+ftp:
+  address: 119.23.75.180
+  port: 21
+  username: ftptest
+  password: ftptest
+  basepath: /home/ftptest/templates
 
 
 
