@@ -6,6 +6,7 @@ import com.lyears.projects.bookstore.util.ResultEnum;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.Cookie;
 
@@ -57,6 +58,15 @@ public class ViewHandler {
             String type = JwtToken.verifyToken(token.getValue()).get("type").asString();
             return type;
         }
+    }
+
+    /**
+     * 管理员页面跳转
+     */
+    @GetMapping("/librarian/pages/{page}")
+    public String librarianPage(@PathVariable("page") String page)
+    {
+        return page;
     }
 
 

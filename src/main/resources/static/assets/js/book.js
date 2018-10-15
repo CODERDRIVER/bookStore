@@ -72,20 +72,23 @@ $('#addBook').click(function () {
 var message = new Array();
 $(document).ready(function(){ 				
          $.ajax({
-					type:'POST',
+					type:'GET',
 					dataType:'json',
-					url:'/info/book',
+					url:'/books',
 					contentType:'application/json;charset=UTF-8',
 					async: false,
-					
 					success:function(data){//返回结果
-  
-						for(var i=0; i<data.length;i++){
+                        //{"content":[{"bookId":1,"bookName":"四级词汇","price":999.0,"inventory":3,"location":"120201","author":"卢根","bookType":"英语类","barCode":"12345678","status":1,"bookUrl":"www.baidu.com","description":"ojsjfoiajosdifjoasjfo"}]
+						var books = []
+						books =data.data.content
+						console.log(data.data.content);
+						for(var i=0; i<books.length;i++){
 							
-							message.push(new book(data[i].bookId,data[i].bookImg, data[i].author,
-								data[i].barcode,data[i].bookName,data[i].bookType, data[i].price,
-								data[i].description, data[i].location));
+							message.push(new book(books[i].bookId,books[i].bookUrl, books[i].author,
+                                books[i].barCode,books[i].bookName,books[i].bookType, books[i].price,
+                                books[i].description, books[i].location));
 							}
+                        loadData();
 							
 					} 
 					
@@ -125,30 +128,30 @@ var numberRowsInTable = theTable.rows.length;
 var numRows = getId("spanTotalNumRows");
 // 书籍信息
 var message = new Array();
-message.push(new book(11503080101, "bookicon2.png","齐桓公", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
-message.push(new book(11503080102,"bookicon2.png", "鲍叔牙", "12345678", "软件工程", "技术类", 3,"讲述相关技术", 21));
-message.push(new book(11503080103, "bookicon2.png","烛之武", "12345678", "软件工程", "技术类", 4,"讲述相关技术", 21));
-message.push(new book(11503080104, "bookicon2.png","孙膑", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 20));
-message.push(new book(11503080105,"bookicon2.png", "赵括", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 20));
-message.push(new book(11503080106,"bookicon2.png", "韩非", "12345678", "软件工程", "技术类", 2, "讲述相关技术",21));
-message.push(new book(11503080107, "../assets/i/bookicon2.png","孟子", "12345678", "软件工程", "技术类", 3, "讲述相关技术",22));
-message.push(new book(11503080108, "../assets/i/bookicon2.png","荀子", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
-message.push(new book(11503080109, "../assets/i/bookicon2.png","吕不韦", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 22));
-message.push(new book(11503080110, "../assets/i/bookicon2.png","吴广", "12345678", "软件工程", "技术类", 2, "讲述相关技术",21));
-message.push(new book(11503080111, "../assets/i/bookicon2.png","樊哙", "12345678", "软件工程", "技术类", 2, "讲述相关技术",21));
-message.push(new book(11503080112, "../assets/i/bookicon2.png","嫪毐", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
-message.push(new book(11503080113,"../assets/i/bookicon2.png", "项庄", "12345678", "软件工程", "技术类", 4,"讲述相关技术", 19));
-message.push(new book(11503080114,"../assets/i/bookicon2.png", "刘邦", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
-message.push(new book(11503080115, "../assets/i/bookicon2.png","袁术", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
-message.push(new book(11503080116, "../assets/i/bookicon2.png","吕禄", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 19));
-message.push(new book(11503080117, "../assets/i/bookicon2.png","孙权", "12345678", "软件工程", "技术类", 3,"讲述相关技术", 21));
-message.push(new book(11503080118, "../assets/i/bookicon2.png","曹操", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
-message.push(new book(11503080119,"../assets/i/bookicon2.png", "刘备", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
-message.push(new book(11503080120,"../assets/i/bookicon2.png", "黄忠", "12345678", "软件工程", "技术类", 1,"讲述相关技术", 21));
-message.push(new book(11503080121,"../assets/i/bookicon2.png", "马超", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 19));
-message.push(new book(11503080122,"../assets/i/bookicon2.png", "魏延", "12345678", "软件工程", "技术类", 1,"讲述相关技术", 21));
-message.push(new book(11503080123, "../assets/i/bookicon2.png","法正", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
-message.push(new book(11503080124, "../assets/i/bookicon2.png","庞统", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
+// message.push(new book(11503080101, "bookicon2.png","齐桓公", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
+// message.push(new book(11503080102,"bookicon2.png", "鲍叔牙", "12345678", "软件工程", "技术类", 3,"讲述相关技术", 21));
+// message.push(new book(11503080103, "bookicon2.png","烛之武", "12345678", "软件工程", "技术类", 4,"讲述相关技术", 21));
+// message.push(new book(11503080104, "bookicon2.png","孙膑", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 20));
+// message.push(new book(11503080105,"bookicon2.png", "赵括", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 20));
+// message.push(new book(11503080106,"bookicon2.png", "韩非", "12345678", "软件工程", "技术类", 2, "讲述相关技术",21));
+// message.push(new book(11503080107, "../assets/i/bookicon2.png","孟子", "12345678", "软件工程", "技术类", 3, "讲述相关技术",22));
+// message.push(new book(11503080108, "../assets/i/bookicon2.png","荀子", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
+// message.push(new book(11503080109, "../assets/i/bookicon2.png","吕不韦", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 22));
+// message.push(new book(11503080110, "../assets/i/bookicon2.png","吴广", "12345678", "软件工程", "技术类", 2, "讲述相关技术",21));
+// message.push(new book(11503080111, "../assets/i/bookicon2.png","樊哙", "12345678", "软件工程", "技术类", 2, "讲述相关技术",21));
+// message.push(new book(11503080112, "../assets/i/bookicon2.png","嫪毐", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
+// message.push(new book(11503080113,"../assets/i/bookicon2.png", "项庄", "12345678", "软件工程", "技术类", 4,"讲述相关技术", 19));
+// message.push(new book(11503080114,"../assets/i/bookicon2.png", "刘邦", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
+// message.push(new book(11503080115, "../assets/i/bookicon2.png","袁术", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
+// message.push(new book(11503080116, "../assets/i/bookicon2.png","吕禄", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 19));
+// message.push(new book(11503080117, "../assets/i/bookicon2.png","孙权", "12345678", "软件工程", "技术类", 3,"讲述相关技术", 21));
+// message.push(new book(11503080118, "../assets/i/bookicon2.png","曹操", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
+// message.push(new book(11503080119,"../assets/i/bookicon2.png", "刘备", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
+// message.push(new book(11503080120,"../assets/i/bookicon2.png", "黄忠", "12345678", "软件工程", "技术类", 1,"讲述相关技术", 21));
+// message.push(new book(11503080121,"../assets/i/bookicon2.png", "马超", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 19));
+// message.push(new book(11503080122,"../assets/i/bookicon2.png", "魏延", "12345678", "软件工程", "技术类", 1,"讲述相关技术", 21));
+// message.push(new book(11503080123, "../assets/i/bookicon2.png","法正", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
+// message.push(new book(11503080124, "../assets/i/bookicon2.png","庞统", "12345678", "软件工程", "技术类", 2,"讲述相关技术", 21));
 
 /* 显示增加窗体 */
 var showHide = function(obj) {
@@ -206,7 +209,7 @@ var changeColor = function() {
 	}
 }
 
-loadData();
+
 
 /* 加载数据 */
 function loadData() {
@@ -238,6 +241,7 @@ function loadData() {
 
 		var checkBtn = createObj("input");
 		checkBtn.type = "checkbox";
+		checkBtn.value = bookId;
 		// 将复选框添加到第一列；
 		checkTd.appendChild(checkBtn);
 		// 将获得的值添加到创建的指定Td中；
@@ -455,13 +459,14 @@ var delSel = function() {
 				}
 			}
 		}
-
+		var checkList = new Array();
 		for (var i = inputs.length - 1; i >= 0; i--) {
 			// 过滤出checkbox类型
 			if (inputs[i].type == "checkbox") {
 				var input = inputs[i];
 				// 找出checkbox的所选择的行
 				if (input.checked) {
+					checkList.push(input.value);
 					// 删除已选择的行
 					tbody.removeChild(input.parentNode.parentNode);
 					// table长度减一
@@ -469,7 +474,22 @@ var delSel = function() {
 				}
 			}
 		}
-		numRows.innerHTML = numberRowsInTable;
+
+        $.ajax({
+            type: "DELETE",
+            url: "/book",
+			data:{
+                "bookIds":checkedList.join(",")
+			},
+            success: function(data) {
+                location.reload();
+            },
+            error:function(data){
+                art.dialog.tips('删除失败!');
+            }
+        });
+
+        numRows.innerHTML = numberRowsInTable;
 		var rows = tbody.rows.length;
 		for (var i = 0; i < rows; i++) {
 			var tr = tbody.rows[i];

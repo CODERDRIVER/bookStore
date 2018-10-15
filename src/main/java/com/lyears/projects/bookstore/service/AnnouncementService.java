@@ -5,6 +5,8 @@ import com.lyears.projects.bookstore.repository.AnnouncementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Description
  * @Author: liuXuyang
@@ -18,6 +20,16 @@ public class AnnouncementService {
 
     @Autowired
     private AnnouncementRepository announcementRepository;
+
+
+    /**
+     *  获得所有的公告列表
+     */
+    public List<Announcement> getAllAnnouncement()
+    {
+        return announcementRepository.findAll();
+    }
+
     /**
      * 增加一条公告
      * @param announcement

@@ -107,6 +107,7 @@ public class LoginHandler {
                 jwtTokenCookie.setMaxAge(60 * 60 * 12);
                 jwtTokenCookie.setPath("/");
                 response.addCookie(jwtTokenCookie);
+                response.addCookie(new Cookie("librarianId",one.getId()+""));
                 return ResultUtil.successNoData(request.getRequestURL().toString());
             } else {
                 throw new UserDefinedException(ResultEnum.PASSWORD_ERROR);

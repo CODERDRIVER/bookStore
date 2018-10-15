@@ -2,8 +2,10 @@ package com.lyears.projects.bookstore.repository;
 
 import com.lyears.projects.bookstore.entity.Reader;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author fzm
@@ -16,7 +18,9 @@ public interface ReaderRepository extends JpaRepository<Reader,Integer> {
     Reader findByEmail(String email);
 
     //设置读者创建账户时所要缴纳的保证金
+    @Modifying
     @Query(nativeQuery = true,value = "UPDATE constants as c set c.deposit = :deposit")
+    @Transactional
     int updateReaderDeposit(@Param("deposit")double deposit);
 
 

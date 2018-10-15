@@ -37,23 +37,26 @@ $('#addReader').click(function () {
         }
     })
 });
-// 获取公告列表
+// 获取reader 列表
 var readerlist = new Array();
 $(document).ready(function(){ 				
     $.ajax({
-            type:'POST',
+            type:'GET',
             dataType:'json',
-            url:'/reader',
+            url:'/readers',
             contentType:'application/json;charset=UTF-8',
             async: false,
             
             success:function(data){//返回结果
-
-                for(var i=0; i<data.length;i++){
+				readers = [];
+				readers = data.data;
+				console.log(readers);
+                for(var i=0; i<readers.length;i++){
                     
-                    readerlist.push(new reader(data[i].readerId,data[i].username,data[i].email,data[i].phoneNumber));
+                    readerlist.push(new reader(readers[i].readerId,readers[i].userName,readers[i].email,readers[i].phoneNumber));
                     }
-                    
+                loadData();
+
             } 
             
         });	
@@ -92,18 +95,18 @@ var numberRowsInTable = theTable.rows.length;
 // 数据条数
 var numRows = getId("spanTotalNumRows");
 
-readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
-readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
-readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
-readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
-readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
-readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
-readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
-readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
-readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
-readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
-readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
-readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
+// readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
+// readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
+// readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
+// readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
+// readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
+// readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
+// readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
+// readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
+// readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
+// readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
+// readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
+// readerlist.push(new reader("123456", "赵云","2454779230@qq.com","18293884567"));
 
 
 
@@ -164,7 +167,6 @@ var changeColor = function() {
 	}
 }
 
-loadData();
 
 /* 加载数据 */
 function loadData() {

@@ -46,10 +46,8 @@ $('#changeFine').click(function () {
         relatedTarget: this,
 
         onConfirm: function (e) {
-            var data = e.data;
-            var fine = data[0];
             var requestData = {
-                "fine": fine,
+                "fine": e.data,
             };
             addAccount(requestData, '/admin/book/fine')
         },
@@ -63,10 +61,8 @@ $('#changeReturnperiod').click(function () {
         relatedTarget: this,
 
         onConfirm: function (e) {
-            var data = e.data;
-            var returnPeriod = data[0];
             var requestData = {
-                "days": returnPeriod,
+                "days": e.data+"",
             };
             addAccount(requestData, '/admin/book/returnDate')
         },
@@ -80,12 +76,10 @@ $('#changeDeposit').click(function () {
         relatedTarget: this,
 
         onConfirm: function (e) {
-            var data = e.data;
-            var deposit = data[0];
-            var requestData = JSON.stringify({
-                "deposit": deposit,
-            });
-            addAccount(requestData, 'change/deposit')
+            var requestData = {
+                "deposit": e.data+"",
+            };
+            addAccount(requestData, '/admin/reader/deposit')
         },
         onCancel: function (e) {
         }

@@ -68,4 +68,14 @@ public class BookService {
     {
         return bookRepository.updateBookPositionById(id,location);
     }
+
+
+    /**
+     *  根据id 删除书籍
+     */
+    public void deleteBookById(int id)
+    {
+        bookRepository.delete(id);
+    }
+
 }

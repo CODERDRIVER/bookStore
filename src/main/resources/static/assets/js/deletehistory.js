@@ -1,21 +1,24 @@
-// 获取公告列表
+// 获取删除记录列表
 var message = new Array();
 $(document).ready(function(){ 				
          $.ajax({
-					type:'POST',
+					type:'GET',
 					dataType:'json',
-					url:'/info/deleteRecord',
+					url:'/book/deleteRecords',
 					contentType:'application/json;charset=UTF-8',
 					async: false,
 					
 					success:function(data){//返回结果
-  
-						for(var i=0; i<data.length;i++){
+						//{"id":1,"bookId":1,"librarainId":6,"deleteDate":1539601284000}
+						deleteRecords = []
+						deleteRecords = data.data;
+						for(var i=0; i<deleteRecords.length;i++){
 							
-							message.push(new deleteRecord(data[i].bookId,data[i].deleteDate,data[i].librarainId));
+							message.push(new deleteRecord(deleteRecords[i].bookId,deleteRecords[i].deleteDate,deleteRecords[i].librarainId));
 							}
-							
-					} 
+                        loadData();
+
+                    }
 
 					
 				});	
@@ -54,20 +57,20 @@ var numberRowsInTable = theTable.rows.length;
 var numRows = getId("spanTotalNumRows");
 // 公告信息
 var message = new Array();
-message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
-message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
-message.push(new deleteRecord("123456", "2018-08-13","libarainID1"));
-message.push(new deleteRecord("123456", "2018-08-13","libarainID1"));
-message.push(new deleteRecord("123456", "2018-08-13","libarainID1"));
-message.push(new deleteRecord("123456", "2018-08-13","libarainID1"));
-message.push(new deleteRecord("123456", "2018-08-13","libarainID1"));
-message.push(new deleteRecord("123456", "2018-08-13","libarainID1"));
-message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
-message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
-message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
-message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
-message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
-message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
+// message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
+// message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
+// message.push(new deleteRecord("123456", "2018-08-13","libarainID1"));
+// message.push(new deleteRecord("123456", "2018-08-13","libarainID1"));
+// message.push(new deleteRecord("123456", "2018-08-13","libarainID1"));
+// message.push(new deleteRecord("123456", "2018-08-13","libarainID1"));
+// message.push(new deleteRecord("123456", "2018-08-13","libarainID1"));
+// message.push(new deleteRecord("123456", "2018-08-13","libarainID1"));
+// message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
+// message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
+// message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
+// message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
+// message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
+// message.push(new deleteRecord("123456", "2018-10-13","libarainID1"));
 
 /* 显示增加窗体 */
 var showHide = function(obj) {
@@ -118,7 +121,6 @@ var changeColor = function() {
 	}
 }
 
-loadData();
 
 /* 加载数据 */
 function loadData() {

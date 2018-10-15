@@ -10,12 +10,14 @@ import com.lyears.projects.bookstore.service.*;
 import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultEnum;
 import com.lyears.projects.bookstore.util.ResultUtil;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,6 +44,9 @@ public class LibrarianHandler {
 
     @Autowired
     private IncomeService incomeService;
+
+    @Autowired
+    private BookDeleteRecordService bookDeleteRecordService;
 
     /**
      * 注册图书管理员
@@ -103,6 +108,33 @@ public class LibrarianHandler {
     }
 
     /**
+     *  图书管理员能够删除图书
+     * @param bookIds
+     * @return
+     */
+    @ResponseBody
+    @DeleteMapping("/book")
+    public ResponseMessage deleteBook(@RequestBody String bookIds,@CookieValue("librarianId")Cookie cookie)
+    {
+        bookIds = bookIds.split("=")[1];
+        for (String bookId:bookIds.split(","))
+        {
+            bookService.deleteBookById(Integer.parseInt(bookId));
+            /**
+             *  将删除记录添加到数据库中
+             *
+             */
+            BookDeleteRecord bookDeleteRecord = new BookDeleteRecord();
+            bookDeleteRecord.setBookId(Integer.parseInt(bookId));
+            bookDeleteRecord.setDeleteDate(new Date());
+            bookDeleteRecord.setLibrarainId(Integer.parseInt(cookie.getValue()));
+            bookDeleteRecordService.saveRecord(bookDeleteRecord);
+        }
+        return ResultUtil.successNoData(request.getRequestURL().toString());
+
+    }
+
+    /**
      * 添加书籍类别
      *
      */
@@ -150,6 +182,8 @@ public class LibrarianHandler {
         }
         return null;
     }
+
+
 
 
 }

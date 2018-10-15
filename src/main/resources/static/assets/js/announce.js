@@ -35,20 +35,21 @@ $('#addAnnouncement').click(function () {
 var message = new Array();
 $(document).ready(function(){ 				
          $.ajax({
-					type:'POST',
+					type:'GET',
 					dataType:'json',
-					url:'/info/announcement',
+					url:'/announcements',
 					contentType:'application/json;charset=UTF-8',
 					async: false,
 					
 					success:function(data){//返回结果
-  
-						for(var i=0; i<data.length;i++){
+  						announcements = data.data;
+						for(var i=0; i<announcements.length;i++){
 							
-							message.push(new announcement(data[i].title,data[i].content));
+							message.push(new announcement(announcements[i].title,announcements[i].content));
 							}
-							
-					} 
+                        loadData();
+
+                    }
 
 					
 				});	
@@ -87,20 +88,20 @@ var numberRowsInTable = theTable.rows.length;
 var numRows = getId("spanTotalNumRows");
 // 公告信息
 var message = new Array();
-message.push(new announcement("第一条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
-message.push(new announcement("第二条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
-message.push(new announcement("第三条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
-message.push(new announcement("第四条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
-message.push(new announcement("第五条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
-message.push(new announcement("第六条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
-message.push(new announcement("第七条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
-message.push(new announcement("第八条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
-message.push(new announcement("第九条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
-message.push(new announcement("第十条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
-message.push(new announcement("第十一条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
-message.push(new announcement("第十二条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
-message.push(new announcement("第十三条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
-message.push(new announcement("第十四条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
+// message.push(new announcement("第一条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
+// message.push(new announcement("第二条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
+// message.push(new announcement("第三条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
+// message.push(new announcement("第四条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
+// message.push(new announcement("第五条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
+// message.push(new announcement("第六条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
+// message.push(new announcement("第七条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
+// message.push(new announcement("第八条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
+// message.push(new announcement("第九条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
+// message.push(new announcement("第十条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
+// message.push(new announcement("第十一条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
+// message.push(new announcement("第十二条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
+// message.push(new announcement("第十三条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
+// message.push(new announcement("第十四条假装的公告", "最近，图书馆有新的一批关于java技术的书籍上新！"));
 
 /* 显示增加窗体 */
 var showHide = function(obj) {
@@ -150,7 +151,6 @@ var changeColor = function() {
 	}
 }
 
-loadData();
 
 /* 加载数据 */
 function loadData() {

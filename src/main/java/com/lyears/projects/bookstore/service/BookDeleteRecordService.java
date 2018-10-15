@@ -28,4 +28,13 @@ public class BookDeleteRecordService {
         List<BookDeleteRecord> all = recordRepository.findAll();
         return all;
     }
+
+
+    /**
+     *  保存一条记录
+     */
+    public void saveRecord(BookDeleteRecord bookDeleteRecord)
+    {
+        recordRepository.save(bookDeleteRecord);
+    }
 }

@@ -1,5 +1,6 @@
 package com.lyears.projects.bookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,5 +23,7 @@ public class BookDeleteRecord {
     private Integer id;
     private Integer bookId;     //所删除书的id
     private Integer librarainId;    //删除书籍的图书管理员id
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date deleteDate;    // 删除日期
 }

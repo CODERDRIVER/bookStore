@@ -1,6 +1,7 @@
 package com.lyears.projects.bookstore.handler;
 
 import com.lyears.projects.bookstore.entity.Book;
+import com.lyears.projects.bookstore.service.BookDeleteRecordService;
 import com.lyears.projects.bookstore.service.BookService;
 import com.lyears.projects.bookstore.service.FtpService;
 import com.lyears.projects.bookstore.util.AuthUtil;
@@ -29,6 +30,9 @@ public class BookHandler {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private BookDeleteRecordService bookDeleteRecordService;
 
     @GetMapping("/books")
     public ResponseMessage getAllBooks(@RequestParam(name = "pageNo", required = false, defaultValue = "1")
@@ -173,6 +177,16 @@ public class BookHandler {
         }
         int status = bookService.updateBookCategoryById(bookId,"");
         return ResultUtil.successNoData(request.getRequestURL().toString());
+    }
+
+    /**
+     *  获取书的删除记录列表
+     */
+
+    @RequestMapping(value = "/book/deleteRecords",method = RequestMethod.GET)
+    public ResponseMessage getAllDeleteRecords()
+    {
+        return ResultUtil.success(bookDeleteRecordService.findAllRecord(),request.getRequestURL().toString());
     }
 
 }

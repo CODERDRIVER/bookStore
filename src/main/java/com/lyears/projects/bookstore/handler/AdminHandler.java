@@ -76,7 +76,9 @@ public class AdminHandler {
     @ResponseBody
     public ResponseMessage updateBookReturnDate(@RequestBody String days)
     {
+        System.out.println(days);
         days = days.split("=")[1];
+        System.out.println(days);
         adminService.updateBookReturnDate(Integer.parseInt(days));
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
@@ -88,9 +90,10 @@ public class AdminHandler {
      */
     @RequestMapping(value = "/reader/deposit",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage updateReaderDeposit(double deposit)
+    public ResponseMessage updateReaderDeposit(@RequestBody String deposit)
     {
-        int status = adminService.updateReaderDeposit(deposit);
+        deposit = deposit.split("=")[1];
+        int status = adminService.updateReaderDeposit(Double.parseDouble(deposit));
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 

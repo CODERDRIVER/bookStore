@@ -1,24 +1,29 @@
 $(document).ready(function(){ 
-    $("#bookManagement").click(function(){                  
-        window.location.href="book.html";                              
+    $("#bookManagement").click(function(){
+        // $.ajax({
+        //     url:"/librarian/pages/book",
+        //     method:"get",
+        //     contentType: "application/json;charset=UTF-8"
+        // })
+        window.location.href="/librarian/pages/book";
      });
  })
 
  $(document).ready(function(){ 
-    $("#readerManagement").click(function(){                  
-        window.location.href="readerlist.html";                              
+    $("#readerManagement").click(function(){
+        window.location.href="/librarian/pages/readerlist";
      });
  })
 
  $(document).ready(function(){ 
     $("#announceManagement").click(function(){                  
-        window.location.href="announcelist.html";                              
+        window.location.href="/librarian/pages/announcelist";
      });
  })
 
  $(document).ready(function(){ 
     $("#deleteHistory").click(function(){                  
-        window.location.href="deleteHistory.html";                              
+        window.location.href="/librarian/pages/deleteHistory";
      });
  })
 

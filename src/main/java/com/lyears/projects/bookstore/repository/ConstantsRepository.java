@@ -25,7 +25,7 @@ public interface ConstantsRepository extends JpaRepository<Constants,Integer>{
 
     //更改所有书籍的归还期限
     @Modifying
-    @Query(nativeQuery = true, value = "UPDATE constants AS c SET b.return_period = :days")
+    @Query(nativeQuery = true, value = "UPDATE constants AS c SET c.return_period = :days")
     @Transactional
     void updateBookReturnDate(@Param("days") int days);
 }

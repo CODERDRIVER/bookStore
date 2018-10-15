@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import sun.jvm.hotspot.runtime.ResultTypeFinder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
 
 /**
  * @Description
@@ -28,6 +29,15 @@ public class AnnouncementHandler {
 
     @Autowired
     private AnnouncementService announcementService;
+
+    /**
+     * 获取所有的公告列表
+     */
+    @RequestMapping(value = "/announcements",method = RequestMethod.GET)
+    public ResponseMessage getAllAnnouncement()
+    {
+        return ResultUtil.success(announcementService.getAllAnnouncement(),request.getRequestURL().toString());
+    }
 
     /**
      * 增加一条公告记录
@@ -74,11 +84,15 @@ public class AnnouncementHandler {
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 
-    @RequestMapping(value = "/announcement/{id}",method = RequestMethod.DELETE)
-    public ResponseMessage deleteAnnouncementById(@PathVariable("id")int id)
+    @RequestMapping(value = "/announcement",method = RequestMethod.DELETE)
+    public ResponseMessage deleteAnnouncementById(String ids)
     {
+        ids = ids.split("=")[1];
         try{
-            announcementService.deleteAnnouncementById(id);
+            for (String id:ids.split(","))
+            {
+                announcementService.deleteAnnouncementById(Integer.parseInt(id));
+            }
             return ResultUtil.successNoData(request.getRequestURL().toString());
         }catch (Exception e)
         {
