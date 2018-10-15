@@ -65,10 +65,10 @@ $('#changeReturnperiod').click(function () {
         onConfirm: function (e) {
             var data = e.data;
             var returnPeriod = data[0];
-            var requestData = JSON.stringify({
-                "emailreturnPeriod": returnPeriod,
-            });
-            addAccount(requestData, 'change/returnPeriod')
+            var requestData = {
+                "days": returnPeriod,
+            };
+            addAccount(requestData, '/admin/book/returnDate')
         },
         onCancel: function (e) {
         }

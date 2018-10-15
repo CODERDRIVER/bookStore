@@ -74,9 +74,10 @@ public class AdminHandler {
      */
     @RequestMapping(value = "/book/returnDate",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage updateBookReturnDate(int days)
+    public ResponseMessage updateBookReturnDate(@RequestBody String days)
     {
-        adminService.updateBookReturnDate(days);
+        days = days.split("=")[1];
+        adminService.updateBookReturnDate(Integer.parseInt(days));
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 
