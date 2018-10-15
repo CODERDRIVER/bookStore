@@ -1,5 +1,76 @@
+$(document).ready(function(){ 
+    $("#bookManagement").click(function(){                  
+        window.location.href="book.html";                              
+     });
+ })
+
+ $(document).ready(function(){ 
+    $("#readerManagement").click(function(){                  
+        window.location.href="readerlist.html";                              
+     });
+ })
+
+ $(document).ready(function(){ 
+    $("#announceManagement").click(function(){                  
+        window.location.href="announcelist.html";                              
+     });
+ })
+
+ $(document).ready(function(){ 
+    $("#deleteHistory").click(function(){                  
+        window.location.href="deleteHistory.html";                              
+     });
+ })
+
+
 $('#addNewBook').on('click', function () {
     $('#addNewBookPrompt').modal({
+        relatedTarget: this,
+        onConfirm: function (e) {
+            var data = e.data;
+            var author = data[0];
+            var name = data[1];
+            var type = data[2];
+            var location = data[3];
+            var description = data[4];
+            var price = data[5];
+            var bookImg = data[6]; 
+            var requestData = JSON.stringify({
+                "bookName": name,
+                "price": price,
+                "inventory": inventory,
+                "author": author,
+                "bookType": type,
+                "location": location,
+                "bookImg": bookImg,
+                "description": description
+            });
+
+            $.ajax({
+                type: 'post',
+                url: 'book',
+                data: requestData,
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success: function (e) {
+                    console.log(e);
+                    if (e.code === 0) {
+                        loadBookPage(1, 10, $('#search-input').val())
+                    } else {
+                        alert(e.message)
+                    }
+                }
+            })
+        },
+        onCancel: function (e) {
+
+        }
+    });
+
+});
+
+$('#incomeQuery').on('click', function () {
+    $('#incomePrompt').modal({
         relatedTarget: this,
         onConfirm: function (e) {
             var data = e.data;
@@ -40,6 +111,7 @@ $('#addNewBook').on('click', function () {
     });
 
 });
+
 
 
 /**

@@ -33,13 +33,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     Book findByBookName(String bookName);
 
-    @Query(nativeQuery = true, value = "UPDATE constants AS c SET c.fine = :fine")
-    int updateBookFine(@Param("fine") double fine);
-
-    //更改所有书籍的归还期限
-    @Query(nativeQuery = true, value = "UPDATE constants AS c SET b.return_period = :days")
-    int updateBookReturnDate(@Param("days") int days);
-
 
     //根据id 更新书籍类别
     @Query(nativeQuery = true, value = "UPDATE book AS b SET b.book_type =:category WHERE b.book_id = :id")

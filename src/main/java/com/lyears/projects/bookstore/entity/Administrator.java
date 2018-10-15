@@ -18,5 +18,6 @@ public class Administrator {
 
     private String email;
     private String userName;
+    @Column(columnDefinition = "varchar(25) default 00010001")
     private String password;
 }

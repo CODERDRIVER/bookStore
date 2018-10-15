@@ -1,0 +1,553 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <title>Bibliosoft-BookList</title>
+
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="icon" type="image/png" href="../assets/i/bookicon2.png">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/bookicon2.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/bookicon2.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/bookicon2.png">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+</head>
+<body>
+<div class="container">
+    <header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
+        <div class="am-container" style="max-width: unset">
+            <h1 class="am-topbar-brand">
+                <a href="/">Bibliosoft</a>
+            </h1>
+
+            <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+                    data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+                    class="am-icon-bars"></span></button>
+
+            <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+                <div class="am-topbar-right">
+                    <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
+                </div>
+
+                <div class="am-topbar-right">
+                    <li class="am-dropdown am-dropdown-header" data-am-dropdown>
+                        <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                            English <span class="am-icon-caret-down"></span>
+                        </a>
+                        <ul class="am-dropdown-content">
+                            <li class="am-dropdown-header">Language Setting</li>
+                            <li><a id="English" href="#">English</a></li>
+                            <li><a id="Chinese" href="#">中文</a></li>
+                        </ul>
+                    </li>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    
+    <div class="am-modal am-modal-prompt" tabindex="-1" id="addNewBookPrompt">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd"><h4>Add New Book</h4></div>
+            <div class="am-modal-bd">
+                <form class="am-form am-form-horizontal">
+                    <div class="am-form-group">
+                        <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">Author:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text" id="doc-ipt-3">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-2" class="am-u-sm-2 am-form-label">Name:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text" id="doc-ipt-2" >
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-1" class="am-u-sm-2 am-form-label">Type:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text" id="doc-ipt-1" >
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-4" class="am-u-sm-2 am-form-label">Location:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text" id="doc-ipt-4" >
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-5" class="am-u-sm-2 am-form-label">Description:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text" id="doc-ipt-5" >
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-6" class="am-u-sm-2 am-form-label">Price:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="number" id="doc-ipt-6" >
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-7" class="am-u-sm-2 am-form-label">BookImg:</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="file" id="doc-ipt-7" >
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
+                <span class="am-modal-btn" data-am-modal-confirm="">add</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf">
+                    <strong class="am-text-primary am-text-xxl" style="color: rgb(64, 100, 133);">Account Table</strong>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="am-g">
+                <div class="am-u-sm-12 am-u-md-6">
+                    <div class="am-btn-toolbar">
+                        <div class="am-btn-group am-btn-group-xs">
+                            <button id="addNewBook" type="button" class="am-btn am-btn-default"><span
+                                    class="am-icon-plus"></span> Add Book
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-u-sm-12 am-u-md-3">
+                    <div class="am-form-group">
+                        <select data-am-selected="{btnSize: 'sm'}">
+                            <option value="option1">All Types</option>
+                            <option value="option1">Librarian</option>
+                            <option value="option2">Reader</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="am-u-sm-12 am-u-md-3">
+                    <div class="am-input-group am-input-group-sm">
+                        <input type="text" class="am-form-field">
+                        <span class="am-input-group-btn">
+        <button class="am-btn am-btn-default" type="button">Search</button>
+        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="am-g">
+                <div class="am-u-sm-12">
+                    <form class="am-form">
+                        <table class="am-table am-table-striped am-table-hover table-main">
+                            <thead>
+                            <tr>
+                                <!--总的checkbox，未加js全选-->
+                                <th class="table-check"><input type="checkbox"/></th>
+                                <th class="table-id">Status</th>
+                                <th class="table-title">User Name</th>
+                                <th class="table-type">User Type</th>
+                                <th class="table-deposite">Deposite</th>
+                                <th class="am-hide-sm-only">Email</th>
+                                <th class="table-set">Operations</th>
+                                <!--每一个tr之间为一个表单数据，后期改为动态，保持一个页面15个数据,否则全屏可能出现空白-->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Active</td>
+                                <td>Librarian 1</td>
+                                <td>Librarian</td>
+                                <td>0 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-off"></span> Disable
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Active</td>
+                                <td>Librarian 2</td>
+                                <td>Librarian</td>
+                                <td>0 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-off"></span> Disable
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Active</td>
+                                <td>Librarian 3</td>
+                                <td>Librarian</td>
+                                <td>0 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-off"></span> Disable
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Active</td>
+                                <td>Librarian 4</td>
+                                <td>Librarian</td>
+                                <td>0 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-off"></span> Disable
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Active</td>
+                                <td>Librarian 5</td>
+                                <td>Librarian</td>
+                                <td>0 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-off"></span> Disable
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Active</td>
+                                <td>Reader 1</td>
+                                <td>Reader</td>
+                                <td>100 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-off"></span> Disable
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Active</td>
+                                <td>Reader 2</td>
+                                <td>Reader</td>
+                                <td>100 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-off"></span> Disable
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Active</td>
+                                <td>Reader 3</td>
+                                <td>Reader</td>
+                                <td>100 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-off"></span> Disable
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Active</td>
+                                <td>Reader 4</td>
+                                <td>Reader</td>
+                                <td>100 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-off"></span> Disable
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Active</td>
+                                <td>Reader 5</td>
+                                <td>Reader</td>
+                                <td>100 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-off"></span> Disable
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Inactive</td>
+                                <td>Reader 6</td>
+                                <td>Reader</td>
+                                <td>100 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-on"></span> Active
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Inactive</td>
+                                <td>Reader 7</td>
+                                <td>Reader</td>
+                                <td>100 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-on"></span> Active
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Inactive</td>
+                                <td>Reader 8</td>
+                                <td>Reader</td>
+                                <td>100 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-on"></span> Active
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Inactive</td>
+                                <td>Reader 9</td>
+                                <td>Reader</td>
+                                <td>100 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-on"></span> Active
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td>Inactive</td>
+                                <td>Reader 10</td>
+                                <td>Reader</td>
+                                <td>100 RMB</td>
+                                <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                    class="am-icon-pencil-square-o"></span> Edit
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-toggle-on"></span> Active
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <div class="am-cf">
+                            15 records in total<!-- 共 3 条记录 -->
+                            <div class="am-fr">
+                                <ul class="am-pagination">
+                                    <li class="am-disabled"><a href="#">«</a></li>
+                                    <li class="am-Disable"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">»</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr/>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <footer class="footer">
+            <p>2018. by ZBT.</p>
+        </footer>
+
+        <!--[if (gte IE 9)|!(IE)]><!-->
+        <script src="../assets/js/jquery-3.1.1.min.js"></script>
+        <!--<![endif]-->
+        <!--[if lte IE 8 ]>
+        <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+        <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+        <![endif]-->
+        <script src="../assets/js/amazeui.min.js"></script>
+        <script src="../assets/js/style.js"></script>
+        <script src="../assets/js/librarian.js"></script>
+    </div>
+</div>
+</body>
+</html>

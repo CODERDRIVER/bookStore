@@ -3,10 +3,7 @@ package com.lyears.projects.bookstore.service;
 import com.lyears.projects.bookstore.entity.Administrator;
 import com.lyears.projects.bookstore.entity.Librarian;
 import com.lyears.projects.bookstore.entity.Reader;
-import com.lyears.projects.bookstore.repository.AdminRepository;
-import com.lyears.projects.bookstore.repository.BookRepository;
-import com.lyears.projects.bookstore.repository.LibrarianRepository;
-import com.lyears.projects.bookstore.repository.ReaderRepository;
+import com.lyears.projects.bookstore.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +27,9 @@ public class AdminService {
     private LibrarianRepository librarianRepository;
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private ConstantsRepository constantsRepository;
 
     @Transactional(readOnly = true, rollbackFor = RuntimeException.class)
     public Administrator findByEmail(String email) {
@@ -57,7 +57,7 @@ public class AdminService {
      */
     public int updateBookFine(double fine)
     {
-        int status = bookRepository.updateBookFine(fine);
+        int status = constantsRepository.updateBookFine(fine);
         return status;
     }
 
@@ -66,7 +66,7 @@ public class AdminService {
      */
     public int updateBookReturnDate(int days)
     {
-        return bookRepository.updateBookReturnDate(days);
+        return constantsRepository.updateBookReturnDate(days);
     }
 
     /**
