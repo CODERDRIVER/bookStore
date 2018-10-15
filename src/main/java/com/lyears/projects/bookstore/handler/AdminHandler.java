@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author fzm
@@ -30,6 +31,20 @@ public class AdminHandler {
     @Autowired
     private HttpServletRequest request;
 
+
+    /**
+     * 查询所有的图书管理员列表
+     * @return
+     */
+    @GetMapping("/librarians")
+    @ResponseBody
+    public List<Librarian> getAllLibrarians()
+    {
+        List<Librarian> allLibralians = librarianService.getAllLibralians();
+        return allLibralians;
+    }
+
+
     @GetMapping("/accounts")
     @ResponseBody
     public ResponseMessage getAllAccount(){
@@ -42,9 +57,12 @@ public class AdminHandler {
      */
     @RequestMapping(value = "/book/fine",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage updateBookFine( double fine)
+    public ResponseMessage updateBookFine(@RequestBody String fine)
     {
-        int status = adminService.updateBookFine(fine);
+        System.out.println(fine);
+        fine = fine.split("=")[1];
+        double f = Double.parseDouble(fine);
+        adminService.updateBookFine(f);
         //判断status 的状态，返回相应的结果
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
@@ -58,7 +76,7 @@ public class AdminHandler {
     @ResponseBody
     public ResponseMessage updateBookReturnDate(int days)
     {
-        int status = adminService.updateBookReturnDate(days);
+        adminService.updateBookReturnDate(days);
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 
@@ -122,5 +140,21 @@ public class AdminHandler {
         librarianService.deleteByEmail(email);
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
+
+    /**
+     *  对图书管理员账号进行删除 根据id
+     */
+    @ResponseBody
+    @RequestMapping(value = "/delete/librarian/id/",method = RequestMethod.DELETE)
+    public ResponseMessage deleteLibralianById(@RequestBody String ids)
+    {
+        // 获得数据
+        ids = ids.split("=")[1];
+        String[] id = ids.split("%2C");
+        librarianService.deleteById(id);
+        return ResultUtil.successNoData(request.getRequestURL().toString());
+    }
+
+
 
 }

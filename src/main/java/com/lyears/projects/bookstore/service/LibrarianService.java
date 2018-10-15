@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author fzm
  * @date 2018/10/3
@@ -35,4 +37,26 @@ public class LibrarianService {
         librarian.setEmail(email);
         librarianRepository.delete(librarian);
     }
+
+    /**
+     *  查询所有的图书管理员列表
+     */
+
+    public List<Librarian> getAllLibralians()
+    {
+        return librarianRepository.findAll();
+    }
+
+
+    /**
+     * 根据id 删除图书管理员
+     */
+    public void deleteById(String[] ids)
+    {
+        for (String id:ids)
+        {
+            librarianRepository.delete(Integer.parseInt(id));
+        }
+    }
+
 }

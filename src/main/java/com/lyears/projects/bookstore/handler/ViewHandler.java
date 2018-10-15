@@ -49,8 +49,14 @@ public class ViewHandler {
     }
 
     @GetMapping("/")
-    public String index() {
-        return "index";
+    public String index(@CookieValue(value = "token",required = false)Cookie token) {
+        if (token == null)
+        {
+            return "index";
+        }else{
+            String type = JwtToken.verifyToken(token.getValue()).get("type").asString();
+            return type;
+        }
     }
 
 

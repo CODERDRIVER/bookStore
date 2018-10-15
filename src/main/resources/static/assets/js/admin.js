@@ -48,10 +48,10 @@ $('#changeFine').click(function () {
         onConfirm: function (e) {
             var data = e.data;
             var fine = data[0];
-            var requestData = JSON.stringify({
+            var requestData = {
                 "fine": fine,
-            });
-            addAccount(requestData, 'change/fine')
+            };
+            addAccount(requestData, '/admin/book/fine')
         },
         onCancel: function (e) {
         }
@@ -112,17 +112,18 @@ $(document).ready(function(){
     $.ajax({
             type:'GET',
             dataType:'json',
-            url:'/librarian',
+            url:'/admin/librarians',
             contentType:'application/json;charset=UTF-8',
             async: false,
             
             success:function(data){//返回结果
-
+				console.log(data);
                 for(var i=0; i<data.length;i++){
                     
-                    librarianlist.push(new librarian(data[i].librarianId,data[i].username,data[i].email));
+                    librarianlist.push(new librarian(data[i].id,data[i].userName,data[i].email));
                     }
-                    
+                loadData();
+
             } 
             
         });	
@@ -222,7 +223,7 @@ var changeColor = function() {
 	}
 }
 
-loadData();
+
 
 /* 加载数据 */
 function loadData() {
@@ -243,7 +244,7 @@ function loadData() {
 
 		var checkBtn = createObj("input");
 		checkBtn.type = "checkbox";
-		checkBtn.value="${librarianlist[i].librarianId}";
+		checkBtn.value=librarianlist[i].librarianId;
 		// 将复选框添加到第一列；
 		checkTd.appendChild(checkBtn);
 		// 将获得的值添加到创建的指定Td中；
@@ -419,8 +420,7 @@ var delSel = function() {
 				var input = inputs[i];
 				// 找出checkbox的所选择的行
 				if (input.checked) {
-
-					checkedList.push($(this).val());
+					checkedList.push(input.value);
 					// 删除已选择的行
 					tbody.removeChild(input.parentNode.parentNode);
 					// table长度减一
@@ -429,11 +429,11 @@ var delSel = function() {
 			}
 		}
 		$.ajax({                      
-			type: "POST",                      
-			url: "deletemore",                      
-			data: {'delitems':checkedList.toString()},                    
-			success: function(data) {                                               
-				    location.reload();                      
+			type: "DELETE",
+			url: "/admin/delete/librarian/id/",
+			data: {'ids':checkedList.join(",")},
+			success: function(data) {
+				    location.reload();
 				},
 			error:function(data){
 				 art.dialog.tips('删除失败!');
@@ -622,11 +622,12 @@ var okBtn = function() {
 	$.ajax({
 		type:'POST',
 		dataType:'json',
-		url:'/update',
+		url:'/admin/edit/librarian/',
 		contentType:'application/json;charset=UTF-8',	
-		data:JSON.stringify({"librarianId":librarianId,"username":username,"email":email}),
+		data:JSON.stringify({"id":librarianId,"userName":username,"email":email}),
 		success:function(data){//返回结果
 				location.reload();
+				alert("Success");
 		  },
 	    error:function(data){
 			art.dialog.tips('更新修改数据失败!');

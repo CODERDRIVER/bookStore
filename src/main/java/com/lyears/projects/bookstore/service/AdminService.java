@@ -55,18 +55,17 @@ public class AdminService {
     /**
      * 更改所有的书籍罚金
      */
-    public int updateBookFine(double fine)
+    public void updateBookFine(double fine)
     {
-        int status = constantsRepository.updateBookFine(fine);
-        return status;
+         constantsRepository.updateBookFine(fine);
     }
 
     /**
      * 更改所有书籍的归还期限
      */
-    public int updateBookReturnDate(int days)
+    public void updateBookReturnDate(int days)
     {
-        return constantsRepository.updateBookReturnDate(days);
+         constantsRepository.updateBookReturnDate(days);
     }
 
     /**

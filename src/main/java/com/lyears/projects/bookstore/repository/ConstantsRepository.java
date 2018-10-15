@@ -17,9 +17,9 @@ import org.springframework.stereotype.Repository;
 public interface ConstantsRepository extends JpaRepository<Constants,Integer>{
 
     @Query(nativeQuery = true, value = "UPDATE constants AS c SET c.fine = :fine")
-    int updateBookFine(@Param("fine") double fine);
+    void updateBookFine(@Param("fine") double fine);
 
     //更改所有书籍的归还期限
     @Query(nativeQuery = true, value = "UPDATE constants AS c SET b.return_period = :days")
-    int updateBookReturnDate(@Param("days") int days);
+    void updateBookReturnDate(@Param("days") int days);
 }
