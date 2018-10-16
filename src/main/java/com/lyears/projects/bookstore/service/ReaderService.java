@@ -50,6 +50,12 @@ public class ReaderService {
     public Reader findByUserName(String userName) {
         return readerRepository.findByUserName(userName);
     }
+
+    /**
+     *
+     * @param email
+     * @return
+     */
     @Transactional(readOnly = true,rollbackFor = RuntimeException.class)
     public Reader findByEmail(String email) {
         return readerRepository.findByEmail(email);

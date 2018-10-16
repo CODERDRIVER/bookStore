@@ -123,11 +123,18 @@ public class AdminHandler {
      */
     @ResponseBody
     @RequestMapping(value = "/edit/librarian/",method = RequestMethod.POST)
-    public ResponseMessage editLibrarianProfile(Librarian librarian)
+    public ResponseMessage editLibrarianProfile(@RequestBody Librarian librarian)
     {
         if (librarian==null)
         {
             //异常处理
+            return ResultUtil.error(ResultEnum.NO_LIBRARIAN,request.getRequestURL().toString());
+        }
+        Integer id = librarian.getId();
+        Librarian librarianById = librarianService.findLibrarianById(id);
+        if (librarian.getPassword()==null||"".equals(librarian.getPassword()))
+        {
+            librarian.setPassword(librarianById.getPassword());
         }
         librarianService.save(librarian);
         return ResultUtil.successNoData(request.getRequestURL().toString());

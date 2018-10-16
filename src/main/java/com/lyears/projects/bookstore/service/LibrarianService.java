@@ -29,6 +29,13 @@ public class LibrarianService {
     }
 
     /**
+     *  根据图书管理员 id  查询该图书管理员
+     */
+    public Librarian findLibrarianById(int librarianId)
+    {
+        return librarianRepository.findOne(librarianId);
+    }
+    /**
      * 根据图书馆管理员邮箱删除该用户
      */
     public void deleteByEmail(String email)

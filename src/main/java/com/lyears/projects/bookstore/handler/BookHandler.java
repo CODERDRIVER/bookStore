@@ -188,5 +188,4 @@ public class BookHandler {
     {
         return ResultUtil.success(bookDeleteRecordService.findAllRecord(),request.getRequestURL().toString());
     }
-
 }

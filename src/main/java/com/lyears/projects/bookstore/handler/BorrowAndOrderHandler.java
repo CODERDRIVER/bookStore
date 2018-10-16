@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -73,7 +74,19 @@ public class BorrowAndOrderHandler {
                 request.getRequestURL().toString());
     }
 
+    /**
+     *  根据readerid 查询读者的所有借阅信息
+     * @param cookie
+     * @return
+     */
 
+    @ResponseBody
+    @RequestMapping("/borrows/readerId")
+    public ResponseMessage getBorrowsByReaderId(@CookieValue("readerId")Cookie cookie)
+    {
+        String readerId = cookie.getValue();
+        return ResultUtil.success(borrowAndOrderService.getBorrowsByReaderId(Integer.parseInt(readerId)),request.getRequestURL().toString());
+    }
 
     private List<Borrow> avoidStackOverflow(List<Borrow> borrows){
         borrows.forEach(

@@ -4,6 +4,8 @@ import com.lyears.projects.bookstore.entity.BookReturnRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @Description
  * @Author: liuXuyang
@@ -13,4 +15,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface BookReturnRecordRepository extends JpaRepository<BookReturnRecord,Integer>{
+
+    /**
+     *  根据 读者id 查询所有的归还记录
+     */
+    public List<BookReturnRecord> findAllByReaderId(int readerId);
 }

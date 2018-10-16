@@ -110,7 +110,7 @@ public class BookStoreApplicationTests {
         order.setBook(book);
         order.setReader(reader);
 
-        order.setOrderStatus(true);
+//        order.setOrderStatus(true);
 
         book.getOrders().add(order);
         reader.getOrders().add(order);

@@ -36,7 +36,7 @@ public class Order {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime returnDate = orderDate.plusHours(2);
 
-    private Boolean orderStatus;
+    private int orderStatus;        // 预约状态，0 预约中 1 预约成功 2 预约失败
 
     public Integer getOrderId() {
         return orderId;
@@ -78,11 +78,11 @@ public class Order {
         this.returnDate = returnDate;
     }
 
-    public Boolean getOrderStatus() {
+    public int getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(Boolean orderStatus) {
+    public void setOrderStatus(int orderStatus) {
         this.orderStatus = orderStatus;
     }
 }

@@ -4,12 +4,11 @@ import com.lyears.projects.bookstore.entity.Book;
 import com.lyears.projects.bookstore.repository.BookRepository;
 import com.lyears.projects.bookstore.util.IDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author fzm
@@ -78,4 +77,28 @@ public class BookService {
         bookRepository.delete(id);
     }
 
+    /**
+     *  多条件查询 根据书名 作者 类型
+     */
+    public Page<Book> findBooksByBookNameOrAuthorOrBookType(int pageNo,int pageSize,String query)
+    {
+        Pageable pageable = new PageRequest(pageNo - 1, pageSize, Sort.Direction.ASC, "bookId");
+        return bookRepository.findAllByAuthorContainingOrBookNameContainingOrBookTypeContaining(query,query,query,pageable);
+    }
+
+    /**
+     *  根据bookID 设置book 的状态
+     */
+    public void updateBookStatusByBookId(int bookStatus,int bookId)
+    {
+        bookRepository.updateStatusByBookId(bookStatus,bookId);
+    }
+
+    /**
+     *  根据bookName 更新 book 的库存量
+     */
+    public void updateInventoryByBookName(String bookName,int inventory)
+    {
+        bookRepository.updateInventoryByBookName(bookName,inventory);
+    }
 }

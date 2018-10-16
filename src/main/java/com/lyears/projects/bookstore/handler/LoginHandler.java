@@ -78,6 +78,10 @@ public class LoginHandler {
                 jwtTokenCookie.setMaxAge(60 * 60 * 12);
                 jwtTokenCookie.setPath("/");
                 response.addCookie(jwtTokenCookie);
+                Cookie readerCookie = new Cookie("readerId",reader.getReaderId()+"");
+                readerCookie.setMaxAge(60*60*12);
+                readerCookie.setPath("/");
+                response.addCookie(readerCookie);
                 return ResultUtil.successNoData(request.getRequestURL().toString());
             } else {
                 throw new UserDefinedException(ResultEnum.PASSWORD_ERROR);

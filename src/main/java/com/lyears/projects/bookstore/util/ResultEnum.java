@@ -21,6 +21,8 @@ public enum ResultEnum {
     BORROW_NOT_EXIST(-10,"borrow not exist!"),
     NO_ANNOUNCEMENT(-11,"no announcement"),
     SUCCESS(0, "success"),
+    NO_BORROWNUM_LEFT(-12,"borrow numbers is max"),
+    NO_LIBRARIAN(-13,"no librarian"),
     SYSTEM_ERROR(-1000001, "system error!");
 
 

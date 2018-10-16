@@ -3,6 +3,7 @@ package com.lyears.projects.bookstore.entity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +33,8 @@ public class Book {
 
     private String bookUrl; //图片url
     private String description; //描述
+    private LocalDate pubdate;  //发布时间
+    private String publisher;   //发布者
 
 
     @OneToMany(mappedBy = "book", fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
@@ -142,5 +145,21 @@ public class Book {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDate getPubdate() {
+        return pubdate;
+    }
+
+    public void setPubdate(LocalDate pubdate) {
+        this.pubdate = pubdate;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 }

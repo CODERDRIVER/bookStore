@@ -11,5 +11,5 @@ import java.util.List;
  * @date 2018/10/2
  **/
 public interface OrderRepository extends JpaRepository<Order, Integer> {
-    List<Order> getAllByReturnDateBeforeAndOrderStatus(LocalDateTime localDateTime,boolean status);
+    List<Order> getAllByReturnDateBeforeAndOrderStatus(LocalDateTime localDateTime,int status);
 }
