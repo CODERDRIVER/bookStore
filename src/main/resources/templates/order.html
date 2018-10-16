@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <title>Bibliosoft-ReaderList</title>
+
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="icon" type="image/png" href="/assets/i/bookicon2.png">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="/assets/i/bookicon2.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="/assets/i/bookicon2.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="/assets/i/bookicon2.png">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+
+    <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link type="text/css" rel="stylesheet" href="/assets/css/book.css" />
+
+</head>
+<body>
+<div class="container">
+    <header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
+        <div class="am-container" style="max-width: unset">
+            <h1 class="am-topbar-brand">
+                <a href="/">Bibliosoft-BookList</a>
+            </h1>
+
+            <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+                    data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+                    class="am-icon-bars"></span></button>
+
+            <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+                <div class="am-topbar-right">
+                    <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home">Back Home </button>
+                    <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
+                </div>
+
+                <div class="am-topbar-right">
+                    <li class="am-dropdown am-dropdown-header" data-am-dropdown>
+                        <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                            English <span class="am-icon-caret-down"></span>
+                        </a>
+                        <ul class="am-dropdown-content">
+                            <li class="am-dropdown-header">Language Setting</li>
+                            <li><a id="English" href="#">English</a></li>
+                            <li><a id="Chinese" href="#">中文</a></li>
+                        </ul>
+                    </li>
+                </div>
+
+
+
+            </div>
+        </div>
+    </header>
+
+
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <hr>
+
+            <div class="am-u-sm-12 am-u-md-3">
+                <div class="am-input-group am-input-group-sm">
+                    <input type="text" class="am-form-field">
+                    <span class="am-input-group-btn">
+                        <button class="am-btn am-btn-default" type="button">Search</button>
+                        </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="tbody">
+            <div class="tbody_inside">
+                <!-- <div class="addOrDelete">
+                    <button class="add" type="button" id="show">add</button>
+                    <button class="delete" type="button" onclick="delSel();" >delete</button>
+                </div> -->
+                <!--信息部分-->
+                <table class="contentTable" id="table">
+                    <thead id="thead">
+                    <tr class="contentTable1">
+                        <td><input type="checkbox" onclick="selAll(this);"></td>
+                        <td>SerialID</td>
+                        <td>BookID</td>
+                        <td >BookImg</td>
+                        <td>Author</td>
+                        <td>BarCode</td>
+                        <td>BookName</td>
+                        <td>BookType</td>
+                        <td>Price</td>
+                        <td>Decription</td>
+                        <td>Location</td>
+                        <td>Operation</td>
+                    </tr>
+                    </thead>
+                    <tbody class="tb" id="tb">
+
+                    </tbody>
+                </table>
+                <div class="upOrDown">
+                    <span id="spanFirst" class="spanFirst">FirstPage , </span>
+                    <span id="spanLast" class="spanLast">LastPage , </span> the
+                    <span id="spanPageNum"></span> page , total
+                    <span id="spanTotalPage"></span> pages, total
+                    <span id="spanTotalNumRows"></span> items,（10 items/page）
+                    <button class="down" type="button" id="spanNext">next page</button>
+                    <button class="up" type="button" id="spanPre">pre page</button>
+                </div>
+            </div>
+            <div class="over" style="display:none;" id="over">
+                <div class="over_child">
+                    <p>add book information</p>
+                    <table>
+                        <tbody id="over_tb">
+                        <tr>
+                            <td>BookImg：</td>
+                            <td><input type="file" id="i1"></td>
+                        </tr>
+                        <tr>
+                            <td>Author：</td>
+                            <td><input type="text" id="i2"></td>
+                        </tr>
+                        <tr>
+                            <td>BookName：</td>
+                            <td><input type="text" id="i3"></td>
+                        </tr>
+                        <tr>
+                            <td>BookType：</td>
+                            <td><input type="text" id="i4"></td>
+                        </tr>
+                        <tr>
+                            <td>Price：</td>
+                            <td><input type="number" id="i5"></td>
+                        </tr>
+                        <tr>
+                            <td>Decription：</td>
+                            <td><input type="text" id="i6"></td>
+                        </tr>
+                        <tr>
+                            <td>Location：</td>
+                            <td><input type="text" id="i7"></td>
+                        </tr>
+                        </tbody>
+                        <tr>
+                            <td colspan="2">
+                                <input type="button" value="cancel" id="hide23" class="button1" />
+                                <input type="button" value="confirm" onclick="addTr();" class="button2" />
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="string"></div>
+                </div>
+            </div>
+            <div class="over2" style="display:none;" id="over2">
+                <div class="over_child2">
+                    <p id="lookMessages">modify book information</p>
+                    <table>
+                        <tbody id="over_tb2">
+                        <tr>
+                            <td>BookImg：</td>
+                            <td><input type="text" ></td>
+                        </tr>
+                        <tr>
+                            <td>Author：</td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <td>BarCode：</td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <td>BookName：</td>
+                            <td><input type="text" ></td>
+                        </tr>
+                        <tr>
+                            <td>BookType：</td>
+                            <td><input type="text" ></td>
+                        </tr>
+                        <tr>
+                            <td>Price：</td>
+                            <td><input type="number" ></td>
+                        </tr>
+                        <tr>
+                            <td>Decription：</td>
+                            <td><input type="text" ></td>
+                        </tr>
+                        <tr>
+                            <td>Location：</td>
+                            <td><input type="text" ></td>
+                        </tr>
+                        </tbody>
+                        <tr>
+                            <td colspan="2">
+                                <input type="button" value="cancel" onclick="showHide2(this);" class="button1" />
+                                <input type="button" value="save" onclick="okBtn();" class="button2" id="hide" />
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="string"></div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="/assets/js/jquery-3.1.1.min.js"></script>
+        <script src="/assets/js/amazeui.min.js"></script>
+        <script src="/assets/js/app.js"></script>
+        <script type="text/javascript" src="/assets/js/order.js"></script>
+</body>
+</html>
