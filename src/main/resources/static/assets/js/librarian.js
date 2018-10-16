@@ -27,6 +27,21 @@ $(document).ready(function(){
      });
  })
 
+/**
+ * 登出按钮
+ */
+$('#log-out').click(function () {
+      $.ajax({
+          type: 'delete',
+          url: 'logout',
+          contentType: "application/json;charset=UTF-8",
+          success: function (e) {
+              if (e.code === 0) {
+                  window.location.href = "/"
+              }
+          }
+      })
+  })
 
 $('#addNewBook').on('click', function () {
     $('#addNewBookPrompt').modal({
