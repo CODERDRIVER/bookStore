@@ -57,17 +57,17 @@ $('#unpaidFine').on('click', function () {
  * 登出按钮
  */
 $('#log-out').click(function () {
-    $.ajax({
-        type: 'delete',
-        url: 'logout',
-        contentType: "application/json;charset=UTF-8",
-        success: function (e) {
-            if (e.code === 0) {
-                window.location.href = "/"
-            }
-        }
-    })
-})
+      $.ajax({
+          type: 'delete',
+          url: 'logout',
+          contentType: "application/json;charset=UTF-8",
+          success: function (e) {
+              if (e.code === 0) {
+                  window.location.href = "/"
+              }
+          }
+      })
+  })
 /**
  * 搜索框点击事件
  */

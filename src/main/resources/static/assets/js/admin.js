@@ -99,6 +99,23 @@ function addAccount(data, url) {
         }
     })
 }
+
+/**
+ * 登出按钮
+ */
+$('#log-out').click(function () {
+      $.ajax({
+          type: 'delete',
+          url: 'logout',
+          contentType: "application/json;charset=UTF-8",
+          success: function (e) {
+              if (e.code === 0) {
+                  window.location.href = "/"
+              }
+          }
+      })
+  })
+
 // 获取图书管理员列表
 var librarianlist = new Array();
 
@@ -114,7 +131,7 @@ $(document).ready(function(){
 				console.log(data);
                 for(var i=0; i<data.length;i++){
                     
-                    librarianlist.push(new librarian(data[i].id,data[i].userName,data[i].email));
+                    librarianlist.push(new librarian(data[i].id,data[i].userName,data[i].email,data[i].password));
                     }
                 loadData();
 
@@ -186,10 +203,11 @@ var showHide2 = function(obj) {
 
 
 /* 创建读者对象 */
-function librarian(librarianId,username,email) {
+function librarian(librarianId,username,email,password) {
 	this.librarianId = librarianId;
     this.username = username;
     this.email = email;
+    this.password = password;
 }
 
 
@@ -225,7 +243,7 @@ function loadData() {
 		var librarianId = librarianlist[i].librarianId;
         var username = librarianlist[i].username;
         var email = librarianlist[i].email;
-
+        var password = librarianlist[i].password;
 		// 创建tr
 		var tr = createObj("tr");
 		// 创建td
@@ -234,6 +252,7 @@ function loadData() {
 		var librarianIdTd = createObj("td");
         var usernameTd = createObj("td");
         var emailTd = createObj("td");
+        var passwordTd = createObj("td");
 		var dmlTd = createObj("td");
 
 		var checkBtn = createObj("input");
@@ -249,6 +268,7 @@ function loadData() {
 		librarianIdTd.innerHTML = librarianId;
         usernameTd.innerHTML = username;
 		emailTd.innerHTML = email;
+		passwordTd.innerHTML = password;
         
 		// 创建个button按钮，添加到操作列；
 		var lookBtn = createObj("input");
@@ -278,6 +298,7 @@ function loadData() {
 		tr.appendChild(librarianIdTd);
         tr.appendChild(usernameTd);
         tr.appendChild(emailTd);
+        tr.appendChild(passwordTd);
 		tr.appendChild(dmlTd);
 
 		// 将新建的tr加入到tbody中
@@ -532,6 +553,7 @@ var modTr = function(obj) {
     var librarianId = tr.cells[2].innerHTML;
 	var username = tr.cells[3].innerHTML;
     var email = tr.cells[4].innerHTML;
+    var password = tr.cells[5].innerHTML;
    
 	// 获得遮罩层的tbody
 	var tb = getId("over_tb2");
@@ -541,9 +563,11 @@ var modTr = function(obj) {
 	inputs[0].value = librarianId;
     inputs[1].value = username;
     inputs[2].value = email;
+    inputs[3].value = password;
 	inputs[0].disabled = "disabled";
     inputs[1].disabled = "";
     inputs[2].disabled = "";
+    inputs[3].disabled = "";
 
 }
 
@@ -587,7 +611,7 @@ var okBtn = function() {
 	var librarianId = inputs[0].value;
 	var username = inputs[1].value;
 	var email = inputs[2].value;
-	
+	var password = inputs[3].value;
 	// 获得主页中的数据,将修改的数据填入到主页中,
 	var tbody = getId("tb");
 	var rows = tbody.rows.length; // 获得所有的行
@@ -611,6 +635,14 @@ var okBtn = function() {
 				tr.cells[4].innerHTML = email;
 			}
 
+			if (tr.cells[5].innerHTML != password) {
+                if ( password == '') {
+                    alert('password can not be null！');
+                    return false;
+                }
+                tr.cells[5].innerHTML = password;
+            }
+
 		}
 	}
 	$.ajax({
@@ -618,7 +650,7 @@ var okBtn = function() {
 		dataType:'json',
 		url:'/admin/edit/librarian/',
 		contentType:'application/json;charset=UTF-8',	
-		data:JSON.stringify({"id":librarianId,"userName":username,"email":email}),
+		data:JSON.stringify({"id":librarianId,"userName":username,"email":email,"password":password}),
 		success:function(data){//返回结果
 				location.reload();
 				alert("Success");
