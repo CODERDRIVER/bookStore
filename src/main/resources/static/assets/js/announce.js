@@ -516,6 +516,20 @@ var okBtn = function() {
 
 		}
 	}
+	$.ajax({
+		type:'POST',
+		dataType:'json',
+		url:'/librarian/edit/announcement/',
+		contentType:'application/json;charset=UTF-8',	
+		data:{"id":announceId,"title":title,"content":content},
+		success:function(data){//返回结果
+				location.reload();
+				alert("Success");
+		  },
+	    error:function(data){
+			art.dialog.tips('更新修改数据失败!');
+		}
+	     });
 	// 隐藏遮罩层
 	showHide2();
 }

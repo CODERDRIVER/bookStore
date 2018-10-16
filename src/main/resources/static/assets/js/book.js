@@ -88,6 +88,7 @@ function addAccount(data, url) {
 }
 
 function getBook() {
+	alert("光标已经移出isbn");
 	var isbn = getId("doc8").value;
 	var url = 'https://api.douban.com/v2/book/isbn/'+isbn;
 	$.ajax({
@@ -789,6 +790,21 @@ var okBtn = function() {
 			}
 		}
 	}
+	$.ajax({
+		type:'POST',
+		dataType:'json',
+		url:'/librarian/edit/book/',
+		contentType:'application/json;charset=UTF-8',	
+		data:{"bookId":bookId,"bookImg":bookImg,"author":author,"barcode":barcode,"bookName":bookName,
+		"bookType":bookType,"price":price,"description":description,"location":location},
+		success:function(data){//返回结果
+				location.reload();
+				alert("Success");
+		  },
+	    error:function(data){
+			art.dialog.tips('更新修改数据失败!');
+		}
+	     });
 	// 隐藏遮罩层
 	showHide2();
 }
