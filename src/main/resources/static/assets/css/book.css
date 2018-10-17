@@ -232,12 +232,12 @@ body {
 }
 .upOrDown {
 	height: 60px;
-	width: 1332px;
-    margin-bottom: 0 px;
-    bottom: 0px;
+	width: 100%;
+    margin-bottom: 0px;
+    bottom: 5px;
     left: 10px;
 	padding-top:20px;
-	position: fixed;
+	position: absolute;
 	background:#F0ECE9;
 }
 .up {
@@ -254,6 +254,7 @@ body {
 }
 .down {
 	background:#D9534F;
+	margin-right: 20px;
 	width:105px;
 	height:40px;
 	float:right;

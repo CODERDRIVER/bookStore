@@ -5,6 +5,7 @@ import com.lyears.projects.bookstore.entity.Borrow;
 import com.lyears.projects.bookstore.entity.Order;
 import com.lyears.projects.bookstore.entity.Reader;
 import com.lyears.projects.bookstore.exception.UserDefinedException;
+import com.lyears.projects.bookstore.model.BookBorrowRecordData;
 import com.lyears.projects.bookstore.repository.*;
 import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultEnum;
@@ -17,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,10 +42,10 @@ public class BorrowAndOrderService {
     private ReaderRepository readerRepository;
 
     @Autowired
-    private ConstantsService constantsService;
+    private HttpServletRequest request;
 
     @Autowired
-    private HttpServletRequest request;
+    private ConstantsService constantsService;
 
     /**
      * 根据书名和读者名借书
@@ -193,9 +196,36 @@ public class BorrowAndOrderService {
     /**
      *  根据 读者id 查询所有借阅信息
      */
-    public List<Borrow> getBorrowsByReaderId(int readerId)
+    public List<BookBorrowRecordData> getBorrowsByReaderId(int readerId)
     {
-        return borrowRepository.findBorrowsByReaderId(readerId);
+        // 获得所有的 借阅信息
+        List<Borrow> borrowsByReaderId = borrowRepository.findBorrowsByReaderId(readerId);
+        List<BookBorrowRecordData> bookBorrowRecordDatas = new ArrayList<>();
+        // 查询是否有延期的
+        borrowsByReaderId.forEach(borrow -> {
+            BookBorrowRecordData bookBorrowRecordData = new BookBorrowRecordData();
+            // 获得借阅日期
+            LocalDate borrowDate = borrow.getBorrowDate();
+            // 初始化今天的时间
+            LocalDate now = LocalDate.now();
+
+            // 获得借阅的天数
+            Period between = Period.between(borrowDate, now);
+            int days = between.getDays();
+
+            // 获得书籍归还的逾期数
+            int delayDays = constantsService.getRuturnPeriod();
+
+            if (days>delayDays)
+            {
+                bookBorrowRecordData.setFine(days-delayDays);
+            }
+            bookBorrowRecordData.setBorrowDate(borrowDate);
+            bookBorrowRecordData.setBookId(borrow.getBook().getBookId());
+            bookBorrowRecordData.setBookName(borrow.getBook().getBookName());
+            bookBorrowRecordDatas.add(bookBorrowRecordData);
+        });
+        return bookBorrowRecordDatas;
     }
 
     /**

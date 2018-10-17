@@ -153,7 +153,7 @@ $(document).ready(function(){
 $('#log-out').click(function () {
       $.ajax({
           type: 'delete',
-          url: 'logout',
+          url: '/logout',
           contentType: "application/json;charset=UTF-8",
           success: function (e) {
               if (e.code === 0) {
@@ -541,13 +541,13 @@ var delSel = function() {
             type: "DELETE",
             url: "/book",
 			data:{
-                "bookIds":checkedList.join(",")
+                "bookIds":checkList.join(",")
 			},
             success: function(data) {
                 location.reload();
             },
             error:function(data){
-                art.dialog.tips('删除失败!');
+                data.dialog.tips('删除失败!');
             }
         });
 

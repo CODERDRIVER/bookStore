@@ -287,11 +287,11 @@ body {
 .upOrDown {
 	height: 60px;
 	width: 1332px;
-    margin-bottom: 0 px;
+    margin-bottom: 0px;
     bottom: 0px;
     left: 10px;
 	padding-top:20px;
-	position: fixed;
+	position: absolute;
 	background:#F0ECE9;
 }
 .up {
@@ -310,6 +310,7 @@ body {
 	background:#D9534F;
 	width:105px;
 	height:40px;
+	margin-right:20px;
 	float:right;
 	font-size:16px;
 	color:#FFFFFF;

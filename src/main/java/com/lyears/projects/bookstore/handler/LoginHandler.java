@@ -78,7 +78,7 @@ public class LoginHandler {
                 jwtTokenCookie.setMaxAge(60 * 60 * 12);
                 jwtTokenCookie.setPath("/");
                 response.addCookie(jwtTokenCookie);
-                Cookie readerCookie = new Cookie("readerId",reader.getReaderId()+"");
+                Cookie readerCookie = new Cookie("readerId",one.getReaderId()+"");
                 readerCookie.setMaxAge(60*60*12);
                 readerCookie.setPath("/");
                 response.addCookie(readerCookie);
@@ -111,7 +111,10 @@ public class LoginHandler {
                 jwtTokenCookie.setMaxAge(60 * 60 * 12);
                 jwtTokenCookie.setPath("/");
                 response.addCookie(jwtTokenCookie);
-                response.addCookie(new Cookie("librarianId",one.getId()+""));
+                Cookie librarianCookie = new Cookie("librarianId",one.getId()+"");
+                librarianCookie.setMaxAge(60 * 60 * 12);
+                librarianCookie.setPath("/");
+                response.addCookie(librarianCookie);
                 return ResultUtil.successNoData(request.getRequestURL().toString());
             } else {
                 throw new UserDefinedException(ResultEnum.PASSWORD_ERROR);
@@ -129,6 +132,11 @@ public class LoginHandler {
         } else {
             token.setMaxAge(0);
             response.addCookie(token);
+            String type = JwtToken.verifyToken(token.getValue()).get("type").asString();
+            Cookie temp = new Cookie(type+"Id","");
+            temp.setMaxAge(0);
+            // 删除相对应的cookie
+            response.addCookie(temp);
             return ResultUtil.successNoData(request.getRequestURL().toString());
         }
     }

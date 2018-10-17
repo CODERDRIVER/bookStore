@@ -2,15 +2,15 @@
     var returnRecord = new Array();
     $(document).ready(function(){
         $.ajax({
-            type:'POST',
+            type:'GET',
             dataType:'json',
-            url:'/reader/borrow',
+            url:'/book/return/records',
             contentType:'application/json;charset=UTF-8',
             async: false,
-
             success:function(data){//返回结果
-
-                for(var i=0; i<data.length;i++){
+                console.log(data);
+                var records = data.data;
+                for(var i=0; i<records.length;i++){
 
                     returnRecord.push(new returnlist(data[i].bookId,data[i].bookName,data[i].returnDate));
                     }

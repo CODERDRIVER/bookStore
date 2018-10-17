@@ -2,17 +2,18 @@
 var borrowRecord = new Array();
 $(document).ready(function(){ 				
     $.ajax({
-        type:'POST',
+        type:'get',
         dataType:'json',
-        url:'/reader/borrow',
+        url:'/borrows/readerId',
         contentType:'application/json;charset=UTF-8',
         async: false,
         
         success:function(data){//返回结果
-
-            for(var i=0; i<data.length;i++){
+			console.log(data);
+			var borrows = data.data;
+            for(var i=0; i<borrows.length;i++){
                 
-                borrowRecord.push(new borrow(data[i].bookId,data[i].bookName,data[i].borrowDate,data[i].fine));
+                borrowRecord.push(new borrow(borrows[i].bookId,borrows[i].bookName,borrows[i].borrowDate,borrows[i].fine));
                 }
                 
         } 
