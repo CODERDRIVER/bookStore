@@ -53,4 +53,14 @@ public class ResultUtil {
         return responseMessage;
     }
 
+    /**
+     *  操作失败，带有数据
+     */
+    public static ResponseMessage errorWithData(Object o, String url) {
+        ResponseMessage responseMessage = new ResponseMessage();
+        responseMessage.setData(o);
+        responseMessage.setRequestUrl(url);
+        return responseMessage;
+    }
+
 }

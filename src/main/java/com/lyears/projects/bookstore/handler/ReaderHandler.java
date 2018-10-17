@@ -62,7 +62,7 @@ public class ReaderHandler {
     @PostMapping(value = "/add/reader")
     @ResponseBody
     public ResponseMessage saveReader(@RequestBody Reader reader, @CookieValue(value = "token")Cookie token) {
-        String type = "admin";
+        String type = "librarian";
         if (token == null) {
             //如果未登录，返回未登录页面
             throw new UserDefinedException(ResultEnum.NEED_LOGIN);
@@ -74,10 +74,12 @@ public class ReaderHandler {
         /**
          * 图书馆输入income表，增加deposit元
          */
+        reader.setPassword("12345678"); //设置密码
         readerService.save(reader);
         // 查询当前的保证金是多少元
         double deposit = constantsService.getDeposit();
         incomeService.addIncome(deposit);
+
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 

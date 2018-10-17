@@ -24,12 +24,26 @@ $('#addAnnouncement').click(function () {
                 "title": title,
                 "content": content,
             });
-            addAccount(requestData, 'add/announcement')
+            addAccount(requestData, '/announcement/add')
         },
         onCancel: function (e) {
         }
     })
 });
+
+function addAccount(data, url) {
+    $.ajax({
+        type: 'post',
+        url: url,
+        data: data,
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success: function (e) {
+            alert(e.message)
+            location.reload()
+        }
+    })
+}
 
 // 获取公告列表
 var message = new Array();
@@ -45,7 +59,7 @@ $(document).ready(function(){
   						announcements = data.data;
 						for(var i=0; i<announcements.length;i++){
 							
-							message.push(new announcement(announcements[i].title,announcements[i].content));
+							message.push(new announcement(announcements[i].id,announcements[i].title,announcements[i].content));
 							}
                         loadData();
 
@@ -66,7 +80,7 @@ $(document).ready(function(){
 $('#log-out').click(function () {
       $.ajax({
           type: 'delete',
-          url: 'logout',
+          url: '/logout',
           contentType: "application/json;charset=UTF-8",
           success: function (e) {
               if (e.code === 0) {
@@ -136,7 +150,8 @@ var showHide2 = function(obj) {
 }
 
 /* 创建公告对象 */
-function announcement(title,content) {
+function announcement(id,title,content) {
+	this.id =id;
 	this.title = title;
 	this.content = content;
 }
@@ -169,12 +184,14 @@ var changeColor = function() {
 /* 加载数据 */
 function loadData() {
 	for (var i = 0; i < message.length; i++) {
+		var id = message[i].id;
 		var title = message[i].title;
 		var content = message[i].content;
 		// 创建tr
 		var tr = createObj("tr");
 		// 创建td
 		var checkTd = createObj("td");
+		var announcementId = createObj("td");
 		var serialTd = createObj("td");
 		var titleTd = createObj("td");
 		var contentTd = createObj("td");
@@ -182,6 +199,7 @@ function loadData() {
 
 		var checkBtn = createObj("input");
 		checkBtn.type = "checkbox";
+		checkBtn.value = id;
 		// 将复选框添加到第一列；
 		checkTd.appendChild(checkBtn);
 		// 将获得的值添加到创建的指定Td中；
@@ -189,6 +207,7 @@ function loadData() {
 		var rows = tbody.rows.length;
 		// 将获得的信息添加到指定的为td中
 		serialTd.innerHTML = rows + 1;
+        announcementId.innerHTML = id;
 		titleTd.innerHTML = title;
 		contentTd.innerHTML = content;
 
@@ -215,6 +234,7 @@ function loadData() {
 		// 将新建的td加入到新建的行中
 		tr.appendChild(checkTd);
 		tr.appendChild(serialTd);
+		tr.appendChild(announcementId);
 		tr.appendChild(titleTd);
 		tr.appendChild(contentTd);
 		tr.appendChild(dmlTd);
@@ -332,19 +352,33 @@ var delSel = function() {
 			}
 		}
 
-		for (var i = inputs.length - 1; i >= 0; i--) {
+        var checkedList = new Array();
+        for (var i = inputs.length - 1; i >= 0; i--) {
 			// 过滤出checkbox类型
 			if (inputs[i].type == "checkbox") {
 				var input = inputs[i];
 				// 找出checkbox的所选择的行
 				if (input.checked) {
 					// 删除已选择的行
+                    checkedList.push(input.value);
 					tbody.removeChild(input.parentNode.parentNode);
 					// table长度减一
 					numberRowsInTable--;
 				}
 			}
 		}
+        $.ajax({
+            type: "delete",
+            url: "/announcement",
+            data: {'ids':checkedList.join(",")},
+            success: function(data) {
+            	alert("success");
+                location.reload();
+            },
+            error:function(data){
+                art.dialog.tips('删除失败!');
+            }
+        });
 		numRows.innerHTML = numberRowsInTable;
 		var rows = tbody.rows.length;
 		for (var i = 0; i < rows; i++) {
@@ -439,17 +473,20 @@ var modTr = function(obj) {
 	var tr = obj.parentNode.parentNode;
 	// 获得需要修改的内容
 	serialTxt = tr.cells[1].innerHTML;
-	var title = tr.cells[2].innerHTML;
-	var content = tr.cells[3].innerHTML;
+	var id = tr.cells[2].innerHTML;
+	var title = tr.cells[3].innerHTML;
+	var content = tr.cells[4].innerHTML;
 	// 获得遮罩层的tbody
 	var tb = getId("over_tb2");
 	// 获得tb中所有的input
     var inputs = tb.getElementsByTagName("input");
     var texts = tb.getElementsByTagName("textarea");
 	// 往遮罩层中的input填入从表格中取得来的数据
-	inputs[0].value = title;
+	inputs[0].value = id;
+	inputs[1].value = title;
 	texts[0].value = content;
-	inputs[0].disabled = "";
+	inputs[0].disabled = true;
+	inputs[1].disabled = "";
 	texts[0].disabled = "";
 
 }
@@ -490,7 +527,8 @@ var okBtn = function() {
 	// 获得tb中的所有的input的值，并且赋值给变量
     var inputs = tb.getElementsByTagName("input");
     var texts = tb.getElementsByTagName("textarea");
-	var title = inputs[0].value;
+	var id = inputs[0].value;
+	var title = inputs[1].value;
 	var content = texts[0].value;
 	
 	// 获得主页中的数据,将修改的数据填入到主页中,
@@ -499,23 +537,42 @@ var okBtn = function() {
 	for (var i = 0; i < rows; i++) {
 		var tr = tbody.rows[i];
 		if (i + 1 == serialTxt) {
-			if (tr.cells[2].innerHTML != title) {
+			if (tr.cells[3].innerHTML != title) {
 				if (title == '') {
 					alert('title can not be null！');
 					return false;
 				} 
-				tr.cells[2].innerHTML = title;
+				tr.cells[3].innerHTML = title;
 			}
-			if (tr.cells[3].innerHTML != content) {
+			if (tr.cells[4].innerHTML != content) {
 				if (content == '') {
 					alert('content can not be null！');
 					return false;
 				}
-				tr.cells[3].innerHTML = content;
+				tr.cells[4].innerHTML = content;
 			}
 
 		}
 	}
+	// 调用后端接口，同步到数据库中
+    $.ajax({
+        type:'POST',
+        dataType:'json',
+        url:'/announcement/'+id,
+        contentType:'application/json;charset=UTF-8',
+        data:JSON.stringify({
+			"id":id,
+            "title": title,
+            "content": content,
+        }),
+        success:function(data){//返回结果
+            location.reload();
+            alert("Success");
+        },
+        error:function(data){
+            art.dialog.tips('更新修改数据失败!');
+        }
+    });
 	// 隐藏遮罩层
 	showHide2();
 }

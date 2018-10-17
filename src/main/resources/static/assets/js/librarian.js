@@ -33,7 +33,7 @@ $(document).ready(function(){
 $('#log-out').click(function () {
       $.ajax({
           type: 'delete',
-          url: 'logout',
+          url: '/logout',
           contentType: "application/json;charset=UTF-8",
           success: function (e) {
               if (e.code === 0) {

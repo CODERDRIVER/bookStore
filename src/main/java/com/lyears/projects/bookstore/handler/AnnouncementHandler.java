@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.ws.Response;
 
 /**
  * @Description
@@ -45,7 +44,7 @@ public class AnnouncementHandler {
      * @return
      */
     @RequestMapping(value = "/announcement/add",method = RequestMethod.POST)
-    public ResponseMessage addAnnouncement(Announcement announcement, @CookieValue("token")String token)
+    public ResponseMessage addAnnouncement(@RequestBody Announcement announcement, @CookieValue("token")String token)
     {
         if (!AuthUtil.isLibrarian(token))
         {
@@ -63,7 +62,7 @@ public class AnnouncementHandler {
      * @return
      */
     @RequestMapping(value = "/announcement/{id}",method = RequestMethod.POST)
-    public ResponseMessage updateAnnouncement(@PathVariable("id")int id, Announcement announcement, @CookieValue("token")String token)
+    public ResponseMessage updateAnnouncement(@PathVariable("id")int id,@RequestBody Announcement announcement, @CookieValue("token")String token)
     {
         // 根据id 查询 原来公告
         Announcement announcementById = announcementService.findAnnouncementById(id);
@@ -84,11 +83,11 @@ public class AnnouncementHandler {
     }
 
     @RequestMapping(value = "/announcement",method = RequestMethod.DELETE)
-    public ResponseMessage deleteAnnouncementById(String ids)
+    public ResponseMessage deleteAnnouncementById(@RequestBody String ids)
     {
         ids = ids.split("=")[1];
         try{
-            for (String id:ids.split(","))
+            for (String id:ids.split("%2C"))
             {
                 announcementService.deleteAnnouncementById(Integer.parseInt(id));
             }

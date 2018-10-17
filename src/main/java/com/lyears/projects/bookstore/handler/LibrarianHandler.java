@@ -100,11 +100,20 @@ public class LibrarianHandler {
      * 图书管理员能够删除读者账户
      */
     @ResponseBody
-    @DeleteMapping("/reader/{id}")
-    public ResponseMessage deleteReader(@PathVariable(value = "id")int readerId)
+    @DeleteMapping("/reader")
+    public ResponseMessage deleteReader(@RequestBody  String readerIds)
     {
+        System.out.println(readerIds);
         // 如果要删除读者账号，读者账号内的罚金必须被缴纳且为归还的书籍必须归还
-        return readerService.deleteReaderById(readerId);
+        readerIds = readerIds.split("=")[1];
+        String[] ids = readerIds.split("%2C");
+        List<ResponseMessage> list = readerService.deleteReaderByIds(ids);
+        if (list==null ||list.size() == 0)
+        {
+            return ResultUtil.errorWithData(list,request.getRequestURI().toString());
+        }else{
+            return ResultUtil.successNoData(request.getRequestURL().toString());
+        }
     }
 
     /**

@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -68,6 +69,22 @@ public class ReaderService {
     }
 
     /**
+     *  删除多个id
+     */
+    public List<ResponseMessage> deleteReaderByIds(String[] ids)
+    {
+        List<ResponseMessage> list = new ArrayList<>();
+        for (String i: ids)
+        {
+            ResponseMessage responseMessage = deleteReaderById(Integer.parseInt(i));
+            if (responseMessage.getCode()!=0)
+            {
+                list.add(responseMessage);
+            }
+        }
+        return list;
+    }
+    /**
      * 根据id 删除读者账号
      */
     public ResponseMessage deleteReaderById(int id)
@@ -81,16 +98,18 @@ public class ReaderService {
             // 返回用户不存在信息
             responseMessage.setCode(-1);
             responseMessage.setMessage("该用户不存在");
+            responseMessage.setData(reader.getReaderId());
             return responseMessage;
         }
         //首先查询该用户的罚金有没有被缴纳
 
         Double totalFine = reader.getUnPaidFine();
-        if (totalFine>0)
+        if (totalFine!=null&&totalFine>0)
         {
             //读者罚金没有缴纳，不能注销
             responseMessage.setCode(-1);
             responseMessage.setMessage("读者罚金未缴纳完全，不能注销");
+            responseMessage.setData(reader.getReaderId());
         }
 
         //查询该用户是否有没有归还的书籍
@@ -100,7 +119,7 @@ public class ReaderService {
             //读者还有 没有归还的书籍
             responseMessage.setCode(-1);
             responseMessage.setMessage("注销失败，该读者有没有归还的书籍");
-
+            responseMessage.setData(reader.getReaderId());
         }
 
         // 删除该用户

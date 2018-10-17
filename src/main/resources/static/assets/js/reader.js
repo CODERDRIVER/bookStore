@@ -1,5 +1,5 @@
 $('#addReader').click(function () {
-    $('#prompt-title').text('Add Book')
+    $('#prompt-title').text('Add Reader')
     $('#addAccountPrompt').modal({
         relatedTarget: this,
 
@@ -31,12 +31,25 @@ $('#addReader').click(function () {
                 "email": email,
 				"phoneNumber": phoneNumber,
             });
-            addAccount(requestData, 'add/reader')
+            addAccount(requestData, '/add/reader')
         },
         onCancel: function (e) {
         }
     })
 });
+function addAccount(data, url) {
+    $.ajax({
+        type: 'post',
+        url: url,
+        data: data,
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success: function (e) {
+            alert(e.message)
+            location.reload()
+        }
+    })
+}
 // 获取reader 列表
 var readerlist = new Array();
 $(document).ready(function(){ 				
@@ -206,7 +219,7 @@ function loadData() {
 
 		var checkBtn = createObj("input");
 		checkBtn.type = "checkbox";
-		checkBtn.value="${readerlist[i].readerId}";
+		checkBtn.value=readerId;
 		// 将复选框添加到第一列；
 		checkTd.appendChild(checkBtn);
 		// 将获得的值添加到创建的指定Td中；
@@ -261,6 +274,7 @@ function loadData() {
 		changeBtn.value = "Edit";
 
 		// 为新建的changeBtn创建监听属性；
+
 		changeBtn.onclick = function() {
 			modTr(this);
         }
@@ -456,7 +470,7 @@ var delSel = function() {
 				var input = inputs[i];
 				// 找出checkbox的所选择的行
 				if (input.checked) {
-					checkedList.push($(this).val());
+					checkedList.push(input.value);
 					// 删除已选择的行
 					tbody.removeChild(input.parentNode.parentNode);
 					// table长度减一
@@ -464,10 +478,10 @@ var delSel = function() {
 				}
 			}
 		}
-		$.ajax({                      
-			type: "POST",                      
-			url: "deletemore",                      
-			data: {'delitems':checkedList.toString()},                    
+		$.ajax({
+			type: "delete",
+			url: "/reader",
+			data: {'readerIds':checkedList.join(",")},
 			success: function(data) {                                               
 				    location.reload();                      
 				},

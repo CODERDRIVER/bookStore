@@ -21,7 +21,8 @@ public class AuthUtil {
     {
         Map<String, Claim> claims = JwtToken.verifyToken(token);
         String type = claims.get("type").asString();
-        return type.equals("libralian");
+        System.out.println(type);
+        return type.equals("librarian");
     }
 
 
