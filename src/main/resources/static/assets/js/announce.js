@@ -554,7 +554,6 @@ var okBtn = function() {
 
 		}
 	}
-<<<<<<< HEAD
 	// 调用后端接口，同步到数据库中
     $.ajax({
         type:'POST',
@@ -574,22 +573,20 @@ var okBtn = function() {
             art.dialog.tips('更新修改数据失败!');
         }
     });
-=======
-	$.ajax({
-		type:'POST',
-		dataType:'json',
-		url:'/librarian/edit/announcement/',
-		contentType:'application/json;charset=UTF-8',	
-		data:{"id":announceId,"title":title,"content":content},
-		success:function(data){//返回结果
-				location.reload();
-				alert("Success");
-		  },
-	    error:function(data){
-			art.dialog.tips('更新修改数据失败!');
-		}
-	     });
->>>>>>> 75a954bc315fd55cb22c8f94215b867a029de007
+	// $.ajax({
+	// 	type:'POST',
+	// 	dataType:'json',
+	// 	url:'/librarian/edit/announcement/',
+	// 	contentType:'application/json;charset=UTF-8',
+	// 	data:{"id":announceId,"title":title,"content":content},
+	// 	success:function(data){//返回结果
+	// 			location.reload();
+	// 			alert("Success");
+	// 	  },
+	//     error:function(data){
+	// 		art.dialog.tips('更新修改数据失败!');
+	// 	}
+	//      });
 	// 隐藏遮罩层
 	showHide2();
 }

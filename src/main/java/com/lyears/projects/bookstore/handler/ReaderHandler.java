@@ -54,6 +54,11 @@ public class ReaderHandler {
                 request.getRequestURL().toString());
     }
 
+    @GetMapping("/reader/pages/{page}")
+    public String readerView(@PathVariable("page")String page)
+    {
+        return page;
+    }
     /**
      * 注册读者
      * @param reader    传入的读者信息

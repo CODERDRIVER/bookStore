@@ -82,13 +82,13 @@
 							<label for="doc-bookImg" class="am-u-sm-2 am-form-label">ISBN:</label>
 							<div class="am-u-sm-10">
 								<input class="am-modal-prompt-input" type="text" id="doc8"
-										placeholder="Enter your ISBN" onblur="getBook()">
+										placeholder="Enter your ISBN">
 							</div>
 					</div>
 					<div class="am-form-group">
 						<label for="doc-bookImg" class="am-u-sm-2 am-form-label">BookImg:</label>
 						<div class="am-u-sm-10">
-							<input class="am-modal-prompt-input" type="file" id="doc1"
+							<input class="am-modal-prompt-input" type="text" id="doc1"
 								   placeholder="Enter your bookImg">
 						</div>
 					</div>
@@ -214,7 +214,7 @@
 					<tbody id="over_tb">
 						<tr>
 							<td>BookImg：</td>
-							<td><input type="file" id="i1"></td>
+							<td><input type="text" id="i1"></td>
 						</tr>
 						<tr>
 							<td>Author：</td>
@@ -257,8 +257,12 @@
 				<table>
 					<tbody id="over_tb2">
 						<tr>
+							<td>BookId：</td>
+							<td><input type="text" id="i0"></td>
+						</tr>
+						<tr>
 							<td>BookImg：</td>
-							<td><input type="text" ></td>
+							<td><input type="file" ></td>
 						</tr>
 						<tr>
 							<td>Author：</td>

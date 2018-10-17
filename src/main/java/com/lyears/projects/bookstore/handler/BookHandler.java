@@ -60,7 +60,7 @@ public class BookHandler {
                 request.getRequestURL().toString());
     }
 
-    @PostMapping("/book")
+    @PostMapping("/book/add")
     public ResponseMessage addNewBook(@RequestBody Book book){
         bookService.save(book);
         return ResultUtil.successNoData(request.getRequestURL().toString());

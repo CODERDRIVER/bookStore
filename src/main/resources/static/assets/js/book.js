@@ -59,7 +59,7 @@ $('#addBook').click(function () {
 				return false;
 			} 
             var requestData = JSON.stringify({
-                "bookImg": bookImg,
+                "bookUrl": bookImg,
                 "author": author,
 				"bookName": bookName,
 				"bookType": bookType,
@@ -67,7 +67,7 @@ $('#addBook').click(function () {
 				"description": description,
 				"location":location,
             });
-            addAccount(requestData, 'add/book')
+            addAccount(requestData, '/book/add')
         },
         onCancel: function (e) {
         }
@@ -87,8 +87,19 @@ function addAccount(data, url) {
     })
 }
 
+/**
+ * 给isbn 添加回车事件
+ */
+$("#doc8").bind("keypress",function (event) {
+	if (event.keyCode == "13")
+	{
+		getBook();
+	}
+
+});
+
 function getBook() {
-	alert("光标已经移出isbn");
+	// alert("光标已经移出isbn");
 	var isbn = getId("doc8").value;
 	var url = 'https://api.douban.com/v2/book/isbn/'+isbn;
 	$.ajax({
@@ -634,6 +645,7 @@ var modTr = function(obj) {
 	var tr = obj.parentNode.parentNode;
 	// 获得需要修改的内容
 	serialTxt = tr.cells[1].innerHTML;
+	var bookId = tr.cells[2].innerHTML;
 	var bookImgTxt = tr.cells[3].innerHTML;
 	var authorTxt = tr.cells[4].innerHTML;
 	var barcodeTxt = tr.cells[5].innerHTML;
@@ -647,22 +659,29 @@ var modTr = function(obj) {
 	// 获得tb中所有的input
 	var inputs = tb.getElementsByTagName("input");
 	// 往遮罩层中的input填入从表格中取得来的数据
-	inputs[0].value = bookImgTxt;
-	inputs[1].value = authorTxt;
-	inputs[2].value = barcodeTxt;
-	inputs[3].value = bookNameTxt;
-	inputs[4].value = bookTypeTxt;
-	inputs[5].value = priceTxt;
-	inputs[6].value = descriptionTxt;
-	inputs[7].value = locationTxt;
-	inputs[0].disabled = "";
-	inputs[1].disabled = "";
-	inputs[2].disabled = "";
-	inputs[3].disabled = "";
-	inputs[4].disabled = "";
-	inputs[5].disabled = "";
-	inputs[6].disabled = "";
-	inputs[7].disabled = "";
+	// inputs[0].value = bookImgTxt;
+	inputs[0].value = bookId;
+	inputs[2].value = authorTxt;
+	inputs[3].value = barcodeTxt;
+	inputs[4].value = bookNameTxt;
+	inputs[5].value = bookTypeTxt;
+	inputs[6].value = priceTxt;
+	inputs[7].value = descriptionTxt;
+	inputs[8].value = locationTxt;
+	inputs[0].disabled = true;
+	for (var i=1;i<inputs.length;i++)
+	{
+		inputs[i].disabled = "";
+	}
+
+	// inputs[0].disabled = "";
+	// inputs[1].disabled = "";
+	// inputs[2].disabled = "";
+	// inputs[3].disabled = "";
+	// inputs[4].disabled = "";
+	// inputs[5].disabled = "";
+	// inputs[6].disabled = "";
+	// inputs[7].disabled = "";
 }
 
 /* 查看书籍信息 */

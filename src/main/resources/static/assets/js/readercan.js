@@ -1,6 +1,6 @@
 $(document).ready(function(){ 
     $("#borrowHistory").click(function(){                  
-       window.location.href="/reader/pages/readborrow";
+       window.location.href="/reader/pages/readerborrow";
      });
  })
 

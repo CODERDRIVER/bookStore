@@ -21,7 +21,7 @@
 
     $(document).ready(function(){
         $("#home").click(function(){
-            window.location.href="reader.html";
+            window.location.href="/";
          });
      })
 
@@ -316,9 +316,6 @@
             $(".over").hide("slow");
         });
     });
-    }
-    });
-    })
 
     $(document).ready(function(){
     $("#home").click(function(){
