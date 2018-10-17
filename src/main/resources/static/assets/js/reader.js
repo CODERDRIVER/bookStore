@@ -739,6 +739,7 @@ var okBtn = function() {
 		contentType:'application/json;charset=UTF-8',	
 		data:JSON.stringify({"readerId":readerId,"username":username,"email":email,"phoneNumber":phoneNumber}),
 		success:function(data){//返回结果
+		        alert("success");
 				location.reload();
 		  },
 	    error:function(data){

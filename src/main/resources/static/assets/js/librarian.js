@@ -27,6 +27,29 @@ $(document).ready(function(){
      });
  })
 
+ $(document).ready(function(){
+    $(":radio").click(function(){
+        alert("您是..." + $(this).val());
+        $.ajax({
+           type:'POST',
+           dataType:'json',
+           url:'/libralian/income/records',
+           contentType:'application/json;charset=UTF-8',	
+           data:{"type":$(this).val()},
+           success:function(data){//返回结果
+                   alert("success");
+                   getId("do1").val = data.totalDeposit;
+                   getId("do2").val = data.totalFine;
+                   location.reload();	
+             },
+           error:function(data){
+               art.dialog.tips('获取收入失败!');
+           }
+       });
+       });
+   })
+  
+
 /**
  * 登出按钮
  */
@@ -75,7 +98,7 @@ $('#addNewBook').on('click', function () {
                 success: function (e) {
                     console.log(e);
                     if (e.code === 0) {
-                        loadBookPage(1, 10, $('#search-input').val())
+                        loadData();
                     } else {
                         alert(e.message)
                     }
@@ -91,40 +114,9 @@ $('#addNewBook').on('click', function () {
 
 $('#incomeQuery').on('click', function () {
     $('#incomePrompt').modal({
+        
         relatedTarget: this,
-        onConfirm: function (e) {
-            var data = e.data;
-            var author = data[0];
-            var name = data[1];
-            var type = data[2];
-            var barCode = data[3];
-            var inventory = data[4];
-            var price = data[5];
-            var requestData = JSON.stringify({
-                "bookName": name,
-                "price": price,
-                "inventory": inventory,
-                "author": author,
-                "bookType": type,
-                "barCode": barCode
-            });
-
-            $.ajax({
-                type: 'post',
-                url: 'book',
-                data: requestData,
-                dataType: "json",
-                contentType: "application/json;charset=UTF-8",
-                success: function (e) {
-                    console.log(e);
-                    if (e.code === 0) {
-                        loadBookPage(1, 10, $('#search-input').val())
-                    } else {
-                        alert(e.message)
-                    }
-                }
-            })
-        },
+        
         onCancel: function (e) {
 
         }

@@ -1,10 +1,11 @@
 $('#addBook').click(function () {
-    $('#prompt-title').text('Add Book')
+    
+	$('#prompt-title').text('Add Book')
     $('#addAccountPrompt').modal({
-        relatedTarget: this,
-
+		relatedTarget: this,
+		
         onConfirm: function (e) {
-            var data = e.data;
+			var data = e.data;
             var bookImg = data[0];
             var author = data[1];
 			var bookName = data[2];
@@ -13,6 +14,11 @@ $('#addBook').click(function () {
 			var description = data[5];
 			var location = data[6];
 
+			var ISBN = getId("doc8").value;
+			if (ISBN == '') {
+				alert('ISBN can not be null！');
+				return false;
+			} 
 			var bookImg = getId("doc1").value;
 			if (bookImg == '') {
 				alert('bookImg can not be null！');
@@ -67,7 +73,36 @@ $('#addBook').click(function () {
         }
     })
 });
+function addAccount(data, url) {
+    $.ajax({
+        type: 'post',
+        url: url,
+        data: data,
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success: function (e) {
+            alert(e.message)
+            location.reload()
+        }
+    })
+}
 
+function getBook() {
+	alert("光标已经移出isbn");
+	var isbn = getId("doc8").value;
+	var url = 'https://api.douban.com/v2/book/isbn/'+isbn;
+	$.ajax({
+		url: url,
+		dataType: 'jsonp',
+		success:function (data) {
+			console.log(data);
+			getId("doc1").value = data.img;
+			getId("doc2").value = data.author;
+			getId("doc3").value = data.title;
+			getId("doc5").value =  data.price;
+		}
+	});
+}
 // 获取书籍信息列表
 var message = new Array();
 $(document).ready(function(){ 				
@@ -599,26 +634,26 @@ var modTr = function(obj) {
 	var tr = obj.parentNode.parentNode;
 	// 获得需要修改的内容
 	serialTxt = tr.cells[1].innerHTML;
-	var numberTxt = tr.cells[3].innerHTML;
-	var nameTxt = tr.cells[4].innerHTML;
-	var academyTxt = tr.cells[5].innerHTML;
-	var majorTxt = tr.cells[6].innerHTML;
-	var gradeTxt = tr.cells[7].innerHTML;
-	var classTxt = tr.cells[8].innerHTML;
-	var ageTxt = tr.cells[9].innerHTML;
+	var bookImgTxt = tr.cells[3].innerHTML;
+	var authorTxt = tr.cells[4].innerHTML;
+	var barcodeTxt = tr.cells[5].innerHTML;
+	var bookNameTxt = tr.cells[6].innerHTML;
+	var bookTypeTxt = tr.cells[7].innerHTML;
+	var priceTxt = tr.cells[8].innerHTML;
+	var descriptionTxt = tr.cells[9].innerHTML;
 	var locationTxt = tr.cells[10].innerHTML;
 	// 获得遮罩层的tbody
 	var tb = getId("over_tb2");
 	// 获得tb中所有的input
 	var inputs = tb.getElementsByTagName("input");
 	// 往遮罩层中的input填入从表格中取得来的数据
-	inputs[0].value = numberTxt;
-	inputs[1].value = nameTxt;
-	inputs[2].value = academyTxt;
-	inputs[3].value = majorTxt;
-	inputs[4].value = gradeTxt;
-	inputs[5].value = classTxt;
-	inputs[6].value = ageTxt;
+	inputs[0].value = bookImgTxt;
+	inputs[1].value = authorTxt;
+	inputs[2].value = barcodeTxt;
+	inputs[3].value = bookNameTxt;
+	inputs[4].value = bookTypeTxt;
+	inputs[5].value = priceTxt;
+	inputs[6].value = descriptionTxt;
 	inputs[7].value = locationTxt;
 	inputs[0].disabled = "";
 	inputs[1].disabled = "";
@@ -643,26 +678,26 @@ var lookTr = function(obj) {
 	// 通过按钮来获得tr;
 	var tr = obj.parentNode.parentNode;
 	// 获得需要查看的内容
-	var numberTxt = tr.cells[3].innerHTML;
-	var nameTxt = tr.cells[4].innerHTML;
-	var academyTxt = tr.cells[5].innerHTML;
-	var majorTxt = tr.cells[6].innerHTML;
-	var gradeTxt = tr.cells[7].innerHTML;
-	var classTxt = tr.cells[8].innerHTML;
-	var ageTxt = tr.cells[9].innerHTML;
+	var bookImgTxt = tr.cells[3].innerHTML;
+	var authorTxt = tr.cells[4].innerHTML;
+	var barcodeTxt = tr.cells[5].innerHTML;
+	var bookNameTxt = tr.cells[6].innerHTML;
+	var bookTypeTxt = tr.cells[7].innerHTML;
+	var priceTxt = tr.cells[8].innerHTML;
+	var descriptionTxt = tr.cells[9].innerHTML;
 	var locationTxt = tr.cells[10].innerHTML;
 	// 获得遮罩层的tbody
 	var tb = getId("over_tb2");
 	// 获得tb中所有的input
 	var inputs = tb.getElementsByTagName("input");
 	// 往遮罩层中的input填入从表格中取得来的数据
-	inputs[0].value = numberTxt;
-	inputs[1].value = nameTxt;
-	inputs[2].value = academyTxt;
-	inputs[3].value = majorTxt;
-	inputs[4].value = gradeTxt;
-	inputs[5].value = classTxt;
-	inputs[6].value = ageTxt;
+	inputs[0].value = bookImgTxt;
+	inputs[1].value = authorTxt;
+	inputs[2].value = barcodeTxt;
+	inputs[3].value = bookNameTxt;
+	inputs[4].value = bookTypeTxt;
+	inputs[5].value = priceTxt;
+	inputs[6].value = descriptionTxt;
 	inputs[7].value = locationTxt;
 	inputs[0].disabled = "disabled";
 	inputs[1].disabled = "disabled";
@@ -680,13 +715,13 @@ var okBtn = function() {
 	var tb = getId("over_tb2");
 	// 获得tb中的所有的input的值，并且赋值给变量
 	var inputs = tb.getElementsByTagName("input");
-	var numberTxt = inputs[0].value;
-	var nameTxt = inputs[1].value;
-	var academyTxt = inputs[2].value;
-	var majorTxt = inputs[3].value;
-	var gradeTxt = inputs[4].value;
-	var classTxt = inputs[5].value;
-	var ageTxt = inputs[6].value;
+	var bookImgTxt = inputs[0].value;
+	var authorTxt = inputs[1].value;
+	var barcodeTxt = inputs[2].value;
+	var bookNameTxt = inputs[3].value;
+	var bookTypeTxt = inputs[4].value;
+	var priceTxt = inputs[5].value;
+	var descriptionTxt = inputs[6].value;
 	var locationTxt = inputs[7].value;
 	// 获得主页中的数据,将修改的数据填入到主页中,
 	var tbody = getId("tb");
@@ -694,73 +729,82 @@ var okBtn = function() {
 	for (var i = 0; i < rows; i++) {
 		var tr = tbody.rows[i];
 		if (i + 1 == serialTxt) {
-			if (tr.cells[3].innerHTML != numberTxt) {
-				if (numberTxt == '') {
-					alert('学号不能为空！');
-					return false;
-				} else if (isNaN(numberTxt)) {
-					alert("学号请输入数字");
-					return false;
-				}
-				tr.cells[3].innerHTML = numberTxt;
-			}
-			if (tr.cells[4].innerHTML != nameTxt) {
-				if (nameTxt == '') {
-					alert('姓名不能为空！');
-					return false;
-				}
-				tr.cells[4].innerHTML = nameTxt;
-			}
-			if (tr.cells[5].innerHTML != academyTxt) {
-				if (academyTxt == '') {
-					alert('学院不能为空！');
-					return false;
-				}
-				tr.cells[5].innerHTML = academyTxt;
-			}
-			if (tr.cells[6].innerHTML != majorTxt) {
-				if (majorTxt == '') {
-					alert('专业不能为空！');
-					return false;
-				}
-				tr.cells[6].innerHTML = majorTxt;
-			}
-			if (tr.cells[7].innerHTML != gradeTxt) {
-				if (gradeTxt == '') {
-					alert('年级不能为空！');
-					return false;
-				} else if (isNaN(gradeTxt)) {
-					alert("年级请输入数字");
-					return false;
-				}
-				tr.cells[7].innerHTML = gradeTxt;
-			}
-			if (tr.cells[8].innerHTML != classTxt) {
-				if (classTxt == '') {
-					alert('班级不能为空！');
-					return false;
-				} else if (isNaN(classTxt)) {
-					alert("价格请输入数字");
-					return false;
-				}
-				tr.cells[8].innerHTML = classTxt;
-			}
-			if (tr.cells[9].innerHTML != ageTxt) {
-				if (ageTxt == '') {
-					alert('年龄不能为空！');
+			if (tr.cells[3].innerHTML != bookImgTxt) {
+				if (bookImgTxt == '') {
+					alert('bookImg can not be null！');
 					return false;
 				} 
-				tr.cells[9].innerHTML = ageTxt;
+				tr.cells[3].innerHTML = bookImgTxt;
+			}
+			if (tr.cells[4].innerHTML != authorTxt) {
+				if (authorTxt == '') {
+					alert('author can not be null！');
+					return false;
+				}
+				tr.cells[4].innerHTML = authorTxt;
+			}
+			if (tr.cells[5].innerHTML != barcodeTxt) {
+				if (barcodeTxt == '') {
+					alert('barcode can not be null！');
+					return false;
+				}
+				tr.cells[5].innerHTML = barcodeTxt;
+			}
+			if (tr.cells[6].innerHTML != bookNameTxt) {
+				if (bookNameTxt == '') {
+					alert('bookName can not be null！');
+					return false;
+				}
+				tr.cells[6].innerHTML = bookNameTxt;
+			}
+			if (tr.cells[7].innerHTML != bookTypeTxt) {
+				if (bookTypeTxt == '') {
+					alert('bookType can not be null！');
+					return false;
+				} 
+				tr.cells[7].innerHTML = gradeTxt;
+			}
+			if (tr.cells[8].innerHTML != priceTxt) {
+				if (priceTxt == '') {
+					alert('price can not be null！');
+					return false;
+				} else if (isNaN(priceTxt)) {
+					alert("price is a number");
+					return false;
+				}
+				tr.cells[8].innerHTML = priceTxt;
+			}
+			if (tr.cells[9].innerHTML != descriptionTxt) {
+				if (descriptionTxt == '') {
+					alert('description can not be null！');
+					return false;
+				} 
+				tr.cells[9].innerHTML = descriptionTxt;
 			}
 			if (tr.cells[10].innerHTML != locationTxt) {
-				if (ageTxt == '') {
-					alert('年龄不能为空！');
+				if (locationTxt == '') {
+					alert('location can not be null！');
 					return false;
 				} 
 				tr.cells[10].innerHTML = locationTxt;
 			}
 		}
 	}
+	$.ajax({
+		type:'POST',
+		dataType:'json',
+		url:'/librarian/edit/book/',
+		contentType:'application/json;charset=UTF-8',	
+		data:{"bookId":bookId,"bookImg":bookImg,"author":author,"barcode":barcode,"bookName":bookName,
+		"bookType":bookType,"price":price,"description":description,"location":location},
+		success:function(data){//返回结果
+				location.reload();
+				alert("Success");
+		  },
+	    error:function(data){
+			art.dialog.tips('更新修改数据失败!');
+		}
+	     });
 	// 隐藏遮罩层
 	showHide2();
 }
