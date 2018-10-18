@@ -1,5 +1,17 @@
 $('#addBook').click(function () {
-    
+	var pubdate ="";
+	var publisher ="";
+    var isbn = getId("doc8").value;
+	var url = 'https://api.douban.com/v2/book/isbn/'+isbn;
+	$.ajax({
+		url: url,
+		dataType: 'jsonp',
+		success:function (data) {
+			console.log(data);
+			pubdate = data.pubdate;
+			publisher = data.publisher;
+        }
+	});
 	$('#prompt-title').text('Add Book')
     $('#addAccountPrompt').modal({
 		relatedTarget: this,
@@ -66,6 +78,8 @@ $('#addBook').click(function () {
                 "price": price,
 				"description": description,
 				"location":location,
+				"pubdate" :pubdate,
+				"publisher" :publisher
             });
             addAccount(requestData, '/book/add')
         },

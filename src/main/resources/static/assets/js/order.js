@@ -95,7 +95,33 @@ $(document).ready(function(){
 				});	
 })
 
-$(document).ready(function(){ 
+function searchBook(){
+	var aboutbook = document.getElementById("bookinput").value;
+	$.ajax({
+		type:'GET',
+		dataType:'json',
+		url:'/book/search',
+		contentType:'application/json;charset=UTF-8',
+		data:{"aboutbook": aboutbook },
+		async: false,
+		success:function(data){//返回结果
+			//{"content":[{"bookId":1,"bookName":"四级词汇","price":999.0,"inventory":3,"location":"120201","author":"卢根","bookType":"英语类","barCode":"12345678","status":1,"bookUrl":"www.baidu.com","description":"ojsjfoiajosdifjoasjfo"}]
+			var books = []
+			books =data.data.content
+			console.log(data.data.content);
+			for(var i=0; i<books.length;i++){
+				
+				message.push(new book(books[i].bookId,books[i].bookUrl, books[i].author,
+					books[i].barCode,books[i].bookName,books[i].bookType, books[i].price,
+					books[i].description, books[i].location,books[i].inventory));
+				}
+			loadData();
+				
+		} 
+		
+	});	
+}
+functionready(function(){ 
     $("#home").click(function(){                  
         window.location.href="/";
      });
@@ -273,7 +299,7 @@ function loadData() {
            		data:{"bookName":bookName},
            		success:function(data){//返回结果
 					console.log(data);
-           				// location.reload();
+						   // location.reload();
 						window.location.reload();
            		  },
            	    error:function(data){
@@ -297,7 +323,8 @@ function loadData() {
            		data:{"bookName":bookName},
            		success:function(data){//返回结果
 					console.log(data);
-           				// location.reload();
+						   // location.reload();
+						alert("借阅成功！");
 						window.location.reload();
            		  },
            	    error:function(data){
