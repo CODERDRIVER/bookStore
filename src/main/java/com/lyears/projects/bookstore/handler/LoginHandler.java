@@ -6,6 +6,7 @@ import com.lyears.projects.bookstore.entity.Librarian;
 import com.lyears.projects.bookstore.entity.Reader;
 import com.lyears.projects.bookstore.exception.UserDefinedException;
 import com.lyears.projects.bookstore.jwt.JwtToken;
+import com.lyears.projects.bookstore.model.PasswordForget;
 import com.lyears.projects.bookstore.service.AdminService;
 import com.lyears.projects.bookstore.service.LibrarianService;
 import com.lyears.projects.bookstore.service.ReaderService;
@@ -14,13 +15,17 @@ import com.lyears.projects.bookstore.util.ResultEnum;
 import com.lyears.projects.bookstore.util.ResultUtil;
 import com.lyears.projects.bookstore.util.SendEmail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sun.plugin2.message.Message;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Map;
 
 /**
@@ -40,7 +45,11 @@ public class LoginHandler {
     private LibrarianService librarianService;
 
     @Autowired
+    private JavaMailSender javaMailSender;
+
+    @Autowired
     private HttpServletRequest request;
+    public static final String FROM = "1187697635@qq.com";
 
     @PostMapping("/login/admin")
     @ResponseBody
@@ -161,9 +170,13 @@ public class LoginHandler {
     /**
      *  忘记密码，通过邮箱发送密码
      */
-    @GetMapping("/password")
-    public ResponseMessage forgetPassword(@RequestParam("email") String email,@RequestParam("type")String type)
+    @PostMapping(value = "/send/password")
+    @ResponseBody
+    public ResponseMessage forgetPassword(@RequestBody PasswordForget passwordForget)
     {
+        String email = passwordForget.getEmail();
+        String type = passwordForget.getType();
+        System.out.println(email);
         if (email==null||type==null)
         {
             return ResultUtil.error(ResultEnum.FAILURE,request.getRequestURL().toString());
@@ -175,7 +188,12 @@ public class LoginHandler {
             case "librarian":password = librarianService.findByEmail(email).getPassword();break;
             case "reader":password = readerService.findByEmail(email).getPassword();break;
         }
-        SendEmail.sendPasswordMail(email,password);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(FROM);
+        message.setTo(email);
+        message.setSubject("主题：密码找回");
+        message.setText("你的密码为"+password);
+        javaMailSender.send(message);
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 }

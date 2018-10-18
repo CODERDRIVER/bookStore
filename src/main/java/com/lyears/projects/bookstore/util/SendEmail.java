@@ -47,8 +47,11 @@ public class SendEmail {
      */
     public static void sendPasswordMail(String to,String password)
     {
+        System.out.println(to);
         String subject = "密码找回";
         sendMail(to,subject,"你的密码为："+password);
     }
+
+
 
 }

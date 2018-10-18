@@ -5,24 +5,32 @@
 
 var cookieUtil = $.AMUI.utils.cookie;
 
-function findKey(){
-    var email = getId("doc-email").val;
+function findKey(e){
+    var email = document.getElementById("doc-email").value;
+    // alert($(':input[name="loginType"]:checked').val());
     var type = $(':input[name="loginType"]:checked').val();
-    $.ajax({
-        type:'get',
-        dataType:'json',
-        url:'/password',
-        contentType:'application/json;charset=UTF-8',
-        data:{"email":email,"type":type},
-        success:function(data){//返回结果
-         console.log(data);
+    if(type == undefined)
+    {
+        // alert("请选择登录类型");
+        // showLoginModal();
+    }else{
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:'/send/password',
+            contentType:'application/json;charset=UTF-8',
+            data:JSON.stringify({"email":email,"type":type}),
+            success:function(data){//返回结果
+                alert("发送成功");
+                console.log(data);
                 // location.reload();
-             window.location.reload();
-          },
-        error:function(data){
-         alert('请求找回密码失败!');
-        }
-    });
+                // window.location.reload();
+            },
+            error:function(data){
+                alert('请求找回密码失败!');
+            }
+        });
+    }
 }
 //login function
 $(function () {
@@ -34,35 +42,67 @@ $(function () {
 
     $('#sign-in').on('click', function () {
         if (cookieUtil.get('token') != null) {
-            window.location = "login/all"
+            window.location = "/login/all"
         } else {
-            $('#loginPrompt').modal({
-                relatedTarget: this,
-                onConfirm: function (e) {
-                    var data = e.data;
-                    var email = data[0];
-                    var password = data[1];
-                    var requestData = JSON.stringify({
-                        "email": email,
-                        "password": password
-                    });
-                    var type = $(':input[name="loginType"]:checked').val();
-
-                    if (type === "admin") {
-                        login(requestData, 'login/admin', "admin")
-                    } else if (type === "librarian") {
-                        login(requestData, 'login/librarian', 'librarian')
-                    } else if (type === "reader") {
-                        login(requestData, 'login/reader', '/')
-                    }
-                },
-                onCancel: function (e) {
-
-                }
-            });
+            showLoginModal();
+            // $('#loginPrompt').modal({
+            //     relatedTarget: this,
+            //     closeViaDimmer:false,
+            //     closeOnConfirm:false,
+            //     onConfirm: function (e) {
+            //         var data = e.data;
+            //         var email = data[0];
+            //         var password = data[1];
+            //         var requestData = JSON.stringify({
+            //             "email": email,
+            //             "password": password
+            //         });
+            //         var type = $(':input[name="loginType"]:checked').val();
+            //
+            //         if (type === "admin") {
+            //             login(requestData, 'login/admin', "admin")
+            //         } else if (type === "librarian") {
+            //             login(requestData, 'login/librarian', 'librarian')
+            //         } else if (type === "reader") {
+            //             login(requestData, 'login/reader', '/')
+            //         }
+            //     },
+            //     onCancel: function (e) {
+            //
+            //     }
+            // });
         }
     });
 });
+function showLoginModal()
+{
+    $('#loginPrompt').modal({
+        relatedTarget: this,
+        closeViaDimmer:false,
+        closeOnConfirm:false,
+        onConfirm: function (e) {
+            var data = e.data;
+            var email = data[0];
+            var password = data[1];
+            var requestData = JSON.stringify({
+                "email": email,
+                "password": password
+            });
+            var type = $(':input[name="loginType"]:checked').val();
+
+            if (type === "admin") {
+                login(requestData, 'login/admin', "admin")
+            } else if (type === "librarian") {
+                login(requestData, 'login/librarian', 'librarian')
+            } else if (type === "reader") {
+                login(requestData, 'login/reader', '/')
+            }
+        },
+        onCancel: function (e) {
+
+        }
+    });
+}
 
 /**
  * 模态登录窗口
