@@ -21,6 +21,9 @@
 .am-dropdown {
     margin-top: 8px;
 }
+.am-dropdown-content li{
+    background-color: #e6e6e6;
+}
 
 .am-align-left {
     margin-bottom: 0.2rem;

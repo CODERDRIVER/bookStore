@@ -27,8 +27,10 @@ public class Reader {
     private String password;
     private Integer borrowNum = 0;
     private String phoneNumber;    //电话号码
-    private Double paidFine; //已经交过的罚金
-    private Double unPaidFine; //未交过的罚金
+    @Column(columnDefinition = "double default 0")
+    private double paidFine; //已经交过的罚金
+    @Column(columnDefinition = "double default 0")
+    private double unPaidFine; //未交过的罚金
     @OneToMany(mappedBy = "reader", targetEntity = Borrow.class)
     private Set<Borrow> borrows = new HashSet<>();
     @OneToMany(mappedBy = "reader", targetEntity = Order.class)

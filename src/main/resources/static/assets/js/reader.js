@@ -579,21 +579,23 @@ var borrowTr = function(obj) {
 var returnTr = function(obj) {
 	window.location.href="return.html";
 }
+// $("#unpaidFine").click(function () {
+// 	alert("click");
+// 	fineTr();
+// })
 
 /* 获取罚金记录信息 */
-var fineTr = function(obj) {
+var fineTr = function() {
 	var readerId = "";
 	var paidFine = "";
 	var unpaidFine = "";
     $.ajax({
-        type:'POST',
+        type:'get',
         dataType:'json',
-        url:'/fine',
+        url:'/reader/unpaidFine',
         contentType:'application/json;charset=UTF-8',
-        async: false,
-        
+        async: true,
         success:function(data){//返回结果
-
 			 readerId = data.readerId;
 			 paidFine = data.paidFine;
 			 unpaidFine = data.unpaidFine;

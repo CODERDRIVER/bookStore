@@ -107,11 +107,12 @@ function getBook() {
 		dataType: 'jsonp',
 		success:function (data) {
 			console.log(data);
-			getId("doc1").value = data.img;
+			getId("doc1").value = data.image;
 			getId("doc2").value = data.author;
 			getId("doc3").value = data.title;
-			getId("doc5").value =  data.price;
-		}
+			console.log(data.price.slice(0,-1));
+			getId("doc5").value = parseFloat(data.price.slice(0,-1));
+        }
 	});
 }
 // 获取书籍信息列表
@@ -697,6 +698,7 @@ var lookTr = function(obj) {
 	// 通过按钮来获得tr;
 	var tr = obj.parentNode.parentNode;
 	// 获得需要查看的内容
+	var bookId = tr.cells[2].innerHTML;
 	var bookImgTxt = tr.cells[3].innerHTML;
 	var authorTxt = tr.cells[4].innerHTML;
 	var barcodeTxt = tr.cells[5].innerHTML;
@@ -710,7 +712,7 @@ var lookTr = function(obj) {
 	// 获得tb中所有的input
 	var inputs = tb.getElementsByTagName("input");
 	// 往遮罩层中的input填入从表格中取得来的数据
-	inputs[0].value = bookImgTxt;
+	inputs[0].value = bookId;
 	inputs[1].value = authorTxt;
 	inputs[2].value = barcodeTxt;
 	inputs[3].value = bookNameTxt;

@@ -29,8 +29,8 @@ $('#unpaidFine').on('click', function () {
             });
 
             $.ajax({
-                type: 'post',
-                url: 'book',
+                type: 'get',
+                url: '/book',
                 data: requestData,
                 dataType: "json",
                 contentType: "application/json;charset=UTF-8",
