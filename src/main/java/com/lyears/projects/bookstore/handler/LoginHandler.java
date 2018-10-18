@@ -12,6 +12,7 @@ import com.lyears.projects.bookstore.service.ReaderService;
 import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultEnum;
 import com.lyears.projects.bookstore.util.ResultUtil;
+import com.lyears.projects.bookstore.util.SendEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -155,5 +156,26 @@ public class LoginHandler {
         } else {
             throw new UserDefinedException(ResultEnum.NEED_LOGIN);
         }
+    }
+
+    /**
+     *  忘记密码，通过邮箱发送密码
+     */
+    @GetMapping("/password")
+    public ResponseMessage forgetPassword(@RequestParam("email") String email,@RequestParam("type")String type)
+    {
+        if (email==null||type==null)
+        {
+            return ResultUtil.error(ResultEnum.FAILURE,request.getRequestURL().toString());
+        }
+        String password = "";
+        switch (type)
+        {
+            case "admin":password = adminService.findByEmail(email).getPassword();break;
+            case "librarian":password = librarianService.findByEmail(email).getPassword();break;
+            case "reader":password = readerService.findByEmail(email).getPassword();break;
+        }
+        SendEmail.sendPasswordMail(email,password);
+        return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 }

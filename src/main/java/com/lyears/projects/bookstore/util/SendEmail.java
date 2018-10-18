@@ -42,4 +42,13 @@ public class SendEmail {
 
     }
 
+    /**
+     *  发送找回密码
+     */
+    public static void sendPasswordMail(String to,String password)
+    {
+        String subject = "密码找回";
+        sendMail(to,subject,"你的密码为："+password);
+    }
+
 }
