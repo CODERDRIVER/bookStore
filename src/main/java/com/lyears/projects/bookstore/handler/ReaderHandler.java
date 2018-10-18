@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -104,17 +106,26 @@ public class ReaderHandler {
      * 书籍预约功能
      */
 
-    @RequestMapping(value = "/book/order",method = RequestMethod.POST)
+    @RequestMapping(value = "/book/order",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public ResponseMessage orderBook(@RequestBody String bookName,@CookieValue("readerId")Cookie readerId)
     {
+        try {
+            // 转码
+            bookName = URLDecoder.decode(bookName,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        System.out.println(bookName.split("=")[1]);
+//        bookName = bookName.split("=")[1];
+        final String  name = bookName.split("=")[1];
         if (readerId==null)
         {
             ResultUtil.error(ResultEnum.NO_RIGHT,request.getRequestURL().toString());
         }else{
 
             // 保存一条预约记录
-           ResponseMessage responseMessage =  borrowAndOrderService.orderBookWithReaderIdAndBookId(Integer.parseInt(readerId.getValue()),bookName);
+           ResponseMessage responseMessage =  borrowAndOrderService.orderBookWithReaderIdAndBookId(Integer.parseInt(readerId.getValue()),bookName.split("=")[1]);
 
            // 启动一个定时器，在两个小时后，取消预约
             TimerTask timerTask = new TimerTask() {
@@ -128,7 +139,7 @@ public class ReaderHandler {
                     int bookId = book.getBookId();
                     bookService.updateBookStatusByBookId(0,bookId); //设置书为正常状态
                     // 库存量增加1
-                    bookService.updateInventoryByBookName(bookName,book.getInventory()+1);
+                    bookService.updateInventoryByBookName(name,book.getInventory()+1);
                 }
             };
             // 两个小时候后执行

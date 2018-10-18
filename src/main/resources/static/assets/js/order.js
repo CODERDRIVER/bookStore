@@ -86,7 +86,7 @@ $(document).ready(function(){
 							
 							message.push(new book(books[i].bookId,books[i].bookUrl, books[i].author,
                                 books[i].barCode,books[i].bookName,books[i].bookType, books[i].price,
-                                books[i].description, books[i].location));
+                                books[i].description, books[i].location,books[i].inventory));
 							}
                         loadData();
 							
@@ -173,7 +173,7 @@ var showHide2 = function(obj) {
 
 /* 创建书籍对象 */
 function book(bookId,bookImg, author, barcode, bookName, bookType, price,
-		description,location) {
+		description,location,inventory) {
 	this.bookId = bookId;
 	this.bookImg = bookImg;
 	this.author = author;
@@ -183,6 +183,7 @@ function book(bookId,bookImg, author, barcode, bookName, bookType, price,
 	this.price = price;
 	this.description = description;
 	this.location = location;
+	this.inventory = inventory;
 }
 
 var changeColor = function() {
@@ -221,13 +222,14 @@ function loadData() {
 		var price = message[i].price;
 		var description = message[i].description;
 		var location = message[i].location;
+		var inventory = message[i].inventory;
 		// 创建tr
 		var tr = createObj("tr");
 		// 创建td
 		var checkTd = createObj("td");
 		var serialTd = createObj("td");
 		var bookIdTd = createObj("td");
-		var bookImgTd = createObj("td");
+		var inventoryTd = createObj("td");
 		var authorTd = createObj("td");
 		var barcodeTd = createObj("td");
 		var bookNameTd = createObj("td");
@@ -238,14 +240,15 @@ function loadData() {
 		var dmlTd = createObj("td");
 
 		// 将复选框添加到第一列；
-		checkTd.appendChild(checkBtn);
+		// checkTd.appendChild(checkBtn);
 		// 将获得的值添加到创建的指定Td中；
 		var tbody = getId("tb");
 		var rows = tbody.rows.length;
 		// 将获得的信息添加到指定的为td中
 		serialTd.innerHTML = rows + 1;
 		bookIdTd.innerHTML = bookId;
-		bookImgTd.innerHTML = bookImg;
+		// bookImgTd.innerHTML = bookImg;
+		inventoryTd.innerHTML = inventory;
 		authorTd.innerHTML = author;
 		barcodeTd.innerHTML = barcode;
 		bookNameTd.innerHTML = bookName;
@@ -261,17 +264,20 @@ function loadData() {
 		orderBtn.value = "order";
 		// 为新建的orderBtn创建监听属性；
 		orderBtn.onclick = function() {
+			console.log(bookName);
            $.ajax({
            		type:'POST',
            		dataType:'json',
-           		url:'/order',
+           		url:'/book/order',
            		contentType:'application/json;charset=UTF-8',
-           		data:{"bookId":bookId},
+           		data:{"bookName":bookName},
            		success:function(data){//返回结果
-           				location.reload();
+					console.log(data);
+           				// location.reload();
+						window.location.reload();
            		  },
            	    error:function(data){
-           			art.dialog.tips('预约数据失败!');
+                    alert('预约数据失败!');
            		}
            	});
 		};
@@ -279,8 +285,9 @@ function loadData() {
 		dmlTd.appendChild(orderBtn);
 		// 将新建的td加入到新建的行中
 		tr.appendChild(serialTd);
-		tr.appendChild(bookIdTd);
-		tr.appendChild(bookImgTd);
+		tr.appendChild(inventoryTd)
+		// tr.appendChild(bookIdTd);
+		// tr.appendChild(bookImgTd);
 		tr.appendChild(authorTd);
 		tr.appendChild(barcodeTd);
 		tr.appendChild(bookNameTd);
