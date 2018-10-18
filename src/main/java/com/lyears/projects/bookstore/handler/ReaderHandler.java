@@ -48,6 +48,33 @@ public class ReaderHandler {
     @Autowired
     private BorrowAndOrderService borrowAndOrderService;
 
+    /**
+     *  根据readerId 查找Reader信息
+     * @param readerId
+     * @return
+     */
+    @GetMapping("/reader/readerId")
+    @ResponseBody
+    public ResponseMessage findReaderById(@CookieValue("readerId")Cookie readerId)
+    {
+        return ResultUtil.success(readerService.findOne(Integer.parseInt(readerId.getValue())),request.getRequestURL().toString());
+    }
+
+    /**
+     *  修改reader 的信息
+     * @return
+     */
+
+    @PostMapping("/reader/edit")
+    @ResponseBody
+    public ResponseMessage updateReaderInfo(@RequestBody Reader reader,@CookieValue("readerId")Cookie readerId)
+    {
+        reader.setReaderId(Integer.parseInt(readerId.getValue()));
+        readerService.save(reader);
+        // 更新数据库
+        return ResultUtil.successNoData(request.getRequestURL().toString());
+    }
+
     @GetMapping(value = "/readers")
     @ResponseBody
     public ResponseMessage getAllReaders() {
