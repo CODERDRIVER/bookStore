@@ -134,7 +134,7 @@ function loadData() {
         var bookNameTd = createObj("td");
         var borrowDateTd = createObj("td");
         var fineTd = createObj("td");
-
+        var dmlTd = createObj("td");
 		// 将获得的值添加到创建的指定Td中；
 		var tbody = getId("tb");
 		var rows = tbody.rows.length;
@@ -145,13 +145,36 @@ function loadData() {
         bookIdTd.innerHTML = bookId;
 		borrowDateTd.innerHTML = borrowDate;
 
+		// 创建个归还的button按钮，添加到操作列；
+		var returnBtn = createObj("input");
+		returnBtn.type = "button";
+		returnBtn.value = "Return";
+		// 为新建的returnBtn创建监听属性；
+		returnBtn.onclick = function() {
+			var flag = window.confirm("确定归还？");
+			if (flag) {
+					$.ajax({
+						type: 'post',
+						url: '/reader/return',
+						data: {"bookId":bookId},
+						dataType: "json",
+						contentType: "application/json;charset=UTF-8",
+						success: function (e) {
+							console.log(e);
+							alert(e.message);
+						}
+					})
+				}
+		};
 
+		dmlTd.appendChild(returnBtn);
 		// 将新建的td加入到新建的行中
 		tr.appendChild(serialTd);
         tr.appendChild(bookIdTd);
         tr.appendChild(bookNameTd);
         tr.appendChild(borrowDateTd);
-        tr.appendChild(fineTd);
+		tr.appendChild(fineTd);
+		tr.appendChild(dmlTd);
 
 		// 将新建的tr加入到tbody中
 		var tbody = getId("tb");

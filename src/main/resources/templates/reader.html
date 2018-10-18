@@ -72,7 +72,8 @@
                 </li>
             </div>
             <div class="am-topbar-right">
-                <button id="lib-icon" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><span class="am-icon-user-secret"> Mr.Reader </span></button>
+                <!-- <button id="lib-icon" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><span class="am-icon-user-secret" > Mr.Reader </span></button> -->
+                <button id="lib-icon" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm" > Mr.Reader </button> 
             </div>
         </div>
     </div>
@@ -94,6 +95,54 @@
         <div class="am-modal-footer">
             <span class="am-modal-btn" data-am-modal-cancel="">close</span>
             
+        </div>
+    </div>
+</div>
+
+<div class="am-modal am-modal-prompt" tabindex="-1" id="readerPrompt">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd"><h4 id="prompt-title">Edit Reader-information</h4></div>
+        <div class="am-modal-bd">
+            <form class="am-form am-form-horizontal">
+                <div class="am-form-group">
+                    <label for="doc-title" class="am-u-sm-2 am-form-label">Email:</label>
+                    <div class="am-u-sm-10">
+                        <input class="am-modal-prompt-input" type="text" id="eamil"
+                            placeholder="Enter your eamil">
+                    </div>
+                </div>
+
+                <div class="am-form-group">
+                    <label for="doc-content" class="am-u-sm-2 am-form-label">UserName：</label>
+                    <div class="am-u-sm-10">
+                        <input class="am-modal-prompt-input" type="text" id="userName"
+                            placeholder="Enter your userName">
+                    </div>
+                </div>
+
+                <div class="am-form-group">
+                    <label for="doc-content" class="am-u-sm-2 am-form-label">PhoneNumber：</label>
+                    <div class="am-u-sm-10">
+                        <input class="am-modal-prompt-input" type="text" id="phoneNumber"
+                            placeholder="Enter your phoneNumber">
+                    </div>
+                </div>
+
+                <div class="am-form-group">
+                    <label for="doc-content" class="am-u-sm-2 am-form-label">Password：</label>
+                    <div class="am-u-sm-10">
+                        <input class="am-modal-prompt-input" type="text" id="password"
+                            placeholder="Enter your password">
+                    </div>
+                </div>
+
+                
+            </form>
+
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
+            <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
         </div>
     </div>
 </div>

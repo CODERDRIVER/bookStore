@@ -121,7 +121,7 @@
         for (var i = 0; i < returnRecord.length; i++) {
             var bookId = returnRecord[i].bookId;
             var bookName = returnRecord[i].bookName;
-            var borrowDate = returnRecord[i].returnDate;
+            var returnDate = returnRecord[i].returnDate;
 
             // 创建tr
             var tr = createObj("tr");
