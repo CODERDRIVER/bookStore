@@ -281,8 +281,33 @@ function loadData() {
            		}
            	});
 		};
+		
+		// 创建个button按钮，添加到操作列；
+		var borrowBtn = createObj("input");
+		borrowBtn.type = "button";
+		borrowBtn.value = "borrow";
+		// 为新建的orderBtn创建监听属性；
+		orderBtn.onclick = function() {
+			console.log(bookName);
+           $.ajax({
+           		type:'POST',
+           		dataType:'json',
+           		url:'/book/order',
+           		contentType:'application/json;charset=UTF-8',
+           		data:{"bookName":bookName},
+           		success:function(data){//返回结果
+					console.log(data);
+           				// location.reload();
+						window.location.reload();
+           		  },
+           	    error:function(data){
+                    alert('借书失败!');
+           		}
+           	});
+		};
 
 		dmlTd.appendChild(orderBtn);
+		dmlTd.appendChild(borrowBtn);
 		// 将新建的td加入到新建的行中
 		tr.appendChild(serialTd);
 		tr.appendChild(inventoryTd)

@@ -1,10 +1,29 @@
 /*
-    author: fzm
-    date: 2018-9-25
+    author: zbt
+    date: 2018-10-18
  */
 
 var cookieUtil = $.AMUI.utils.cookie;
 
+function findKey(){
+    var email = getId("doc-email").val;
+    var type = $(':input[name="loginType"]:checked').val();
+    $.ajax({
+        type:'get',
+        dataType:'json',
+        url:'/password',
+        contentType:'application/json;charset=UTF-8',
+        data:{"email":email,"type":type},
+        success:function(data){//返回结果
+         console.log(data);
+                // location.reload();
+             window.location.reload();
+          },
+        error:function(data){
+         alert('请求找回密码失败!');
+        }
+    });
+}
 //login function
 $(function () {
     //如果已登录，切换到注销按钮
