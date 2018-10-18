@@ -15,6 +15,7 @@ $(document).ready(function(){
                 
                 borrowRecord.push(new borrow(borrows[i].bookId,borrows[i].bookName,borrows[i].borrowDate,borrows[i].fine));
                 }
+            loadData();
                 
         } 
     });
@@ -53,18 +54,18 @@ var numberRowsInTable = theTable.rows.length;
 var numRows = getId("spanTotalNumRows");
 
 var borrowRecord = new Array();
-borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
-borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
-borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
-borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
-borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
-borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
-borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
-borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
-borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
-borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
-borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
-borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
+// borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
+// borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
+// borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
+// borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
+// borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
+// borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
+// borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
+// borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
+// borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
+// borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
+// borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
+// borrowRecord.push(new borrow("123", "某本书","2018/10/13 21：55","100"));
 
 /* 显示增加窗体 */
 var showHide = function(obj) {
@@ -116,7 +117,7 @@ var changeColor = function() {
 	}
 }
 
-loadData();
+
 
 /* 加载数据 */
 function loadData() {

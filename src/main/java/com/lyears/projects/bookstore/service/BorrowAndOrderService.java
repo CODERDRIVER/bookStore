@@ -105,6 +105,7 @@ public class BorrowAndOrderService {
             return ResultUtil.error(ResultEnum.NO_BORROWNUM_LEFT,request.getRequestURL().toString());
         }else{
             // 查询 该书的剩余库存量
+            System.out.println(bookName);
             List<Book> byBookName = bookRepository.findByBookName(bookName);
             int counts = byBookName.get(0).getInventory();
             if (counts > 0 )
