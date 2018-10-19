@@ -53,6 +53,18 @@ public class ReaderService {
 
     @Transactional(rollbackFor = RuntimeException.class)
     public void save(Reader reader) {
+        int readerId = reader.getReaderId();
+        Reader one = readerRepository.findOne(readerId);
+        if (reader.getPassword()==null)
+        {
+            reader.setPassword(one.getPassword());
+        }
+        if (reader.getBorrowNum()==null)
+        {
+            reader.setBorrowNum(one.getBorrowNum());
+        }
+        reader.setUnPaidFine(one.getUnPaidFine());
+        reader.setPaidFine(one.getPaidFine());
         readerRepository.save(reader);
     }
 

@@ -87,7 +87,7 @@ $(document).ready(function(){
  $('#log-out').click(function () {
        $.ajax({
            type: 'delete',
-           url: 'logout',
+           url: '/logout',
            contentType: "application/json;charset=UTF-8",
            success: function (e) {
                if (e.code === 0) {
@@ -573,7 +573,6 @@ var selAll = function() {
 /* 获取借书记录信息 */
 var borrowTr = function(obj) {
 	window.location.href="borrow.html";
-	window.location.href="borrow.html";
 }
 
 /* 获取还书记录信息 */
@@ -743,9 +742,10 @@ var okBtn = function() {
 	$.ajax({
 		type:'POST',
 		dataType:'json',
-		url:'/update',
+		url:'/reader/edit',
 		contentType:'application/json;charset=UTF-8',	
-		data:JSON.stringify({"readerId":readerId,"username":username,"email":email,"phoneNumber":phoneNumber}),
+		data:JSON.stringify(
+			{"readerId":readerId,"userName":username,"email":email,"phoneNumber":phoneNumber}),
 		success:function(data){//返回结果
 		        alert("success");
 				location.reload();

@@ -67,9 +67,13 @@ public class ReaderHandler {
 
     @PostMapping("/reader/edit")
     @ResponseBody
-    public ResponseMessage updateReaderInfo(@RequestBody Reader reader,@CookieValue("readerId")Cookie readerId)
+    public ResponseMessage updateReaderInfo(@RequestBody Reader reader,@CookieValue(value = "readerId",required = false)Cookie readerId)
     {
-        reader.setReaderId(Integer.parseInt(readerId.getValue()));
+        System.out.println(reader.toString());
+        if (readerId!=null)
+        {
+            reader.setReaderId(Integer.parseInt(readerId.getValue()));
+        }
         readerService.save(reader);
         // 更新数据库
         return ResultUtil.successNoData(request.getRequestURL().toString());

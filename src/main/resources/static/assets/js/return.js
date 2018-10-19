@@ -2,14 +2,14 @@
 var returnRecord = new Array();
 $(document).ready(function(){ 				
     $.ajax({
-        type:'POST',
+        type:'get',
         dataType:'json',
-        url:'/return',
+        url:'/book/return/records',
         contentType:'application/json;charset=UTF-8',
         async: false,
         
         success:function(data){//返回结果
-
+			console.log(data);
             for(var i=0; i<data.length;i++){
                 
                 returnRecord.push(new returnlist(data[i].returnId,data[i].readerId,data[i].bookId,data[i].returnDate));
@@ -30,7 +30,7 @@ $(document).ready(function(){
 $('#log-out').click(function () {
       $.ajax({
           type: 'delete',
-          url: 'logout',
+          url: '/logout',
           contentType: "application/json;charset=UTF-8",
           success: function (e) {
               if (e.code === 0) {
@@ -67,18 +67,18 @@ var numberRowsInTable = theTable.rows.length;
 var numRows = getId("spanTotalNumRows");
 
 var returnRecord = new Array();
-returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
-returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
-returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
-returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
-returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
-returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
-returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
-returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
-returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
-returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
-returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
-returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
+// returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
+// returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
+// returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
+// returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
+// returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
+// returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
+// returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
+// returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
+// returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
+// returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
+// returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
+// returnRecord.push(new returnlist("123", "某读者","某本书","2018/10/13 21：55"));
 
 /* 显示增加窗体 */
 var showHide = function(obj) {
