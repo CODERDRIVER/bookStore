@@ -825,12 +825,13 @@ var okBtn = function() {
 			}
 		}
 	}
+	var formdata = new FormData($('form')[0]);
 	$.ajax({
 		type:'POST',
 		dataType:'json',
 		url:'/librarian/edit/book/',
 		contentType:'application/json;charset=UTF-8',	
-		data:{"bookId":bookId,"bookImg":bookImg,"author":author,"barcode":barcode,"bookName":bookName,
+		data:{"bookId":bookId,"bookImg":formdata,"author":author,"barcode":barcode,"bookName":bookName,
 		"bookType":bookType,"price":price,"description":description,"location":location},
 		success:function(data){//返回结果
 				location.reload();
