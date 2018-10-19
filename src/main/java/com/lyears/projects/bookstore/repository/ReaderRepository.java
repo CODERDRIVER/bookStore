@@ -17,6 +17,8 @@ public interface ReaderRepository extends JpaRepository<Reader,Integer> {
 
     Reader findByEmail(String email);
 
+    Reader findByPhoneNumber(String phoneNumber);
+
     //设置读者创建账户时所要缴纳的保证金
     @Modifying
     @Query(nativeQuery = true,value = "UPDATE constants as c set c.deposit = :deposit")

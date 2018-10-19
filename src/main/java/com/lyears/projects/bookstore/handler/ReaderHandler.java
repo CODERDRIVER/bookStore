@@ -95,7 +95,7 @@ public class ReaderHandler {
      */
     @PostMapping(value = "/add/reader")
     @ResponseBody
-    public ResponseMessage saveReader(@RequestBody Reader reader, @CookieValue(value = "token")Cookie token) {
+    public ResponseMessage saveReader(@RequestBody Reader reader, @CookieValue("token")Cookie token) {
         String type = "librarian";
         if (token == null) {
             //如果未登录，返回未登录页面
@@ -109,10 +109,13 @@ public class ReaderHandler {
          * 图书馆输入income表，增加deposit元
          */
         reader.setPassword("12345678"); //设置密码
-        readerService.save(reader);
         // 查询当前的保证金是多少元
         double deposit = constantsService.getDeposit();
         incomeService.addIncome(deposit);
+        // 设置读者的已付钱数
+        reader.setPaidFine(deposit);
+        readerService.save(reader);
+
 
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
@@ -123,9 +126,18 @@ public class ReaderHandler {
      */
     @GetMapping("/reader/unpaidFine")
     @ResponseBody
-    public ResponseMessage getUnpaidFine(@CookieValue(value = "readerId")Cookie readerId)
+    public ResponseMessage getUnpaidFine(@RequestParam(value = "readerId",required = false)String readerId,@CookieValue(value = "readerId",required = false)Cookie readerIdCookie)
     {
-        Reader one = readerService.findOne(readerId.getVersion());
+
+        Reader one = null;
+        if (readerIdCookie!=null)
+        {
+            one = readerService.findOne(Integer.parseInt(readerIdCookie.getValue()));
+        }else{
+            one = readerService.findOne(Integer.parseInt(readerId));
+        }
+        one.setBorrows(null);
+        one.setOrders(null);
         return ResultUtil.success(one,request.getRequestURL().toString());
     }
 
@@ -152,7 +164,7 @@ public class ReaderHandler {
         }else{
 
             // 保存一条预约记录
-           ResponseMessage responseMessage =  borrowAndOrderService.orderBookWithReaderIdAndBookId(Integer.parseInt(readerId.getValue()),bookName.split("=")[1]);
+           ResponseMessage responseMessage =  borrowAndOrderService.orderBookWithReaderIdAndBookName(Integer.parseInt(readerId.getValue()),bookName.split("=")[1]);
 
            // 启动一个定时器，在两个小时后，取消预约
             TimerTask timerTask = new TimerTask() {
@@ -174,6 +186,29 @@ public class ReaderHandler {
             return responseMessage;
         }
         return null;
+    }
+
+    /**
+     *  书籍借阅功能
+     */
+    @RequestMapping(value = "/book/borrow",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public ResponseMessage borrowBook(@RequestBody String bookName,@CookieValue("readerId")Cookie readerId)
+    {
+        try {
+            // 转码
+            bookName = URLDecoder.decode(bookName,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        if (readerId==null)
+        {
+            return ResultUtil.error(ResultEnum.NO_RIGHT,request.getRequestURL().toString());
+        }else{
+            // 增加一条借阅记录
+           return borrowAndOrderService.borrowBookWithBookNameAndReaderId(Integer.parseInt(readerId.getValue()), bookName.split("=")[1]);
+        }
     }
     /**
      * 使用Stream避免栈溢出

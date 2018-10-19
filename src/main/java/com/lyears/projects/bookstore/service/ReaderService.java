@@ -27,6 +27,15 @@ public class ReaderService {
     @Autowired
     private ConstantsRepository constantsRepository;
 
+    /**
+     *  根据手机号查询读者信息
+     * @param phoneNumber
+     */
+    public Reader findByPhoneNumber(String phoneNumber)
+    {
+        return readerRepository.findByPhoneNumber(phoneNumber);
+    }
+
     @Transactional(rollbackFor = RuntimeException.class)
     public void delete(Integer id) {
         readerRepository.delete(id);

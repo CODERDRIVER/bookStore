@@ -84,7 +84,7 @@ public class BorrowAndOrderService {
      * @param readerId
      * @param bookName
      */
-    public ResponseMessage orderBookWithReaderIdAndBookId(int readerId, String bookName)
+    public ResponseMessage orderBookWithReaderIdAndBookName(int readerId, String bookName)
     {
         /**
          *  1. 需要查询该读者的借阅数量是否已经足够
@@ -120,6 +120,7 @@ public class BorrowAndOrderService {
                          *  设置该书的状态
                          *  增加一条预约记录
                          *  设置该书籍的库存 减一
+                         *  读者的借阅数量加一
                          */
                         book.setStatus(2);      // 设置为预约中
                         // 更新数据库
@@ -132,6 +133,8 @@ public class BorrowAndOrderService {
                         order.setOrderStatus(0);    // 预约中
                         order.setOrderDate(LocalDateTime.now());
                         orderRepository.save(order);
+                        reader.setBorrowNum(reader.getBorrowNum()+1);
+                        readerRepository.save(reader);
                         return ResultUtil.success(book,request.getRequestURL().toString());
                     }
                 }
@@ -141,6 +144,64 @@ public class BorrowAndOrderService {
         }
         return null;
 
+    }
+
+    /**
+     *  根据读者id,和书名进行借书操作
+     * @param readerId
+     * @param bookName
+     * @return
+     */
+    public ResponseMessage borrowBookWithBookNameAndReaderId(int readerId,String bookName)
+    {
+        /**
+         *  首先查询该读者能否借书
+         */
+        Reader one = readerRepository.findOne(readerId);
+        int borrowNum = one.getBorrowNum();
+
+        // 得到每个读者能够借书的数量
+        int totalBorrowNums = constantsService.getTotalBorrowNums();
+
+        if (borrowNum==totalBorrowNums)
+        {
+            // 不能借阅
+            return ResultUtil.error(ResultEnum.NO_BORROWNUM_LEFT,request.getRequestURL().toString());
+        }else{
+            // 查询该书的库存量
+            System.out.println(bookName);
+            List<Book> byBookName = bookRepository.findByBookName(bookName);
+            int counts = byBookName.get(0).getInventory();
+            if (counts>0)
+            {
+                // 说明有库存
+                // 增加一条借阅查询 并更新书的状态以及书的库存
+               for (Book book:byBookName){
+                   if (book.getStatus()==0)
+                   {
+                       // 说明是正常的，能够进行借阅的书
+                       book.setStatus(1);  //设置成已借出
+                       bookRepository.save(book);
+
+                       //更新库存
+                       bookRepository.updateInventoryByBookName(bookName,counts-1);
+
+                       Borrow borrow = new Borrow();
+                       borrow.setBook(book);
+                       borrow.setBorrowDate(LocalDate.now());
+                       borrow.setReader(one);
+                       borrow.setBorrowStatus(true);    // 设置为借阅成功
+                       borrowRepository.save(borrow);
+                       one.setBorrowNum(one.getBorrowNum()+1);
+                       readerRepository.save(one);
+                       return ResultUtil.success(book,request.getRequestURL().toString());
+                   }
+               }
+            }else{
+                return ResultUtil.error(ResultEnum.NO_BOOK_STORE,request.getRequestURL().toString());
+            }
+        }
+        return null;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)

@@ -10,10 +10,7 @@ import com.lyears.projects.bookstore.model.PasswordForget;
 import com.lyears.projects.bookstore.service.AdminService;
 import com.lyears.projects.bookstore.service.LibrarianService;
 import com.lyears.projects.bookstore.service.ReaderService;
-import com.lyears.projects.bookstore.util.ResponseMessage;
-import com.lyears.projects.bookstore.util.ResultEnum;
-import com.lyears.projects.bookstore.util.ResultUtil;
-import com.lyears.projects.bookstore.util.SendEmail;
+import com.lyears.projects.bookstore.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -99,6 +96,33 @@ public class LoginHandler {
         } else {
             throw new UserDefinedException(ResultEnum.USER_NOT_EXIST);
         }
+    }
+
+
+    /**
+     *读者登录，手机号
+     */
+    @PostMapping("/login/reader/phoneNumber")
+    @ResponseBody
+    public ResponseMessage loginWithPhone(@RequestBody Reader reader,HttpServletResponse response)
+    {
+        String phone  = reader.getPhoneNumber();
+        String password = reader.getPassword();
+        Reader one = readerService.findByPhoneNumber(phone);
+        if (one!=null)
+        {
+            if (one.getPassword().equals(password))
+            {
+                // 说明手机号和密码都是正确的
+                String jwtToken = JwtToken.createToken(phone,one.getUserName(),"reader");
+                CookieUtil.createCookie("token",jwtToken,60*60*12,"/",response);
+                CookieUtil.createCookie("readerId",one.getReaderId()+"",60*60*12,"/",response);
+                return ResultUtil.successNoData(request.getRequestURL().toString());
+            }
+        }else{
+            return ResultUtil.error(ResultEnum.NO_RIGHT,request.getRequestURL().toString());
+        }
+        return null;
     }
 
     /**

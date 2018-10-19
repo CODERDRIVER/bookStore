@@ -77,13 +77,14 @@
     <div class="admin-content">
         <div class="admin-content-body">
             <hr>
-
-            <div class="am-u-sm-12 am-u-md-3">
-                <div class="am-input-group am-input-group-sm">
-                    <input type="text" class="am-form-field" placeholder="Enter the booName/author">
-                    <span class="am-input-group-btn">
-                        <button class="am-btn am-btn-default" type="button" id="search" onclick="searchBook()">Search</button>
-                        </span>
+            <div class="am-g">
+                <div class="am-u-lg-3">
+                    <div class="am-input-group am-input-group-primary">
+                        <input type="text" id="search-key" class="am-form-field" placeholder="BookName,Author,BookType">
+                        <span class="am-input-group-btn">
+                        <button class="am-btn am-btn-primary" type="button" id="search" onclick="searchBook()"><span class="am-icon-search"></span></button>
+                     </span>
+                    </div>
                 </div>
             </div>
         </div>

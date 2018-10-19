@@ -147,7 +147,7 @@ $(document).ready(function(){
 							
 							message.push(new book(books[i].bookId,books[i].bookUrl, books[i].author,
                                 books[i].barCode,books[i].bookName,books[i].bookType, books[i].price,
-                                books[i].description, books[i].location));
+                                books[i].description, books[i].location,books[i].inventory));
 							}
                         loadData();
 							
@@ -250,7 +250,7 @@ var showHide2 = function(obj) {
 
 /* 创建书籍对象 */
 function book(bookId,bookImg, author, barcode, bookName, bookType, price,
-		description,location) {
+		description,location,inventory) {
 	this.bookId = bookId;
 	this.bookImg = bookImg;
 	this.author = author;
@@ -260,6 +260,7 @@ function book(bookId,bookImg, author, barcode, bookName, bookType, price,
 	this.price = price;
 	this.description = description;
 	this.location = location;
+	this.inventory = inventory;
 }
 
 var changeColor = function() {
@@ -300,6 +301,7 @@ function loadData() {
 		var price = message[i].price;
 		var description = message[i].description;
 		var location = message[i].location;
+		var inventory = message[i].inventory;
 		// 创建tr
 		var tr = createObj("tr");
 		// 创建td
@@ -315,6 +317,7 @@ function loadData() {
 		var descriptionTd = createObj("td");
 		var locationTd = createObj("td");
 		var dmlTd = createObj("td");
+		var inventoryTd = createObj("td");
 
 		var checkBtn = createObj("input");
 		checkBtn.type = "checkbox";
@@ -335,6 +338,7 @@ function loadData() {
 		priceTd.innerHTML = price;
 		descriptionTd.innerHTML = description;
 		locationTd.innerHTML = location;
+        inventoryTd.innerHTML = inventory;
 
 
 		// 创建个button按钮，添加到操作列；
@@ -360,7 +364,7 @@ function loadData() {
 		tr.appendChild(checkTd);
 		tr.appendChild(serialTd);
 		tr.appendChild(bookIdTd);
-		tr.appendChild(bookImgTd);
+		tr.appendChild(inventoryTd);
 		tr.appendChild(authorTd);
 		tr.appendChild(barcodeTd);
 		tr.appendChild(bookNameTd);
@@ -661,7 +665,7 @@ var modTr = function(obj) {
 	// 获得需要修改的内容
 	serialTxt = tr.cells[1].innerHTML;
 	var bookId = tr.cells[2].innerHTML;
-	var bookImgTxt = tr.cells[3].innerHTML;
+	var inventoryTxt = tr.cells[3].innerHTML;
 	var authorTxt = tr.cells[4].innerHTML;
 	var barcodeTxt = tr.cells[5].innerHTML;
 	var bookNameTxt = tr.cells[6].innerHTML;
@@ -669,6 +673,7 @@ var modTr = function(obj) {
 	var priceTxt = tr.cells[8].innerHTML;
 	var descriptionTxt = tr.cells[9].innerHTML;
 	var locationTxt = tr.cells[10].innerHTML;
+
 	// 获得遮罩层的tbody
 	var tb = getId("over_tb2");
 	// 获得tb中所有的input
@@ -676,6 +681,7 @@ var modTr = function(obj) {
 	// 往遮罩层中的input填入从表格中取得来的数据
 	// inputs[0].value = bookImgTxt;
 	inputs[0].value = bookId;
+	inputs[1].value = inventoryTxt;
 	inputs[2].value = authorTxt;
 	inputs[3].value = barcodeTxt;
 	inputs[4].value = bookNameTxt;
@@ -688,15 +694,6 @@ var modTr = function(obj) {
 	{
 		inputs[i].disabled = "";
 	}
-
-	// inputs[0].disabled = "";
-	// inputs[1].disabled = "";
-	// inputs[2].disabled = "";
-	// inputs[3].disabled = "";
-	// inputs[4].disabled = "";
-	// inputs[5].disabled = "";
-	// inputs[6].disabled = "";
-	// inputs[7].disabled = "";
 }
 
 /* 查看书籍信息 */
@@ -713,7 +710,7 @@ var lookTr = function(obj) {
 	var tr = obj.parentNode.parentNode;
 	// 获得需要查看的内容
 	var bookId = tr.cells[2].innerHTML;
-	var bookImgTxt = tr.cells[3].innerHTML;
+	var inventoryTxt = tr.cells[3].innerHTML;
 	var authorTxt = tr.cells[4].innerHTML;
 	var barcodeTxt = tr.cells[5].innerHTML;
 	var bookNameTxt = tr.cells[6].innerHTML;
@@ -727,13 +724,14 @@ var lookTr = function(obj) {
 	var inputs = tb.getElementsByTagName("input");
 	// 往遮罩层中的input填入从表格中取得来的数据
 	inputs[0].value = bookId;
-	inputs[1].value = authorTxt;
-	inputs[2].value = barcodeTxt;
-	inputs[3].value = bookNameTxt;
-	inputs[4].value = bookTypeTxt;
-	inputs[5].value = priceTxt;
-	inputs[6].value = descriptionTxt;
-	inputs[7].value = locationTxt;
+	inputs[1].value = inventoryTxt;
+	inputs[2].value = authorTxt;
+	inputs[3].value = barcodeTxt;
+	inputs[4].value = bookNameTxt;
+	inputs[5].value = bookTypeTxt;
+	inputs[6].value = priceTxt;
+	inputs[7].value = descriptionTxt;
+	inputs[8].value = locationTxt;
 	inputs[0].disabled = "disabled";
 	inputs[1].disabled = "disabled";
 	inputs[2].disabled = "disabled";

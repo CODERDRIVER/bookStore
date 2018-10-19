@@ -17,35 +17,22 @@ $(document).ready(function(){
  })
 
 $('#unpaidFine').on('click', function () {
-    $('#unpaidFinePrompt').modal({
-        relatedTarget: this,
-        onConfirm: function (e) {
-            var data = e.data;
-            var totalDeposit = data[0];
-            var totalFine = data[1];
-            var requestData = JSON.stringify({
-                "totalDeposit": totalDeposit,
-                "totalFine": totalFine,
-            });
+    $.ajax({
+        type: 'get',
+        url: '/reader/unpaidFine',
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success: function (data) {
+            console.log(data);
+            document.getElementById("unpaid-fine").value = data.data;
+            $('#unpaidFinePrompt').modal({
+                closeViaDimmer:false,
+                closeOnConfirm:false,
+                relatedTarget: this,
+                onCancel: function (e) {
 
-            $.ajax({
-                type: 'get',
-                url: '/book',
-                data: requestData,
-                dataType: "json",
-                contentType: "application/json;charset=UTF-8",
-                success: function (e) {
-                    console.log(e);
-                    if (e.code === 0) {
-                        loadBookPage(1, 10, $('#search-input').val())
-                    } else {
-                        alert(e.message)
-                    }
                 }
-            })
-        },
-        onCancel: function (e) {
-
+            });
         }
     });
 

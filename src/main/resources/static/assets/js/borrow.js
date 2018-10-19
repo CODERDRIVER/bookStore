@@ -2,7 +2,7 @@
 var borrowRecord = new Array();
 $(document).ready(function(){ 				
     $.ajax({
-        type:'POST',
+        type:'get',
         dataType:'json',
         url:'/borrow',
         contentType:'application/json;charset=UTF-8',
@@ -30,7 +30,7 @@ $(document).ready(function(){
 $('#log-out').click(function () {
       $.ajax({
           type: 'delete',
-          url: 'logout',
+          url: '/logout',
           contentType: "application/json;charset=UTF-8",
           success: function (e) {
               if (e.code === 0) {
@@ -67,18 +67,18 @@ var numberRowsInTable = theTable.rows.length;
 var numRows = getId("spanTotalNumRows");
 
 var borrowRecord = new Array();
-borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
-borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
-borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
-borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
-borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
-borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
-borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
-borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
-borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
-borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
-borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
-borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
+// borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
+// borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
+// borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
+// borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
+// borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
+// borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
+// borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
+// borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
+// borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
+// borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
+// borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
+// borrowRecord.push(new borrow("123", "某读者","某本书","2018/10/13 21：55"));
 
 /* 显示增加窗体 */
 var showHide = function(obj) {

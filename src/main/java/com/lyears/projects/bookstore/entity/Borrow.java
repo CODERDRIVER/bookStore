@@ -30,12 +30,12 @@ public class Borrow {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate borrowDate = LocalDate.now();
     /**
      * 用户借书默认一个月还
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate returnDate = this.getBorrowDate().plusMonths(1);
 
     private Boolean borrowStatus;

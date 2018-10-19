@@ -78,7 +78,7 @@ $(document).ready(function(){
 
 $(document).ready(function(){ 
     $("#home").click(function(){                  
-        window.location.href="librarian.html";                              
+        window.location.href="/librarian";
      });
  })
  /**
@@ -255,8 +255,8 @@ function loadData() {
 		fineBtn.type = "button";
 		fineBtn.value = "Fine";
 		// 为新建的fineBtn创建监听属性；
-		fineBtn.onclick = function() {
-			fineTr(this);
+		fineBtn.onclick = function(e) {
+			fineTr(e);
         };
         
 		// 创建个button按钮，添加到操作列；
@@ -573,6 +573,7 @@ var selAll = function() {
 /* 获取借书记录信息 */
 var borrowTr = function(obj) {
 	window.location.href="borrow.html";
+	window.location.href="borrow.html";
 }
 
 /* 获取还书记录信息 */
@@ -585,44 +586,49 @@ var returnTr = function(obj) {
 // })
 
 /* 获取罚金记录信息 */
-var fineTr = function() {
-	var readerId = "";
+var fineTr = function(e) {
+	var readerId = e.srcElement.parentNode.parentNode.childNodes[2].innerHTML;
+	console.log(readerId);
 	var paidFine = "";
 	var unpaidFine = "";
     $.ajax({
         type:'get',
         dataType:'json',
         url:'/reader/unpaidFine',
+		data:{
+        	"readerId":readerId
+		},
         contentType:'application/json;charset=UTF-8',
         async: true,
         success:function(data){//返回结果
-			 readerId = data.readerId;
-			 paidFine = data.paidFine;
-			 unpaidFine = data.unpaidFine;
+
+			console.log(data);
+			 readerId = data.data.readerId;
+			 paidFine = data.data.paidFine;
+			 unpaidFine = data.data.unPaidFine;
+            // 获得隐藏的DIV
+            var overDiv = getId("over5");
+            var buttonConfirm = getId("hide5");
+            getId("lookMessages5").innerHTML = "view fine record";
+            buttonConfirm.style.display = "none";
+
+            // 将隐藏的div有隐藏显现出来
+            overDiv.style.display = "block";
+
+
+            // 获得遮罩层的tbody
+            var tb = getId("over_tb5");
+            // 获得tb中所有的input
+            var inputs = tb.getElementsByTagName("input");
+            // 往遮罩层中的input填入从表格中取得来的数据
+            inputs[0].value = readerId;
+            inputs[1].value = paidFine;
+            inputs[2].value = unpaidFine;
+            inputs[0].disabled = "disabled";
+            inputs[1].disabled = "disabled";
+            inputs[2].disabled = "disabled";
         }   
     });
-	// 获得隐藏的DIV
-	var overDiv = getId("over5");
-	var buttonConfirm = getId("hide5");
-	getId("lookMessages5").innerHTML = "view fine record";
-	buttonConfirm.style.display = "none";
-
-	// 将隐藏的div有隐藏显现出来
-	overDiv.style.display = "block";
-	
-    
-	// 获得遮罩层的tbody
-	var tb = getId("over_tb5");
-	// 获得tb中所有的input
-    var inputs = tb.getElementsByTagName("input");
-	// 往遮罩层中的input填入从表格中取得来的数据
-	inputs[0].value = readerId;
-    inputs[1].value = paidFine;
-    inputs[2].value = unpaidFine;
-	inputs[0].disabled = "disabled";
-    inputs[1].disabled = "disabled";
-	inputs[2].disabled = "disabled";
-	
 	
 }
 
