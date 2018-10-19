@@ -63,6 +63,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query(nativeQuery = true,value = "update book as b set b.status = :stat where b.book_id = :bookId")
     @Modifying
     @Transactional
-    void updateStatusByBookId(int stat,int bookId);
+    void updateStatusByBookId(@Param("stat") int stat,@Param("bookId") int bookId);
 
 }

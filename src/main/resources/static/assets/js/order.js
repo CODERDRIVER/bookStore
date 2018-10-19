@@ -96,36 +96,37 @@ $(document).ready(function(){
 })
 
 function searchBook(){
-	var aboutbook = document.getElementById("bookinput").value;
-	$.ajax({
+	var key = document.getElementById("search-key").value;
+	$("#tb").html("");
+    $.ajax({
 		type:'GET',
 		dataType:'json',
-		url:'/book/search',
+		url:'/books?keyStr='+key,
 		contentType:'application/json;charset=UTF-8',
-		data:{"aboutbook": aboutbook },
 		async: false,
 		success:function(data){//返回结果
 			//{"content":[{"bookId":1,"bookName":"四级词汇","price":999.0,"inventory":3,"location":"120201","author":"卢根","bookType":"英语类","barCode":"12345678","status":1,"bookUrl":"www.baidu.com","description":"ojsjfoiajosdifjoasjfo"}]
 			var books = []
 			books =data.data.content
 			console.log(data.data.content);
+			message = new Array();
 			for(var i=0; i<books.length;i++){
 				
 				message.push(new book(books[i].bookId,books[i].bookUrl, books[i].author,
 					books[i].barCode,books[i].bookName,books[i].bookType, books[i].price,
 					books[i].description, books[i].location,books[i].inventory));
 				}
+			console.log(message);
 			loadData();
-				
 		} 
 		
 	});	
 }
-functionready(function(){ 
-    $("#home").click(function(){                  
-        window.location.href="/";
-     });
- })
+
+$("#home").click(function(){
+	window.location.href="/";
+ });
+
 
 var getId = function(id) {
 	return document.getElementById(id);
@@ -289,7 +290,8 @@ function loadData() {
 		orderBtn.type = "button";
 		orderBtn.value = "order";
 		// 为新建的orderBtn创建监听属性；
-		orderBtn.onclick = function() {
+		orderBtn.onclick = function(e) {
+			bookName = e.srcElement.parentNode.parentNode.childNodes[4].innerHTML;
 			console.log(bookName);
            $.ajax({
            		type:'POST',
@@ -299,11 +301,17 @@ function loadData() {
            		data:{"bookName":bookName},
            		success:function(data){//返回结果
 					console.log(data);
-						   // location.reload();
+						if(data.code==0)
+						{
+                            // location.reload();
+                            alert('预约成功!');
+                        }else{
+							alert(data.message);
+						}
 						window.location.reload();
            		  },
            	    error:function(data){
-                    alert('预约数据失败!');
+                    alert('预约失败!');
            		}
            	});
 		};
@@ -313,22 +321,29 @@ function loadData() {
 		borrowBtn.type = "button";
 		borrowBtn.value = "borrow";
 		// 为新建的orderBtn创建监听属性；
-		orderBtn.onclick = function() {
-			console.log(bookName);
-           $.ajax({
+        borrowBtn.onclick = function(e) {
+            bookName = e.srcElement.parentNode.parentNode.childNodes[4].innerHTML;
+            console.log(bookName);
+            $.ajax({
            		type:'POST',
            		dataType:'json',
-           		url:'/book/order',
+           		url:'/book/borrow',
            		contentType:'application/json;charset=UTF-8',
            		data:{"bookName":bookName},
            		success:function(data){//返回结果
 					console.log(data);
 						   // location.reload();
-						alert("借阅成功！");
+                    if(data.code==0)
+                    {
+                        // location.reload();
+                        alert('借阅成功!');
+                    }else{
+                        alert(data.message);
+                    }
 						window.location.reload();
            		  },
            	    error:function(data){
-                    alert('借书失败!');
+                    alert('借阅失败!');
            		}
            	});
 		};
@@ -414,6 +429,7 @@ function pre() {
 
 /* 第一页 */
 function first() {
+    numberRowsInTable = theTable.rows.length;
 	hideTable();
 	page = 1;
 	for (var i = 0; i < pageSize && i < numberRowsInTable; i++) {
@@ -444,7 +460,7 @@ function last() {
 /* 隐藏table */
 function hideTable() {
 	for (var i = 0; i < numberRowsInTable; i++) {
-		theTable.rows[i].style.display = 'none';
+       theTable.rows[i].style.display = 'none';
 	}
 }
 

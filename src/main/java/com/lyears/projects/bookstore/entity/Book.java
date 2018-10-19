@@ -19,7 +19,6 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer bookId;
-    @Column(unique = true)
     private String bookName;
     private Double price;
     private Integer inventory;  //库存

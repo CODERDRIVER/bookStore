@@ -81,11 +81,17 @@ public class BorrowAndOrderHandler {
      */
 
     @ResponseBody
-    @RequestMapping("/borrows/readerId")
-    public ResponseMessage getBorrowsByReaderId(@CookieValue("readerId")Cookie cookie)
+    @RequestMapping(value = "/borrows/readerId",method = RequestMethod.GET)
+    public ResponseMessage getBorrowsByReaderId(@RequestParam(value = "readerId",required = false)String readerId,@CookieValue(value = "readerId",required = false)Cookie cookie)
     {
-        String readerId = cookie.getValue();
-        return ResultUtil.success(borrowAndOrderService.getBorrowsByReaderId(Integer.parseInt(readerId)),request.getRequestURL().toString());
+        String id = "";
+        if (cookie!=null)
+        {
+            id = cookie.getValue();
+        }else{
+            id = readerId;
+        }
+        return ResultUtil.success(borrowAndOrderService.getBorrowsByReaderId(Integer.parseInt(id)),request.getRequestURL().toString());
     }
 
     private List<Borrow> avoidStackOverflow(List<Borrow> borrows){

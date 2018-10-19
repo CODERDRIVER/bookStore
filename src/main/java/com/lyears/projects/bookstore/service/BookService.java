@@ -41,7 +41,19 @@ public class BookService {
     public void save(Book book){
         //补全书籍的bar_code 信息
         book.setBarCode(IDGenerator.getUniqueId());
+        // 根据名称获得该书的库存量
+        List<Book> byBookName = bookRepository.findByBookName(book.getBookName());
+        int counts = 0;
+        if (byBookName!=null&&byBookName.size()!=0)
+        {
+           counts =  byBookName.get(0).getInventory()+1;
+        }else {
+            counts = 1;
+        }
+        book.setStatus(0);
         bookRepository.save(book);
+
+        bookRepository.updateInventoryByBookName(book.getBookName(),counts);
     }
 
     /**
