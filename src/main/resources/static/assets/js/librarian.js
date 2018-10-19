@@ -27,6 +27,23 @@ $(document).ready(function(){
      });
  })
 
+ $(document).ready(function(){ 
+    $("#orderManagement").click(function(){                  
+        window.location.href="/librarian/pages/orderManage";
+     });
+ })
+
+ $(document).ready(function(){ 
+    $("#borrowManagement").click(function(){                  
+        window.location.href="/librarian/pages/borrowManage";
+     });
+ })
+
+ $(document).ready(function(){ 
+    $("#returnManagement").click(function(){                  
+        window.location.href="/librarian/pages/returnManage";
+     });
+ })
  $(document).ready(function(){
     $(":radio").click(function(){
         alert("您是..." + $(this).val());
