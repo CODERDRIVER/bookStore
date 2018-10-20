@@ -2,13 +2,17 @@ package com.lyears.projects.bookstore.handler;
 
 import com.lyears.projects.bookstore.exception.ErrorPageException;
 import com.lyears.projects.bookstore.jwt.JwtToken;
+import com.lyears.projects.bookstore.util.CookieUtil;
 import com.lyears.projects.bookstore.util.ResultEnum;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author fzm
@@ -16,6 +20,9 @@ import javax.servlet.http.Cookie;
  **/
 @Controller
 public class ViewHandler {
+
+    @Autowired
+    private HttpServletResponse response;
 
     @GetMapping("/admin")
     public String adminIndex(@CookieValue(value = "token", required = false) Cookie token) {
@@ -64,8 +71,13 @@ public class ViewHandler {
      * 管理员页面跳转
      */
     @GetMapping("/librarian/pages/{page}")
-    public String librarianPage(@PathVariable("page") String page)
+    public String librarianPage(@PathVariable("page") String page,@RequestParam(value = "readerId",required = false) String readerId)
     {
+//        if (readerId!=null)
+//        {
+//            response.setHeader("readerId",readerId);
+//        }
+        CookieUtil.createCookie("readerId",readerId,60*60*12,"/",response);
         return page;
     }
 

@@ -238,7 +238,7 @@ function loadData() {
 		borrowBtn.value = "Borrow";
 		// 为新建的borrowBtn创建监听属性；
 		borrowBtn.onclick = function() {
-			borrowTr(this);
+			borrowTr(readerId);
         };
         
         // 创建个button按钮，添加到还书记录列；
@@ -247,7 +247,7 @@ function loadData() {
 		returnBtn.value = "Return";
 		// 为新建的returnBtn创建监听属性；
 		returnBtn.onclick = function() {
-			returnTr(this);
+			returnTr(readerId);
         };
 
         // 创建个button按钮，添加到罚金记录列；
@@ -571,13 +571,13 @@ var selAll = function() {
 }
 
 /* 获取借书记录信息 */
-var borrowTr = function(obj) {
-	window.location.href="borrow.html";
+var borrowTr = function(readerId) {
+	window.location.href="borrow.html?readerId="+readerId;
 }
 
 /* 获取还书记录信息 */
-var returnTr = function(obj) {
-	window.location.href="return.html";
+var returnTr = function(readerId) {
+	window.location.href="return.html?readerId="+readerId;
 }
 // $("#unpaidFine").click(function () {
 // 	alert("click");

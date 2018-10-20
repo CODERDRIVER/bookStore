@@ -1,22 +1,23 @@
 // 获取借书记录列表
 var borrowRecord = new Array();
-$(document).ready(function(){ 				
-    $.ajax({
-        type:'get',
-        dataType:'json',
-        url:'/borrow',
-        contentType:'application/json;charset=UTF-8',
-        async: false,
-        
-        success:function(data){//返回结果
+$(document).ready(function(){
 
-            for(var i=0; i<data.length;i++){
-                
-                borrowRecord.push(new borrow(data[i].borrowId,data[i].readerId,data[i].bookId,data[i].borrowDate));
-                }
-                
-        } 
-    });
+	$.ajax({
+		type:'get',
+		dataType:'json',
+		url:'/borrows/readerId',
+		contentType:'application/json;charset=UTF-8',
+		async: false,
+		success:function(data){//返回结果
+			console.log(data);
+			var borrows = data.data;
+			for(var i=0; i<borrows.length;i++){
+
+				borrowRecord.push(new borrow(borrows[i].borrowId,borrows[i].readerId,borrows[i].bookId,borrows[i].borrowDate));
+			}
+            loadData();
+		}
+	});
 })
 
 $(document).ready(function(){ 
@@ -130,7 +131,7 @@ var changeColor = function() {
 	}
 }
 
-loadData();
+
 
 /* 加载数据 */
 function loadData() {

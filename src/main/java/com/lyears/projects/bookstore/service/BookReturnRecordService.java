@@ -36,6 +36,26 @@ public class BookReturnRecordService {
     private BorrowRepository borrowRepository;
     @Autowired
     private ConstantsService constantsService ;
+
+
+    /**
+     * 添加一条归还记录
+     * @param bookReturnRecord
+     */
+    public void saveReturnRecord(BookReturnRecord bookReturnRecord)
+    {
+        bookReturnRecordRepository.save(bookReturnRecord);
+    }
+    /**
+     *
+     * @param returnId
+     * @return
+     */
+
+    public BookReturnRecord findOne(int returnId)
+    {
+        return bookReturnRecordRepository.findOne(returnId);
+    }
     /**
      * 返回所有的归还书籍记录
      * @return
@@ -46,6 +66,15 @@ public class BookReturnRecordService {
        return bookReturnRecordRepository.findAll();
     }
 
+    /**
+     *  查询所有的归还记录
+     * @return
+     */
+    public List<BookReturnRecord> findAll()
+    {
+        List<BookReturnRecord> all = bookReturnRecordRepository.findAll();
+        return all;
+    }
 
     /**
      *  根据读者id 查询所有的书籍归还记录
@@ -79,8 +108,11 @@ public class BookReturnRecordService {
                 diff = days - returnPeriod;
             }
             bookReturnRecordData.setFine(diff);
+            bookReturnRecordData.setReaderId(Integer.parseInt(readerId));
+            bookReturnRecordData.setReturnId(bookReturnRecord.getId());
             bookReturnRecordDataList.add(bookReturnRecordData);
         }
+        System.out.println(readerId);
         return bookReturnRecordDataList;
     }
 }

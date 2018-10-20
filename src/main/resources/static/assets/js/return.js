@@ -7,7 +7,6 @@ $(document).ready(function(){
         url:'/book/return/records',
         contentType:'application/json;charset=UTF-8',
         async: false,
-        
         success:function(data){//返回结果
 			console.log(data);
             for(var i=0; i<data.length;i++){

@@ -3,6 +3,7 @@ package com.lyears.projects.bookstore.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
         @UniqueConstraint(columnNames = {"reader_id", "book_id"})
 })
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
 public class Borrow {
 
     @Id
@@ -38,54 +40,10 @@ public class Borrow {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate returnDate = this.getBorrowDate().plusMonths(1);
 
-    private Boolean borrowStatus;
+    private int borrowStatus;   //借阅状态  0 借阅中 1 借阅成功 2 借阅失败
 
 
-    public Integer getBorrowId() {
-        return borrowId;
-    }
 
-    public void setBorrowId(Integer borrowId) {
-        this.borrowId = borrowId;
-    }
 
-    public Reader getReader() {
-        return reader;
-    }
 
-    public void setReader(Reader reader) {
-        this.reader = reader;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    public LocalDate getBorrowDate() {
-        return borrowDate;
-    }
-
-    public void setBorrowDate(LocalDate borrowDate) {
-        this.borrowDate = borrowDate;
-    }
-
-    public LocalDate getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(LocalDate returnDate) {
-        this.returnDate = returnDate;
-    }
-
-    public Boolean getBorrowStatus() {
-        return borrowStatus;
-    }
-
-    public void setBorrowStatus(Boolean borrowStatus) {
-        this.borrowStatus = borrowStatus;
-    }
 }

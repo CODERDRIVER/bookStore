@@ -6,6 +6,7 @@ import com.lyears.projects.bookstore.entity.Order;
 import com.lyears.projects.bookstore.entity.Reader;
 import com.lyears.projects.bookstore.exception.UserDefinedException;
 import com.lyears.projects.bookstore.model.BookBorrowRecordData;
+import com.lyears.projects.bookstore.model.BookOrderRecordData;
 import com.lyears.projects.bookstore.repository.*;
 import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultEnum;
@@ -48,6 +49,18 @@ public class BorrowAndOrderService {
     private ConstantsService constantsService;
 
     /**
+     *  根据id 查询该条记录
+     */
+    public Borrow findById(int borrowId)
+    {
+        return borrowRepository.findOne(borrowId);
+    }
+
+    public Order findByOrderId(int orderId)
+    {
+        return orderRepository.findOne(orderId);
+    }
+    /**
      * 根据书名和读者名借书
      *
      * @param bookName   书名
@@ -71,7 +84,7 @@ public class BorrowAndOrderService {
             throw new UserDefinedException(ResultEnum.NO_BOOK_STORE);
         }
         //新建借书项
-        borrow.setBorrowStatus(true);
+        borrow.setBorrowStatus(0);
         borrow.setBook(book);
         borrow.setReader(reader);
         readerRepository.save(reader);
@@ -190,7 +203,7 @@ public class BorrowAndOrderService {
                        borrow.setBook(book);
                        borrow.setBorrowDate(LocalDate.now());
                        borrow.setReader(one);
-                       borrow.setBorrowStatus(true);    // 设置为借阅成功
+                       borrow.setBorrowStatus(0);    // 设置为借阅中
                        borrowRepository.save(borrow);
                        one.setBorrowNum(one.getBorrowNum()+1);
                        readerRepository.save(one);
@@ -204,6 +217,49 @@ public class BorrowAndOrderService {
         return null;
     }
 
+    /**
+     *  获得所有读者的借阅记录
+     * @return
+     */
+    public ResponseMessage getAllBorrows()
+    {
+        List<Borrow> all = borrowRepository.findAll();
+        List<BookBorrowRecordData> bookBorrowRecordDatas = new ArrayList<>();
+        for (Borrow borrow : all) {
+            BookBorrowRecordData bookBorrowRecordData = new BookBorrowRecordData();
+            bookBorrowRecordData.setReaderId(borrow.getBorrowId());
+            bookBorrowRecordData.setReaderId(borrow.getReader().getReaderId());
+            bookBorrowRecordData.setBorrowDate(borrow.getBorrowDate());
+            bookBorrowRecordData.setBookId(borrow.getBook().getBookId());
+            bookBorrowRecordData.setBookName(borrow.getBook().getBookName());
+            bookBorrowRecordDatas.add(bookBorrowRecordData);
+        }
+        return ResultUtil.success(bookBorrowRecordDatas,request.getRequestURL().toString());
+    }
+
+    /**
+     *  获得所有读者的预定记录
+     */
+    public ResponseMessage getAllOrders()
+    {
+        List<Order> all = orderRepository.findAll();
+        List<BookOrderRecordData> bookOrderRecordDatas = new ArrayList<>();
+        for (Order order : all) {
+            BookOrderRecordData bookOrderRecordData  = new BookOrderRecordData();
+            bookOrderRecordData.setOrderId(order.getOrderId());
+            bookOrderRecordData.setBookId(order.getBook().getBookId());
+            bookOrderRecordData.setBookName(order.getBook().getBookName());
+            bookOrderRecordData.setOrderDate(order.getOrderDate());
+            bookOrderRecordData.setReaderId(order.getReader().getReaderId());
+            bookOrderRecordDatas.add(bookOrderRecordData);
+        }
+        return ResultUtil.success(bookOrderRecordDatas,request.getRequestURL().toString());
+    }
+    /**
+     *
+     * @param bookName
+     * @param readerName
+     */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
     public void returnBookWithReaderName(String bookName, String readerName) {
         Book book = bookRepository.findByBookName(bookName).get(0);
@@ -212,7 +268,7 @@ public class BorrowAndOrderService {
         if (borrow == null) {
             throw new UserDefinedException(ResultEnum.BORROW_NOT_EXIST);
         } else {
-            borrow.setBorrowStatus(false);
+            borrow.setBorrowStatus(0);
             reader.setBorrowNum(reader.getBorrowNum() + 1);
             book.setInventory(book.getInventory() + 1);
             borrowRepository.save(borrow);
@@ -285,7 +341,10 @@ public class BorrowAndOrderService {
             bookBorrowRecordData.setBorrowDate(borrowDate);
             bookBorrowRecordData.setBookId(borrow.getBook().getBookId());
             bookBorrowRecordData.setBookName(borrow.getBook().getBookName());
+            bookBorrowRecordData.setBorrowId(borrow.getBorrowId());
+            bookBorrowRecordData.setReaderId(readerId);
             bookBorrowRecordDatas.add(bookBorrowRecordData);
+
         });
         return bookBorrowRecordDatas;
     }
@@ -298,5 +357,22 @@ public class BorrowAndOrderService {
         LocalDate pre = now.minusDays(1);
         LocalDate next = now.plusDays(1);
         return borrowRepository.findAllByReturnDateBetween(pre,next);
+    }
+
+    /**
+     *  更新borrow 信息
+     */
+    public void updateBorrowInfo(Borrow borrow)
+    {
+        borrowRepository.save(borrow);
+    }
+
+    /**
+     *  更新 order 信息
+     *
+     */
+    public void updateOrderInfo(Order order)
+    {
+        orderRepository.save(order);
     }
 }

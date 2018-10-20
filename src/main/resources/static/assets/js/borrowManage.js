@@ -4,7 +4,7 @@ $(document).ready(function(){
     $.ajax({
         type:'get',
         dataType:'json',
-        url:'/borrows/manage',
+        url:'/librarian/borrows',
         contentType:'application/json;charset=UTF-8',
         async: false,
         
@@ -13,7 +13,7 @@ $(document).ready(function(){
 			var borrows = data.data;
             for(var i=0; i<borrows.length;i++){
                 
-                borrowRecord.push(new borrow(borrows[i].readerId,borrows[i].bookId,borrows[i].bookName,borrows[i].borrowDate));
+                borrowRecord.push(new borrow(borrows[i].borrowId,borrows[i].readerId,borrows[i].bookId,borrows[i].bookName,borrows[i].borrowDate));
                 }
             loadData();
                 
@@ -86,7 +86,8 @@ var showHide2 = function(obj) {
 }
 
 /* 创建借书记录对象 */
-function borrow(readerId,bookId,bookName,borrowDate) {
+function borrow(borrowId,readerId,bookId,bookName,borrowDate) {
+	this.borrowId = borrowId;
     this.bookId = bookId;
     this.bookName = bookName;
 	this.borrowDate = borrowDate;
@@ -122,6 +123,7 @@ var changeColor = function() {
 /* 加载数据 */
 function loadData() {
 	for (var i = 0; i < borrowRecord.length; i++) {
+		var borrowId = borrowRecord[i].borrowId;
 		var bookId = borrowRecord[i].bookId;
         var bookName = borrowRecord[i].bookName;
         var readerId = borrowRecord[i].readerId;
@@ -151,13 +153,19 @@ function loadData() {
 		acceptBtn.type = "button";
 		acceptBtn.value = "Accept";
 		// 为新建的acceptBtn创建监听属性；
-		acceptBtn.onclick = function() {
+		acceptBtn.onclick = function(e) {
 			var flag = window.confirm("确定同意该借阅请求？");
 			if (flag) {
 					$.ajax({
 						type: 'post',
-						url: '/reader/borrow/accept',
-						data: {"bookId":bookId},
+						url: '/librarian/confirm/bookBorrow',
+						data: JSON.stringify(
+							{
+								"borrowId":borrowId,
+								"readerId":readerId,
+								"bookId":bookId
+							}
+							),
 						dataType: "json",
 						contentType: "application/json;charset=UTF-8",
 						success: function (e) {
@@ -178,8 +186,14 @@ function loadData() {
 			if (flag) {
 					$.ajax({
 						type: 'post',
-						url: '/reader/borrow/reject',
-						data: {"bookId":bookId},
+						url: '/librarian/reject/bookBorrow',
+						data: JSON.stringify(
+                            {
+                                "borrowId":borrowId,
+                                "readerId":readerId,
+                                "bookId":bookId
+                            }
+                        ),
 						dataType: "json",
 						contentType: "application/json;charset=UTF-8",
 						success: function (e) {
@@ -190,7 +204,8 @@ function loadData() {
 				}
 		};
 
-		dmlTd.appendChild(returnBtn);
+		dmlTd.appendChild(rejectBtn);
+		dmlTd.appendChild(acceptBtn)
 		// 将新建的td加入到新建的行中
 		tr.appendChild(serialTd);
 		tr.appendChild(readerIdTd);
@@ -368,3 +383,19 @@ $(document).ready(function() {
 		$(".over").hide("slow");
 	});
 });
+
+/**
+ * 登出按钮
+ */
+$('#log-out').click(function () {
+    $.ajax({
+        type: 'delete',
+        url: '/logout',
+        contentType: "application/json;charset=UTF-8",
+        success: function (e) {
+            if (e.code === 0) {
+                window.location.href = "/"
+            }
+        }
+    })
+})

@@ -1,10 +1,12 @@
 package com.lyears.projects.bookstore.handler;
 
 import com.lyears.projects.bookstore.entity.Book;
+import com.lyears.projects.bookstore.entity.BookReturnRecord;
 import com.lyears.projects.bookstore.entity.Reader;
 import com.lyears.projects.bookstore.exception.ErrorPageException;
 import com.lyears.projects.bookstore.exception.UserDefinedException;
 import com.lyears.projects.bookstore.jwt.JwtToken;
+import com.lyears.projects.bookstore.model.IdManageData;
 import com.lyears.projects.bookstore.service.*;
 import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultEnum;
@@ -19,6 +21,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -47,6 +50,9 @@ public class ReaderHandler {
 
     @Autowired
     private BorrowAndOrderService borrowAndOrderService;
+
+    @Autowired
+    private BookReturnRecordService bookReturnRecordService;
 
     /**
      *  根据readerId 查找Reader信息
@@ -134,7 +140,7 @@ public class ReaderHandler {
     {
 
         Reader one = null;
-        if (readerIdCookie!=null)
+        if (readerIdCookie!=null&&!readerIdCookie.getValue().equals(""))
         {
             one = readerService.findOne(Integer.parseInt(readerIdCookie.getValue()));
         }else{
@@ -213,6 +219,24 @@ public class ReaderHandler {
             // 增加一条借阅记录
            return borrowAndOrderService.borrowBookWithBookNameAndReaderId(Integer.parseInt(readerId.getValue()), bookName.split("=")[1]);
         }
+    }
+
+    /**
+     *  书籍归还请求
+     */
+    @ResponseBody
+    @PostMapping("/reader/book/return")
+    public ResponseMessage returnBook(@RequestBody IdManageData idManageData,@CookieValue("readerId")Cookie readerId)
+    {
+         // 增加一条归还记录
+        BookReturnRecord bookReturnRecord = new BookReturnRecord();
+        bookReturnRecord.setBookId(idManageData.getBookId());
+        bookReturnRecord.setBorrowId(idManageData.getBorrowId());
+        bookReturnRecord.setReaderId(Integer.parseInt(readerId.getValue()));
+        bookReturnRecord.setReturnDate(LocalDate.now());
+        bookReturnRecord.setReturnStatus(0);
+        bookReturnRecordService.saveReturnRecord(bookReturnRecord);
+        return ResultUtil.successNoData(request.getRequestURL().toString());
     }
     /**
      * 使用Stream避免栈溢出
