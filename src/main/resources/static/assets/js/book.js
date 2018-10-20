@@ -1,17 +1,17 @@
+var pubdate ;
+var publisher ="";
 $('#addBook').click(function () {
-	var pubdate ="";
-	var publisher ="";
-    var isbn = getId("doc8").value;
-	var url = 'https://api.douban.com/v2/book/isbn/'+isbn;
-	$.ajax({
-		url: url,
-		dataType: 'jsonp',
-		success:function (data) {
-			console.log(data);
-			pubdate = data.pubdate;
-			publisher = data.publisher;
-        }
-	});
+    // var isbn = getId("doc8").value;
+	// var url = 'https://api.douban.com/v2/book/isbn/'+isbn;
+	// $.ajax({
+	// 	url: url,
+	// 	dataType: 'jsonp',
+	// 	success:function (data) {
+	// 		console.log(data);
+	// 		pubdate = data.pubdate;
+	// 		publisher = data.publisher;
+     //    }
+	// });
 	$('#prompt-title').text('Add Book')
     $('#addAccountPrompt').modal({
 		relatedTarget: this,
@@ -120,7 +120,10 @@ function getBook() {
 		url: url,
 		dataType: 'jsonp',
 		success:function (data) {
-			console.log(data);
+            console.log(data);
+            pubdate = data.pubdate;
+            pubdate = new Date(pubdate.replace(/-/g,"/"));
+            publisher = data.publisher;
 			getId("doc1").value = data.image;
 			getId("doc2").value = data.author;
 			getId("doc3").value = data.title;

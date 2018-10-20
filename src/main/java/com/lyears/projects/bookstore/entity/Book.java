@@ -1,5 +1,6 @@
 package com.lyears.projects.bookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
@@ -32,6 +33,7 @@ public class Book {
 
     private String bookUrl; //图片url
     private String description; //描述
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate pubdate;  //发布时间
     private String publisher;   //发布者
 

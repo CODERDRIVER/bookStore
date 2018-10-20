@@ -70,6 +70,7 @@ public class LibrarianHandler {
                 .get("type").asString().equals(type)) {
             throw new UserDefinedException(ResultEnum.NO_RIGHT);
         }
+        librarian.setPassword("00010001");
         librarianService.save(librarian);
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
