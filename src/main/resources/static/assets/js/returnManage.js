@@ -4,7 +4,7 @@
         $.ajax({
             type:'GET',
             dataType:'json',
-            url:'/book/return/manage/records',
+            url:'/librarian/return/records',
             contentType:'application/json;charset=UTF-8',
             async: false,
             success:function(data){//返回结果
@@ -12,7 +12,7 @@
                 var records = data.data;
                 for(var i=0; i<records.length;i++){
 
-                    returnRecord.push(new returnlist(data[i].readerIdId,data[i].bookId,data[i].bookName,data[i].returnDate));
+                    returnRecord.push(new returnlist(records[i].returnId,records[i].readerId,records[i].bookId,records[i].bookName,records[i].returnDate));
                     }
 
             }
@@ -84,7 +84,8 @@
     }
 
     /* 创建还书记录对象 */
-    function returnlist(readerId,bookId,bookName,returnDate) {
+    function returnlist(returnId,readerId,bookId,bookName,returnDate) {
+        this.returnId = returnId;
         this.bookId = bookId;
         this.bookName = bookName;
         this.returnDate = returnDate;
@@ -123,6 +124,8 @@
             var bookId = returnRecord[i].bookId;
             var bookName = returnRecord[i].bookName;
             var returnDate = returnRecord[i].returnDate;
+            var returnId = returnRecord[i].returnId;
+            var readerId = returnRecord[i].readerId;
 
             // 创建tr
             var tr = createObj("tr");
@@ -153,8 +156,13 @@
                 if (flag) {
                         $.ajax({
                             type: 'post',
-                            url: '/reader/return/check',
-                            data: {"bookId":bookId},
+                            url: '/librarian/confirm/bookReturn',
+                            data: JSON.stringify(
+                                {
+                                    "readerId":readerId,
+                                    "bookId":bookId
+                                }
+                            ),
                             dataType: "json",
                             contentType: "application/json;charset=UTF-8",
                             success: function (e) {
@@ -343,5 +351,18 @@
             $(".over").hide("slow");
         });
     });
-
-    
+    /**
+     * 登出按钮
+     */
+    $('#log-out').click(function () {
+        $.ajax({
+            type: 'delete',
+            url: '/logout',
+            contentType: "application/json;charset=UTF-8",
+            success: function (e) {
+                if (e.code === 0) {
+                    window.location.href = "/"
+                }
+            }
+        })
+    });

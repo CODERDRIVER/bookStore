@@ -31,4 +31,6 @@ public class BookReturnRecord {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDate returnDate;    // 归还日期
+
+    private Integer returnStatus;// 归还状态 0 正在归还中 1 归还
 }

@@ -1,11 +1,9 @@
 package com.lyears.projects.bookstore.handler;
 
-import com.lyears.projects.bookstore.entity.Book;
-import com.lyears.projects.bookstore.entity.Income;
-import com.lyears.projects.bookstore.entity.Librarian;
-import com.lyears.projects.bookstore.entity.BookDeleteRecord;
+import com.lyears.projects.bookstore.entity.*;
 import com.lyears.projects.bookstore.exception.UserDefinedException;
 import com.lyears.projects.bookstore.jwt.JwtToken;
+import com.lyears.projects.bookstore.model.IdManageData;
 import com.lyears.projects.bookstore.service.*;
 import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultEnum;
@@ -17,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +47,11 @@ public class LibrarianHandler {
 
     @Autowired
     private BookDeleteRecordService bookDeleteRecordService;
+    @Autowired
+    private BorrowAndOrderService borrowAndOrderService;
 
+    @Autowired
+    private BookReturnRecordService bookReturnRecordService;
     /**
      * 注册图书管理员
      *
@@ -66,6 +70,7 @@ public class LibrarianHandler {
                 .get("type").asString().equals(type)) {
             throw new UserDefinedException(ResultEnum.NO_RIGHT);
         }
+        librarian.setPassword("00010001");
         librarianService.save(librarian);
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
@@ -82,7 +87,7 @@ public class LibrarianHandler {
          */
         List<BookDeleteRecord> allRecord = recordService.findAllRecord();
         //对结果进行处理
-        return null;
+        return ResultUtil.success(allRecord,request.getRequestURL().toString());
     }
 
     /**
@@ -93,7 +98,7 @@ public class LibrarianHandler {
     public ResponseMessage updateBookInfo(@RequestBody Book book)
     {
         bookService.save(book);
-        return null;
+        return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 
     /**
@@ -193,6 +198,84 @@ public class LibrarianHandler {
     }
 
 
+    /**
+     *  图书管理员对借阅图书进行确认
+     */
+
+    @ResponseBody
+    @PostMapping("/librarian/confirm/bookBorrow")
+    public ResponseMessage confirmBookBorrow(@RequestBody IdManageData idManageData,@CookieValue("librarianId")Cookie librarianId)
+    {
+
+        // 权限判定 是否是管理员
+        /**
+         *  确认借阅需要发生的事件
+         *  1. borrow_status 状态变为借阅成功
+         *  2. reader 不发生变化
+         *  3. book 不发生变化
+         */
+        int borrowId = idManageData.getBorrowId();
+        // 设置 borrowId 中 borrow_status  设置为借阅成功
+        Borrow byId = borrowAndOrderService.findById(borrowId);
+        byId.setBorrowStatus(1);    // 设置为借阅成功
+        return ResultUtil.successNoData(request.getRequestURL().toString());
+    }
+
+    /**
+     *  图书管理员拒绝图书借阅
+     */
+    @ResponseBody
+    @PostMapping("/librarian/reject/bookBorrow")
+    public ResponseMessage rejcetBookBorrow(@RequestBody IdManageData idManageData,@CookieValue("librarianId")Cookie librarianId)
+    {
+        /**
+         *  拒绝借阅发生的事件
+         *  1. borrow_status 状态发生变化
+         *  2. reader 的borrow_num 发生变化
+         *  3. book 的 status  和 inventory 发生变化
+         */
+        return librarianService.rejectBookBorrow(idManageData);
+    }
+
+    /**
+     *  图书管理员对预约图书进行确认
+     */
+    @ResponseBody
+    @PostMapping("/librarian/confirm/bookOrder")
+    public ResponseMessage confirmBookOrder(@RequestBody IdManageData idManageData)
+    {
+        /**
+         *  更新 order_status 的状态
+         */
+        int orderId = idManageData.getOrderId();
+        Order byOrderId = borrowAndOrderService.findByOrderId(orderId);
+        byOrderId.setOrderStatus(1);
+        return ResultUtil.successNoData(request.getRequestURL().toString());
+    }
+
+    @ResponseBody
+    @PostMapping("/librarian/reject/bookOrder")
+    public ResponseMessage rejectBookOrderr(@RequestBody IdManageData idManageData)
+    {
+        /**
+         *  更新 order_status 的状态
+         *  更新 reader 的 borrow_num
+         *  更新 book status inventory 数量
+         */
+        return librarianService.rejectBookOrder(idManageData);
+    }
+
+
+
+    /**
+     *  图书管理员对 归还图书进行确认
+     */
+    @ResponseBody
+    @PostMapping("/librarian/confirm/bookReturn")
+    public ResponseMessage confirmBookReturn(@RequestBody IdManageData idManageData)
+    {
+        return librarianService.confirmReturnBook(idManageData);
+    }
 
 
 }

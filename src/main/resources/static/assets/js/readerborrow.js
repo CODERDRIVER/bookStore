@@ -13,7 +13,7 @@ $(document).ready(function(){
 			var borrows = data.data;
             for(var i=0; i<borrows.length;i++){
                 
-                borrowRecord.push(new borrow(borrows[i].bookId,borrows[i].bookName,borrows[i].borrowDate,borrows[i].fine));
+                borrowRecord.push(new borrow(borrows[i].borrowId,borrows[i].bookId,borrows[i].bookName,borrows[i].borrowDate,borrows[i].fine));
                 }
             loadData();
                 
@@ -86,7 +86,8 @@ var showHide2 = function(obj) {
 }
 
 /* 创建借书记录对象 */
-function borrow(bookId,bookName,borrowDate,fine) {
+function borrow(borrowId,bookId,bookName,borrowDate,fine) {
+	this.borrowId = borrowId;
     this.bookId = bookId;
     this.bookName = bookName;
 	this.borrowDate = borrowDate;
@@ -126,6 +127,7 @@ function loadData() {
         var bookName = borrowRecord[i].bookName;
         var fine = borrowRecord[i].fine;
         var borrowDate = borrowRecord[i].borrowDate;
+        var borrowId = borrowRecord[i].borrowId;
 
 		// 创建tr
 		var tr = createObj("tr");
@@ -156,8 +158,13 @@ function loadData() {
 			if (flag) {
 					$.ajax({
 						type: 'post',
-						url: '/reader/return',
-						data: {"bookId":bookId},
+						url: '/reader/book/return',
+						data: JSON.stringify(
+							{
+								"borrowId":borrowId,
+								"bookId":bookId
+							}
+						),
 						dataType: "json",
 						contentType: "application/json;charset=UTF-8",
 						success: function (e) {

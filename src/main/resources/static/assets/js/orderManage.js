@@ -4,7 +4,7 @@ $(document).ready(function(){
     $.ajax({
         type:'get',
         dataType:'json',
-        url:'/orders/manage',
+        url:'/librarian/orders',
         contentType:'application/json;charset=UTF-8',
         async: false,
         
@@ -13,7 +13,7 @@ $(document).ready(function(){
 			var borrows = data.data;
             for(var i=0; i<borrows.length;i++){
                 
-                orderRecord.push(new order(borrows[i].readerId,borrows[i].bookId,borrows[i].bookName,borrows[i].orderDate));
+                orderRecord.push(new order(borrows[i].orderId,borrows[i].readerId,borrows[i].bookId,borrows[i].bookName,borrows[i].orderDate));
                 }
             loadData();
                 
@@ -85,8 +85,14 @@ var showHide2 = function(obj) {
 	overDiv.style.display = "none";
 }
 
+<<<<<<< HEAD
 /* 创建预约书记录对象 */
 function order(readerId,bookId,bookName,orderDate) {
+=======
+/* 创建借书记录对象 */
+function order(orderId,readerId,bookId,bookName,orderDate) {
+	this.orderId = orderId;
+>>>>>>> 28a782b528c9056eece89f9a631f80c04d457ed8
     this.bookId = bookId;
     this.bookName = bookName;
 	this.orderDate = orderDate;
@@ -126,6 +132,7 @@ function loadData() {
         var bookName = orderRecord[i].bookName;
         var readerId = orderRecord[i].readerId;
         var orderDate = orderRecord[i].orderDate;
+        var orderId = orderRecord[i].orderId;
 
 		// 创建tr
 		var tr = createObj("tr");
@@ -156,8 +163,12 @@ function loadData() {
 			if (flag) {
 					$.ajax({
 						type: 'post',
-						url: '/reader/order/accept',
-						data: {"bookId":bookId},
+						url: '/librarian/confirm/bookOrder',
+						data: {
+                            "orderId":orderId,
+                            "readerId":readerId,
+                            "bookId":bookId
+                        },
 						dataType: "json",
 						contentType: "application/json;charset=UTF-8",
 						success: function (e) {
@@ -178,8 +189,12 @@ function loadData() {
 			if (flag) {
 					$.ajax({
 						type: 'post',
-						url: '/reader/order/reject',
-						data: {"bookId":bookId},
+						url: '/librarian/reject/bookOrder',
+						data: {
+                            "orderId":orderId,
+                            "readerId":readerId,
+                            "bookId":bookId
+                        },
 						dataType: "json",
 						contentType: "application/json;charset=UTF-8",
 						success: function (e) {
@@ -369,3 +384,18 @@ $(document).ready(function() {
 		$(".over").hide("slow");
 	});
 });
+/**
+ * 登出按钮
+ */
+$('#log-out').click(function () {
+    $.ajax({
+        type: 'delete',
+        url: '/logout',
+        contentType: "application/json;charset=UTF-8",
+        success: function (e) {
+            if (e.code === 0) {
+                window.location.href = "/"
+            }
+        }
+    })
+})

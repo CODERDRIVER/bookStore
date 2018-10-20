@@ -21,5 +21,7 @@ public class BookReturnRecordData {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate returnDate;
+    private Integer returnId;
+    private Integer readerId;
     private double fine;    //罚金数
 }

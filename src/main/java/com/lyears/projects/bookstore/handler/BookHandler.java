@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author fzm
@@ -37,10 +38,10 @@ public class BookHandler {
     @GetMapping("/books")
     public ResponseMessage getAllBooks(@RequestParam(name = "pageNo", required = false, defaultValue = "1")
                                                String pageNoStr,
-                                       @RequestParam(name = "pageSize", defaultValue = "5") String pageSizeStr,
+                                       @RequestParam(name = "pageSize", defaultValue = "10") String pageSizeStr,
                                        @RequestParam(name = "keyStr", defaultValue = "", required = false) String keyStr) {
         int pageNo = 1;
-        int pageSize = 5;
+        int pageSize = 10;
 
         try {
             pageNo = Integer.parseInt(pageNoStr);

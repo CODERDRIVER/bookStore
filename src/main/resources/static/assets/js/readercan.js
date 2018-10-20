@@ -24,7 +24,7 @@ $('#unpaidFine').on('click', function () {
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             console.log(data);
-            document.getElementById("unpaid-fine").value = data.data;
+            document.getElementById("unpaid-fine").value = data.data.unPaidFine;
             $('#unpaidFinePrompt').modal({
                 closeViaDimmer:false,
                 closeOnConfirm:false,
