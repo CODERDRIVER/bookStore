@@ -8,6 +8,7 @@ $(document).ready(function(){
 			   async: false,
 			   
 			   success:function(data){//返回结果
+				   console.log(data);
 					 announcements = data.data;
 				   for(var i=0; i<announcements.length;i++){
 					   var j = i+1;
@@ -19,7 +20,6 @@ $(document).ready(function(){
 
 			   
 		   });	
-		   window.onload = function(){
 			//获取滚动部分
 			var area=document.getElementById("scrollBox");
 			//area.innerHTML="<ul>"+str+"</ul>";
@@ -34,26 +34,25 @@ $(document).ready(function(){
 			 area.scrollTop=0;
 			 area.innerHTML+=area.innerHTML;
 			 function startScroll(){//开始运动
-				 timer=setInterval("scrollUp()",speed);
+				 timer=setInterval(scrollUp,speed);
 				 area.scrollTop++;
 				 }
-			 // function scrollUp(){//循环运动
-			 // 	if(area.scrollTop%oLiHeight==0){
-			 // 		clearInterval(timer)
-			 // 		setTimeout(startScroll,delay);
-			 // 		}else{
-			 // 			area.scrollTop++;
-			 // 			if(area.scrollTop >= area.scrollHeight/2){
-			 // 				area.scrollTop =0;
-			 // 				}
-			 // 			}
-			 // 	}
+			 function scrollUp(){//循环运动
+			 	if(area.scrollTop%oLiHeight==0){
+			 		clearInterval(timer)
+			 		setTimeout(startScroll,delay);
+			 		}else{
+			 			area.scrollTop++;
+			 			if(area.scrollTop >= area.scrollHeight/2){
+			 				area.scrollTop =0;
+			 				}
+			 			}
+			 	}
 		 //页面加载两秒后运动
 		  setTimeout(startScroll,delay);
 		 //鼠标事件
 		 $("#scrollBox").mouseover(function(){clearInterval(timer)});
 		 //$("#scrollBox").mouseout(function(){timer=setInterval('scrollUp()',speed)});
-	 }
 })
 
 	

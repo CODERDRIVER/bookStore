@@ -204,13 +204,8 @@ function loadData() {
 				}
 		};
 
-<<<<<<< HEAD
 		dmlTd.appendChild(acceptBtn);
 		dmlTd.appendChild(rejectBtn);
-=======
-		dmlTd.appendChild(rejectBtn);
-		dmlTd.appendChild(acceptBtn)
->>>>>>> 28a782b528c9056eece89f9a631f80c04d457ed8
 		// 将新建的td加入到新建的行中
 		tr.appendChild(serialTd);
 		tr.appendChild(readerIdTd);
