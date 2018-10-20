@@ -88,6 +88,10 @@ function showLoginModal()
                 "email": email,
                 "password": password
             });
+            var requestDataAdapter = JSON.stringify({
+                "phoneNumber": email,
+                "password": password
+            });
             var type = $(':input[name="loginType"]:checked').val();
 
             if (type === "admin") {
@@ -95,7 +99,7 @@ function showLoginModal()
             } else if (type === "librarian") {
                 login(requestData, 'login/librarian', 'librarian')
             } else if (type === "reader") {
-                login(requestData, '/login/reader/phoneNumber', '/')
+                login(requestDataAdapter, '/login/reader/phoneNumber', '/')
             }
         },
         onCancel: function (e) {

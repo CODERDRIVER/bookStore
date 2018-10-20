@@ -111,7 +111,7 @@ public class LoginHandler {
         Reader one = readerService.findByPhoneNumber(phone);
         if (one!=null)
         {
-            if (one.getPhoneNumber()!=null&&one.getPassword().equals(password))
+            if (one.getPassword()!=null&&one.getPassword().equals(password))
             {
                 // 说明手机号和密码都是正确的
                 String jwtToken = JwtToken.createToken(phone,one.getUserName(),"reader");
