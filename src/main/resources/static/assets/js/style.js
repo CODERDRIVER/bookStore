@@ -219,12 +219,13 @@ function loadBookPage(pageNo, pageSize, keyStr) {
         var bookType = data.data.content[no].bookType
         var author = data.data.content[no].author
         var barCode = data.data.content[no].barCode
+        var image = data.data.content[no].bookUrl;
         // console.log(data.data.content[no])
         $('#bookList').append('' +
             '            <li class="am-cf am-text-truncate">\n' +
             '                <!--书籍缩略图-->\n' +
             '                <p class="am-align-left">\n' +
-            '                    <img class="am-radius" src="assets/i/bookicon1.png" alt="..."\n' +
+            '                    <img class="am-radius" src="'+image+'" alt="..."\n' +
             '                         width="140" height="140">\n' +
             '                </p>\n' +
             '                <!--书名作为h2标题-->\n' +
