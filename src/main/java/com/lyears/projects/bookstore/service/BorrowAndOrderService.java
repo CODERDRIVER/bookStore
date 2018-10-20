@@ -207,7 +207,7 @@ public class BorrowAndOrderService {
                        borrowRepository.save(borrow);
                        one.setBorrowNum(one.getBorrowNum()+1);
                        readerRepository.save(one);
-                       return ResultUtil.success(book,request.getRequestURL().toString());
+                       return ResultUtil.successNoData(request.getRequestURL().toString());
                    }
                }
             }else{
@@ -223,7 +223,7 @@ public class BorrowAndOrderService {
      */
     public ResponseMessage getAllBorrows()
     {
-        List<Borrow> all = borrowRepository.findAll();
+        List<Borrow> all = borrowRepository.findAllByBorrowStatus(0);
         List<BookBorrowRecordData> bookBorrowRecordDatas = new ArrayList<>();
         for (Borrow borrow : all) {
             BookBorrowRecordData bookBorrowRecordData = new BookBorrowRecordData();
@@ -314,10 +314,17 @@ public class BorrowAndOrderService {
     /**
      *  根据 读者id 查询所有借阅信息
      */
-    public List<BookBorrowRecordData> getBorrowsByReaderId(int readerId)
+    public List<BookBorrowRecordData> getBorrowsByReaderId(int readerId,int type)
     {
         // 获得所有的 借阅信息
-        List<Borrow> borrowsByReaderId = borrowRepository.findBorrowsByReaderId(readerId);
+        List<Borrow> borrowsByReaderId = new ArrayList<>();
+        if (type==0)
+        {
+            borrowsByReaderId =  borrowRepository.findBorrowsByReaderIdAndBorrowStatus(readerId,type);
+        }else if (type == 1)
+        {
+            borrowsByReaderId = borrowRepository.findBorrowsByReaderId(readerId);
+        }
         List<BookBorrowRecordData> bookBorrowRecordDatas = new ArrayList<>();
         // 查询是否有延期的
         borrowsByReaderId.forEach(borrow -> {

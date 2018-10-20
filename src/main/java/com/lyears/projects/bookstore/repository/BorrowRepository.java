@@ -27,14 +27,18 @@ public interface BorrowRepository extends JpaRepository<Borrow, Integer> {
     Borrow getByBookAndAndReaderAndAndBorrowStatus(Book book, Reader reader, boolean status);
 
     /**
-     *  根据读者id 查询所有借阅信息
+     *  根据读者id 和借阅状态查询所有借阅信息
      */
-    @Query(nativeQuery = true,value = "SELECT * from book_borrow as b WHERE b.reader_id = :readerId ")
-    List<Borrow> findBorrowsByReaderId(@Param("readerId") int readerId);
+    @Query(nativeQuery = true,value = "SELECT * from book_borrow as b WHERE b.reader_id = :readerId AND b.borrow_status = :borrowStatus")
+    List<Borrow> findBorrowsByReaderIdAndBorrowStatus(@Param("readerId") int readerId,@Param("borrowStatus")int borrowStatus);
 
+    @Query(nativeQuery = true,value = "SELECT * from book_borrow as b WHERE b.reader_id = :readerId")
+    List<Borrow> findBorrowsByReaderId(@Param("readerId")int readerId);
     /**
      *  查询所有过期书籍
      */
     List<Borrow> findAllByReturnDateBetween(LocalDate pre,LocalDate next);
+
+    List<Borrow> findAllByBorrowStatus(int borrowStatus);
 
 }

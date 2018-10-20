@@ -23,11 +23,11 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer orderId;
 
-    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "reader_id")
     private Reader reader;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;
 

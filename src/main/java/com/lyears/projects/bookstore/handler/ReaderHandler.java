@@ -89,7 +89,7 @@ public class ReaderHandler {
     @ResponseBody
     public ResponseMessage getAllReaders() {
 
-        return ResultUtil.success(avoidStackOverflow(readerService.getAllReaders()),
+        return ResultUtil.success(readerService.getAllReaders(),
                 request.getRequestURL().toString());
     }
 
@@ -217,7 +217,9 @@ public class ReaderHandler {
             return ResultUtil.error(ResultEnum.NO_RIGHT,request.getRequestURL().toString());
         }else{
             // 增加一条借阅记录
-           return borrowAndOrderService.borrowBookWithBookNameAndReaderId(Integer.parseInt(readerId.getValue()), bookName.split("=")[1]);
+            ResponseMessage responseMessage = borrowAndOrderService.borrowBookWithBookNameAndReaderId(Integer.parseInt(readerId.getValue()), bookName.split("=")[1]);
+            System.out.println(responseMessage);
+            return responseMessage;
         }
     }
 

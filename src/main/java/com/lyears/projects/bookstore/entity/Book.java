@@ -38,10 +38,10 @@ public class Book {
     private String publisher;   //发布者
 
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Set<Borrow> borrows = new HashSet<>();
 
-    @OneToMany(mappedBy = "book",fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "book",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();
 
     public Integer getBookId() {

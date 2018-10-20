@@ -1,6 +1,7 @@
 package com.lyears.projects.bookstore.service;
 
 import com.lyears.projects.bookstore.entity.Reader;
+import com.lyears.projects.bookstore.model.ReaderData;
 import com.lyears.projects.bookstore.repository.ConstantsRepository;
 import com.lyears.projects.bookstore.repository.ReaderRepository;
 import com.lyears.projects.bookstore.util.ResponseMessage;
@@ -47,8 +48,22 @@ public class ReaderService {
     }
 
     @Transactional(readOnly = true, rollbackFor = RuntimeException.class)
-    public List<Reader> getAllReaders() {
-        return readerRepository.findAll();
+    public List<ReaderData> getAllReaders() {
+        List<Reader> all = readerRepository.findAll();
+        List<ReaderData> readerDatas = new ArrayList<>();
+        all.forEach(reader -> {
+            ReaderData readerData = new ReaderData();
+            readerData.setBorrowNum(reader.getBorrowNum());
+            readerData.setEmail(reader.getEmail());
+            readerData.setPaidFine(reader.getPaidFine());
+            readerData.setPassword(reader.getPassword());
+            readerData.setPhoneNumber(reader.getPhoneNumber());
+            readerData.setReaderId(reader.getReaderId());
+            readerData.setUnPaidFine(reader.getUnPaidFine());
+            readerData.setUserName(reader.getUserName());
+            readerDatas.add(readerData);
+        });
+        return readerDatas;
     }
 
     @Transactional(rollbackFor = RuntimeException.class)

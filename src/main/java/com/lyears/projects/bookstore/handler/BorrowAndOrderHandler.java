@@ -103,7 +103,7 @@ public class BorrowAndOrderHandler {
 
     @ResponseBody
     @RequestMapping(value = "/borrows/readerId",method = RequestMethod.GET)
-    public ResponseMessage getBorrowsByReaderId(@RequestParam(value = "readerId",required = false)String readerId,@CookieValue(value = "readerId",required = false)Cookie cookie)
+    public ResponseMessage getBorrowsByReaderId(@RequestParam(value = "readerId",required = false)String readerId,@CookieValue(value = "readerId",required = false)Cookie cookie,@CookieValue(value = "librarianId",required = false)Cookie librarianId)
     {
         String id = "";
         if (cookie!=null)
@@ -112,7 +112,13 @@ public class BorrowAndOrderHandler {
         }else{
             id = readerId;
         }
-        return ResultUtil.success(borrowAndOrderService.getBorrowsByReaderId(Integer.parseInt(id)),request.getRequestURL().toString());
+        // type 0 表示根据id 和borrowStatus查询  1 表示只根据id
+        int type = 0;
+        if (librarianId!=null)
+        {
+            type = 1;
+        }
+        return ResultUtil.success(borrowAndOrderService.getBorrowsByReaderId(Integer.parseInt(id),type),request.getRequestURL().toString());
     }
 
     private List<Borrow> avoidStackOverflow(List<Borrow> borrows){
