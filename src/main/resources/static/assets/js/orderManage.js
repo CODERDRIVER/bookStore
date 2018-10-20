@@ -85,7 +85,7 @@ var showHide2 = function(obj) {
 	overDiv.style.display = "none";
 }
 
-/* 创建借书记录对象 */
+/* 创建预约书记录对象 */
 function order(readerId,bookId,bookName,orderDate) {
     this.bookId = bookId;
     this.bookName = bookName;
