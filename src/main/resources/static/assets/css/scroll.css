@@ -3,8 +3,8 @@
 
     .announcebody{
         position: absolute;
-        left:40%;
-        top:10%;
+        left:75%;
+        top:8%;
     }
     .announcecontainer{
         width:300px;
@@ -21,7 +21,7 @@
         }
     #scrollBox{
     width:300px;
-    height:144px;
+    height:100px;
     overflow:hidden;
         }
     #scrollBox ul{

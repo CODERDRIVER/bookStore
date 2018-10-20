@@ -29,12 +29,12 @@ $(document).ready(function(){
 			 //设置全局定时器
 			 var timer=null;
 			 //定义延迟
-			 var delay=2000;
+			 var delay=200;
 			 //获取高度
 			 var oLiHeight=$("#scrollBox li").height();
 			 //速度
 			 var speed=60;
-			 area.scrollTop=300;
+			 area.scrollTop=20;
 			 area.innerHTML+=area.innerHTML;
 			 function startScroll(){//开始运动
 				 timer=setInterval(scrollUp,speed);
@@ -55,6 +55,9 @@ $(document).ready(function(){
 		  setTimeout(startScroll,delay);
 		 //鼠标事件
 		 $("#scrollBox").mouseover(function(){clearInterval(timer)});
+		 $("#scrollBox").mouseout(function () {
+			 timer = setInterval(scrollUp,speed);
+         })
 		 //$("#scrollBox").mouseout(function(){timer=setInterval('scrollUp()',speed)});
 })
 
