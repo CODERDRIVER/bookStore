@@ -107,11 +107,11 @@ public class LoginHandler {
     public ResponseMessage loginWithPhone(@RequestBody Reader reader,HttpServletResponse response)
     {
         String phone  = reader.getPhoneNumber();
-        String phoneNumber = reader.getPhoneNumber();
+        String password = reader.getPassword();
         Reader one = readerService.findByPhoneNumber(phone);
         if (one!=null)
         {
-            if (one.getPhoneNumber()!=null&&one.getPhoneNumber().equals(phoneNumber))
+            if (one.getPhoneNumber()!=null&&one.getPassword().equals(password))
             {
                 // 说明手机号和密码都是正确的
                 String jwtToken = JwtToken.createToken(phone,one.getUserName(),"reader");

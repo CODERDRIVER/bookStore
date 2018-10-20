@@ -95,7 +95,7 @@ function showLoginModal()
             } else if (type === "librarian") {
                 login(requestData, 'login/librarian', 'librarian')
             } else if (type === "reader") {
-                login(requestData, 'login/reader', '/')
+                login(requestData, '/login/reader/phoneNumber', '/')
             }
         },
         onCancel: function (e) {
