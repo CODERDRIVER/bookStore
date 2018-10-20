@@ -39,7 +39,10 @@
         text-decoration:none;
         color:#f60;
         }
-    #scrollBox ul li a:hover{
-            color:#000;
+    #scrollBox ul li a:hover {
+        color: #000;
+    }
+    .scrollBox ul li a:hover{
+            color:rgb(9, 255, 0);
             font-size:smaller;
     }
