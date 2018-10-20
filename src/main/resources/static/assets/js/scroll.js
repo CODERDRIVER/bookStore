@@ -13,7 +13,8 @@ $(document).ready(function(){
                    document.getElementById("scrollBox").innerHTML = "";
 				   for(var i=0; i<announcements.length;i++){
 					   var j = i+1;
-					  str+= "<li><a href='#'>"+j+":"+announcements[i].title+"</a></li>"
+					   var obj=announcements[i].content;
+					  str+= "<li><a href='#'  title="+obj+" >"+j+":"+announcements[i].title+"</a></li>"
 					  // message.push(new announcement(announcements[i].id,announcements[i].title,announcements[i].content));
 					   }
 					   document.getElementById("scrollBox").innerHTML="<ul>"+str+"</ul>";
@@ -33,7 +34,7 @@ $(document).ready(function(){
 			 var oLiHeight=$("#scrollBox li").height();
 			 //速度
 			 var speed=60;
-			 area.scrollTop=0;
+			 area.scrollTop=300;
 			 area.innerHTML+=area.innerHTML;
 			 function startScroll(){//开始运动
 				 timer=setInterval(scrollUp,speed);
