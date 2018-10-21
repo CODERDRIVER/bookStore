@@ -18,6 +18,12 @@ $(document).ready(function(){
 					  // message.push(new announcement(announcements[i].id,announcements[i].title,announcements[i].content));
 					   }
 					   document.getElementById("scrollBox").innerHTML="<ul>"+str+"</ul>";
+				   if (announcements.length==0)
+				   {
+				   		$(".announcebody").hide();
+				   }else{
+                       $(".announcebody").show();
+				   }
                    console.log(document.getElementById("scrollBox").innerHTML);
                }
 

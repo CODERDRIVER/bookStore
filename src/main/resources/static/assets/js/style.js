@@ -74,6 +74,7 @@ $(function () {
         }
     });
 });
+
 function showLoginModal()
 {
     $('#loginPrompt').modal({

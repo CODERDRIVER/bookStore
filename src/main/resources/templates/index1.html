@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capadble" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta charset="utf-8">
+    <title>测试</title>
+    <!--<script src="../assets/js/jquery-3.1.1.min.js"></script>-->
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.8.1/jquery.min.js"></script>
+    <style>
+        #WidgetFloaterPanels {
+            display: none !important;
+        }
+
+        #WidgetLogoPanel {
+            display: none !important;
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+
+
+<select id="change" onchange="dianji()">
+
+    <option value="">切换语言</option>
+    <option value="zhongwen">中文</option>
+    <option value="English">英文</option>
+    <option value="Français">法文</option>
+
+</select>
+
+<!--内容-->
+
+<p id="text">白癜风是一种常见的后天性限局性或泛发性皮肤色素脱失病。由于皮肤的黑素细胞功能消失引起，但机制还不清楚。全身各部位可发生，常见于指背、腕、前臂、颜面、颈项及生殖器周围等。女性外阴部亦可发生，青年妇女居多。</p>
+<p id="text">白癜风可以出现在双胞胎及家族中，说明遗传在白癜风发病中有重要作用。研究认为白癜风具有不完全外显率，基因上有多个致病位点。</p>
+<p id="text">精神因素与白癜风的发病密切相关，大多患者在起病或皮损发展阶段有精神创伤、过度紧张、情绪低落或沮丧。白斑处神经末梢有退行性变，也支持神经化学学说。</p>
+<p id="text">白癜风患者体内可以产生抗体和T淋巴细胞，说明免疫反应可能导致黑素细胞被破坏。而细胞本身合成的毒性黑素前身物及某些导致皮肤脱色的化学物质对黑素细胞也可能有选择性的破坏作用。</p>
+<p id="text">白癜风患者血液及皮肤中铜或铜蓝蛋白水平降低，导致酪氨酸酶活性降低，因而影响黑素的代谢。</p>
+
+<p id="text">欢迎，欢迎，欢迎</p>
+<p id="text">欢迎，欢迎，欢迎</p>
+<p id="text">欢迎，欢迎，欢迎</p>
+<p id="text">欢迎，欢迎，欢迎</p>
+<p id="text">欢迎，欢迎，欢迎</p>
+
+<script>
+    $(function() {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "http://www.microsoftTranslator.com/ajax/v3/WidgetV3.ashx?siteData=ueOIGRSKkd965FeEGM5JtQ**";
+        document.getElementsByTagName('head')[0].appendChild(script);
+
+        var resultm = sessionStorage.getItem("language");
+
+        document.onreadystatechange = function() {
+
+
+            if (document.readyState == 'complete') {
+
+                if (resultm === "English") {
+                    Microsoft.Translator.Widget.Translate('zh-CHS', 'en', onProgress, onError, onComplete, onRestoreOriginal, 2000);
+                } else if (resultm === "Français") {
+                    Microsoft.Translator.Widget.Translate('zh-CHS', 'fr', onProgress, onError, onComplete, onRestoreOriginal, 2000);
+                } else if (resultm === "zhongwen") {
+                    Microsoft.Translator.Widget.Translate('zh-CHS', 'zh-CHS', onProgress, onError, onComplete, onRestoreOriginal, 2000);
+                }
+            }
+        }
+
+        function onProgress(value) {
+            $("#WidgetFloaterPanels").hide();
+        }
+
+        function onError(error) {
+            $("#WidgetFloaterPanels").hide();
+        }
+
+        function onComplete() {
+            $("#WidgetFloaterPanels").hide();
+        }
+
+        function onRestoreOriginal() {
+            $("#WidgetFloaterPanels").hide();
+        }
+    });
+
+
+
+    function dianji() {
+
+        var result = $("#change").val();
+
+        if (result === "English") {
+
+            sessionStorage.setItem("language", "English");
+
+        } else if (result === "Français") {
+
+            sessionStorage.setItem("language", "Français");
+
+        } else if (result === "zhongwen") {
+
+            sessionStorage.setItem("language", "zhongwen");
+        }
+
+        window.location.reload(); //刷新当前页面.
+
+    }
+</script>
+
+
+</body>
+
+</html>

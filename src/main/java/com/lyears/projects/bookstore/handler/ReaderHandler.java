@@ -116,6 +116,15 @@ public class ReaderHandler {
             throw new UserDefinedException(ResultEnum.NO_RIGHT);
         }
         /**
+         *  判断读者的电话号是否已经存在
+         */
+        String phoneNumber = reader.getPhoneNumber();
+        Reader byPhoneNumber = readerService.findByPhoneNumber(phoneNumber);
+        if (byPhoneNumber ==null)
+        {
+            return ResultUtil.error(ResultEnum.PHONENUMBER_EXITS,"phone number exits");
+        }
+        /**
          * 图书馆输入income表，增加deposit元
          */
         reader.setPassword("12345678"); //设置密码

@@ -63,6 +63,7 @@ public class BookHandler {
 
     @PostMapping("/book/add")
     public ResponseMessage addNewBook(@RequestBody Book book){
+        System.out.println(book.getPubdate());
         bookService.save(book);
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }

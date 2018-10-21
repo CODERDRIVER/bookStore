@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="../assets/css/amazeui.min.css">
     <link rel="stylesheet" href="../assets/css/app.css">
     <link rel="stylesheet" href="../assets/css/scroll.css">
+    <!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.8.1/jquery.min.js"></script>-->
 </head>
 <body>
 <div class="container">
@@ -60,15 +61,22 @@
 
                 <div class="am-topbar-right">
                     <li class="am-dropdown am-dropdown-header" data-am-dropdown>
-                        <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-                            English <span class="am-icon-caret-down"></span>
-                        </a>
-                        <ul class="am-dropdown-content">
-                            <li class="am-dropdown-header">Language Setting</li>
-                            <li><a id="English" href="#">English</a></li>
-                            <li><a id="Chinese" href="#">中文</a></li>
-                        </ul>
+                        <!--<a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">-->
+                            <!--English <span class="am-icon-caret-down"></span>-->
+                        <!--</a>-->
+                        <!--<ul class="am-dropdown-content">-->
+                            <!--<li class="am-dropdown-header">Language Setting</li>-->
+                            <!--<li><a id="English" href="#">English</a></li>-->
+                            <!--<li><a id="Chinese" href="#">中文</a></li>-->
+                        <!--</ul>-->
+                        <select onchange="dianji()" id="change">
+                            <option value="qiehuan">切换语言</option>
+                            <option value="English">English</option>
+                            <option value="zhongwen">Chinese</option>
+                        </select>
                     </li>
+
+
                 </div>
 
             </div>
@@ -82,7 +90,7 @@
                     <div class="am-form-group">
                         <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">account:</label>
                         <div class="am-u-sm-10">
-                            <input class="am-modal-prompt-input" type="email" id="doc-email" placeholder="Enter your email">
+                            <input class="am-modal-prompt-input" type="email" id="doc-email" placeholder="Enter your account">
                         </div>
                     </div>
 
@@ -240,11 +248,12 @@
     <p>2018. by Team A12.</p>
 </footer>
 
+<!--[if lte IE 8 ]>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.8.1/jquery.min.js"></script>
+<!--<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>-->
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="../assets/js/jquery-3.1.1.min.js"></script>
 <!--<![endif]-->
-<!--[if lte IE 8 ]>
-<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
 <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
@@ -252,6 +261,70 @@
 <script src="../assets/js/style.js"></script>
 <!-- <script src="../assets/js/scroll.js"></script> -->
 <script src="../assets/js/scroll.js"></script>
-    
+<script>
+//    $(function() {
+//        var script = document.createElement("script");
+//        script.type = "text/javascript";
+//        script.src = "http://www.microsoftTranslator.com/ajax/v3/WidgetV3.ashx?siteData=ueOIGRSKkd965FeEGM5JtQ**";
+//        document.getElementsByTagName('head')[0].appendChild(script);
+//
+//        var resultm = sessionStorage.getItem("language");
+//
+//        console.log(document.readyState);
+//        document.onreadystatechange = function() {
+//
+//            if (document.readyState == 'complete') {
+//                if (resultm === "English") {
+//                    Microsoft.Translator.Widget.Translate('zh-CHS', 'en', onProgress, onError, onComplete, onRestoreOriginal, 2000);
+//                } else if (resultm === "Français") {
+//                    Microsoft.Translator.Widget.Translate('zh-CHS', 'fr', onProgress, onError, onComplete, onRestoreOriginal, 2000);
+//                } else if (resultm === "zhongwen") {
+//                    Microsoft.Translator.Widget.Translate('zh-CHS', 'zh-CHS', onProgress, onError, onComplete, onRestoreOriginal, 2000);
+//                }
+//                $("#WidgetFloaterPanels").hide();
+//            }
+//        }
+//        $("#WidgetFloaterPanels").hide();
+//        function onProgress(value) {
+//            $("#WidgetFloaterPanels").hide();
+//        }
+//
+//        function onError(error) {
+//            $("#WidgetFloaterPanels").hide();
+//        }
+//
+//        function onComplete() {
+//            $("#WidgetFloaterPanels").hide();
+//        }
+//
+//        function onRestoreOriginal() {
+//            $("#WidgetFloaterPanels").hide();
+//        }
+//    });
+//
+//
+//
+//    function dianji() {
+//
+//        var result = $("#change").val();
+//
+//        if (result === "English") {
+//
+//            sessionStorage.setItem("language", "English");
+//
+//        } else if (result === "Français") {
+//
+//            sessionStorage.setItem("language", "Français");
+//
+//        } else if (result === "zhongwen") {
+//
+//            sessionStorage.setItem("language", "zhongwen");
+//        }
+//
+//        window.location.reload(); //刷新当前页面.
+//
+//    }
+</script>
+
 </body>
 </html>

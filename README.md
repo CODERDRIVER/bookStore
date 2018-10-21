@@ -2,6 +2,7 @@
 
 # 中英文转换方案
 https://blog.csdn.net/csdn_lqr/article/details/78026254
+http://www.cnblogs.com/linyusong/p/9678850.html
 
 <script type="text/javascript"src="https://down.tenglongw.com/js/language.js"></script>
 # 日期工具类

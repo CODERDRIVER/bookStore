@@ -70,6 +70,13 @@ public class LibrarianHandler {
                 .get("type").asString().equals(type)) {
             throw new UserDefinedException(ResultEnum.NO_RIGHT);
         }
+        String email = librarian.getEmail();
+        // 判断该邮箱是否已经被注册
+        Librarian byEmail = librarianService.findByEmail(email);
+        if (byEmail==null)
+        {
+            return ResultUtil.error(ResultEnum.EMAIL_EXITS,request.getRequestURL().toString());
+        }
         librarian.setPassword("00010001");
         librarianService.save(librarian);
         return ResultUtil.successNoData(request.getRequestURL().toString());

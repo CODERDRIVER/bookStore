@@ -23,6 +23,8 @@ public enum ResultEnum {
     SUCCESS(0, "success"),
     NO_BORROWNUM_LEFT(-12,"borrow numbers is max"),
     NO_LIBRARIAN(-13,"no librarian"),
+    EMAIL_EXITS(-14,"email exits"),
+    PHONENUMBER_EXITS(-15,"phone number exits"),
     FAILURE(-14,"failure"),
     SYSTEM_ERROR(-1000001, "system error!");
 
