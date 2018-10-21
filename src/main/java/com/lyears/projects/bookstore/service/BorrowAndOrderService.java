@@ -148,7 +148,7 @@ public class BorrowAndOrderService {
                         orderRepository.save(order);
                         reader.setBorrowNum(reader.getBorrowNum()+1);
                         readerRepository.save(reader);
-                        return ResultUtil.success(book,request.getRequestURL().toString());
+                        return ResultUtil.successNoData(request.getRequestURL().toString());
                     }
                 }
             }else{
@@ -227,7 +227,7 @@ public class BorrowAndOrderService {
         List<BookBorrowRecordData> bookBorrowRecordDatas = new ArrayList<>();
         for (Borrow borrow : all) {
             BookBorrowRecordData bookBorrowRecordData = new BookBorrowRecordData();
-            bookBorrowRecordData.setReaderId(borrow.getBorrowId());
+            bookBorrowRecordData.setBorrowId(borrow.getBorrowId());
             bookBorrowRecordData.setReaderId(borrow.getReader().getReaderId());
             bookBorrowRecordData.setBorrowDate(borrow.getBorrowDate());
             bookBorrowRecordData.setBookId(borrow.getBook().getBookId());

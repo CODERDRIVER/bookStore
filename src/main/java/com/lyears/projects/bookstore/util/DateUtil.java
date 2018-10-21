@@ -31,8 +31,8 @@ public class DateUtil {
         {
             dayOfWeek+=7;
         }
-        calendar.add(calendar.get(Calendar.DATE),2-dayOfWeek);
-        return calendar.getTime();
+        calendar.add(Calendar.DATE,2-dayOfWeek);
+        return getDateStartTime(calendar.getTime());
     }
 
     /**
@@ -44,7 +44,7 @@ public class DateUtil {
         // 给本周开始时间加6
         calendar.setTime(getBeginDayOfWeek());
         calendar.add(Calendar.DAY_OF_WEEK,6);
-        return calendar.getTime();
+        return getDateEndTime(calendar.getTime());
     }
 
     /**
@@ -54,7 +54,7 @@ public class DateUtil {
     {
         Calendar calendar = Calendar.getInstance();
         calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),1);
-        return calendar.getTime();
+        return getDateStartTime(calendar.getTime());
     }
 
     /**
@@ -67,7 +67,7 @@ public class DateUtil {
         // 获得该月总共有多少天
         int actualMaximum = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),actualMaximum);
-        return calendar.getTime();
+        return getDateEndTime(calendar.getTime());
     }
 
     /**

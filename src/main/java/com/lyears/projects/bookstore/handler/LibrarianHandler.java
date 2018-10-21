@@ -4,6 +4,7 @@ import com.lyears.projects.bookstore.entity.*;
 import com.lyears.projects.bookstore.exception.UserDefinedException;
 import com.lyears.projects.bookstore.jwt.JwtToken;
 import com.lyears.projects.bookstore.model.IdManageData;
+import com.lyears.projects.bookstore.model.IncomeData;
 import com.lyears.projects.bookstore.service.*;
 import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultEnum;
@@ -73,11 +74,14 @@ public class LibrarianHandler {
         String email = librarian.getEmail();
         // 判断该邮箱是否已经被注册
         Librarian byEmail = librarianService.findByEmail(email);
-        if (byEmail==null)
+        if (byEmail!=null)
         {
             return ResultUtil.error(ResultEnum.EMAIL_EXITS,request.getRequestURL().toString());
         }
-        librarian.setPassword("00010001");
+        if (librarian.getPassword()==null||librarian.getPassword().equals(""))
+        {
+            librarian.setPassword("00010001");
+        }
         librarianService.save(librarian);
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
@@ -191,7 +195,7 @@ public class LibrarianHandler {
     {
 
         String date = "";
-        List<Income> dailyRecord = incomeService.getDailyRecord(type);
+        IncomeData dailyRecord = incomeService.getDailyRecord(type);
         /**
          * 收入记录分为保证金收入和罚金收入
          *TODO 对收入进行区分
@@ -225,6 +229,7 @@ public class LibrarianHandler {
         // 设置 borrowId 中 borrow_status  设置为借阅成功
         Borrow byId = borrowAndOrderService.findById(borrowId);
         byId.setBorrowStatus(1);    // 设置为借阅成功
+        borrowAndOrderService.updateBorrowInfo(byId);
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 
@@ -257,6 +262,7 @@ public class LibrarianHandler {
         int orderId = idManageData.getOrderId();
         Order byOrderId = borrowAndOrderService.findByOrderId(orderId);
         byOrderId.setOrderStatus(1);
+        borrowAndOrderService.updateOrderInfo(byOrderId);
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 

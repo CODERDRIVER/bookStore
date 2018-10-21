@@ -85,14 +85,10 @@ var showHide2 = function(obj) {
 	overDiv.style.display = "none";
 }
 
-<<<<<<< HEAD
-/* 创建预约书记录对象 */
-function order(readerId,bookId,bookName,orderDate) {
-=======
+
 /* 创建借书记录对象 */
 function order(orderId,readerId,bookId,bookName,orderDate) {
 	this.orderId = orderId;
->>>>>>> 28a782b528c9056eece89f9a631f80c04d457ed8
     this.bookId = bookId;
     this.bookName = bookName;
 	this.orderDate = orderDate;
@@ -164,11 +160,11 @@ function loadData() {
 					$.ajax({
 						type: 'post',
 						url: '/librarian/confirm/bookOrder',
-						data: {
+						data: JSON.stringify({
                             "orderId":orderId,
                             "readerId":readerId,
                             "bookId":bookId
-                        },
+                        }),
 						dataType: "json",
 						contentType: "application/json;charset=UTF-8",
 						success: function (e) {

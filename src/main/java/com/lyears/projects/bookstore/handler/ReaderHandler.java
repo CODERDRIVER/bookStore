@@ -120,7 +120,7 @@ public class ReaderHandler {
          */
         String phoneNumber = reader.getPhoneNumber();
         Reader byPhoneNumber = readerService.findByPhoneNumber(phoneNumber);
-        if (byPhoneNumber ==null)
+        if (byPhoneNumber !=null)
         {
             return ResultUtil.error(ResultEnum.PHONENUMBER_EXITS,"phone number exits");
         }

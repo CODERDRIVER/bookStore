@@ -46,27 +46,31 @@ $(document).ready(function(){
  })
  $(document).ready(function(){
     $(":radio").click(function(){
-        alert("您是..." + $(this).val());
+        // alert("您是..." + $(this).val());
         $.ajax({
-           type:'POST',
+           type:'get',
            dataType:'json',
            url:'/libralian/income/records',
            contentType:'application/json;charset=UTF-8',	
            data:{"type":$(this).val()},
            success:function(data){//返回结果
-                   alert("success");
-                   getId("do1").val = data.totalDeposit;
-                   getId("do2").val = data.totalFine;
-                   location.reload();	
+                   // alert("success");
+                    console.log(data);
+                   getId("do1").value = data.data.deposit;
+                   getId("do2").value = data.data.fine;
+                   console.log(getId("do1"));
+                   // location.reload();
              },
            error:function(data){
-               art.dialog.tips('获取收入失败!');
+               console.log("获取失败");
            }
        });
        });
    })
-  
 
+var getId = function(id) {
+    return document.getElementById(id);
+}
 /**
  * 登出按钮
  */
@@ -131,7 +135,8 @@ $('#addNewBook').on('click', function () {
 
 $('#incomeQuery').on('click', function () {
     $('#incomePrompt').modal({
-        
+        closeViaDimmer:false,
+        closeOnConfirm:false,
         relatedTarget: this,
         
         onCancel: function (e) {
@@ -149,7 +154,7 @@ $('#incomeQuery').on('click', function () {
 $('#log-out').click(function () {
     $.ajax({
         type: 'delete',
-        url: 'logout',
+        url: '/logout',
         contentType: "application/json;charset=UTF-8",
         success: function (e) {
             if (e.code === 0) {
@@ -191,7 +196,7 @@ function loadBookPage(pageNo, pageSize, keyStr) {
     }
     $.ajax({
         type: 'get',
-        url: 'books?pageNo=' + pageNo + '&pageSize=' + pageSize + '&keyStr=' + keyStr,
+        url: '/books?pageNo=' + pageNo + '&pageSize=' + pageSize + '&keyStr=' + keyStr,
         contentType: "application/json;charset=UTF-8",
         error: function () {
             alert("网络异常！")
@@ -232,12 +237,13 @@ function loadBookPage(pageNo, pageSize, keyStr) {
         var bookType = data.data.content[no].bookType
         var author = data.data.content[no].author
         var barCode = data.data.content[no].barCode
+        var image = data.data.content[no].bookUrl;
         // console.log(data.data.content[no])
         $('#bookList').append('' +
             '            <li class="am-cf am-text-truncate">\n' +
             '                <!--书籍缩略图-->\n' +
             '                <p class="am-align-left">\n' +
-            '                    <img class="am-radius" src="assets/i/bookicon1.png" alt="..."\n' +
+            '                    <img class="am-radius" src="'+image+'" alt="..."\n' +
             '                         width="140" height="140">\n' +
             '                </p>\n' +
             '                <!--书名作为h2标题-->\n' +
