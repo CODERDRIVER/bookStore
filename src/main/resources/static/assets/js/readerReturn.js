@@ -51,19 +51,19 @@
     // 数据条数
     var numRows = getId("spanTotalNumRows");
 
-    var returnRecord = new Array();
-    returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
-    returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
-    returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
-    returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
-    returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
-    returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
-    returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
-    returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
-    returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
-    returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
-    returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
-    returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
+    // var returnRecord = new Array();
+    // returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
+    // returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
+    // returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
+    // returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
+    // returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
+    // returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
+    // returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
+    // returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
+    // returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
+    // returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
+    // returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
+    // returnRecord.push(new returnlist("123", "某本书","2018/10/13 21：55"));
 
     /* 显示增加窗体 */
     var showHide = function(obj) {
