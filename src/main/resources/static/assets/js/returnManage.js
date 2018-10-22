@@ -14,7 +14,7 @@
 
                     returnRecord.push(new returnlist(records[i].returnId,records[i].readerId,records[i].bookId,records[i].bookName,records[i].returnDate));
                     }
-
+                loadData();
             }
         });
     })
@@ -116,7 +116,7 @@
         }
     }
 
-    loadData();
+
 
     /* 加载数据 */
     function loadData() {

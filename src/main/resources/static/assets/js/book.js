@@ -78,7 +78,7 @@ $('#addBook').click(function () {
                 "price": price,
 				"description": description,
 				"location":location,
-				"pubdate" :pubdate,
+				// "pubdate" :pubdate,
 				"publisher" :publisher
             });
             addAccount(requestData, '/book/add')
@@ -751,27 +751,27 @@ var okBtn = function() {
 	var tb = getId("over_tb2");
 	// 获得tb中的所有的input的值，并且赋值给变量
 	var inputs = tb.getElementsByTagName("input");
-	var bookImgTxt = inputs[0].value;
-	var authorTxt = inputs[1].value;
-	var barcodeTxt = inputs[2].value;
-	var bookNameTxt = inputs[3].value;
-	var bookTypeTxt = inputs[4].value;
-	var priceTxt = inputs[5].value;
-	var descriptionTxt = inputs[6].value;
-	var locationTxt = inputs[7].value;
+	var bookId = inputs[0].value;
+	var authorTxt = inputs[2].value;
+	var barcodeTxt = inputs[3].value;
+	var bookNameTxt = inputs[4].value;
+	var bookTypeTxt = inputs[5].value;
+	var priceTxt = inputs[6].value;
+	var descriptionTxt = inputs[7].value;
+	var locationTxt = inputs[8].value;
 	// 获得主页中的数据,将修改的数据填入到主页中,
 	var tbody = getId("tb");
 	var rows = tbody.rows.length; // 获得所有的行
 	for (var i = 0; i < rows; i++) {
 		var tr = tbody.rows[i];
 		if (i + 1 == serialTxt) {
-			if (tr.cells[3].innerHTML != bookImgTxt) {
-				if (bookImgTxt == '') {
-					alert('bookImg can not be null！');
-					return false;
-				} 
-				tr.cells[3].innerHTML = bookImgTxt;
-			}
+			// if (tr.cells[3].innerHTML != bookImgTxt) {
+			// 	if (bookImgTxt == '') {
+			// 		alert('bookImg can not be null！');
+			// 		return false;
+			// 	}
+			// 	tr.cells[3].innerHTML = bookImgTxt;
+			// }
 			if (tr.cells[4].innerHTML != authorTxt) {
 				if (authorTxt == '') {
 					alert('author can not be null！');
@@ -798,13 +798,13 @@ var okBtn = function() {
 					alert('bookType can not be null！');
 					return false;
 				} 
-				tr.cells[7].innerHTML = gradeTxt;
+				tr.cells[7].innerHTML = bookTypeTxt;
 			}
 			if (tr.cells[8].innerHTML != priceTxt) {
 				if (priceTxt == '') {
 					alert('price can not be null！');
 					return false;
-				} else if (isNaN(priceTxt)) {
+				} else if (parseFloat(priceTxt)) {
 					alert("price is a number");
 					return false;
 				}
@@ -830,10 +830,10 @@ var okBtn = function() {
 	$.ajax({
 		type:'POST',
 		dataType:'json',
-		url:'/librarian/edit/book/',
+		url:'/book/update/profile',
 		contentType:'application/json;charset=UTF-8',	
-		data:{"bookId":bookId,"bookImg":formdata,"author":author,"barcode":barcode,"bookName":bookName,
-		"bookType":bookType,"price":price,"description":description,"location":location},
+		data:JSON.stringify({"bookId":bookId,"author":authorTxt,"barCode":barcodeTxt,"bookName":bookNameTxt,
+		"bookType":bookTypeTxt,"price":parseFloat(priceTxt),"description":descriptionTxt,"location":locationTxt}),
 		success:function(data){//返回结果
 				location.reload();
 				alert("Success");

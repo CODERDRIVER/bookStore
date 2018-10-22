@@ -59,10 +59,10 @@ $(document).ready(function(){
 			 	}
 		 //页面加载两秒后运动
 		  setTimeout(startScroll,delay);
-		 //鼠标事件
+		 // 鼠标事件
 		// $("#scrollBox").mouseover(function(){clearInterval(timer)});
-		//   $("#scrollBox").mouseout(function () {
-		// 	setTimeout(startScroll,delay);
+		 //  $("#scrollBox").mouseout(function () {
+			// setTimeout(startScroll,delay);
         // })
 		 //$("#scrollBox").mouseout(function(){timer=setInterval('scrollUp()',speed)});
 })

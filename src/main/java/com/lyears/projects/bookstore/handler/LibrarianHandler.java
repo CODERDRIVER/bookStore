@@ -144,7 +144,11 @@ public class LibrarianHandler {
         bookIds = bookIds.split("=")[1];
         for (String bookId:bookIds.split(","))
         {
-            bookService.deleteBookById(Integer.parseInt(bookId));
+            boolean b = bookService.deleteBookById(Integer.parseInt(bookId));
+            if (!b)
+            {
+                return ResultUtil.error(ResultEnum.CAN_NOT_DELETE,request.getRequestURL().toString());
+            }
             /**
              *  将删除记录添加到数据库中
              *

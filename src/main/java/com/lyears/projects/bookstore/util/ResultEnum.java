@@ -25,7 +25,8 @@ public enum ResultEnum {
     NO_LIBRARIAN(-13,"no librarian"),
     EMAIL_EXITS(-14,"email exits"),
     PHONENUMBER_EXITS(-15,"phone number exits"),
-    FAILURE(-14,"failure"),
+    FAILURE(-16,"failure"),
+    CAN_NOT_DELETE(-17,"can not be deleted"),
     SYSTEM_ERROR(-1000001, "system error!");
 
 
