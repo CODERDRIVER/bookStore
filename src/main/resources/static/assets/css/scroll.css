@@ -5,6 +5,8 @@
         position: absolute;
         left:75%;
         top:8%;
+        border:rgb(64,100,133);
+
     }
     .announcecontainer{
         width:300px;
@@ -17,7 +19,8 @@
         text-align:center;
         line-height:50px;
         font-size:1.3em;
-        background-color:#0FF;
+        background-color:rgba(152,245,255,0.2);
+        border-radius: 45%;
         }
     #scrollBox{
     width:300px;
