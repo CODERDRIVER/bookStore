@@ -153,6 +153,7 @@ $('#log-out').click(function () {
  * 搜索框点击事件
  */
 $('#search-button').click(function () {
+    $("#bookPane").show();
     searchFun()
 });
 $(document).keyup(function (event) {
@@ -244,8 +245,6 @@ function loadBookPage(pageNo, pageSize, keyStr) {
             '                <p class="book-info-p am-text-middle am-text-sm">\n' +
             '                    Remain:\n' +
             '                    <em>' + inventory + '</em>\n' +
-            '                <button class="am-btn am-btn-default am-btn-xs am-text-secondary am-align-right" type="button">\n' +
-            '                <span class="am-icon-clock-o"></span> Reserve</button>\n' +
             '                </p>\n' +
             '                <p class="book-info-p am-text-middle am-text-xs">' + bookType + '</p>\n' +
             '                <p class="book-info-p am-text-middle am-text-xs">' + barCode + '</p>\n' +

@@ -25,5 +25,13 @@ public interface ReaderRepository extends JpaRepository<Reader,Integer> {
     @Transactional
     int updateReaderDeposit(@Param("deposit")double deposit);
 
+    /*
+     删除读者
+     */
+    @Modifying
+    @Query(nativeQuery = true,value = "UPDATE reader r SET r.status = 1 WHERE  r.reader_id = :readerId")
+    @Transactional
+    void deleteById(@Param("readerId")int readerId);
+
 
 }

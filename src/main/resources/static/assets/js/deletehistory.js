@@ -67,7 +67,7 @@ var pageSize = 10;
 var page = 1;
 var theTable = getId("tb");
 // 获取行的长度
-var numberRowsInTable = theTable.rows.length;
+// var numberRowsInTable = theTable.rows.length;
 // 数据条数
 var numRows = getId("spanTotalNumRows");
 // 公告信息
@@ -143,42 +143,63 @@ function loadData() {
 		var bookId = message[i].bookId;
         var deleteDate = message[i].deleteDate;
         var librarainId = message[i].librarainId;
-		// 创建tr
-		var tr = createObj("tr");
-		// 创建td
-		var serialTd = createObj("td");
-		var bookIdTd = createObj("td");
-        var deleteDateTd = createObj("td");
-        var librarainIdTd = createObj("td");
-		
-		
-		// 将获得的值添加到创建的指定Td中；
-		var tbody = getId("tb");
-		var rows = tbody.rows.length;
-		// 将获得的信息添加到指定的为td中
-		serialTd.innerHTML = rows + 1;
-		bookIdTd.innerHTML = bookId;
-		deleteDateTd.innerHTML = deleteDate;
-		librarainIdTd.innerHTML = librarainId;
 
-		
-		// 将新建的td加入到新建的行中
-		tr.appendChild(serialTd);
-		tr.appendChild(bookIdTd);
-		tr.appendChild(deleteDateTd);
-		tr.appendChild(librarainIdTd);
-		
-		// 将新建的tr加入到tbody中
-		var tbody = getId("tb");
-		tbody.appendChild(tr);
+        /**
+		 * <tbody>
+         <tr>
+         <td><input type="checkbox" /></td>
+         <td>Serial ID</td>
+         <td>Book Id</td>
+         <td>Delete Date</td>
+         <td>Librarain Id</td>
+         </tr>
+         </tbody>
+         */
 
-		// 隔行换色。
-		var table = document.getElementById("table");
-		table.tBodies[0].rows[table.tBodies[0].rows.length - 1].style.display = 'none';
-		numberRowsInTable++;
-		totalPage.innerHTML = pageCount();
-		numRows.innerHTML = numberRowsInTable;
-		first();
+        $("#table").append('<tbody>' +
+            '<tr>' +
+            '<td><input type="checkbox" /></td>\n' +
+            '<td>'+(i+1)+'</td>\n' +
+            '<td>'+bookId+'</td>\n' +
+            '<td>'+deleteDate+'</td>\n' +
+            '<td>'+librarainId+'</td>\n' +
+            '</tr></tbody>')
+            // 创建tr
+		// var tr = createObj("tr");
+		// // 创建td
+		// var serialTd = createObj("td");
+		// var bookIdTd = createObj("td");
+        // var deleteDateTd = createObj("td");
+        // var librarainIdTd = createObj("td");
+		//
+		//
+		// // 将获得的值添加到创建的指定Td中；
+		// var tbody = getId("tb");
+		// var rows = tbody.rows.length;
+		// // 将获得的信息添加到指定的为td中
+		// serialTd.innerHTML = rows + 1;
+		// bookIdTd.innerHTML = bookId;
+		// deleteDateTd.innerHTML = deleteDate;
+		// librarainIdTd.innerHTML = librarainId;
+        //
+		//
+		// // 将新建的td加入到新建的行中
+		// tr.appendChild(serialTd);
+		// tr.appendChild(bookIdTd);
+		// tr.appendChild(deleteDateTd);
+		// tr.appendChild(librarainIdTd);
+		//
+		// // 将新建的tr加入到tbody中
+		// var tbody = getId("tb");
+		// tbody.appendChild(tr);
+        //
+		// // 隔行换色。
+		// var table = document.getElementById("table");
+		// table.tBodies[0].rows[table.tBodies[0].rows.length - 1].style.display = 'none';
+		// numberRowsInTable++;
+		// totalPage.innerHTML = pageCount();
+		// numRows.innerHTML = numberRowsInTable;
+		// first();
 	}
 	changeColor();
 }

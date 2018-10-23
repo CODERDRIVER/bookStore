@@ -1,51 +1,124 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Bibliosoft-ReturnRecord</title>
-<link type="text/css" rel="stylesheet" href="/assets/css/announce.css" />
-<script type="text/javascript" src="/assets/js/jquery-3.1.1.min.js"></script>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport"
+			content="width=device-width, initial-scale=1">
+	<title>Bibliosoft-Reader Return Records</title>
+
+	<!-- Set render engine for 360 browser -->
+	<meta name="renderer" content="webkit">
+
+	<!-- No Baidu Siteapp-->
+	<meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+	<link rel="icon" type="image/png" href="/assets/i/bookicon2.png">
+
+	<!-- Add to homescreen for Chrome on Android -->
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="icon" sizes="192x192" href="/assets/i/bookicon2.png">
+
+	<!-- Add to homescreen for Safari on iOS -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+	<link rel="apple-touch-icon-precomposed" href="/assets/i/bookicon2.png">
+
+	<!-- Tile icon for Win8 (144x144 + tile color) -->
+	<meta name="msapplication-TileImage" content="/assets/i/bookicon2.png">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+
+	<link rel="stylesheet" href="/assets/css/amazeui.min.css">
+	<link rel="stylesheet" href="/assets/css/app.css">
+	<link rel="stylesheet" href="/assets/css/announce.css">
+	<!-- <script type="text/javascript" src="/assets/js/jquery-3.1.1.min.js"></script> -->
 </head>
+	
+<body class="am-with-topbar-fixed-top">
+<div class="container">
+	<header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
+		<div class="am-container" style="max-width: unset">
+			<h1 class="am-topbar-brand">
+				<a href="#">Reader Return Records</a>
+			</h1>
 
-<body>
-	<div class="tbody">
-		<div class="tbody_inside">
-			<!--头部-->
-			<div class="head">
-				<div class="head_left"></div>
-				<p class="title">Bibliosoft-ReturnRecord</p>
-				<div class="head_right"></div>
-			</div>
-			
-			<div class="addOrDelete">
-				<button class="index" type="button" id="home">Back Home </button>
-			</div>
-			<!--信息部分-->
-			<table class="contentTable" id="table">
-				<thead id="thead">
-					<tr class="contentTable1">
-                        <td>SerialID</td>
-						<td>BookId</td>
-						<td>BookName</td>
-                        <td>ReturnDate</td>
-					</tr>
-				</thead>
-				<tbody class="tb" id="tb">
+			<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+					data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only"></span> <span
+					class="am-icon-bars"></span></button>
 
-				</tbody>
-			</table>
-			<div class="upOrDown">
-				<span id="spanFirst" class="spanFirst">FirstPage , </span> 
-                <span id="spanLast" class="spanLast">LastPage , </span> the 
-                <span id="spanPageNum"></span> page , total 
-                <span id="spanTotalPage"></span> pages, total
-				<span id="spanTotalNumRows"></span> items,(10 items/page)
-				<button class="down" type="button" id="spanNext">next page</button>
-				<button class="up" type="button" id="spanPre">pre page</button>
+			<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+
+				<div class="am-topbar-right">
+					<button type="button" id="home" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Back</button>
+				</div>
+
+				<div class="am-topbar-right">
+					<li class="am-dropdown am-dropdown-header" data-am-dropdown>
+						<a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+							English <span class="am-icon-caret-down"></span>
+						</a>
+						<ul class="am-dropdown-content">
+							<li class="am-dropdown-header">Language Setting</li>
+							<li><a id="English" href="#">English</a></li>
+							<li><a id="Chinese" href="#">中文</a></li>
+						</ul>
+					</li>
+				</div>
 			</div>
 		</div>
-		
+	</header>
+
+	<div class="admin-content">
+		<div class="admin-content-body">
+			<div class="am-cf am-padding am-padding-bottom-0">
+				<div class="am-fl am-cf">
+					<strong class="am-text-primary am-text-xxl" style="color: rgb(64, 100, 133);">Return Records</strong>
+				</div>
+			</div>
+
+			<hr>
+	
+			<div class="am-g">
+				<div class="am-u-sm-12">
+					<form class="am-form">
+					<table id="table" class="am-table am-table-striped am-table-hover table-main">
+						<thead id="thead">
+						<tr>
+						
+						<th>Serial ID</th>
+						<th>Book ID</th>
+						<th>Book Name</th>
+						<th>Return Date</th>
+						</tr>
+						</thead>
+
+						<!--<tbody>-->
+							<!--<tr>-->
+							<!--<td>Serial ID</td>-->
+							<!--<td>Book ID</td>-->
+							<!--<td>Book Name</td>-->
+							<!--<td>Return Date</td>-->
+							<!--</tr>-->
+						<!--</tbody>-->
+
+					</table>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
-	<script type="text/javascript" src="/assets/js/readerReturn.js"></script>
+
+</div>
+
+<footer class="footer">
+	<p>2018. by Team A12.</p>
+</footer>
+<script type="text/javascript" src="/assets/js/jquery-3.1.1.min.js"></script>
+<script src="/assets/js/amazeui.min.js"></script>
+<script src="/assets/js/app.js"></script>
+<script type="text/javascript" src="/assets/js/readerReturn.js"></script>
 </body>
 </html>

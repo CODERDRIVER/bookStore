@@ -49,7 +49,7 @@ var pageSize = 10;
 var page = 1;
 var theTable = getId("tb");
 // 获取行的长度
-var numberRowsInTable = theTable.rows.length;
+// var numberRowsInTable = theTable.rows.length;
 // 数据条数
 var numRows = getId("spanTotalNumRows");
 
@@ -129,269 +129,364 @@ function loadData() {
         var readerId = orderRecord[i].readerId;
         var orderDate = orderRecord[i].orderDate;
         var orderId = orderRecord[i].orderId;
-
+        /**
+		 * <tbody>
+         <tr>
+         <td><input type="checkbox" /></td>
+         <td>Serial ID</td>
+         <td>Reader ID</td>
+         <td>2 本</td>
+         <td>BarCode</td>
+         <td>Book Name</td>
+         <td>Price</td>
+         <td>
+         <div class="am-btn-toolbar">
+         <div class="am-btn-group am-btn-group-xs">
+         <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-check"></span> Complete</button>
+         <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-close"></span> Cancel</button>
+         </div>
+         </div>
+         </td>
+         </tr>
+         </tbody>
+         */
+        $("#table").append('<tbody>'+
+            '<tr>'+
+            '<td><input type="checkbox" /></td>'+
+            '<td>'+(i+1)+'</td>'+
+            '<td>'+bookId+'</td>'+
+            '<td>'+bookName+'</td>'+
+            '<td>'+readerId+'</td>'+
+            '<td>'+orderDate+'</td>'+
+            '<td>'+orderId+'</td>'+
+            '<td>'+
+            '<div class="am-btn-toolbar">'+
+            ' <div class="am-btn-group am-btn-group-xs">\n' +
+            '         <button type="button" onclick="complete(this)"  class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> Complete</button>\n' +
+            '         <button type="button" onclick="cancel(this)" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash"></span> Cancel</button>\n' +
+            '         </div>'+
+            '</div>'+
+            '</td></tr></tbody>');
 		// 创建tr
-		var tr = createObj("tr");
-		// 创建td
-		var serialTd = createObj("td");
-        var bookIdTd = createObj("td");
-        var bookNameTd = createObj("td");
-        var orderDateTd = createObj("td");
-        var readerIdTd = createObj("td");
-        var dmlTd = createObj("td");
-		// 将获得的值添加到创建的指定Td中；
-		var tbody = getId("tb");
-		var rows = tbody.rows.length;
-		// 将获得的信息添加到指定的为td中
-		serialTd.innerHTML = rows + 1;
-		bookNameTd.innerHTML = bookName;
-        readerIdTd.innerHTML = readerId;
-        bookIdTd.innerHTML = bookId;
-		orderDateTd.innerHTML = orderDate;
-
-		// 创建个同意借阅的button按钮，添加到操作列；
-		var acceptBtn = createObj("input");
-		acceptBtn.type = "button";
-		acceptBtn.value = "Accept";
-		// 为新建的acceptBtn创建监听属性；
-		acceptBtn.onclick = function() {
-			var flag = window.confirm("确定同意该借阅请求？");
-			if (flag) {
-					$.ajax({
-						type: 'post',
-						url: '/librarian/confirm/bookOrder',
-						data: JSON.stringify({
-                            "orderId":orderId,
-                            "readerId":readerId,
-                            "bookId":bookId
-                        }),
-						dataType: "json",
-						contentType: "application/json;charset=UTF-8",
-						success: function (e) {
-							console.log(e);
-							alert(e.message);
-						}
-					})
-				}
-		};
-
-		// 创建个拒绝借阅的button按钮，添加到操作列；
-		var rejectBtn = createObj("input");
-		rejectBtn.type = "button";
-		rejectBtn.value = "Reject";
-		// 为新建的acceptBtn创建监听属性；
-		rejectBtn.onclick = function() {
-			var flag = window.confirm("确定拒绝该借阅请求？");
-			if (flag) {
-					$.ajax({
-						type: 'post',
-						url: '/librarian/reject/bookOrder',
-						data: {
-                            "orderId":orderId,
-                            "readerId":readerId,
-                            "bookId":bookId
-                        },
-						dataType: "json",
-						contentType: "application/json;charset=UTF-8",
-						success: function (e) {
-							console.log(e);
-							alert(e.message);
-						}
-					})
-				}
-		};
-
-		dmlTd.appendChild(acceptBtn);
-		dmlTd.appendChild(rejectBtn);
-		// 将新建的td加入到新建的行中
-		tr.appendChild(serialTd);
-		tr.appendChild(readerIdTd);
-        tr.appendChild(bookIdTd);
-        tr.appendChild(bookNameTd);
-        tr.appendChild(orderDateTd);
-		tr.appendChild(dmlTd);
-
-		// 将新建的tr加入到tbody中
-		var tbody = getId("tb");
-		tbody.appendChild(tr);
-
-		// 隔行换色。
-		var table = document.getElementById("table");
-		table.tBodies[0].rows[table.tBodies[0].rows.length - 1].style.display = 'none';
-		numberRowsInTable++;
-		totalPage.innerHTML = pageCount();
-		numRows.innerHTML = numberRowsInTable;
-		first();
+		// var tr = createObj("tr");
+		// // 创建td
+		// var serialTd = createObj("td");
+        // var bookIdTd = createObj("td");
+        // var bookNameTd = createObj("td");
+        // var orderDateTd = createObj("td");
+        // var readerIdTd = createObj("td");
+        // var dmlTd = createObj("td");
+		// // 将获得的值添加到创建的指定Td中；
+		// var tbody = getId("tb");
+		// var rows = tbody.rows.length;
+		// // 将获得的信息添加到指定的为td中
+		// serialTd.innerHTML = rows + 1;
+		// bookNameTd.innerHTML = bookName;
+        // readerIdTd.innerHTML = readerId;
+        // bookIdTd.innerHTML = bookId;
+		// orderDateTd.innerHTML = orderDate;
+        //
+		// // 创建个同意借阅的button按钮，添加到操作列；
+		// var acceptBtn = createObj("input");
+		// acceptBtn.type = "button";
+		// acceptBtn.value = "Accept";
+		// // 为新建的acceptBtn创建监听属性；
+		// acceptBtn.onclick = function() {
+		// 	var flag = window.confirm("确定同意该借阅请求？");
+		// 	if (flag) {
+		// 			$.ajax({
+		// 				type: 'post',
+		// 				url: '/librarian/confirm/bookOrder',
+		// 				data: JSON.stringify({
+         //                    "orderId":orderId,
+         //                    "readerId":readerId,
+         //                    "bookId":bookId
+         //                }),
+		// 				dataType: "json",
+		// 				contentType: "application/json;charset=UTF-8",
+		// 				success: function (e) {
+		// 					console.log(e);
+		// 					alert(e.message);
+		// 				}
+		// 			})
+		// 		}
+		// };
+        //
+		// // 创建个拒绝借阅的button按钮，添加到操作列；
+		// var rejectBtn = createObj("input");
+		// rejectBtn.type = "button";
+		// rejectBtn.value = "Reject";
+		// // 为新建的acceptBtn创建监听属性；
+		// rejectBtn.onclick = function() {
+		// 	var flag = window.confirm("确定拒绝该借阅请求？");
+		// 	if (flag) {
+		// 			$.ajax({
+		// 				type: 'post',
+		// 				url: '/librarian/reject/bookOrder',
+		// 				data: {
+         //                    "orderId":orderId,
+         //                    "readerId":readerId,
+         //                    "bookId":bookId
+         //                },
+		// 				dataType: "json",
+		// 				contentType: "application/json;charset=UTF-8",
+		// 				success: function (e) {
+		// 					console.log(e);
+		// 					alert(e.message);
+		// 				}
+		// 			})
+		// 		}
+		// };
+        //
+		// dmlTd.appendChild(acceptBtn);
+		// dmlTd.appendChild(rejectBtn);
+		// // 将新建的td加入到新建的行中
+		// tr.appendChild(serialTd);
+		// tr.appendChild(readerIdTd);
+        // tr.appendChild(bookIdTd);
+        // tr.appendChild(bookNameTd);
+        // tr.appendChild(orderDateTd);
+		// tr.appendChild(dmlTd);
+        //
+		// // 将新建的tr加入到tbody中
+		// var tbody = getId("tb");
+		// tbody.appendChild(tr);
+        //
+		// // 隔行换色。
+		// var table = document.getElementById("table");
+		// table.tBodies[0].rows[table.tBodies[0].rows.length - 1].style.display = 'none';
+		// numberRowsInTable++;
+		// totalPage.innerHTML = pageCount();
+		// numRows.innerHTML = numberRowsInTable;
+		// first();
 	}
 	changeColor();
 }
 
-/* 下一页 */
-function next() {
-
-	hideTable();
-
-	currentRow = pageSize * page;
-	maxRow = currentRow + pageSize;
-	if (maxRow > numberRowsInTable)
-		maxRow = numberRowsInTable;
-	for (var i = currentRow; i < maxRow; i++) {
-		theTable.rows[i].style.display = '';
-	}
-	page++;
-	if (maxRow == numberRowsInTable) {
-		nextText();
-		lastText();
-	}
-	showPage();
-	preLink();
-	firstLink();
-}
-
-/* 上一页 */
-function pre() {
-
-	hideTable();
-
-	page--;
-
-	currentRow = pageSize * page;
-	maxRow = currentRow - pageSize;
-	if (currentRow > numberRowsInTable)
-		currentRow = numberRowsInTable;
-	for (var i = maxRow; i < currentRow; i++) {
-		theTable.rows[i].style.display = '';
-	}
-
-	if (maxRow == 0) {
-		preText();
-		firstText();
-	}
-
-	showPage();
-	nextLink();
-	lastLink();
-}
-
-/* 第一页 */
-function first() {
-	hideTable();
-	page = 1;
-	for (var i = 0; i < pageSize && i < numberRowsInTable; i++) {
-		theTable.rows[i].style.display = '';
-	}
-	showPage();
-
-	preText();
-	nextLink();
-	lastLink();
-}
-
-/* 最后一页 */
-function last() {
-	hideTable();
-	page = pageCount();
-	currentRow = pageSize * (page - 1);
-	for (var i = currentRow; i < numberRowsInTable; i++) {
-		theTable.rows[i].style.display = '';
-	}
-	showPage();
-
-	preLink();
-	nextText();
-	firstLink();
-}
-
-/* 隐藏table */
-function hideTable() {
-	for (var i = 0; i < numberRowsInTable; i++) {
-		theTable.rows[i].style.display = 'none';
-	}
-}
-
-/* 展示第几页 */
-function showPage() {
-	pageNum.innerHTML = page;
-}
-
-/* 总共页数 */
-function pageCount() {
-	var count = 1;
-	if (numberRowsInTable % pageSize != 0)
-		count = 1;
-	return parseInt(numberRowsInTable / (pageSize + 0.1)) + count;
-}
-
-/* 显示链接 */
-function preLink() {
-	spanPre.innerHTML = "<a class='upLink' href='javascript:pre();'>pre page</a>";
-}
-function preText() {
-	spanPre.innerHTML = "pre page";
-}
-
-function nextLink() {
-	spanNext.innerHTML = "<a class='downLink' href='javascript:next();'>next page</a>";
-}
-function nextText() {
-	spanNext.innerHTML = "next page";
-}
-
-function firstLink() {
-	spanFirst.innerHTML = "<a href='javascript:first();'>firstPage , </a>";
-}
-function firstText() {
-	spanFirst.innerHTML = "firstPage , ";
-}
-
-function lastLink() {
-	spanLast.innerHTML = "<a href='javascript:last();'>lastPage , </a>";
-}
-function lastText() {
-	spanLast.innerHTML = "lastPage , ";
-}
-
-/* 隐藏表格 */
-function hide() {
-	for (var i = pageSize; i < numberRowsInTable; i++) {
-		theTable.rows[i].style.display = 'none';
-	}
-
-	totalPage.innerHTML = pageCount();
-	pageNum.innerHTML = '1';
-	numRows.innerHTML = numberRowsInTable;
-
-	nextLink();
-	lastLink();
-}
-
-hide();
-
-/*显示时特效*/
-$(document).ready(function() {
-	$("#show").click(function() {
-		$(".over").show("slow");
-	});
-});
-
-/*隐藏时特效*/
-$(document).ready(function() {
-	$("#hide23").click(function() {
-		$(".over").hide("slow");
-	});
-});
 /**
- * 登出按钮
+ *  完成点击按钮
  */
-$('#log-out').click(function () {
-    $.ajax({
-        type: 'delete',
-        url: '/logout',
-        contentType: "application/json;charset=UTF-8",
-        success: function (e) {
-            if (e.code === 0) {
-                window.location.href = "/"
-            }
-        }
-    })
-})
+function complete(e)
+{
+	var tr = e.parentNode.parentNode.parentNode.parentNode;
+	var bookId = tr.childNodes[2].innerHTML;
+	var readerId = tr.childNodes[4].innerHTML;
+	var orderId = tr.childNodes[6].innerHTML;
+	var flag = window.confirm("确定同意该借阅请求？");
+	if (flag) {
+			$.ajax({
+				type: 'post',
+				url: '/librarian/confirm/bookOrder',
+				data: JSON.stringify({
+	               "orderId":orderId,
+	               "readerId":readerId,
+	               "bookId":bookId
+	           }),
+				dataType: "json",
+				contentType: "application/json;charset=UTF-8",
+				success: function (e) {
+					console.log(e);
+					alert(e.message);
+				}
+			})
+		}
+}
+
+/**
+ *  取消按钮
+ */
+function cancel(e)
+{
+    var tr = e.parentNode.parentNode.parentNode.parentNode;
+    var bookId = tr.childNodes[2].innerHTML;
+    var readerId = tr.childNodes[4].innerHTML;
+    var orderId = tr.childNodes[6].innerHTML;
+	var flag = window.confirm("确定拒绝该借阅请求？");
+	if (flag) {
+			$.ajax({
+				type: 'post',
+				url: '/librarian/reject/bookOrder',
+				data: {
+				   "orderId":orderId,
+				   "readerId":readerId,
+				   "bookId":bookId
+			   },
+				dataType: "json",
+				contentType: "application/json;charset=UTF-8",
+				success: function (e) {
+					console.log(e);
+					alert(e.message);
+				}
+			})
+		}
+}
+
+/* 下一页 */
+// function next() {
+//
+// 	hideTable();
+//
+// 	currentRow = pageSize * page;
+// 	maxRow = currentRow + pageSize;
+// 	if (maxRow > numberRowsInTable)
+// 		maxRow = numberRowsInTable;
+// 	for (var i = currentRow; i < maxRow; i++) {
+// 		theTable.rows[i].style.display = '';
+// 	}
+// 	page++;
+// 	if (maxRow == numberRowsInTable) {
+// 		nextText();
+// 		lastText();
+// 	}
+// 	showPage();
+// 	preLink();
+// 	firstLink();
+// }
+//
+// /* 上一页 */
+// function pre() {
+//
+// 	hideTable();
+//
+// 	page--;
+//
+// 	currentRow = pageSize * page;
+// 	maxRow = currentRow - pageSize;
+// 	if (currentRow > numberRowsInTable)
+// 		currentRow = numberRowsInTable;
+// 	for (var i = maxRow; i < currentRow; i++) {
+// 		theTable.rows[i].style.display = '';
+// 	}
+//
+// 	if (maxRow == 0) {
+// 		preText();
+// 		firstText();
+// 	}
+//
+// 	showPage();
+// 	nextLink();
+// 	lastLink();
+// }
+//
+// /* 第一页 */
+// function first() {
+// 	hideTable();
+// 	page = 1;
+// 	for (var i = 0; i < pageSize && i < numberRowsInTable; i++) {
+// 		theTable.rows[i].style.display = '';
+// 	}
+// 	showPage();
+//
+// 	preText();
+// 	nextLink();
+// 	lastLink();
+// }
+//
+// /* 最后一页 */
+// function last() {
+// 	hideTable();
+// 	page = pageCount();
+// 	currentRow = pageSize * (page - 1);
+// 	for (var i = currentRow; i < numberRowsInTable; i++) {
+// 		theTable.rows[i].style.display = '';
+// 	}
+// 	showPage();
+//
+// 	preLink();
+// 	nextText();
+// 	firstLink();
+// }
+//
+// /* 隐藏table */
+// function hideTable() {
+// 	for (var i = 0; i < numberRowsInTable; i++) {
+// 		theTable.rows[i].style.display = 'none';
+// 	}
+// }
+//
+// /* 展示第几页 */
+// function showPage() {
+// 	pageNum.innerHTML = page;
+// }
+//
+// /* 总共页数 */
+// function pageCount() {
+// 	var count = 1;
+// 	if (numberRowsInTable % pageSize != 0)
+// 		count = 1;
+// 	return parseInt(numberRowsInTable / (pageSize + 0.1)) + count;
+// }
+//
+// /* 显示链接 */
+// function preLink() {
+// 	spanPre.innerHTML = "<a class='upLink' href='javascript:pre();'>pre page</a>";
+// }
+// function preText() {
+// 	spanPre.innerHTML = "pre page";
+// }
+//
+// function nextLink() {
+// 	spanNext.innerHTML = "<a class='downLink' href='javascript:next();'>next page</a>";
+// }
+// function nextText() {
+// 	spanNext.innerHTML = "next page";
+// }
+//
+// function firstLink() {
+// 	spanFirst.innerHTML = "<a href='javascript:first();'>firstPage , </a>";
+// }
+// function firstText() {
+// 	spanFirst.innerHTML = "firstPage , ";
+// }
+//
+// function lastLink() {
+// 	spanLast.innerHTML = "<a href='javascript:last();'>lastPage , </a>";
+// }
+// function lastText() {
+// 	spanLast.innerHTML = "lastPage , ";
+// }
+//
+// /* 隐藏表格 */
+// function hide() {
+// 	for (var i = pageSize; i < numberRowsInTable; i++) {
+// 		theTable.rows[i].style.display = 'none';
+// 	}
+//
+// 	totalPage.innerHTML = pageCount();
+// 	pageNum.innerHTML = '1';
+// 	numRows.innerHTML = numberRowsInTable;
+//
+// 	nextLink();
+// 	lastLink();
+// }
+//
+// hide();
+//
+// /*显示时特效*/
+// $(document).ready(function() {
+// 	$("#show").click(function() {
+// 		$(".over").show("slow");
+// 	});
+// });
+//
+// /*隐藏时特效*/
+// $(document).ready(function() {
+// 	$("#hide23").click(function() {
+// 		$(".over").hide("slow");
+// 	});
+// });
+// /**
+//  * 登出按钮
+//  */
+// $('#log-out').click(function () {
+//     $.ajax({
+//         type: 'delete',
+//         url: '/logout',
+//         contentType: "application/json;charset=UTF-8",
+//         success: function (e) {
+//             if (e.code === 0) {
+//                 window.location.href = "/"
+//             }
+//         }
+//     })
+// })

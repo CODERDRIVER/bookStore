@@ -6,6 +6,7 @@ import com.lyears.projects.bookstore.entity.Reader;
 import com.lyears.projects.bookstore.exception.ErrorPageException;
 import com.lyears.projects.bookstore.exception.UserDefinedException;
 import com.lyears.projects.bookstore.jwt.JwtToken;
+import com.lyears.projects.bookstore.model.BorrowData;
 import com.lyears.projects.bookstore.model.IdManageData;
 import com.lyears.projects.bookstore.service.*;
 import com.lyears.projects.bookstore.util.ResponseMessage;
@@ -76,7 +77,7 @@ public class ReaderHandler {
     public ResponseMessage updateReaderInfo(@RequestBody Reader reader,@CookieValue(value = "readerId",required = false)Cookie readerId)
     {
         System.out.println(reader.toString());
-        if (readerId!=null)
+        if (readerId!=null&&!readerId.getValue().equals(""))
         {
             reader.setReaderId(Integer.parseInt(readerId.getValue()));
         }
@@ -212,21 +213,18 @@ public class ReaderHandler {
      */
     @RequestMapping(value = "/book/borrow",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public ResponseMessage borrowBook(@RequestBody String bookName,@CookieValue("readerId")Cookie readerId)
+    public ResponseMessage borrowBook(@RequestBody BorrowData borrowData)
     {
-        try {
-            // 转码
-            bookName = URLDecoder.decode(bookName,"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
+        String bookName = borrowData.getBookName();
+        String phoneNumber = borrowData.getPhoneNumber();
+        Reader byPhoneNumber = readerService.findByPhoneNumber(phoneNumber);
+        Integer readerId = byPhoneNumber.getReaderId();
         if (readerId==null)
         {
-            return ResultUtil.error(ResultEnum.NO_RIGHT,request.getRequestURL().toString());
+            return ResultUtil.error(ResultEnum.USER_NOT_EXIST,request.getRequestURL().toString());
         }else{
             // 增加一条借阅记录
-            ResponseMessage responseMessage = borrowAndOrderService.borrowBookWithBookNameAndReaderId(Integer.parseInt(readerId.getValue()), bookName.split("=")[1]);
+            ResponseMessage responseMessage = borrowAndOrderService.borrowBookWithBookNameAndReaderId(readerId, bookName);
             System.out.println(responseMessage);
             return responseMessage;
         }

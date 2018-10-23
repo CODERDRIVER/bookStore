@@ -7,7 +7,7 @@
 <meta name="keywords" content="">
 <meta name="viewport"
 		content="width=device-width, initial-scale=1">
-<title>Bibliosoft-DeleteHistory</title>
+<title>Bibliosoft-Delete History</title>
 
 <!-- Set render engine for 360 browser -->
 <meta name="renderer" content="webkit">
@@ -38,41 +38,75 @@
 </head>
 <body>
 <div class="container">
-<header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
-	<div class="am-container" style="max-width: unset">
-		<h1 class="am-topbar-brand">
-			<a href="/">Bibliosoft-DeleteHistory</a>
-		</h1>
+	<header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
+		<div class="am-container" style="max-width: unset">
+			<h1 class="am-topbar-brand">
+				<a href="/">Book Delete History</a>
+			</h1>
 
-		<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
-				data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
-				class="am-icon-bars"></span></button>
+			<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+					data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+					class="am-icon-bars"></span></button>
 
-		<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
-			<div class="am-topbar-right">
-				<button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home">Back Home </button>
-				<button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
+			<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+				<div class="am-topbar-right">
+					<button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home">Back</button>
+					<button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
+				</div>
+
+				<div class="am-topbar-right">
+					<li class="am-dropdown am-dropdown-header" data-am-dropdown>
+						<a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+							English <span class="am-icon-caret-down"></span>
+						</a>
+						<ul class="am-dropdown-content">
+							<li class="am-dropdown-header">Language Setting</li>
+							<li><a id="English" href="#">English</a></li>
+							<li><a id="Chinese" href="#">中文</a></li>
+						</ul>
+					</li>
+				</div>
+
 			</div>
+		</div>
+	</header>
+	<div class="admin-content">
+		<div class="admin-content-body">
+		<hr>
 
-			<div class="am-topbar-right">
-				<li class="am-dropdown am-dropdown-header" data-am-dropdown>
-					<a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-						English <span class="am-icon-caret-down"></span>
-					</a>
-					<ul class="am-dropdown-content">
-						<li class="am-dropdown-header">Language Setting</li>
-						<li><a id="English" href="#">English</a></li>
-						<li><a id="Chinese" href="#">中文</a></li>
-					</ul>
-				</li>
+		<div class="am-g">
+			<div class="am-u-sm-12">
+				<form class="am-form">
+				<table id="table" class="am-table am-table-striped am-table-hover table-main">
+					<thead id="thead">
+					<tr>
+					
+					<th class="table-check"><input type="checkbox" /></th>
+						<th >Serial ID</th>
+						<th>Book Id</th>
+						<th>Delete Date</th>
+						<th>Librarain Id</th>
+					</tr>
+					</thead>
+
+					<!--<tbody>-->
+						<!--<tr>-->
+						<!--<td><input type="checkbox" /></td>-->
+						<!--<td>Serial ID</td>-->
+						<!--<td>Book Id</td>-->
+                        <!--<td>Delete Date</td>-->
+                        <!--<td>Librarain Id</td>-->
+						<!--</tr>-->
+					<!--</tbody>-->
+
+				</table>
+				</form>
 			</div>
-
+		</div>
 		</div>
 	</div>
-</header>
-	<div class="tbody">
+	<!-- <div class="tbody">
 		<div class="tbody_inside">
-			<!--信息部分-->
 			<table class="contentTable" id="table">
 				<thead id="thead">
 					<tr class="contentTable1">
@@ -96,11 +130,14 @@
 				<button class="up" type="button" id="spanPre">pre page</button>
 			</div>
 		</div>
-		
-	</div>
-	<script type="text/javascript" src="/assets/js/jquery-3.1.1.min.js"></script>
-	<script src="/assets/js/amazeui.min.js"></script>
-    <script src="/assets/js/app.js"></script>
-	<script type="text/javascript" src="/assets/js/deletehistory.js"></script>
+	</div> -->
+</div>
+<footer class="footer">
+	<p>2018. by Team A12.</p>
+</footer>
+<script type="text/javascript" src="/assets/js/jquery-3.1.1.min.js"></script>
+<script src="/assets/js/amazeui.min.js"></script>
+<script src="/assets/js/app.js"></script>
+<script type="text/javascript" src="/assets/js/deletehistory.js"></script>
 </body>
 </html>

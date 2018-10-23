@@ -1,10 +1,10 @@
-// 获取借书记录列表
+// 获取请求借书记录列表
 var borrowRecord = new Array();
 $(document).ready(function(){ 				
     $.ajax({
         type:'get',
         dataType:'json',
-        url:'/borrows/readerId',
+        url:'/librarian/borrows',
         contentType:'application/json;charset=UTF-8',
         async: false,
         
@@ -13,7 +13,7 @@ $(document).ready(function(){
 			var borrows = data.data;
             for(var i=0; i<borrows.length;i++){
                 
-                borrowRecord.push(new borrow(borrows[i].borrowId,borrows[i].bookId,borrows[i].bookName,borrows[i].borrowDate,borrows[i].fine));
+                borrowRecord.push(new borrow(borrows[i].borrowId,borrows[i].readerId,borrows[i].bookId,borrows[i].bookName,borrows[i].borrowDate));
                 }
             loadData();
                 
@@ -86,12 +86,12 @@ var showHide2 = function(obj) {
 }
 
 /* 创建借书记录对象 */
-function borrow(borrowId,bookId,bookName,borrowDate,fine) {
+function borrow(borrowId,readerId,bookId,bookName,borrowDate) {
 	this.borrowId = borrowId;
     this.bookId = bookId;
     this.bookName = bookName;
 	this.borrowDate = borrowDate;
-	this.fine = fine;
+	this.readerId = readerId;
 }
 
 var changeColor = function() {
@@ -123,32 +123,29 @@ var changeColor = function() {
 /* 加载数据 */
 function loadData() {
 	for (var i = 0; i < borrowRecord.length; i++) {
+		var borrowId = borrowRecord[i].borrowId;
 		var bookId = borrowRecord[i].bookId;
         var bookName = borrowRecord[i].bookName;
-        var fine = borrowRecord[i].fine;
+        var readerId = borrowRecord[i].readerId;
         var borrowDate = borrowRecord[i].borrowDate;
-        var borrowId = borrowRecord[i].borrowId;
 
-        /**
-		 * <tbody>
-         <tr>
-         <td>Serial ID</td>
-         <td>Book ID</td>
-         <td>Book Name</td>
-         <td>Fine</td>
-         <td>Borrow Date</td>
-         </tr>
-         </tbody>
-         */
-        $("#table").append('<tbody>' +
-            '<tr>' +
-            '<td><input type="checkbox" /></td>\n' +
-            '<td>'+(i+1)+'</td>\n' +
-            '<td>'+bookId+'</td>\n' +
-            '<td>'+bookName+'</td>\n' +
-            '<td>'+fine+'</td>\n' +
-            '<td>'+borrowDate+'</td>\n' +
-            '</tr></tbody>');
+        $("#table").append('<tbody>'+
+            '<tr>'+
+            '<td><input type="checkbox" /></td>'+
+            '<td>'+(i+1)+'</td>'+
+            '<td>'+inventory+'</td>'+
+            '<td>'+barcode+'</td>'+
+            '<td>'+bookName+'</td>'+
+            '<td>'+location+'</td>'+
+            '<td>'+price+'</td>'+
+            '<td>'+
+            '<div class="am-btn-toolbar">'+
+            ' <div class="am-btn-group am-btn-group-xs">\n' +
+            '         <button type="button" onclick="reserve(this)"  class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> Borrow</button>\n' +
+            // '         <button type="button" onclick="detail(this)" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash"></span> Detail</button>\n' +
+            '         </div>'+
+            '</div>'+
+            '</td></tr></tbody>');
 		// 创建tr
 		// var tr = createObj("tr");
 		// // 创建td
@@ -156,7 +153,7 @@ function loadData() {
         // var bookIdTd = createObj("td");
         // var bookNameTd = createObj("td");
         // var borrowDateTd = createObj("td");
-        // var fineTd = createObj("td");
+        // var readerIdTd = createObj("td");
         // var dmlTd = createObj("td");
 		// // 将获得的值添加到创建的指定Td中；
 		// var tbody = getId("tb");
@@ -164,27 +161,28 @@ function loadData() {
 		// // 将获得的信息添加到指定的为td中
 		// serialTd.innerHTML = rows + 1;
 		// bookNameTd.innerHTML = bookName;
-        // fineTd.innerHTML = fine;
+        // readerIdTd.innerHTML = readerId;
         // bookIdTd.innerHTML = bookId;
 		// borrowDateTd.innerHTML = borrowDate;
         //
-		// // 创建个归还的button按钮，添加到操作列；
-		// var returnBtn = createObj("input");
-		// returnBtn.type = "button";
-		// returnBtn.value = "Return";
-		// // 为新建的returnBtn创建监听属性；
-		// returnBtn.onclick = function() {
-		// 	var flag = window.confirm("确定归还？");
+		// // 创建个同意借阅的button按钮，添加到操作列；
+		// var acceptBtn = createObj("input");
+		// acceptBtn.type = "button";
+		// acceptBtn.value = "Accept";
+		// // 为新建的acceptBtn创建监听属性；
+		// acceptBtn.onclick = function(e) {
+		// 	var flag = window.confirm("确定同意该借阅请求？");
 		// 	if (flag) {
 		// 			$.ajax({
 		// 				type: 'post',
-		// 				url: '/reader/book/return',
+		// 				url: '/librarian/confirm/bookBorrow',
 		// 				data: JSON.stringify(
 		// 					{
 		// 						"borrowId":borrowId,
+		// 						"readerId":readerId,
 		// 						"bookId":bookId
 		// 					}
-		// 				),
+		// 					),
 		// 				dataType: "json",
 		// 				contentType: "application/json;charset=UTF-8",
 		// 				success: function (e) {
@@ -195,13 +193,42 @@ function loadData() {
 		// 		}
 		// };
         //
-		// dmlTd.appendChild(returnBtn);
+		// // 创建个拒绝借阅的button按钮，添加到操作列；
+		// var rejectBtn = createObj("input");
+		// rejectBtn.type = "button";
+		// rejectBtn.value = "Reject";
+		// // 为新建的acceptBtn创建监听属性；
+		// rejectBtn.onclick = function() {
+		// 	var flag = window.confirm("确定拒绝该借阅请求？");
+		// 	if (flag) {
+		// 			$.ajax({
+		// 				type: 'post',
+		// 				url: '/librarian/reject/bookBorrow',
+		// 				data: JSON.stringify(
+         //                    {
+         //                        "borrowId":borrowId,
+         //                        "readerId":readerId,
+         //                        "bookId":bookId
+         //                    }
+         //                ),
+		// 				dataType: "json",
+		// 				contentType: "application/json;charset=UTF-8",
+		// 				success: function (e) {
+		// 					console.log(e);
+		// 					alert(e.message);
+		// 				}
+		// 			})
+		// 		}
+		// };
+        //
+		// dmlTd.appendChild(acceptBtn);
+		// dmlTd.appendChild(rejectBtn);
 		// // 将新建的td加入到新建的行中
 		// tr.appendChild(serialTd);
+		// tr.appendChild(readerIdTd);
         // tr.appendChild(bookIdTd);
         // tr.appendChild(bookNameTd);
         // tr.appendChild(borrowDateTd);
-		// tr.appendChild(fineTd);
 		// tr.appendChild(dmlTd);
         //
 		// // 将新建的tr加入到tbody中
@@ -373,3 +400,19 @@ $(document).ready(function() {
 		$(".over").hide("slow");
 	});
 });
+
+/**
+ * 登出按钮
+ */
+$('#log-out').click(function () {
+    $.ajax({
+        type: 'delete',
+        url: '/logout',
+        contentType: "application/json;charset=UTF-8",
+        success: function (e) {
+            if (e.code === 0) {
+                window.location.href = "/"
+            }
+        }
+    })
+})

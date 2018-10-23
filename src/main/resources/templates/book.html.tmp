@@ -41,7 +41,7 @@
 <header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
 	<div class="am-container" style="max-width: unset">
 		<h1 class="am-topbar-brand">
-			<a href="/">Book List</a>
+			<a href="/">Bibliosoft-BookList</a>
 		</h1>
 
 		<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
@@ -50,7 +50,7 @@
 
 		<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
 			<div class="am-topbar-right">
-				<button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home">Back </button>
+				<button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home">Back Home </button>
 				<button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
 			</div>
 
@@ -159,84 +159,33 @@
 					<div class="am-btn-toolbar">
 						<div class="am-btn-group am-btn-group-xs">
 							<button id="addBook" type="button" class="am-btn am-btn-default"><span
-									class="am-icon-plus"></span> Add
+									class="am-icon-plus"></span> Add Book
 							</button>
-							<button id="delete" type="button" class="am-btn am-btn-default"  onclick="delSel();">
-								<span class="am-icon-trash"></span> Delete
+							<button id="delete" type="button" class="am-btn am-btn-default"  onclick="delSel();"> Delete
 							</button>
 						</div>
 					</div>
 				</div>
-			</div>
-			
-			<div class="am-g">
-				<div class="am-u-sm-12">
-					<form class="am-form">
-					<table id="table" class="am-table am-table-striped am-table-hover table-main">
-						<thead id="thead">
-						<tr>
-						<th class="table-check"><input type="checkbox" onclick="selAll(this)"/></th>
-							<th>Serial ID</th>
-							<th>Book ID</th>
-							<th>Inventory</th>
-							<th>Author</th>
-							<th>BarCode</th>
-							<th>BookName</th>
-							<th>BookType</th>
-							<th>Price</th>
-							<th>Decription</th>
-							<th>Location</th>
-							<th>Operation</th>
-						</tr>
-						</thead>
-
-						<!--<tbody>-->
-							<!--<tr>-->
-							<!--<td><input type="checkbox" /></td>-->
-							<!--<td>SerialID</td>-->
-							<!--<td>BookID</td>-->
-							<!--<td>Inventory</td>-->
-							<!--<td>Author</td>-->
-							<!--<td>BarCode</td>-->
-							<!--<td>BookName</td>-->
-							<!--<td>BookType</td>-->
-							<!--<td>Price</td>-->
-							<!--<td>Decription</td>-->
-							<!--<td>Location</td>-->
-							<!--<td>-->
-								<!--<div class="am-btn-toolbar">-->
-								<!--<div class="am-btn-group am-btn-group-xs">-->
-									<!--<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> Edit</button>-->
-									<!--<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash"></span> Delete</button>-->
-								<!--</div>-->
-								<!--</div>-->
-							<!--</td>-->
-							<!--</tr>-->
-						<!--</tbody>-->
-
-					</table>
-					</form>
-				</div>
-			</div>
-
 		</div>
 
-	<!-- <div class="tbody">
-		<div class="tbody_inside"> -->
+	</div>
+
+	<div class="tbody">
+		<div class="tbody_inside">
 			<!-- <div class="addOrDelete">
 				<button class="add" type="button" id="show">add</button>
 				<button class="delete" type="button" onclick="delSel();" >delete</button>
 			</div> -->
 			<!--信息部分-->
-			<!-- <table class="contentTable" id="table">
+			<table class="contentTable" id="table">
 				<thead id="thead">
 					<tr class="contentTable1">
 						<td><input type="checkbox" onclick="selAll(this);"></td>
 						<td>SerialID</td>
 						<td>BookID</td>
-						<td>Inventory</td> -->
-						<!-- <td >BookImg</td> -->
-						<!-- <td>Author</td>
+						<td>Inventory</td>
+						<!--<td >BookImg</td>-->
+						<td>Author</td>
 						<td>BarCode</td>
 						<td>BookName</td>
 						<td>BookType</td>
@@ -259,7 +208,7 @@
 				<button class="down" type="button" id="spanNext">next page</button>
 				<button class="up" type="button" id="spanPre">pre page</button>
 			</div>
-		</div> -->
+		</div>
 		<div class="over" style="display:none;" id="over">
 			<div class="over_child">
 				<p>add book information</p>
@@ -356,16 +305,13 @@
 				<div class="string"></div>
 			</div>
 		</div>
-	<!-- </div> tbody-->
 	</div>
-</div>
-
-<footer class="footer">
-	<p>2018. by Team A12.</p>
-</footer>
-<script type="text/javascript" src="/assets/js/jquery-3.1.1.min.js"></script>
-<script src="/assets/js/amazeui.min.js"></script>
-<script src="/assets/js/app.js"></script>
-<script type="text/javascript" src="/assets/js/book.js"></script>
+	<footer class="footer">
+		<p>2018. by Team A12.</p>
+	</footer>
+	<script type="text/javascript" src="/assets/js/jquery-3.1.1.min.js"></script>
+	<script src="/assets/js/amazeui.min.js"></script>
+    <script src="/assets/js/app.js"></script>
+	<script type="text/javascript" src="/assets/js/book.js"></script>
 </body>
 </html>

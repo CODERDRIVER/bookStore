@@ -7,7 +7,7 @@
     <meta name="keywords" content="">
     <meta name="viewport"
           content="width=device-width, initial-scale=1">
-    <title>Bibliosoft-OrderManage</title>
+    <title>Bibliosoft-Reservation Management</title>
 
     <!-- Set render engine for 360 browser -->
     <meta name="renderer" content="webkit">
@@ -41,7 +41,7 @@
     <header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
         <div class="am-container" style="max-width: unset">
             <h1 class="am-topbar-brand">
-                <a href="/">Bibliosoft-OrderManage</a>
+                <a href="/">Reservation Management</a>
             </h1>
 
             <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
@@ -73,149 +73,91 @@
         </div>
     </header>
 
-
     <div class="admin-content">
         <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf">
+                    <strong class="am-text-primary am-text-xxl" style="color: rgb(64, 100, 133);">Reservation List</strong>
+                </div>
+            </div>
+
             <hr>
-          
-        </div>
 
-        <div class="tbody">
-            <div class="tbody_inside">
-                <!-- <div class="addOrDelete">
-                    <button class="add" type="button" id="show">add</button>
-                    <button class="delete" type="button" onclick="delSel();" >delete</button>
-                </div> -->
-                <!--信息部分-->
-                <table class="contentTable" id="table">
-                    <thead id="thead">
-                    <tr class="contentTable1">
-                        <!--<td><input type="checkbox" onclick="selAll(this);"></td>-->
-                        <td>SerialID</td>
-                        <!--<td>BookID</td>-->
-                        <!--<td >BookImg</td>-->
-                        <!-- <td>Inventory</td>
-                        <td>Author</td> -->
-                        <td>ReaderId</td>
-                        <td>BookId</td>
-                        <td>BookName</td>
-                        <td>OrderDate</td>
-                        <!-- <td>Price</td>
-                        <td>Decription</td>
-                        <td>Location</td> -->
-                        <td>Operation</td>
-                    </tr>
-                    </thead>
-                    <tbody class="tb" id="tb">
-
-                    </tbody>
-                </table>
-                <div class="upOrDown">
-                    <span id="spanFirst" class="spanFirst">FirstPage , </span>
-                    <span id="spanLast" class="spanLast">LastPage , </span> the
-                    <span id="spanPageNum"></span> page , total
-                    <span id="spanTotalPage"></span> pages, total
-                    <span id="spanTotalNumRows"></span> items,（10 items/page）
-                    <button class="down" type="button" id="spanNext">next page</button>
-                    <button class="up" type="button" id="spanPre">pre page</button>
+            <div class="am-u-sm-12 am-u-md-6">
+                <div class="am-btn-toolbar">
+                    <div class="am-btn-group am-btn-group-xs">
+                        <button id="complete" type="button" class="am-btn am-btn-default"><span
+                                class="am-icon-check"></span> Complete
+                        </button>
+                        <button id="close" type="button" class="am-btn am-btn-default">
+                            <span class="am-icon-close" ></span> Close
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="over" style="display:none;" id="over">
-                <div class="over_child">
-                    <p>add book information</p>
-                    <table>
-                        <tbody id="over_tb">
-                        <tr>
-                            <td>BookImg：</td>
-                            <td><input type="file" id="i1"></td>
-                        </tr>
-                        <tr>
-                            <td>Author：</td>
-                            <td><input type="text" id="i2"></td>
-                        </tr>
-                        <tr>
-                            <td>BookName：</td>
-                            <td><input type="text" id="i3"></td>
-                        </tr>
-                        <tr>
-                            <td>BookType：</td>
-                            <td><input type="text" id="i4"></td>
-                        </tr>
-                        <tr>
-                            <td>Price：</td>
-                            <td><input type="number" id="i5"></td>
-                        </tr>
-                        <tr>
-                            <td>Decription：</td>
-                            <td><input type="text" id="i6"></td>
-                        </tr>
-                        <tr>
-                            <td>Location：</td>
-                            <td><input type="text" id="i7"></td>
-                        </tr>
-                        </tbody>
-                        <tr>
-                            <td colspan="2">
-                                <input type="button" value="cancel" id="hide23" class="button1" />
-                                <input type="button" value="confirm" onclick="addTr();" class="button2" />
-                            </td>
-                        </tr>
-                    </table>
-                    <div class="string"></div>
+
+            <div class="am-u-sm-12 am-u-md-6">
+                <div class="am-input-group am-input-group-sm">
+                    <input type="text" class="am-form-field" placeholder="BarCode, Reader ID">
+                    <span class="am-input-group-btn">
+                    <button class="am-btn am-btn-default" type="button" id="search" onclick="searchBook()">Search</button>
+                    </span>
                 </div>
             </div>
-            <div class="over2" style="display:none;" id="over2">
-                <div class="over_child2">
-                    <p id="lookMessages">modify book information</p>
-                    <table>
-                        <tbody id="over_tb2">
+
+            <div class="am-g">
+                <div class="am-u-sm-12">
+                    <form class="am-form">
+                    <table id="table" class="am-table am-table-striped am-table-hover table-main">
+                        <thead id="thead">
                         <tr>
-                            <td>BookImg：</td>
-                            <td><input type="text" ></td>
+                        
+                        <th class="table-check"><input type="checkbox" /></th>
+                            <th>Serial ID</th>
+                            <th>Book ID</th>
+                            <th>BookName</th>
+                            <th>ReaderId</th>
+                            <th>OrderDate</th>
+                            <th>OrderId</th>
+                            <th>Operations</th>
                         </tr>
-                        <tr>
-                            <td>Author：</td>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <td>BarCode：</td>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <td>BookName：</td>
-                            <td><input type="text" ></td>
-                        </tr>
-                        <tr>
-                            <td>BookType：</td>
-                            <td><input type="text" ></td>
-                        </tr>
-                        <tr>
-                            <td>Price：</td>
-                            <td><input type="number" ></td>
-                        </tr>
-                        <tr>
-                            <td>Decription：</td>
-                            <td><input type="text" ></td>
-                        </tr>
-                        <tr>
-                            <td>Location：</td>
-                            <td><input type="text" ></td>
-                        </tr>
-                        </tbody>
-                        <tr>
-                            <td colspan="2">
-                                <input type="button" value="cancel" onclick="showHide2(this);" class="button1" />
-                                <input type="button" value="save" onclick="okBtn();" class="button2" id="hide" />
-                            </td>
-                        </tr>
+                        </thead>
+    
+                        <!--<tbody>-->
+                            <!--<tr>-->
+                            <!--<td><input type="checkbox" /></td>-->
+                            <!--<td>Serial ID</td>-->
+                            <!--<td>Reader ID</td>-->
+                            <!--<td>2 本</td>-->
+                            <!--<td>BarCode</td>-->
+                            <!--<td>Book Name</td>-->
+                            <!--<td>Price</td>-->
+                            <!--<td>-->
+                                <!--<div class="am-btn-toolbar">-->
+                                <!--<div class="am-btn-group am-btn-group-xs">-->
+                                    <!--<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-check"></span> Complete</button>-->
+                                    <!--<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-close"></span> Cancel</button>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--</tr>-->
+                        <!--</tbody>-->
+    
                     </table>
-                    <div class="string"></div>
+                    </form>
                 </div>
             </div>
         </div>
-        <script type="text/javascript" src="/assets/js/jquery-3.1.1.min.js"></script>
-        <script src="/assets/js/amazeui.min.js"></script>
-        <script src="/assets/js/app.js"></script>
-        <script type="text/javascript" src="/assets/js/orderManage.js"></script>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>2018. by Team A12.</p>
+</footer>
+    
+<script type="text/javascript" src="/assets/js/jquery-3.1.1.min.js"></script>
+<script src="/assets/js/amazeui.min.js"></script>
+<script src="/assets/js/app.js"></script>
+<script type="text/javascript" src="/assets/js/orderManage.js"></script>
 </body>
 </html>

@@ -52,16 +52,19 @@ public class ReaderService {
         List<Reader> all = readerRepository.findAll();
         List<ReaderData> readerDatas = new ArrayList<>();
         all.forEach(reader -> {
-            ReaderData readerData = new ReaderData();
-            readerData.setBorrowNum(reader.getBorrowNum());
-            readerData.setEmail(reader.getEmail());
-            readerData.setPaidFine(reader.getPaidFine());
-            readerData.setPassword(reader.getPassword());
-            readerData.setPhoneNumber(reader.getPhoneNumber());
-            readerData.setReaderId(reader.getReaderId());
-            readerData.setUnPaidFine(reader.getUnPaidFine());
-            readerData.setUserName(reader.getUserName());
-            readerDatas.add(readerData);
+            if (reader.getStatus()==0)
+            {
+                ReaderData readerData = new ReaderData();
+                readerData.setBorrowNum(reader.getBorrowNum());
+                readerData.setEmail(reader.getEmail());
+                readerData.setPaidFine(reader.getPaidFine());
+                readerData.setPassword(reader.getPassword());
+                readerData.setPhoneNumber(reader.getPhoneNumber());
+                readerData.setReaderId(reader.getReaderId());
+                readerData.setUnPaidFine(reader.getUnPaidFine());
+                readerData.setUserName(reader.getUserName());
+                readerDatas.add(readerData);
+            }
         });
         return readerDatas;
     }
@@ -164,7 +167,7 @@ public class ReaderService {
         }
 
         // 删除该用户
-        readerRepository.delete(id);
+        readerRepository.deleteById(id);
         responseMessage.setCode(0);
         responseMessage.setMessage("删除成功");
         return responseMessage;

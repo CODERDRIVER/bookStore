@@ -14,6 +14,7 @@
 
                     returnRecord.push(new returnlist(data[i].bookId,data[i].bookName,data[i].returnDate));
                     }
+                    loadData();
 
             }
         });
@@ -47,7 +48,7 @@
     var page = 1;
     var theTable = getId("tb");
     // 获取行的长度
-    var numberRowsInTable = theTable.rows.length;
+    // var numberRowsInTable = theTable.rows.length;
     // 数据条数
     var numRows = getId("spanTotalNumRows");
 
@@ -114,7 +115,7 @@
         }
     }
 
-    loadData();
+    // loadData();
 
     /* 加载数据 */
     function loadData() {
@@ -123,196 +124,214 @@
             var bookName = returnRecord[i].bookName;
             var returnDate = returnRecord[i].returnDate;
 
+            /**
+             * <tbody>
+             <tr>
+             <td>Serial ID</td>
+             <td>Book ID</td>
+             <td>Book Name</td>
+             <td>Return Date</td>
+             </tr>
+             </tbody>
+             */
+            $("#table").append('<tbody>' +
+                '<tr>' +
+                '<td><input type="checkbox" /></td>\n' +
+                '<td>'+(i+1)+'</td>\n' +
+                '<td>'+bookId+'</td>\n' +
+                '<td>'+bookName+'</td>\n' +
+                '<td>'+returnDate+'</td>\n' +
+                '</tr></tbody>')
             // 创建tr
-            var tr = createObj("tr");
-            // 创建td
-            var serialTd = createObj("td");
-            var bookIdTd = createObj("td");
-            var bookNameTd = createObj("td");
-            var returnDateTd = createObj("td");
-
-            // 将获得的值添加到创建的指定Td中；
-            var tbody = getId("tb");
-            var rows = tbody.rows.length;
-            // 将获得的信息添加到指定的为td中
-            serialTd.innerHTML = rows + 1;
-            bookNameTd.innerHTML = bookName;
-            bookIdTd.innerHTML = bookId;
-            returnDateTd.innerHTML = returnDate;
-
-
-            // 将新建的td加入到新建的行中
-            tr.appendChild(serialTd);
-            tr.appendChild(bookIdTd);
-            tr.appendChild(bookNameTd);
-            tr.appendChild(returnDateTd);
-
-            // 将新建的tr加入到tbody中
-            var tbody = getId("tb");
-            tbody.appendChild(tr);
-
-            // 隔行换色。
-            var table = document.getElementById("table");
-            table.tBodies[0].rows[table.tBodies[0].rows.length - 1].style.display = 'none';
-            numberRowsInTable++;
-            totalPage.innerHTML = pageCount();
-            numRows.innerHTML = numberRowsInTable;
-            first();
+            // var tr = createObj("tr");
+            // // 创建td
+            // var serialTd = createObj("td");
+            // var bookIdTd = createObj("td");
+            // var bookNameTd = createObj("td");
+            // var returnDateTd = createObj("td");
+            //
+            // // 将获得的值添加到创建的指定Td中；
+            // var tbody = getId("tb");
+            // var rows = tbody.rows.length;
+            // // 将获得的信息添加到指定的为td中
+            // serialTd.innerHTML = rows + 1;
+            // bookNameTd.innerHTML = bookName;
+            // bookIdTd.innerHTML = bookId;
+            // returnDateTd.innerHTML = returnDate;
+            //
+            //
+            // // 将新建的td加入到新建的行中
+            // tr.appendChild(serialTd);
+            // tr.appendChild(bookIdTd);
+            // tr.appendChild(bookNameTd);
+            // tr.appendChild(returnDateTd);
+            //
+            // // 将新建的tr加入到tbody中
+            // var tbody = getId("tb");
+            // tbody.appendChild(tr);
+            //
+            // // 隔行换色。
+            // var table = document.getElementById("table");
+            // table.tBodies[0].rows[table.tBodies[0].rows.length - 1].style.display = 'none';
+            // numberRowsInTable++;
+            // totalPage.innerHTML = pageCount();
+            // numRows.innerHTML = numberRowsInTable;
+            // first();
         }
-        changeColor();
+        // changeColor();
     }
 
     /* 下一页 */
-    function next() {
-
-        hideTable();
-
-        currentRow = pageSize * page;
-        maxRow = currentRow + pageSize;
-        if (maxRow > numberRowsInTable)
-            maxRow = numberRowsInTable;
-        for (var i = currentRow; i < maxRow; i++) {
-            theTable.rows[i].style.display = '';
-        }
-        page++;
-        if (maxRow == numberRowsInTable) {
-            nextText();
-            lastText();
-        }
-        showPage();
-        preLink();
-        firstLink();
-    }
-
-    /* 上一页 */
-    function pre() {
-
-        hideTable();
-
-        page--;
-
-        currentRow = pageSize * page;
-        maxRow = currentRow - pageSize;
-        if (currentRow > numberRowsInTable)
-            currentRow = numberRowsInTable;
-        for (var i = maxRow; i < currentRow; i++) {
-            theTable.rows[i].style.display = '';
-        }
-
-        if (maxRow == 0) {
-            preText();
-            firstText();
-        }
-
-        showPage();
-        nextLink();
-        lastLink();
-    }
-
-    /* 第一页 */
-    function first() {
-        hideTable();
-        page = 1;
-        for (var i = 0; i < pageSize && i < numberRowsInTable; i++) {
-            theTable.rows[i].style.display = '';
-        }
-        showPage();
-
-        preText();
-        nextLink();
-        lastLink();
-    }
-
-    /* 最后一页 */
-    function last() {
-        hideTable();
-        page = pageCount();
-        currentRow = pageSize * (page - 1);
-        for (var i = currentRow; i < numberRowsInTable; i++) {
-            theTable.rows[i].style.display = '';
-        }
-        showPage();
-
-        preLink();
-        nextText();
-        firstLink();
-    }
-
-    /* 隐藏table */
-    function hideTable() {
-        for (var i = 0; i < numberRowsInTable; i++) {
-            theTable.rows[i].style.display = 'none';
-        }
-    }
-
-    /* 展示第几页 */
-    function showPage() {
-        pageNum.innerHTML = page;
-    }
-
-    /* 总共页数 */
-    function pageCount() {
-        var count = 1;
-        if (numberRowsInTable % pageSize != 0)
-            count = 1;
-        return parseInt(numberRowsInTable / (pageSize + 0.1)) + count;
-    }
-
-    /* 显示链接 */
-    function preLink() {
-        spanPre.innerHTML = "<a class='upLink' href='javascript:pre();'>pre page</a>";
-    }
-    function preText() {
-        spanPre.innerHTML = "pre page";
-    }
-
-    function nextLink() {
-        spanNext.innerHTML = "<a class='downLink' href='javascript:next();'>next page</a>";
-    }
-    function nextText() {
-        spanNext.innerHTML = "next page";
-    }
-
-    function firstLink() {
-        spanFirst.innerHTML = "<a href='javascript:first();'>firstPage , </a>";
-    }
-    function firstText() {
-        spanFirst.innerHTML = "firstPage , ";
-    }
-
-    function lastLink() {
-        spanLast.innerHTML = "<a href='javascript:last();'>lastPage , </a>";
-    }
-    function lastText() {
-        spanLast.innerHTML = "lastPage , ";
-    }
-
-    /* 隐藏表格 */
-    function hide() {
-        for (var i = pageSize; i < numberRowsInTable; i++) {
-            theTable.rows[i].style.display = 'none';
-        }
-
-        totalPage.innerHTML = pageCount();
-        pageNum.innerHTML = '1';
-        numRows.innerHTML = numberRowsInTable;
-
-        nextLink();
-        lastLink();
-    }
-
-    hide();
-
-    /*显示时特效*/
-    $(document).ready(function() {
-        $("#show").click(function() {
-            $(".over").show("slow");
-        });
-    });
-
-    /*隐藏时特效*/
-    $(document).ready(function() {
-        $("#hide23").click(function() {
-            $(".over").hide("slow");
-        });
-    });
+    // function next() {
+    //
+    //     hideTable();
+    //
+    //     currentRow = pageSize * page;
+    //     maxRow = currentRow + pageSize;
+    //     if (maxRow > numberRowsInTable)
+    //         maxRow = numberRowsInTable;
+    //     for (var i = currentRow; i < maxRow; i++) {
+    //         theTable.rows[i].style.display = '';
+    //     }
+    //     page++;
+    //     if (maxRow == numberRowsInTable) {
+    //         nextText();
+    //         lastText();
+    //     }
+    //     showPage();
+    //     preLink();
+    //     firstLink();
+    // }
+    //
+    // /* 上一页 */
+    // function pre() {
+    //
+    //     hideTable();
+    //
+    //     page--;
+    //
+    //     currentRow = pageSize * page;
+    //     maxRow = currentRow - pageSize;
+    //     if (currentRow > numberRowsInTable)
+    //         currentRow = numberRowsInTable;
+    //     for (var i = maxRow; i < currentRow; i++) {
+    //         theTable.rows[i].style.display = '';
+    //     }
+    //
+    //     if (maxRow == 0) {
+    //         preText();
+    //         firstText();
+    //     }
+    //
+    //     showPage();
+    //     nextLink();
+    //     lastLink();
+    // }
+    //
+    // /* 第一页 */
+    // function first() {
+    //     hideTable();
+    //     page = 1;
+    //     for (var i = 0; i < pageSize && i < numberRowsInTable; i++) {
+    //         theTable.rows[i].style.display = '';
+    //     }
+    //     showPage();
+    //
+    //     preText();
+    //     nextLink();
+    //     lastLink();
+    // }
+    //
+    // /* 最后一页 */
+    // function last() {
+    //     hideTable();
+    //     page = pageCount();
+    //     currentRow = pageSize * (page - 1);
+    //     for (var i = currentRow; i < numberRowsInTable; i++) {
+    //         theTable.rows[i].style.display = '';
+    //     }
+    //     showPage();
+    //
+    //     preLink();
+    //     nextText();
+    //     firstLink();
+    // }
+    //
+    // /* 隐藏table */
+    // function hideTable() {
+    //     for (var i = 0; i < numberRowsInTable; i++) {
+    //         theTable.rows[i].style.display = 'none';
+    //     }
+    // }
+    //
+    // /* 展示第几页 */
+    // function showPage() {
+    //     pageNum.innerHTML = page;
+    // }
+    //
+    // /* 总共页数 */
+    // function pageCount() {
+    //     var count = 1;
+    //     if (numberRowsInTable % pageSize != 0)
+    //         count = 1;
+    //     return parseInt(numberRowsInTable / (pageSize + 0.1)) + count;
+    // }
+    //
+    // /* 显示链接 */
+    // function preLink() {
+    //     spanPre.innerHTML = "<a class='upLink' href='javascript:pre();'>pre page</a>";
+    // }
+    // function preText() {
+    //     spanPre.innerHTML = "pre page";
+    // }
+    //
+    // function nextLink() {
+    //     spanNext.innerHTML = "<a class='downLink' href='javascript:next();'>next page</a>";
+    // }
+    // function nextText() {
+    //     spanNext.innerHTML = "next page";
+    // }
+    //
+    // function firstLink() {
+    //     spanFirst.innerHTML = "<a href='javascript:first();'>firstPage , </a>";
+    // }
+    // function firstText() {
+    //     spanFirst.innerHTML = "firstPage , ";
+    // }
+    //
+    // function lastLink() {
+    //     spanLast.innerHTML = "<a href='javascript:last();'>lastPage , </a>";
+    // }
+    // function lastText() {
+    //     spanLast.innerHTML = "lastPage , ";
+    // }
+    //
+    // /* 隐藏表格 */
+    // function hide() {
+    //     for (var i = pageSize; i < numberRowsInTable; i++) {
+    //         theTable.rows[i].style.display = 'none';
+    //     }
+    //
+    //     totalPage.innerHTML = pageCount();
+    //     pageNum.innerHTML = '1';
+    //     numRows.innerHTML = numberRowsInTable;
+    //
+    //     nextLink();
+    //     lastLink();
+    // }
+    //
+    // hide();
+    //
+    // /*显示时特效*/
+    // $(document).ready(function() {
+    //     $("#show").click(function() {
+    //         $(".over").show("slow");
+    //     });
+    // });
+    //
+    // /*隐藏时特效*/
+    // $(document).ready(function() {
+    //     $("#hide23").click(function() {
+    //         $(".over").hide("slow");
+    //     });
+    // });

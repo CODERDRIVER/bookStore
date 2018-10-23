@@ -78,6 +78,10 @@ public class LoginHandler {
         String password = reader.getPassword();
 
         Reader one = readerService.findByEmail(email);
+        if (one.getStatus()!=0)
+        {
+            return ResultUtil.error(ResultEnum.USER_NOT_EXIST,request.getRequestURL().toString());
+        }
         if (one != null) {
             if (one.getPassword().equals(password)) {
                 String jwtToken = JwtToken.createToken(email, one.getUserName(), "reader");
@@ -109,6 +113,11 @@ public class LoginHandler {
         String phone  = reader.getPhoneNumber();
         String password = reader.getPassword();
         Reader one = readerService.findByPhoneNumber(phone);
+        System.out.println(one);
+        if (one.getStatus()!=0)
+        {
+            return ResultUtil.error(ResultEnum.USER_NOT_EXIST,request.getRequestURL().toString());
+        }
         if (one!=null)
         {
             if (one.getPassword()!=null&&one.getPassword().equals(password))

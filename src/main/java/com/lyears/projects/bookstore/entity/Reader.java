@@ -35,6 +35,7 @@ public class Reader {
     private Set<Borrow> borrows = new HashSet<>();
     @OneToMany(mappedBy = "reader", targetEntity = Order.class)
     private Set<Order> orders = new HashSet<>();
+    private int status = 0 ; // 表示是否注销 0 表示正常 1 表示注销
 
     @Override
     public String toString() {

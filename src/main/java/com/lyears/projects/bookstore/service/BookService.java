@@ -39,8 +39,6 @@ public class BookService {
      */
     @Transactional(rollbackFor = RuntimeException.class)
     public void save(Book book){
-
-
         // 根据名称获得该书的库存量
         List<Book> byBookName = bookRepository.findByBookName(book.getBookName());
         int counts = 0;
@@ -51,19 +49,20 @@ public class BookService {
             counts = 1;
         }
         book.setStatus(0);
+        book.setBarCode(IDGenerator.getUniqueId());
         if (book.getBookId()!=null)
         {
             //补全书籍的bar_code 信息
             // 说明已经存在该书
-            book.setBarCode(IDGenerator.getUniqueId());
             int bookId = book.getBookId();
             Book one = bookRepository.findOne(bookId);
             book.setBookUrl(one.getBookUrl());
-            book.setInventory(one.getInventory());
+//            book.setInventory(one.getInventory());
             bookRepository.save(book);
         }else{
-            bookRepository.updateInventoryByBookName(book.getBookName(),counts);
+            book.setInventory(1);
             bookRepository.save(book);
+            bookRepository.updateInventoryByBookName(book.getBookName(),counts);
         }
 
     }

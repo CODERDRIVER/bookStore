@@ -203,7 +203,7 @@ var pageSize = 10;
 var page = 1;
 var theTable = getId("tb");
 // 获取行的长度
-var numberRowsInTable = theTable.rows.length;
+// var numberRowsInTable = theTable.rows.length;
 // 数据条数
 var numRows = getId("spanTotalNumRows");
 // 书籍信息
@@ -305,93 +305,162 @@ function loadData() {
 		var description = message[i].description;
 		var location = message[i].location;
 		var inventory = message[i].inventory;
+
+
+        /**
+		 * <tbody>
+         <tr>
+         <td><input type="checkbox" /></td>
+         <td>SerialID</td>
+         <td>BookID</td>
+         <td>Inventory</td>
+         <td>Author</td>
+         <td>BarCode</td>
+         <td>BookName</td>
+         <td>BookType</td>
+         <td>Price</td>
+         <td>Decription</td>
+         <td>Location</td>
+         <td>
+         <div class="am-btn-toolbar">
+         <div class="am-btn-group am-btn-group-xs">
+         <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> Edit</button>
+         <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash"></span> Delete</button>
+         </div>
+         </div>
+         </td>
+         </tr>
+         </tbody>
+
+         */
+        $("#table").append('<tbody>'+
+            '<tr>'+
+            '<td><input type="checkbox" /></td>'+
+            '<td>'+(i+1)+'</td>'+
+            '<td>'+bookId+'</td>'+
+            '<td>'+inventory+'</td>'+
+            '<td>'+author+'</td>'+
+            '<td>'+barcode+'</td>'+
+            '<td>'+bookName+'</td>'+
+            '<td>'+bookType+'</td>'+
+            '<td>'+price+'</td>'+
+            '<td>'+description+'</td>'+
+            '<td>'+location+'</td>'+
+            '<td>'+
+            '<div class="am-btn-toolbar">'+
+			' <div class="am-btn-group am-btn-group-xs">\n' +
+            '         <button type="button" onclick="modTr(this)"  class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> Edit</button>\n' +
+            '         <button type="button" onclick="delItem(this)" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash"></span> Delete</button>\n' +
+            '         </div>'+
+            '</div>'+
+            '</td></tr></tbody>');
 		// 创建tr
-		var tr = createObj("tr");
-		// 创建td
-		var checkTd = createObj("td");
-		var serialTd = createObj("td");
-		var bookIdTd = createObj("td");
-		var bookImgTd = createObj("td");
-		var authorTd = createObj("td");
-		var barcodeTd = createObj("td");
-		var bookNameTd = createObj("td");
-		var bookTypeTd = createObj("td");
-		var priceTd = createObj("td");
-		var descriptionTd = createObj("td");
-		var locationTd = createObj("td");
-		var dmlTd = createObj("td");
-		var inventoryTd = createObj("td");
-
-		var checkBtn = createObj("input");
-		checkBtn.type = "checkbox";
-		checkBtn.value = bookId;
-		// 将复选框添加到第一列；
-		checkTd.appendChild(checkBtn);
-		// 将获得的值添加到创建的指定Td中；
-		var tbody = getId("tb");
-		var rows = tbody.rows.length;
-		// 将获得的信息添加到指定的为td中
-		serialTd.innerHTML = rows + 1;
-		bookIdTd.innerHTML = bookId;
-		bookImgTd.innerHTML = bookImg;
-		authorTd.innerHTML = author;
-		barcodeTd.innerHTML = barcode;
-		bookNameTd.innerHTML = bookName;
-		bookTypeTd.innerHTML = bookType;
-		priceTd.innerHTML = price;
-		descriptionTd.innerHTML = description;
-		locationTd.innerHTML = location;
-        inventoryTd.innerHTML = inventory;
-
-
-		// 创建个button按钮，添加到操作列；
-		var lookBtn = createObj("input");
-		lookBtn.type = "button";
-		lookBtn.value = "view";
-		// 为新建的lookBtn创建监听属性；
-		lookBtn.onclick = function() {
-			lookTr(this);
-		};
-
-		var changeBtn = createObj("input");
-		changeBtn.type = "button";
-		changeBtn.value = "modify";
-
-		// 为新建的changeBtn创建监听属性；
-		changeBtn.onclick = function() {
-			modTr(this);
-		}
-		dmlTd.appendChild(lookBtn);
-		dmlTd.appendChild(changeBtn);
-		// 将新建的td加入到新建的行中
-		tr.appendChild(checkTd);
-		tr.appendChild(serialTd);
-		tr.appendChild(bookIdTd);
-		tr.appendChild(inventoryTd);
-		tr.appendChild(authorTd);
-		tr.appendChild(barcodeTd);
-		tr.appendChild(bookNameTd);
-		tr.appendChild(bookTypeTd);
-		tr.appendChild(priceTd);
-		tr.appendChild(descriptionTd);
-		tr.appendChild(locationTd);
-		tr.appendChild(dmlTd);
-
-		// 将新建的tr加入到tbody中
-		var tbody = getId("tb");
-		tbody.appendChild(tr);
-
-		// 隔行换色。
-		var table = document.getElementById("table");
-		table.tBodies[0].rows[table.tBodies[0].rows.length - 1].style.display = 'none';
-		numberRowsInTable++;
-		totalPage.innerHTML = pageCount();
-		numRows.innerHTML = numberRowsInTable;
-		first();
+		// var tr = createObj("tr");
+		// // 创建td
+		// var checkTd = createObj("td");
+		// var serialTd = createObj("td");
+		// var bookIdTd = createObj("td");
+		// var bookImgTd = createObj("td");
+		// var authorTd = createObj("td");
+		// var barcodeTd = createObj("td");
+		// var bookNameTd = createObj("td");
+		// var bookTypeTd = createObj("td");
+		// var priceTd = createObj("td");
+		// var descriptionTd = createObj("td");
+		// var locationTd = createObj("td");
+		// var dmlTd = createObj("td");
+		// var inventoryTd = createObj("td");
+        //
+		// var checkBtn = createObj("input");
+		// checkBtn.type = "checkbox";
+		// checkBtn.value = bookId;
+		// // 将复选框添加到第一列；
+		// checkTd.appendChild(checkBtn);
+		// // 将获得的值添加到创建的指定Td中；
+		// var tbody = getId("tb");
+		// var rows = tbody.rows.length;
+		// // 将获得的信息添加到指定的为td中
+		// serialTd.innerHTML = rows + 1;
+		// bookIdTd.innerHTML = bookId;
+		// bookImgTd.innerHTML = bookImg;
+		// authorTd.innerHTML = author;
+		// barcodeTd.innerHTML = barcode;
+		// bookNameTd.innerHTML = bookName;
+		// bookTypeTd.innerHTML = bookType;
+		// priceTd.innerHTML = price;
+		// descriptionTd.innerHTML = description;
+		// locationTd.innerHTML = location;
+        // inventoryTd.innerHTML = inventory;
+        //
+        //
+		// // 创建个button按钮，添加到操作列；
+		// var lookBtn = createObj("input");
+		// lookBtn.type = "button";
+		// lookBtn.value = "view";
+		// // 为新建的lookBtn创建监听属性；
+		// lookBtn.onclick = function() {
+		// 	lookTr(this);
+		// };
+        //
+		// var changeBtn = createObj("input");
+		// changeBtn.type = "button";
+		// changeBtn.value = "modify";
+        //
+		// // 为新建的changeBtn创建监听属性；
+		// changeBtn.onclick = function() {
+		// 	modTr(this);
+		// }
+		// dmlTd.appendChild(lookBtn);
+		// dmlTd.appendChild(changeBtn);
+		// // 将新建的td加入到新建的行中
+		// tr.appendChild(checkTd);
+		// tr.appendChild(serialTd);
+		// tr.appendChild(bookIdTd);
+		// tr.appendChild(inventoryTd);
+		// tr.appendChild(authorTd);
+		// tr.appendChild(barcodeTd);
+		// tr.appendChild(bookNameTd);
+		// tr.appendChild(bookTypeTd);
+		// tr.appendChild(priceTd);
+		// tr.appendChild(descriptionTd);
+		// tr.appendChild(locationTd);
+		// tr.appendChild(dmlTd);
+        //
+		// // 将新建的tr加入到tbody中
+		// var tbody = getId("tb");
+		// tbody.appendChild(tr);
+        //
+		// // 隔行换色。
+		// var table = document.getElementById("table");
+		// table.tBodies[0].rows[table.tBodies[0].rows.length - 1].style.display = 'none';
+		// numberRowsInTable++;
+		// totalPage.innerHTML = pageCount();
+		// numRows.innerHTML = numberRowsInTable;
+		// first();
 	}
 	changeColor();
 }
 
+// 删除某一条记录
+function delItem(e) {
+	// 拿到 tr
+	var tr = e.parentNode.parentNode.parentNode.parentNode;
+	var bookId = tr.childNodes[2].innerHTML;
+    $.ajax({
+        type: "DELETE",
+        url: "/book",
+        data:{
+            "bookIds":bookId+""
+        },
+        success: function(data) {
+        	alert("删除成功");
+            location.reload();
+        },
+        error:function(data){
+           alert('删除失败!');
+        }
+    });
+}
 /* 增加书籍信息 */
 var addTr = function() {
 	// 做添加，首先获取输入的值
@@ -625,33 +694,21 @@ var delSel = function() {
 
 /* 全选 */
 var selAll = function() {
-	var thead = getId("thead");
-	var tbody = getId("tb");
+	var table = document.getElementById("thead").parentNode;
 	// 获取全部的input元，素返回一个集合；
-	var inputs = tbody.getElementsByTagName("input");
-	var check = thead.getElementsByTagName("input");
-	if (check[0].checked) {
-		for (var i = (page - 1) * (3 * pageSize); i < inputs.length
-				&& i < (page - 1) * (3 * pageSize) + (3 * pageSize); i += 3) {
-			var input = inputs[i];
-
-			if (input.type == "checkbox") {
-				// 设置checkbox为已选
-				input.checked = true;
-			}
-		}
-	} else {
-		for (var i = (page - 1) * (3 * pageSize); i < inputs.length
-				&& i < (page - 1) * (3 * pageSize) + (3 * pageSize); i += 3) {
-			var input = inputs[i];
-
-			if (input.type == "checkbox") {
-				// 设置checkbox为已选
-				input.checked = false;
-			}
+	var tbodys = table.getElementsByTagName("tbody");
+	// console.log(tbodys.length);
+	for (var i=0;i<tbodys.length;i++)
+	{
+		var td = tbodys[i].childNodes[0].childNodes[0];
+		var input = td.getElementsByTagName("input");
+		if (!input[0].checked)
+		{
+            input[0].checked = true;
+		}else{
+			input[0].checked = false;
 		}
 	}
-
 }
 
 /* 获取修改当前书籍信息 */
@@ -664,7 +721,7 @@ var modTr = function(obj) {
 	// 将隐藏的div有隐藏显现出来
 	overDiv.style.display = "block";
 	// 通过按钮来获得tr;
-	var tr = obj.parentNode.parentNode;
+	var tr = obj.parentNode.parentNode.parentNode.parentNode;
 	// 获得需要修改的内容
 	serialTxt = tr.cells[1].innerHTML;
 	var bookId = tr.cells[2].innerHTML;
@@ -752,6 +809,7 @@ var okBtn = function() {
 	// 获得tb中的所有的input的值，并且赋值给变量
 	var inputs = tb.getElementsByTagName("input");
 	var bookId = inputs[0].value;
+	var inventory = inputs[1].value;
 	var authorTxt = inputs[2].value;
 	var barcodeTxt = inputs[3].value;
 	var bookNameTxt = inputs[4].value;
@@ -760,86 +818,85 @@ var okBtn = function() {
 	var descriptionTxt = inputs[7].value;
 	var locationTxt = inputs[8].value;
 	// 获得主页中的数据,将修改的数据填入到主页中,
-	var tbody = getId("tb");
-	var rows = tbody.rows.length; // 获得所有的行
-	for (var i = 0; i < rows; i++) {
-		var tr = tbody.rows[i];
-		if (i + 1 == serialTxt) {
-			// if (tr.cells[3].innerHTML != bookImgTxt) {
-			// 	if (bookImgTxt == '') {
-			// 		alert('bookImg can not be null！');
-			// 		return false;
-			// 	}
-			// 	tr.cells[3].innerHTML = bookImgTxt;
-			// }
-			if (tr.cells[4].innerHTML != authorTxt) {
-				if (authorTxt == '') {
-					alert('author can not be null！');
-					return false;
-				}
-				tr.cells[4].innerHTML = authorTxt;
-			}
-			if (tr.cells[5].innerHTML != barcodeTxt) {
-				if (barcodeTxt == '') {
-					alert('barcode can not be null！');
-					return false;
-				}
-				tr.cells[5].innerHTML = barcodeTxt;
-			}
-			if (tr.cells[6].innerHTML != bookNameTxt) {
-				if (bookNameTxt == '') {
-					alert('bookName can not be null！');
-					return false;
-				}
-				tr.cells[6].innerHTML = bookNameTxt;
-			}
-			if (tr.cells[7].innerHTML != bookTypeTxt) {
-				if (bookTypeTxt == '') {
-					alert('bookType can not be null！');
-					return false;
-				} 
-				tr.cells[7].innerHTML = bookTypeTxt;
-			}
-			if (tr.cells[8].innerHTML != priceTxt) {
-				if (priceTxt == '') {
-					alert('price can not be null！');
-					return false;
-				} else if (parseFloat(priceTxt)) {
-					alert("price is a number");
-					return false;
-				}
-				tr.cells[8].innerHTML = priceTxt;
-			}
-			if (tr.cells[9].innerHTML != descriptionTxt) {
-				if (descriptionTxt == '') {
-					alert('description can not be null！');
-					return false;
-				} 
-				tr.cells[9].innerHTML = descriptionTxt;
-			}
-			if (tr.cells[10].innerHTML != locationTxt) {
-				if (locationTxt == '') {
-					alert('location can not be null！');
-					return false;
-				} 
-				tr.cells[10].innerHTML = locationTxt;
-			}
-		}
-	}
-	var formdata = new FormData($('form')[0]);
+	// var tbody = getId("tb");
+	// var rows = tbody.rows.length; // 获得所有的行
+	// for (var i = 0; i < rows; i++) {
+	// 	var tr = tbody.rows[i];
+	// 	if (i + 1 == serialTxt) {
+	// 		// if (tr.cells[3].innerHTML != bookImgTxt) {
+	// 		// 	if (bookImgTxt == '') {
+	// 		// 		alert('bookImg can not be null！');
+	// 		// 		return false;
+	// 		// 	}
+	// 		// 	tr.cells[3].innerHTML = bookImgTxt;
+	// 		// }
+	// 		if (tr.cells[4].innerHTML != authorTxt) {
+	// 			if (authorTxt == '') {
+	// 				alert('author can not be null！');
+	// 				return false;
+	// 			}
+	// 			tr.cells[4].innerHTML = authorTxt;
+	// 		}
+	// 		if (tr.cells[5].innerHTML != barcodeTxt) {
+	// 			if (barcodeTxt == '') {
+	// 				alert('barcode can not be null！');
+	// 				return false;
+	// 			}
+	// 			tr.cells[5].innerHTML = barcodeTxt;
+	// 		}
+	// 		if (tr.cells[6].innerHTML != bookNameTxt) {
+	// 			if (bookNameTxt == '') {
+	// 				alert('bookName can not be null！');
+	// 				return false;
+	// 			}
+	// 			tr.cells[6].innerHTML = bookNameTxt;
+	// 		}
+	// 		if (tr.cells[7].innerHTML != bookTypeTxt) {
+	// 			if (bookTypeTxt == '') {
+	// 				alert('bookType can not be null！');
+	// 				return false;
+	// 			}
+	// 			tr.cells[7].innerHTML = bookTypeTxt;
+	// 		}
+	// 		if (tr.cells[8].innerHTML != priceTxt) {
+	// 			if (priceTxt == '') {
+	// 				alert('price can not be null！');
+	// 				return false;
+	// 			} else if (parseFloat(priceTxt)) {
+	// 				alert("price is a number");
+	// 				return false;
+	// 			}
+	// 			tr.cells[8].innerHTML = priceTxt;
+	// 		}
+	// 		if (tr.cells[9].innerHTML != descriptionTxt) {
+	// 			if (descriptionTxt == '') {
+	// 				alert('description can not be null！');
+	// 				return false;
+	// 			}
+	// 			tr.cells[9].innerHTML = descriptionTxt;
+	// 		}
+	// 		if (tr.cells[10].innerHTML != locationTxt) {
+	// 			if (locationTxt == '') {
+	// 				alert('location can not be null！');
+	// 				return false;
+	// 			}
+	// 			tr.cells[10].innerHTML = locationTxt;
+	// 		}
+	// 	}
+	// }
 	$.ajax({
 		type:'POST',
 		dataType:'json',
 		url:'/book/update/profile',
 		contentType:'application/json;charset=UTF-8',	
-		data:JSON.stringify({"bookId":bookId,"author":authorTxt,"barCode":barcodeTxt,"bookName":bookNameTxt,
+		data:JSON.stringify({"bookId":bookId,"inventory":inventory,"author":authorTxt,"barCode":barcodeTxt,"bookName":bookNameTxt,
 		"bookType":bookTypeTxt,"price":parseFloat(priceTxt),"description":descriptionTxt,"location":locationTxt}),
 		success:function(data){//返回结果
 				location.reload();
 				alert("Success");
 		  },
 	    error:function(data){
-			art.dialog.tips('更新修改数据失败!');
+			alert('更新修改数据失败!');
 		}
 	     });
 	// 隐藏遮罩层
@@ -847,156 +904,156 @@ var okBtn = function() {
 }
 
 /* 下一页 */
-function next() {
-
-	hideTable();
-
-	currentRow = pageSize * page;
-	maxRow = currentRow + pageSize;
-	if (maxRow > numberRowsInTable)
-		maxRow = numberRowsInTable;
-	for (var i = currentRow; i < maxRow; i++) {
-		theTable.rows[i].style.display = '';
-	}
-	page++;
-	if (maxRow == numberRowsInTable) {
-		nextText();
-		lastText();
-	}
-	showPage();
-	preLink();
-	firstLink();
-}
-
-/* 上一页 */
-function pre() {
-
-	hideTable();
-
-	page--;
-
-	currentRow = pageSize * page;
-	maxRow = currentRow - pageSize;
-	if (currentRow > numberRowsInTable)
-		currentRow = numberRowsInTable;
-	for (var i = maxRow; i < currentRow; i++) {
-		theTable.rows[i].style.display = '';
-	}
-
-	if (maxRow == 0) {
-		preText();
-		firstText();
-	}
-
-	showPage();
-	nextLink();
-	lastLink();
-}
-
-/* 第一页 */
-function first() {
-	hideTable();
-	page = 1;
-	for (var i = 0; i < pageSize && i < numberRowsInTable; i++) {
-		theTable.rows[i].style.display = '';
-	}
-	showPage();
-
-	preText();
-	nextLink();
-	lastLink();
-}
-
-/* 最后一页 */
-function last() {
-	hideTable();
-	page = pageCount();
-	currentRow = pageSize * (page - 1);
-	for (var i = currentRow; i < numberRowsInTable; i++) {
-		theTable.rows[i].style.display = '';
-	}
-	showPage();
-
-	preLink();
-	nextText();
-	firstLink();
-}
-
-/* 隐藏table */
-function hideTable() {
-	for (var i = 0; i < numberRowsInTable; i++) {
-		theTable.rows[i].style.display = 'none';
-	}
-}
-
-/* 展示第几页 */
-function showPage() {
-	pageNum.innerHTML = page;
-}
-
-/* 总共页数 */
-function pageCount() {
-	var count = 1;
-	if (numberRowsInTable % pageSize != 0)
-		count = 1;
-	return parseInt(numberRowsInTable / (pageSize + 0.1)) + count;
-}
-
-/* 显示链接 */
-function preLink() {
-	spanPre.innerHTML = "<a class='upLink' href='javascript:pre();'>pre page</a>";
-}
-function preText() {
-	spanPre.innerHTML = "pre page";
-}
-
-function nextLink() {
-	spanNext.innerHTML = "<a class='downLink' href='javascript:next();'>next page</a>";
-}
-function nextText() {
-	spanNext.innerHTML = "next page";
-}
-
-function firstLink() {
-	spanFirst.innerHTML = "<a href='javascript:first();'>firstPage , </a>";
-}
-function firstText() {
-	spanFirst.innerHTML = "firstPage , ";
-}
-
-function lastLink() {
-	spanLast.innerHTML = "<a href='javascript:last();'>lastPage , </a>";
-}
-function lastText() {
-	spanLast.innerHTML = "lastPage , ";
-}
-
-/* 隐藏表格 */
-function hide() {
-	for (var i = pageSize; i < numberRowsInTable; i++) {
-		theTable.rows[i].style.display = 'none';
-	}
-
-	totalPage.innerHTML = pageCount();
-	pageNum.innerHTML = '1';
-	numRows.innerHTML = numberRowsInTable;
-
-	nextLink();
-	lastLink();
-}
-
-hide();
-
-/*显示时特效*/
-$(document).ready(function() {
-	$("#show").click(function() {
-		$(".over").show("slow");
-	});
-});
-
-/*隐藏时特效*/
-$(document).ready(function() {
-	$("#hide23").click(function() {
-		$(".over").hide("slow");
-	});
-});
+// function next() {
+//
+// 	hideTable();
+//
+// 	currentRow = pageSize * page;
+// 	maxRow = currentRow + pageSize;
+// 	if (maxRow > numberRowsInTable)
+// 		maxRow = numberRowsInTable;
+// 	for (var i = currentRow; i < maxRow; i++) {
+// 		theTable.rows[i].style.display = '';
+// 	}
+// 	page++;
+// 	if (maxRow == numberRowsInTable) {
+// 		nextText();
+// 		lastText();
+// 	}
+// 	showPage();
+// 	preLink();
+// 	firstLink();
+// }
+//
+// /* 上一页 */
+// function pre() {
+//
+// 	hideTable();
+//
+// 	page--;
+//
+// 	currentRow = pageSize * page;
+// 	maxRow = currentRow - pageSize;
+// 	if (currentRow > numberRowsInTable)
+// 		currentRow = numberRowsInTable;
+// 	for (var i = maxRow; i < currentRow; i++) {
+// 		theTable.rows[i].style.display = '';
+// 	}
+//
+// 	if (maxRow == 0) {
+// 		preText();
+// 		firstText();
+// 	}
+//
+// 	showPage();
+// 	nextLink();
+// 	lastLink();
+// }
+//
+// /* 第一页 */
+// function first() {
+// 	hideTable();
+// 	page = 1;
+// 	for (var i = 0; i < pageSize && i < numberRowsInTable; i++) {
+// 		theTable.rows[i].style.display = '';
+// 	}
+// 	showPage();
+//
+// 	preText();
+// 	nextLink();
+// 	lastLink();
+// }
+//
+// /* 最后一页 */
+// function last() {
+// 	hideTable();
+// 	page = pageCount();
+// 	currentRow = pageSize * (page - 1);
+// 	for (var i = currentRow; i < numberRowsInTable; i++) {
+// 		theTable.rows[i].style.display = '';
+// 	}
+// 	showPage();
+//
+// 	preLink();
+// 	nextText();
+// 	firstLink();
+// }
+//
+// /* 隐藏table */
+// function hideTable() {
+// 	for (var i = 0; i < numberRowsInTable; i++) {
+// 		theTable.rows[i].style.display = 'none';
+// 	}
+// }
+//
+// /* 展示第几页 */
+// function showPage() {
+// 	pageNum.innerHTML = page;
+// }
+//
+// /* 总共页数 */
+// function pageCount() {
+// 	var count = 1;
+// 	if (numberRowsInTable % pageSize != 0)
+// 		count = 1;
+// 	return parseInt(numberRowsInTable / (pageSize + 0.1)) + count;
+// }
+//
+// /* 显示链接 */
+// function preLink() {
+// 	spanPre.innerHTML = "<a class='upLink' href='javascript:pre();'>pre page</a>";
+// }
+// function preText() {
+// 	spanPre.innerHTML = "pre page";
+// }
+//
+// function nextLink() {
+// 	spanNext.innerHTML = "<a class='downLink' href='javascript:next();'>next page</a>";
+// }
+// function nextText() {
+// 	spanNext.innerHTML = "next page";
+// }
+//
+// function firstLink() {
+// 	spanFirst.innerHTML = "<a href='javascript:first();'>firstPage , </a>";
+// }
+// function firstText() {
+// 	spanFirst.innerHTML = "firstPage , ";
+// }
+//
+// function lastLink() {
+// 	spanLast.innerHTML = "<a href='javascript:last();'>lastPage , </a>";
+// }
+// function lastText() {
+// 	spanLast.innerHTML = "lastPage , ";
+// }
+//
+// /* 隐藏表格 */
+// function hide() {
+// 	for (var i = pageSize; i < numberRowsInTable; i++) {
+// 		theTable.rows[i].style.display = 'none';
+// 	}
+//
+// 	totalPage.innerHTML = pageCount();
+// 	pageNum.innerHTML = '1';
+// 	numRows.innerHTML = numberRowsInTable;
+//
+// 	nextLink();
+// 	lastLink();
+// }
+//
+// hide();
+//
+// /*显示时特效*/
+// $(document).ready(function() {
+// 	$("#show").click(function() {
+// 		$(".over").show("slow");
+// 	});
+// });
+//
+// /*隐藏时特效*/
+// $(document).ready(function() {
+// 	$("#hide23").click(function() {
+// 		$(".over").hide("slow");
+// 	});
+// });

@@ -165,7 +165,7 @@ var pageSize = 10;
 var page = 1;
 var theTable = getId("tb");
 // 获取行的长度
-// var numberRowsInTable = theTable.rows.length;
+var numberRowsInTable = theTable.rows.length;
 // 数据条数
 var numRows = getId("spanTotalNumRows");
 
@@ -235,7 +235,7 @@ var changeColor = function() {
 		}
 	}
 }
-// loadData();
+
 
 
 /* 加载数据 */
@@ -244,110 +244,77 @@ function loadData() {
 		var librarianId = librarianlist[i].librarianId;
         var username = librarianlist[i].username;
         var email = librarianlist[i].email;
-		var password = librarianlist[i].password;
-		/**
-		 * <tbody>
-                        <tr>
-                        <td><input type="checkbox" /></td>
-                        <td>1</td>
-                        <td>Librarian 1</td>
-                        <td>Librarian</td>
-                        <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
-                        <td>123456</td>
-                        <td>
-                            <div class="am-btn-toolbar">
-                            <div class="am-btn-group am-btn-group-xs">
-                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> Edit</button>
-                                <!-- <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash"></span> Delete</button> -->
-                            </div>
-                            </div>
-                        </td>
-                        </tr>
-                        </tbody>
-		 */
-		$("#table").append('<tbody>'+
-		'<tr>'+
-		'<td><input type="checkbox" /></td>'+
-		'<td>'+(i+1)+'</td>'+
-		'<td>'+librarianId+'</td>'+
-		'<td>'+username+'</td>'+
-		'<td class="am-hide-sm-only">'+email+'</td>'+
-		'<td>'+password+'</td>'+
-		'<td>'+
-			'<div class="am-btn-toolbar">'+
-				'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="modTr(this)"><span class="am-icon-pencil-square-o"></span> Edit</button>'+
-			'</div>'+
-		'</td></tr></tbody>');
+        var password = librarianlist[i].password;
 		// 创建tr
-		// var tr = createObj("tr");
-		// // 创建td
-		// var checkTd = createObj("td");
-		// var serialTd = createObj("td");
-		// var librarianIdTd = createObj("td");
-        // var usernameTd = createObj("td");
-        // var emailTd = createObj("td");
-        // var passwordTd = createObj("td");
-		// var dmlTd = createObj("td");
+		var tr = createObj("tr");
+		// 创建td
+		var checkTd = createObj("td");
+		var serialTd = createObj("td");
+		var librarianIdTd = createObj("td");
+        var usernameTd = createObj("td");
+        var emailTd = createObj("td");
+        var passwordTd = createObj("td");
+		var dmlTd = createObj("td");
 
-		// var checkBtn = createObj("input");
-		// checkBtn.type = "checkbox";
-		// checkBtn.value=librarianlist[i].librarianId;
-		// // 将复选框添加到第一列；
-		// checkTd.appendChild(checkBtn);
-		// // 将获得的值添加到创建的指定Td中；
-		// var tbody = getId("tb");
-		// var rows = tbody.rows.length;
-		// // 将获得的信息添加到指定的为td中
-		// serialTd.innerHTML = rows + 1;
-		// librarianIdTd.innerHTML = librarianId;
-        // usernameTd.innerHTML = username;
-		// emailTd.innerHTML = email;
-		// passwordTd.innerHTML = password;
+		var checkBtn = createObj("input");
+		checkBtn.type = "checkbox";
+		checkBtn.value=librarianlist[i].librarianId;
+		// 将复选框添加到第一列；
+		checkTd.appendChild(checkBtn);
+		// 将获得的值添加到创建的指定Td中；
+		var tbody = getId("tb");
+		var rows = tbody.rows.length;
+		// 将获得的信息添加到指定的为td中
+		serialTd.innerHTML = rows + 1;
+		librarianIdTd.innerHTML = librarianId;
+        usernameTd.innerHTML = username;
+		emailTd.innerHTML = email;
+		passwordTd.innerHTML = password;
         
-		// // 创建个button按钮，添加到操作列；
-		// var lookBtn = createObj("input");
-		// lookBtn.type = "button";
-		// lookBtn.value = "View";
-		// // 为新建的lookBtn创建监听属性；
-		// lookBtn.onclick = function() {
-		// 	lookTr(this);
-		// };
+		// 创建个button按钮，添加到操作列；
+		var lookBtn = createObj("input");
+		lookBtn.type = "button";
+		lookBtn.value = "View";
+		// 为新建的lookBtn创建监听属性；
+		lookBtn.onclick = function() {
+			lookTr(this);
+		};
 
-        // // 创建个button按钮，添加到操作列；
-		// var changeBtn = createObj("input");
-		// changeBtn.type = "button";
-		// changeBtn.value = "Edit";
+        // 创建个button按钮，添加到操作列；
+		var changeBtn = createObj("input");
+		changeBtn.type = "button";
+		changeBtn.value = "Edit";
 
-		// // 为新建的changeBtn创建监听属性；
-		// changeBtn.onclick = function() {
-		// 	modTr(this);
-        // }
+		// 为新建的changeBtn创建监听属性；
+		changeBtn.onclick = function() {
+			modTr(this);
+        }
         
-		// dmlTd.appendChild(lookBtn);
-        // dmlTd.appendChild(changeBtn);
+		dmlTd.appendChild(lookBtn);
+        dmlTd.appendChild(changeBtn);
         
-		// // 将新建的td加入到新建的行中
-		// tr.appendChild(checkTd);
-		// tr.appendChild(serialTd);
-		// tr.appendChild(librarianIdTd);
-        // tr.appendChild(usernameTd);
-        // tr.appendChild(emailTd);
-        // tr.appendChild(passwordTd);
-		// tr.appendChild(dmlTd);
+		// 将新建的td加入到新建的行中
+		tr.appendChild(checkTd);
+		tr.appendChild(serialTd);
+		tr.appendChild(librarianIdTd);
+        tr.appendChild(usernameTd);
+        tr.appendChild(emailTd);
+        tr.appendChild(passwordTd);
+		tr.appendChild(dmlTd);
 
-		// // 将新建的tr加入到tbody中
-		// var tbody = getId("tb");
-		// tbody.appendChild(tr);
+		// 将新建的tr加入到tbody中
+		var tbody = getId("tb");
+		tbody.appendChild(tr);
 
 		// 隔行换色。
-		// var table = document.getElementById("table");
-		// table.tBodies[0].rows[table.tBodies[0].rows.length - 1].style.display = 'none';
-		// numberRowsInTable++;
-		// totalPage.innerHTML = pageCount();
-		// numRows.innerHTML = numberRowsInTable;
-		// first();
+		var table = document.getElementById("table");
+		table.tBodies[0].rows[table.tBodies[0].rows.length - 1].style.display = 'none';
+		numberRowsInTable++;
+		totalPage.innerHTML = pageCount();
+		numRows.innerHTML = numberRowsInTable;
+		first();
 	}
-	// changeColor();
+	changeColor();
 }
 
 /* 增加读者信息 */
@@ -577,13 +544,11 @@ var modTr = function(obj) {
 	getId("lookMessages").innerHTML = "Edit account";
 	buttonConfirm.style.display = "block";
 	// 获得隐藏的DIV
-	// var overDiv = getId("over2");
-    // // 将隐藏的div有隐藏显现出来
-    // console.log(getId("over2"));
-    // overDiv.style.display = "block";
-	getId("over2").style.display = "block";
+	var overDiv = getId("over2");
+	// 将隐藏的div有隐藏显现出来
+	overDiv.style.display = "block";
 	// 通过按钮来获得tr;
-	var tr = obj.parentNode.parentNode.parentNode;
+	var tr = obj.parentNode.parentNode;
     
     // 获得需要修改的内容
     var librarianId = tr.cells[2].innerHTML;
@@ -604,38 +569,39 @@ var modTr = function(obj) {
     inputs[1].disabled = "";
     inputs[2].disabled = "";
     inputs[3].disabled = "";
+
 }
 
-// /* 查看公告信息 */
-// var lookTr = function(obj) {
-// 	// 获得隐藏的DIV
-// 	var overDiv = getId("over2");
-// 	var buttonConfirm = getId("hide");
-// 	getId("lookMessages").innerHTML = "View account";
-// 	buttonConfirm.style.display = "none";
-//
-// 	// 将隐藏的div有隐藏显现出来
-// 	overDiv.style.display = "block";
-// 	// 通过按钮来获得tr;
-// 	var tr = obj.parentNode.parentNode;
-//
-//     // 获得需要修改的内容
-// 	var librarianId = tr.cells[2].innerHTML;
-// 	var username = tr.cells[3].innerHTML;
-//     var email = tr.cells[4].innerHTML;
-// 	// 获得遮罩层的tbody
-// 	var tb = getId("over_tb2");
-// 	// 获得tb中所有的input
-//     var inputs = tb.getElementsByTagName("input");
-// 	// 往遮罩层中的input填入从表格中取得来的数据
-// 	inputs[0].value = librarianId;
-//     inputs[1].value = username;
-//     inputs[2].value = email;
-// 	inputs[0].disabled = "disabled";
-//     inputs[1].disabled = "disabled";
-//     inputs[2].disabled = "disabled";
-//
-// }
+/* 查看公告信息 */
+var lookTr = function(obj) {
+	// 获得隐藏的DIV
+	var overDiv = getId("over2");
+	var buttonConfirm = getId("hide");
+	getId("lookMessages").innerHTML = "View account";
+	buttonConfirm.style.display = "none";
+
+	// 将隐藏的div有隐藏显现出来
+	overDiv.style.display = "block";
+	// 通过按钮来获得tr;
+	var tr = obj.parentNode.parentNode;
+    
+    // 获得需要修改的内容
+	var librarianId = tr.cells[2].innerHTML;
+	var username = tr.cells[3].innerHTML;
+    var email = tr.cells[4].innerHTML;
+	// 获得遮罩层的tbody
+	var tb = getId("over_tb2");
+	// 获得tb中所有的input
+    var inputs = tb.getElementsByTagName("input");
+	// 往遮罩层中的input填入从表格中取得来的数据
+	inputs[0].value = librarianId;
+    inputs[1].value = username;
+    inputs[2].value = email;
+	inputs[0].disabled = "disabled";
+    inputs[1].disabled = "disabled";
+    inputs[2].disabled = "disabled";
+	
+}
 
 /* 确认修改按钮 */
 var okBtn = function() {
@@ -648,38 +614,38 @@ var okBtn = function() {
 	var email = inputs[2].value;
 	var password = inputs[3].value;
 	// 获得主页中的数据,将修改的数据填入到主页中,
-	// var tbody = getId("tb");
-	// var rows = tbody.rows.length; // 获得所有的行
-	// for (var i = 0; i < rows; i++) {
-	// 	var tr = tbody.rows[i];
-	// 	if (i + 1 == serialTxt) {
-	//
-	// 		if (tr.cells[3].innerHTML != username) {
-	// 			if ( username== '') {
-	// 				alert('username can not be null！');
-	// 				return false;
-	// 			}
-	// 			tr.cells[3].innerHTML = username;
-     //        }
-     //
-     //        if (tr.cells[4].innerHTML != email) {
-	// 			if ( email== '') {
-	// 				alert('email can not be null！');
-	// 				return false;
-	// 			}
-	// 			tr.cells[4].innerHTML = email;
-	// 		}
-    //
-	// 		if (tr.cells[5].innerHTML != password) {
-     //            if ( password == '') {
-     //                alert('password can not be null！');
-     //                return false;
-     //            }
-     //            tr.cells[5].innerHTML = password;
-     //        }
-    //
-	// 	}
-	// }
+	var tbody = getId("tb");
+	var rows = tbody.rows.length; // 获得所有的行
+	for (var i = 0; i < rows; i++) {
+		var tr = tbody.rows[i];
+		if (i + 1 == serialTxt) {
+		
+			if (tr.cells[3].innerHTML != username) {
+				if ( username== '') {
+					alert('username can not be null！');
+					return false;
+				}
+				tr.cells[3].innerHTML = username;
+            }
+            
+            if (tr.cells[4].innerHTML != email) {
+				if ( email== '') {
+					alert('email can not be null！');
+					return false;
+				}
+				tr.cells[4].innerHTML = email;
+			}
+
+			if (tr.cells[5].innerHTML != password) {
+                if ( password == '') {
+                    alert('password can not be null！');
+                    return false;
+                }
+                tr.cells[5].innerHTML = password;
+            }
+
+		}
+	}
 	$.ajax({
 		type:'POST',
 		dataType:'json',
@@ -691,7 +657,7 @@ var okBtn = function() {
 				alert("Success");
 		  },
 	    error:function(data){
-			alert('更新修改数据失败!');
+			art.dialog.tips('更新修改数据失败!');
 		}
 	     });
 	// 隐藏遮罩层
@@ -699,156 +665,156 @@ var okBtn = function() {
 }
 
 /* 下一页 */
-// function next() {
+function next() {
 
-// 	hideTable();
+	hideTable();
 
-// 	currentRow = pageSize * page;
-// 	maxRow = currentRow + pageSize;
-// 	if (maxRow > numberRowsInTable)
-// 		maxRow = numberRowsInTable;
-// 	for (var i = currentRow; i < maxRow; i++) {
-// 		theTable.rows[i].style.display = '';
-// 	}
-// 	page++;
-// 	if (maxRow == numberRowsInTable) {
-// 		nextText();
-// 		lastText();
-// 	}
-// 	showPage();
-// 	preLink();
-// 	firstLink();
-// }
+	currentRow = pageSize * page;
+	maxRow = currentRow + pageSize;
+	if (maxRow > numberRowsInTable)
+		maxRow = numberRowsInTable;
+	for (var i = currentRow; i < maxRow; i++) {
+		theTable.rows[i].style.display = '';
+	}
+	page++;
+	if (maxRow == numberRowsInTable) {
+		nextText();
+		lastText();
+	}
+	showPage();
+	preLink();
+	firstLink();
+}
 
-// /* 上一页 */
-// function pre() {
+/* 上一页 */
+function pre() {
 
-// 	hideTable();
+	hideTable();
 
-// 	page--;
+	page--;
 
-// 	currentRow = pageSize * page;
-// 	maxRow = currentRow - pageSize;
-// 	if (currentRow > numberRowsInTable)
-// 		currentRow = numberRowsInTable;
-// 	for (var i = maxRow; i < currentRow; i++) {
-// 		theTable.rows[i].style.display = '';
-// 	}
+	currentRow = pageSize * page;
+	maxRow = currentRow - pageSize;
+	if (currentRow > numberRowsInTable)
+		currentRow = numberRowsInTable;
+	for (var i = maxRow; i < currentRow; i++) {
+		theTable.rows[i].style.display = '';
+	}
 
-// 	if (maxRow == 0) {
-// 		preText();
-// 		firstText();
-// 	}
+	if (maxRow == 0) {
+		preText();
+		firstText();
+	}
 
-// 	showPage();
-// 	nextLink();
-// 	lastLink();
-// }
+	showPage();
+	nextLink();
+	lastLink();
+}
 
-// /* 第一页 */
-// function first() {
-// 	hideTable();
-// 	page = 1;
-// 	for (var i = 0; i < pageSize && i < numberRowsInTable; i++) {
-// 		theTable.rows[i].style.display = '';
-// 	}
-// 	showPage();
+/* 第一页 */
+function first() {
+	hideTable();
+	page = 1;
+	for (var i = 0; i < pageSize && i < numberRowsInTable; i++) {
+		theTable.rows[i].style.display = '';
+	}
+	showPage();
 
-// 	preText();
-// 	nextLink();
-// 	lastLink();
-// }
+	preText();
+	nextLink();
+	lastLink();
+}
 
-// /* 最后一页 */
-// function last() {
-// 	hideTable();
-// 	page = pageCount();
-// 	currentRow = pageSize * (page - 1);
-// 	for (var i = currentRow; i < numberRowsInTable; i++) {
-// 		theTable.rows[i].style.display = '';
-// 	}
-// 	showPage();
+/* 最后一页 */
+function last() {
+	hideTable();
+	page = pageCount();
+	currentRow = pageSize * (page - 1);
+	for (var i = currentRow; i < numberRowsInTable; i++) {
+		theTable.rows[i].style.display = '';
+	}
+	showPage();
 
-// 	preLink();
-// 	nextText();
-// 	firstLink();
-// }
+	preLink();
+	nextText();
+	firstLink();
+}
 
-// /* 隐藏table */
-// function hideTable() {
-// 	for (var i = 0; i < numberRowsInTable; i++) {
-// 		theTable.rows[i].style.display = 'none';
-// 	}
-// }
+/* 隐藏table */
+function hideTable() {
+	for (var i = 0; i < numberRowsInTable; i++) {
+		theTable.rows[i].style.display = 'none';
+	}
+}
 
-// /* 展示第几页 */
-// function showPage() {
-// 	pageNum.innerHTML = page;
-// }
+/* 展示第几页 */
+function showPage() {
+	pageNum.innerHTML = page;
+}
 
-// /* 总共页数 */
-// function pageCount() {
-// 	var count = 1;
-// 	if (numberRowsInTable % pageSize != 0)
-// 		count = 1;
-// 	return parseInt(numberRowsInTable / (pageSize + 0.1)) + count;
-// }
+/* 总共页数 */
+function pageCount() {
+	var count = 1;
+	if (numberRowsInTable % pageSize != 0)
+		count = 1;
+	return parseInt(numberRowsInTable / (pageSize + 0.1)) + count;
+}
 
-// /* 显示链接 */
-// function preLink() {
-// 	spanPre.innerHTML = "<a class='upLink' href='javascript:pre();'>pre page</a>";
-// }
-// function preText() {
-// 	spanPre.innerHTML = "pre page";
-// }
+/* 显示链接 */
+function preLink() {
+	spanPre.innerHTML = "<a class='upLink' href='javascript:pre();'>pre page</a>";
+}
+function preText() {
+	spanPre.innerHTML = "pre page";
+}
 
-// function nextLink() {
-// 	spanNext.innerHTML = "<a class='downLink' href='javascript:next();'>next page</a>";
-// }
-// function nextText() {
-// 	spanNext.innerHTML = "next page";
-// }
+function nextLink() {
+	spanNext.innerHTML = "<a class='downLink' href='javascript:next();'>next page</a>";
+}
+function nextText() {
+	spanNext.innerHTML = "next page";
+}
 
-// function firstLink() {
-// 	spanFirst.innerHTML = "<a href='javascript:first();'>firstPage , </a>";
-// }
-// function firstText() {
-// 	spanFirst.innerHTML = "firstPage , ";
-// }
+function firstLink() {
+	spanFirst.innerHTML = "<a href='javascript:first();'>firstPage , </a>";
+}
+function firstText() {
+	spanFirst.innerHTML = "firstPage , ";
+}
 
-// function lastLink() {
-// 	spanLast.innerHTML = "<a href='javascript:last();'>lastPage , </a>";
-// }
-// function lastText() {
-// 	spanLast.innerHTML = "lastPage , ";
-// }
+function lastLink() {
+	spanLast.innerHTML = "<a href='javascript:last();'>lastPage , </a>";
+}
+function lastText() {
+	spanLast.innerHTML = "lastPage , ";
+}
 
-// /* 隐藏表格 */
-// function hide() {
-// 	for (var i = pageSize; i < numberRowsInTable; i++) {
-// 		theTable.rows[i].style.display = 'none';
-// 	}
+/* 隐藏表格 */
+function hide() {
+	for (var i = pageSize; i < numberRowsInTable; i++) {
+		theTable.rows[i].style.display = 'none';
+	}
 
-// 	totalPage.innerHTML = pageCount();
-// 	pageNum.innerHTML = '1';
-// 	numRows.innerHTML = numberRowsInTable;
+	totalPage.innerHTML = pageCount();
+	pageNum.innerHTML = '1';
+	numRows.innerHTML = numberRowsInTable;
 
-// 	nextLink();
-// 	lastLink();
-// }
+	nextLink();
+	lastLink();
+}
 
-// hide();
+hide();
 
-// /*显示时特效*/
-// $(document).ready(function() {
-// 	$("#show").click(function() {
-// 		$(".over").show("slow");
-// 	});
-// });
+/*显示时特效*/
+$(document).ready(function() {
+	$("#show").click(function() {
+		$(".over").show("slow");
+	});
+});
 
-// /*隐藏时特效*/
-// $(document).ready(function() {
-// 	$("#hide23").click(function() {
-// 		$(".over").hide("slow");
-// 	});
-// });
+/*隐藏时特效*/
+$(document).ready(function() {
+	$("#hide23").click(function() {
+		$(".over").hide("slow");
+	});
+});

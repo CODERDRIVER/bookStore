@@ -242,7 +242,7 @@ public class BorrowAndOrderService {
      */
     public ResponseMessage getAllOrders()
     {
-        List<Order> all = orderRepository.findAll();
+        List<Order> all = orderRepository.findAllByOrderStatus(0);
         List<BookOrderRecordData> bookOrderRecordDatas = new ArrayList<>();
         for (Order order : all) {
             BookOrderRecordData bookOrderRecordData  = new BookOrderRecordData();

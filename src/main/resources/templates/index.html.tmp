@@ -118,7 +118,7 @@
                             reader
                         </label>
                     </div>
-                    <div><button onclick="findKey()" type="button" class="am-btn am-btn-sm" style="color: #7c7c7c; background-color: #fff0">forgot password?</button></div>
+                    <div><button onclick="findKey()" type="button">忘记密码？</button></div>
                 </form>
 
             </div>

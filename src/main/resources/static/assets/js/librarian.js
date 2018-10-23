@@ -45,6 +45,7 @@ $(document).ready(function(){
      });
  })
  $(document).ready(function(){
+     // $("#search_results").hide();
     $(":radio").click(function(){
         // alert("您是..." + $(this).val());
         $.ajax({
@@ -167,6 +168,7 @@ $('#log-out').click(function () {
  * 搜索框点击事件
  */
 $('#search-button').click(function () {
+    $("#bookPane").show();
     searchFun()
 });
 $(document).keyup(function (event) {

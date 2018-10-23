@@ -52,10 +52,10 @@
                         Service <span class="am-icon-caret-down"></span>
                     </a>
                     <ul class="am-dropdown-content">
-                        <li><a id="borrowHistory" >Borrow History</a></li>
-                        <li><a id="returnHistory" >Return History</a></li>
-                        <li><a id="unpaidFine" >Unpaid Fine</a></li>
-                        <li><a id="order" >Order</a></li>
+                        <li><button id="borrowHistory" class="am-btn am-btn-default">Borrow History</button></li>
+                        <li><button id="returnHistory" class="am-btn am-btn-default">Return History</button></li>
+                        <li><button id="unpaidFine" class="am-btn am-btn-default">Unpaid Fine</button></li>
+                        <li><button id="order" class="am-btn am-btn-default">Order</button></li>
                     </ul>
                 </li>
             </div>
@@ -171,10 +171,13 @@
             </p>
         </div>
 
-        <div id="bookPane" data-am-widget="list_news" class="am-list-news am-list-news-default" style="display: none">
+        <div id="bookPane" data-am-widget="list_news" class="am-list-news am-list-news-default">
             <div class="am-list-news-hd am-cf">
                 <a href="#" onclick="return false">
                     <h2>Search Results</h2>
+                    <span class="am-list-news-more am-fr">
+                        <button id="addNewBook" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-add"></span> Add</button>
+                    </span>
                 </a>
             </div>
             <div class="am-list-news-bd">
@@ -252,9 +255,7 @@
 </div>
 <a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
 
-<footer class="footer">
-    <p>2018. by Team A12</p>
-</footer>
+
 <!--[if lt IE 9]>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
 <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
@@ -266,6 +267,5 @@
 <script src="../assets/js/amazeui.min.js"></script>
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/readercan.js"></script>
-<script src="../assets/js/style.js"></script>
 </body>
 </html>

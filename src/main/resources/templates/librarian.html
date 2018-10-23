@@ -24,7 +24,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
-    <link rel="apple-touch-icon-precomposed" href="../assets/i/bookicon2.png">
+    <link rel="apple-touch-icon-precomposed" href="/assets/i/bookicon2.png">
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
     <meta name="msapplication-TileImage" content="/assets/i/bookicon2.png">
@@ -34,207 +34,142 @@
     <link rel="stylesheet" href="/assets/css/app.css">
 </head>
 <body>
-<header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
-    <div class="am-container" style="max-width: unset">
-        <h1 class="am-topbar-brand">
-            <a href="#">Bibliosoft</a>
-        </h1>
+<div class="container">
+    <header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
+        <div class="am-container" style="max-width: unset">
+            <h1 class="am-topbar-brand">
+                <a href="#">Bibliosoft</a>
+            </h1>
 
-        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+            <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
 
-        <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
-            <div class="am-topbar-right">
-                <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
-            </div>
-            <div class="am-topbar-right">
-                <li class="am-dropdown am-dropdown-header" data-am-dropdown>
-                    <a id="l" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-                        Service <span class="am-icon-caret-down"></span>
-                    </a>
-                    <ul class="am-dropdown-content">
-                        <li><button id="bookManagement" class="am-btn am-btn-default">bookList</button></li>
-                        <li><button id="readerManagement" class="am-btn am-btn-default">ReaderList</button></li>
-                        <li><button id="announceManagement" class="am-btn am-btn-default">AnnounceList</button></li>
-                        <li><button id="incomeQuery" class="am-btn am-btn-default">Income</button></li>
-                        <li><button id="deleteHistory" class="am-btn am-btn-default">DeleteHistory</button></li>
-                        <li><button id="orderManagement" class="am-btn am-btn-default">OrderManage</button></li>
-                        <li><button id="borrowManagement" class="am-btn am-btn-default">BorrowManage</button></li>
-                        <li><button id="returnManagement" class="am-btn am-btn-default">ReturnManage</button></li>
-                    </ul>
-                </li>
-            </div>
-            <div class="am-topbar-right">
-                <li class="am-dropdown am-dropdown-header" data-am-dropdown>
-                    <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-                        English <span class="am-icon-caret-down"></span>
-                    </a>
-                    <ul class="am-dropdown-content">
-                        <li class="am-dropdown-header">Language Setting</li>
-                        <li><a id="English" href="#">English</a></li>
-                        <li><a id="Chinese" href="#">中文</a></li>
-                    </ul>
-                </li>
-            </div>
-            <div class="am-topbar-right">
-                <button id="lib-icon" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><span class="am-icon-user-secret"> Mr.Librarian </span></button>
+            <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+                <div class="am-topbar-right">
+                    <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
+                </div>
+                <div class="am-topbar-right">
+                    <li class="am-dropdown am-dropdown-header" data-am-dropdown>
+                        <a id="l" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                            Service <span class="am-icon-caret-down"></span>
+                        </a>
+                        <ul class="am-dropdown-content">
+                            <li><a id="bookManagement" >Book List</a></li>
+                            <li><a id="readerManagement" >Reader List</a></li>
+                            <li><a id="announceManagement" >Announcement List</a></li>
+                            <li><a id="incomeQuery" >Income</a></li>
+                            <li><a id="deleteHistory" >Delete History</a></li>
+                            <li><a id="orderManagement" >Order Manage</a></li>
+                            <li><a id="borrowManagement" >Borrow Manage</a></li>
+                            <li><a id="returnManagement" >Return Manage</a></li>
+                        </ul>
+                    </li>
+                </div>
+                <div class="am-topbar-right">
+                    <li class="am-dropdown am-dropdown-header" data-am-dropdown>
+                        <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                            English <span class="am-icon-caret-down"></span>
+                        </a>
+                        <ul class="am-dropdown-content">
+                            <li class="am-dropdown-header">Language Setting</li>
+                            <li><a id="English" href="#">English</a></li>
+                            <li><a id="Chinese" href="#">中文</a></li>
+                        </ul>
+                    </li>
+                </div>
+                <div class="am-topbar-right">
+                    <button id="lib-icon" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><span class="am-icon-user-secret"> Mr.Librarian </span></button>
+                </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<div class="am-modal am-modal-prompt" tabindex="-1" id="incomePrompt">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd"><h4>Income</h4></div>
-        <div class="am-modal-bd">
-            <form class="am-form am-form-horizontal">
-                <div class="am-form-group">
-                    <label for="doc-ipt-3" class="am-u-sm-2 am-form-label"> Total Deposit:</label>
-                    <div class="am-u-sm-10">
-                        <input class="am-modal-prompt-input" type="text" id="do1" placeholder="Enter your total deposit">
-                    </div>
-                </div>
-
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">Total Fine:</label>
-                    <div class="am-u-sm-10">
-                        <input class="am-modal-prompt-input" type="text" id="do2" placeholder="Enter you total fine">
-                    </div>
-                </div>
-                <div class="am-radio-inline" style="padding-top: 0">
-                    <label >
-                        <input type="radio" name="incomeType" value="daily" data-am-ucheck=""/>
-                        daily
-                    </label>
-                </div>
-                <div class="am-radio-inline" style="padding-top: 0">
-                    <label >
-                        <input type="radio" name="incomeType" value="weekly" data-am-ucheck=""/>
-                        weekly
-                    </label>
-                </div>
-                <div class="am-radio-inline" style="padding-top: 0">
-                    <label >
-                        <input type="radio" name="incomeType" value="monthly" data-am-ucheck=""/>
-                        monthly
-                    </label>
-                </div>
-            </form>
-        </div>
-        <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel="">close</span>
-            
-        </div>
-    </div>
-</div>
-
-<div class="am-cf admin-main">
-    <div class="admin-content">
-        <div class="get-full" id="backGround">
-            <div class="am-g">
-                <div class="am-u-lg-12">
-                    <h1 class="get-title">Bibliosoft - Online Library </h1>
-                </div>
-            </div>
-
-            <p>
-                Online Library Management System
-            </p>
-
-            <p>
-            <div class="am-input-group am-input-group-primaray">
-                <input id="search-input" type="text" class="am-form-field"
-                       placeholder="Search Books by Name, BookType, Author etc.">
-                <span class="am-input-group-btn">
-            <button id="search-button" class="am-btn am-btn-primary" type="button"><span class="am-icon-search"></span></button>
-            </span>
-            </div>
-            </p>
-        </div>
-
-        <div id="bookPane" data-am-widget="list_news" class="am-list-news am-list-news-default">
-            <div class="am-list-news-hd am-cf">
-                <a href="#" onclick="return false">
-                    <h2>Search Results</h2>
-                    <span class="am-list-news-more am-fr">
-                        <button id="addNewBook" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-add"></span> Add</button>
-                    </span>
-                </a>
-            </div>
-            <div class="am-list-news-bd">
-                <ul class="am-list" id="bookList"></ul>
-                <ul class="am-pagination am-pagination-centered" id="bookPagination"></ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="am-modal am-modal-prompt" tabindex="-1" id="addNewBookPrompt">
+    <div class="am-modal am-modal-prompt" tabindex="-1" id="incomePrompt">
         <div class="am-modal-dialog">
-            <div class="am-modal-hd"><h4>Add New Book</h4></div>
+            <div class="am-modal-hd"><h4>Income</h4></div>
             <div class="am-modal-bd">
                 <form class="am-form am-form-horizontal">
                     <div class="am-form-group">
-                        <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">Author:</label>
+                        <label for="doc-ipt-3" class="am-u-sm-2 am-form-label"> Total Deposit:</label>
                         <div class="am-u-sm-10">
-                            <input class="am-modal-prompt-input" type="text" id="doc-ipt-3">
+                            <input class="am-modal-prompt-input" type="text" id="do1" placeholder="Enter your total deposit">
                         </div>
                     </div>
 
                     <div class="am-form-group">
-                        <label for="doc-ipt-2" class="am-u-sm-2 am-form-label">Name:</label>
+                        <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">Total Fine:</label>
                         <div class="am-u-sm-10">
-                            <input class="am-modal-prompt-input" type="text" id="doc-ipt-2" >
+                            <input class="am-modal-prompt-input" type="text" id="do2" placeholder="Enter you total fine">
                         </div>
                     </div>
-
-                    <div class="am-form-group">
-                        <label for="doc-ipt-1" class="am-u-sm-2 am-form-label">Type:</label>
-                        <div class="am-u-sm-10">
-                            <input class="am-modal-prompt-input" type="text" id="doc-ipt-1" >
-                        </div>
+                    <div class="am-radio-inline" style="padding-top: 0">
+                        <label >
+                            <input type="radio" name="incomeType" value="daily" data-am-ucheck=""/>
+                            daily
+                        </label>
                     </div>
-
-                    <div class="am-form-group">
-                        <label for="doc-ipt-4" class="am-u-sm-2 am-form-label">Location:</label>
-                        <div class="am-u-sm-10">
-                            <input class="am-modal-prompt-input" type="text" id="doc-ipt-4" >
-                        </div>
+                    <div class="am-radio-inline" style="padding-top: 0">
+                        <label >
+                            <input type="radio" name="incomeType" value="weekly" data-am-ucheck=""/>
+                            weekly
+                        </label>
                     </div>
-
-                    <div class="am-form-group">
-                        <label for="doc-ipt-5" class="am-u-sm-2 am-form-label">Description:</label>
-                        <div class="am-u-sm-10">
-                            <input class="am-modal-prompt-input" type="text" id="doc-ipt-5" >
-                        </div>
+                    <div class="am-radio-inline" style="padding-top: 0">
+                        <label >
+                            <input type="radio" name="incomeType" value="monthly" data-am-ucheck=""/>
+                            monthly
+                        </label>
                     </div>
-
-                    <div class="am-form-group">
-                        <label for="doc-ipt-6" class="am-u-sm-2 am-form-label">Price:</label>
-                        <div class="am-u-sm-10">
-                            <input class="am-modal-prompt-input" type="number" id="doc-ipt-6" >
-                        </div>
-                    </div>
-
-                    <div class="am-form-group">
-                        <label for="doc-ipt-7" class="am-u-sm-2 am-form-label">BookImg:</label>
-                        <div class="am-u-sm-10">
-                            <input class="am-modal-prompt-input" type="file" id="doc-ipt-7" >
-                        </div>
-                    </div>
-
-
                 </form>
-
             </div>
             <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
-                <span class="am-modal-btn" data-am-modal-confirm="">add</span>
+                <span class="am-modal-btn" data-am-modal-cancel="">close</span>
+                
             </div>
         </div>
     </div>
 
-</div>
-<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+    <div class="am-cf admin-main">
+        <div class="admin-content">
+            <div class="get-full" id="backGround">
+                <div class="am-g">
+                    <div class="am-u-lg-12">
+                        <h1 class="get-title">Bibliosoft - Online Library </h1>
+                    </div>
+                </div>
 
+                <p>
+                    Online Library Management System
+                </p>
+
+                <p>
+                <div class="am-input-group am-input-group-primaray">
+                    <input id="search-input" type="text" class="am-form-field"
+                        placeholder="Search Books by Name, BookType, Author etc.">
+                    <span class="am-input-group-btn">
+                <button id="search-button" class="am-btn am-btn-primary" type="button"><span class="am-icon-search"></span></button>
+                </span>
+                </div>
+                </p>
+            </div>
+
+            <div id="bookPane" data-am-widget="list_news" class="am-list-news am-list-news-default" style="display: none">
+                <div class="am-list-news-hd am-cf" >
+                    <a href="#" onclick="return false"  >
+                        <h2>Search Results</h2>
+                    </a>
+                </div>
+                <div class="am-list-news-bd">
+                    <ul class="am-list" id="bookList"></ul>
+                    <ul class="am-pagination am-pagination-centered" id="bookPagination"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>2018. by Team A12.</p>
+</footer>
 
 <!--[if lt IE 9]>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
