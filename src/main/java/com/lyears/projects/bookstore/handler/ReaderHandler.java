@@ -64,7 +64,10 @@ public class ReaderHandler {
     @ResponseBody
     public ResponseMessage findReaderById(@CookieValue("readerId")Cookie readerId)
     {
-        return ResultUtil.success(readerService.findOne(Integer.parseInt(readerId.getValue())),request.getRequestURL().toString());
+        Reader one = readerService.findOne(Integer.parseInt(readerId.getValue()));
+        one.setBorrows(null);
+        one.setOrders(null);
+        return ResultUtil.success(one,request.getRequestURL().toString());
     }
 
     /**

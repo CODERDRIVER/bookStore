@@ -41,50 +41,54 @@ $('#unpaidFine').on('click', function () {
 $('#lib-icon').on('click', function () {
     $.ajax({
         type: 'get',
-        url: '/reader/information',
+        url: '/reader/readerId',
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             console.log(data);
-            getId("email").val = data.email;
-            getId("userName").val = data.userName;
-            getId("phoneNumber").val = data.phoneNumber;
-            getId("password").val = data.password;
-        }
-    });
-    $('#readerPrompt').modal({
-        relatedTarget: this,
-        onConfirm: function (e) {
-            var data = e.data;
-            var email = data[0];
-            var userName = data[1];
-            var phoneNumber = data[2];
-            var password = data[3];
-            var requestData = {
-                "email": email,
-                "userName": userName,
-                "phoneNumber": phoneNumber,
-                "password": password,
-            };
+            $("#email").val(data.data.email);
+            $("#userName").val(data.data.userName);
+            $("#phoneNumber").val(data.data.phoneNumber);
+            $("#password").val(data.data.password);
+            $('#readerPrompt').modal({
+                relatedTarget: this,
+                onConfirm: function (e) {
+                    var data = e.data;
+                    var email = data[0];
+                    var userName = data[1];
+                    var phoneNumber = data[2];
+                    var password = data[3];
+                    var requestData = {
+                        "email": email,
+                        "userName": userName,
+                        "phoneNumber": phoneNumber,
+                        "password": password,
+                    };
 
-            $.ajax({
-                type: 'post',
-                url: '/reader/information/change',
-                data: requestData,
-                dataType: "json",
-                contentType: "application/json;charset=UTF-8",
-                success: function (e) {
-                    console.log(e);
-                    alert(e.message);
+                    $.ajax({
+                        type: 'post',
+                        url: '/reader/information/change',
+                        data: requestData,
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        success: function (e) {
+                            console.log(e);
+                            alert(e.message);
+                        }
+                    })
+                },
+                onCancel: function (e) {
+
                 }
-            })
-        },
-        onCancel: function (e) {
-
+            });
         }
     });
 
 });
+function getId(id)
+{
+    return document.getElementById(id);
+}
 
 /**
  * 登出按钮
