@@ -2,6 +2,7 @@ package com.lyears.projects.bookstore.handler;
 
 import com.lyears.projects.bookstore.exception.ErrorPageException;
 import com.lyears.projects.bookstore.jwt.JwtToken;
+import com.lyears.projects.bookstore.util.AuthUtil;
 import com.lyears.projects.bookstore.util.CookieUtil;
 import com.lyears.projects.bookstore.util.ResultEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +81,5 @@ public class ViewHandler {
         CookieUtil.createCookie("readerId",readerId,60*60*12,"/",response);
         return page;
     }
-
 
 }

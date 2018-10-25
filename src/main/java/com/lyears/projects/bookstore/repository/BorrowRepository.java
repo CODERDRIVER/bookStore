@@ -41,4 +41,9 @@ public interface BorrowRepository extends JpaRepository<Borrow, Integer> {
 
     List<Borrow> findAllByBorrowStatus(int borrowStatus);
 
+    /**
+     *  根据readerId 和 bookId 和 书的状态查看 借阅记录
+     */
+    @Query(value = "select * from book_borrow as b WHERE b.reader_id=:readerId and b.book_id=:bookId AND b.borrow_status=:borrowStatus",nativeQuery = true)
+    Borrow findBorrowByReaderIdAndBookIdAndBAndBorrowStatus(@Param("readerId") int readerId,@Param("bookId") int bookId,@Param("borrowStatus") int borrowStatus);
 }

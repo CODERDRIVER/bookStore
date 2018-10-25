@@ -61,6 +61,26 @@ public class BookHandler {
                 request.getRequestURL().toString());
     }
 
+    /**
+     *  获得所有可以借阅的书
+     */
+    @GetMapping("/borrow/books")
+    public ResponseMessage getAllBorrowBook(@RequestParam(name = "pageNo", required = false, defaultValue = "1")
+                                                        String pageNoStr,
+                                            @RequestParam(name = "pageSize", defaultValue = "10") String pageSizeStr)
+    {
+        Page<Book> bookPage;
+        int pageNo = Integer.parseInt(pageNoStr);
+        int pageSize = Integer.parseInt(pageSizeStr);
+        if (pageNo<1)
+        {
+            pageNo = 1;
+        }
+        bookPage = bookService.getAllBorrowBooks(pageNo,pageSize);
+        return ResultUtil.success(avoidStackOverflowInReader(bookPage),request.getRequestURL().toString());
+    }
+
+
     @PostMapping("/book/add")
     public ResponseMessage addNewBook(@RequestBody Book book){
         System.out.println(book.getPubdate());

@@ -5,45 +5,48 @@
 
 var cookieUtil = $.AMUI.utils.cookie;
 
-function findKey(e){
+function findKey(e) {
     var email = document.getElementById("doc-email").value;
     // alert($(':input[name="loginType"]:checked').val());
     var type = $(':input[name="loginType"]:checked').val();
-    if(type == undefined)
-    {
+    if (type == undefined) {
         // alert("请选择登录类型");
         // showLoginModal();
-    }else{
+    } else {
         $.ajax({
-            type:'post',
-            dataType:'json',
-            url:'/send/password',
-            contentType:'application/json;charset=UTF-8',
-            data:JSON.stringify({"email":email,"type":type}),
-            success:function(data){//返回结果
+            type: 'post',
+            dataType: 'json',
+            url: '/send/password',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({"email": email, "type": type}),
+            success: function (data) {//返回结果
                 alert("发送成功");
                 console.log(data);
                 // location.reload();
                 // window.location.reload();
             },
-            error:function(data){
+            error: function (data) {
                 alert('请求找回密码失败!');
             }
         });
     }
 }
+
 //login function
 $(function () {
+    $("#reserve").css('display','none');
     //如果已登录，切换到注销按钮
     if (cookieUtil.get('token') != null) {
-        $('#log-out').css('display','block')
-        $('#sign-in').css('display','none')
+        $('#log-out').css('display', 'block')
+        $('#sign-in').css('display', 'none')
+        $("#reserve").css('display','block');
     }
 
     $('#sign-in').on('click', function () {
         if (cookieUtil.get('token') != null) {
             window.location = "/login/all"
         } else {
+
             showLoginModal();
             // $('#loginPrompt').modal({
             //     relatedTarget: this,
@@ -75,12 +78,11 @@ $(function () {
     });
 });
 
-function showLoginModal()
-{
+function showLoginModal() {
     $('#loginPrompt').modal({
         relatedTarget: this,
-        closeViaDimmer:false,
-        closeOnConfirm:false,
+        closeViaDimmer: false,
+        closeOnConfirm: false,
         onConfirm: function (e) {
             var data = e.data;
             var email = data[0];
@@ -125,7 +127,7 @@ function login(data, url, href) {
         success: function (e) {
             console.log(e);
             if (e.code === 0) {
-                window.location.href = href
+                window.location.href = "/";
             } else {
                 alert(e.message)
             }
@@ -231,7 +233,7 @@ function loadBookPage(pageNo, pageSize, keyStr) {
             '            <li class="am-cf am-text-truncate">\n' +
             '                <!--书籍缩略图-->\n' +
             '                <p class="am-align-left">\n' +
-            '                    <img class="am-radius" src="'+image+'" alt="..."\n' +
+            '                    <img class="am-radius" src="' + image + '" alt="..."\n' +
             '                         width="140" height="140">\n' +
             '                </p>\n' +
             '                <!--书名作为h2标题-->\n' +
@@ -245,10 +247,18 @@ function loadBookPage(pageNo, pageSize, keyStr) {
             '                <p class="book-info-p am-text-middle am-text-sm">\n' +
             '                    Remain:\n' +
             '                    <em>' + inventory + '</em>\n' +
+            '                <button id="reserve" onclick="reserve(this)" class="am-btn am-btn-default am-btn-xs am-text-secondary am-align-right" type="button" style="margin-left: 30px">\n' +
+            '                <span class="am-icon-clock-o"></span> Reserve</button>\n' +
             '                </p>\n' +
             '                <p class="book-info-p am-text-middle am-text-xs">' + bookType + '</p>\n' +
             '                <p class="book-info-p am-text-middle am-text-xs">' + barCode + '</p>\n' +
-            '            </li>\n')
+            '            </li>\n');
+        if(cookieUtil.get('token') == null)
+        {
+            $("#reserve").hide();
+        }else{
+            $("#reserve").show();
+        }
     }
 
 
@@ -283,6 +293,33 @@ function loadBookPage(pageNo, pageSize, keyStr) {
             loadBookPage(Number($(this).text()), pageSize, keyStr)
         })
     }
+}
+
+function reserve(e)
+{
+    var li  = e.parentNode.parentNode;
+    var bookName = li.getElementsByTagName("h2")[0].childNodes[1].innerHTML;
+    $.ajax({
+        type:'POST',
+        dataType:'json',
+        url:'/book/order',
+        contentType:'application/json;charset=UTF-8',
+        data:{"bookName":bookName},
+        success:function(data){//返回结果
+            console.log(data);
+            if(data.code==0)
+            {
+                // location.reload();
+                alert('预约成功!');
+            }else{
+                alert(data.message);
+            }
+            window.location.reload();
+        },
+        error:function(data){
+            alert('预约失败!');
+        }
+    });
 }
 
 

@@ -4,13 +4,22 @@ import com.lyears.projects.bookstore.entity.*;
 import com.lyears.projects.bookstore.model.IdManageData;
 import com.lyears.projects.bookstore.repository.LibrarianRepository;
 import com.lyears.projects.bookstore.util.ResponseMessage;
+import com.lyears.projects.bookstore.util.ResultEnum;
 import com.lyears.projects.bookstore.util.ResultUtil;
+import com.lyears.projects.bookstore.util.ZxingCodeUtil;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.persistence.Id;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -148,25 +157,98 @@ public class LibrarianService {
 
     /**
      *  图书管理员确认归还记录
+     *  读者readerId bookId
      */
     public ResponseMessage confirmReturnBook(IdManageData idManageData)
     {
+        String barcode = idManageData.getBarCode();
+
+        Book book =null;
+        if (barcode!=null&&!"".equals(barcode))
+        {
+            book = bookService.findBookByBarCode(barcode);
+        }else{
+            int bookId = idManageData.getBookId();
+            book = bookService.findBookById(bookId);
+        }
+        /**
+         *  查看该书有没有被借阅
+         *
+         */
+        if (book.getStatus()==0)
+        {
+            return ResultUtil.error(ResultEnum.BOOK_NO_BORROW,request.getRequestURL().toString());
+        }
         // 更改读者的borrow_num
-        Integer readerId = idManageData.getReaderId();
-        Reader one = readerService.findOne(readerId);
-        one.setBorrowNum(one.getBorrowNum()-1);
-        readerService.save(one);
+        String phoneNumber = idManageData.getPhoneNumber();
+        Reader byPhoneNumber = readerService.findByPhoneNumber(phoneNumber);
+        byPhoneNumber.setBorrowNum(byPhoneNumber.getBorrowNum()-1);
+        readerService.save(byPhoneNumber);
 
         // 更改书的状态和库存
 
-        int bookId = idManageData.getBookId();
-        Book bookById = bookService.findBookById(bookId);
-        bookById.setStatus(0);
-        bookService.save(bookById);
+        book.setStatus(0);
+        bookService.save(book);
 
-        bookService.updateInventoryByBookName(bookById.getBookName(),bookById.getInventory()+1);
+        bookService.updateInventoryByBookName(book.getBookName(),book.getInventory()+1);
+
+        // 获得与还书记录相关的借阅记录
+        Borrow borrowByReaderIdAndBookIdAndBorrowStatus = borrowAndOrderService.findBorrowByReaderIdAndBookIdAndBorrowStatus(byPhoneNumber.getReaderId(), book.getBookId(), 1);
+        borrowByReaderIdAndBookIdAndBorrowStatus.setBorrowStatus(3);    //设置为已经归还
+        // 保存到数据库
+        borrowAndOrderService.updateBorrowInfo(borrowByReaderIdAndBookIdAndBorrowStatus);
+
+        // 增加一条还书记录
+        BookReturnRecord bookReturnRecord = new BookReturnRecord();
+        bookReturnRecord.setReturnDate(LocalDate.now());
+        bookReturnRecord.setReaderId(byPhoneNumber.getReaderId());
+        bookReturnRecord.setBookId(book.getBookId());
+        bookReturnRecord.setBorrowId(borrowByReaderIdAndBookIdAndBorrowStatus.getBorrowId());
+        bookReturnRecordService.saveReturnRecord(bookReturnRecord);
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 
+    /**
+     *  解析条形码图片
+     * @return
+     */
+    public String decodeBarCodeImg(MultipartFile multipartfile)
+    {
+        /**
+         *  将 multipartFile 转file
+         */
+//        CommonsMultipartFile commonsmultipartfile = (CommonsMultipartFile) multipartfile;
+//        DiskFileItem diskFileItem = (DiskFileItem) commonsmultipartfile.getFileItem();
+//        File file = diskFileItem.getStoreLocation();
+
+        String filePath =request.getSession().getServletContext().getRealPath("/")+"upload/";
+
+        File dir = new File(filePath);
+        if (!dir.exists())
+        {
+            dir.mkdirs();
+        }
+        String path = filePath+multipartfile.getOriginalFilename();
+        File tempFile = null;
+        tempFile = new File(path);
+        try {
+            FileUtils.copyInputStreamToFile(multipartfile.getInputStream(),tempFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String decode = ZxingCodeUtil.decode(tempFile);
+        System.out.println(decode);
+        return decode;
+    }
+
+    /**
+     *  根据用户名和邮箱进行查询
+     * @param key
+     * @return
+     */
+    public List<Librarian> findAllByUsernameOrEmail(String key)
+    {
+        return librarianRepository.findAllByEmailContainingOrUserNameContaining(key,key);
+    }
 
 }

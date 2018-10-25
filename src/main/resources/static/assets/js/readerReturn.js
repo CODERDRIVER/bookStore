@@ -12,7 +12,7 @@
                 var records = data.data;
                 for(var i=0; i<records.length;i++){
 
-                    returnRecord.push(new returnlist(data[i].bookId,data[i].bookName,data[i].returnDate));
+                    returnRecord.push(new returnlist(records[i].bookId,records[i].bookName,records[i].returnDate));
                     }
                     loadData();
 
@@ -136,7 +136,6 @@
              */
             $("#table").append('<tbody>' +
                 '<tr>' +
-                '<td><input type="checkbox" /></td>\n' +
                 '<td>'+(i+1)+'</td>\n' +
                 '<td>'+bookId+'</td>\n' +
                 '<td>'+bookName+'</td>\n' +

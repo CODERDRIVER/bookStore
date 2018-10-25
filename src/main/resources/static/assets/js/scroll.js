@@ -1,70 +1,58 @@
 var str ="";
+var offLeft;
+var aLen;	// announcement length
+var index = 0;
 $(document).ready(function(){
-	$.ajax({
-			   type:'GET',
-			   dataType:'json',
-			   url:'/announcements',
-			   contentType:'application/json;charset=UTF-8',
-			   async: false,
-			   
-			   success:function(data){//返回结果
-				   console.log(data);
-					 announcements = data.data;
-                   document.getElementById("scrollBox").innerHTML = "";
-				   for(var i=0; i<announcements.length;i++){
-					   var j = i+1;
-					   var obj=announcements[i].content;
-					  str+= "<li><a href='#'  title="+obj+" >"+j+":"+announcements[i].title+"</a></li>"
-					  // message.push(new announcement(announcements[i].id,announcements[i].title,announcements[i].content));
-					   }
-					   document.getElementById("scrollBox").innerHTML="<ul>"+str+"</ul>";
-				   // if (announcements.length==0)
-				   // {
-				   // 		$(".announcebody").hide();
-				   // }else{
-                    //    $(".announcebody").show();
-				   // }
-                   console.log(document.getElementById("scrollBox").innerHTML);
-               }
+    $.ajax({
+	   type:'GET',
+	   dataType:'json',
+	   url:'/announcements',
+	   contentType:'application/json;charset=UTF-8',
+	   async: false,
 
-			   
-		   });	
-			//获取滚动部分
-			var area=document.getElementById("scrollBox");
-			//area.innerHTML="<ul>"+str+"</ul>";
-			 //设置全局定时器
-			 var timer=null;
-			 //定义延迟
-			 var delay=200;
-			 //获取高度
-			 var oLiHeight=$("#scrollBox li").height();
-			 //速度
-			 var speed=60;
-			 area.scrollTop=20;
-			 area.innerHTML+=area.innerHTML;
-			 function startScroll(){//开始运动
-				 timer=setInterval(scrollUp,speed);
-				 area.scrollTop++;
-				 }
-			 function scrollUp(){//循环运动
-			 	if(area.scrollTop%oLiHeight==0){
-			 		clearInterval(timer)
-			 		setTimeout(startScroll,delay);
-			 		}else{
-			 			area.scrollTop++;
-			 			if(area.scrollTop >= area.scrollHeight/2){
-			 				area.scrollTop =20;
-			 				}
-			 			}
-			 	}
-		 //页面加载两秒后运动
-		  setTimeout(startScroll,delay);
-		 // 鼠标事件
-		// $("#scrollBox").mouseover(function(){clearInterval(timer)});
-		 //  $("#scrollBox").mouseout(function () {
-			// setTimeout(startScroll,delay);
-        // })
-		 //$("#scrollBox").mouseout(function(){timer=setInterval('scrollUp()',speed)});
-})
+	   success:function(data){//返回结果
+		   console.log(data);
+		   announcements = data.data;
+		   for(var i=0; i<announcements.length;i++){
+			   var j = i+1;
+			   var content=announcements[i].content;
+			   var title=announcements[i].title;
+			   $("#announcement").append('<p style="display: inline;position:relative;left: 0px"> <i class="am-icon-volume-up am-icon-fw"></i>&nbsp;&nbsp;'+title+'&nbsp;:&nbsp;'+content+'</p>');
+		   }
+		   // move();
+		   aLen = $("#announcement").find("p").length;
+		   for(var i=1;i<aLen;i++)
+		   {
+               $("#announcement").find("p")[i].style.display="none";
+		   }
+		   if(aLen>=1)
+		   {
+               setInterval(move,100);
+           }
+       }
+   });
+
+});
+function move() {
+    offLeft = $("#announcement").find("p")[index].offsetLeft;
+    offLeft+=$("#announcement").find("p")[index].offsetWidth;
+	var left = parseInt($("#announcement").find("p")[index].style.left);
+	if (left >= -offLeft)
+	{
+       	$("#announcement").find("p")[index].style.left = (-5+left)+"px";
+    }else{
+        $("#announcement").find("p")[index].style.display="none";
+        $("#announcement").find("p")[index].style.left="0px";	// 恢复到原来的位置
+        if (index == aLen-1)
+		{
+			// 说明已经遍历完
+			index = 0;
+		}else{
+			// 移动下一个公共
+            index++;
+        }
+        $("#announcement").find("p")[index].style.display="inline";
+    }
+}
 
 	

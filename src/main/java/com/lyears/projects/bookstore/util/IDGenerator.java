@@ -11,6 +11,10 @@ import java.util.UUID;
  */
 public class IDGenerator {
 
+    /**
+     *  生成id
+     * @return
+     */
     public static String getUniqueId()
     {
         UUID uuid = UUID.randomUUID();
@@ -18,6 +22,17 @@ public class IDGenerator {
         String[] params  = id.split("-");
         return params[0]+"-"+params[1]+"-"+params[2];
     }
+
+    /**
+     *  生成 文件名称
+     * @param
+     */
+    public static String getFileName()
+    {
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString().replaceAll("-","");
+    }
+
 
     public static void main(String[] args) {
         System.out.println(getUniqueId());

@@ -1,25 +1,30 @@
 package com.lyears.projects.bookstore.handler;
 
 import com.lyears.projects.bookstore.entity.*;
+import com.lyears.projects.bookstore.entity.Reader;
 import com.lyears.projects.bookstore.exception.UserDefinedException;
 import com.lyears.projects.bookstore.jwt.JwtToken;
+import com.lyears.projects.bookstore.model.BorrowData;
 import com.lyears.projects.bookstore.model.IdManageData;
 import com.lyears.projects.bookstore.model.IncomeData;
 import com.lyears.projects.bookstore.service.*;
 import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultEnum;
 import com.lyears.projects.bookstore.util.ResultUtil;
+import com.lyears.projects.bookstore.util.ZxingCodeUtil;
 import com.sun.org.apache.regexp.internal.RE;
+import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.ws.Response;
-import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
+import java.io.*;
 
 /**
  * @author fzm
@@ -282,17 +287,49 @@ public class LibrarianHandler {
         return librarianService.rejectBookOrder(idManageData);
     }
 
-
+    /**
+     *  书籍借阅功能
+     */
+    @RequestMapping(value = "/book/borrow",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public ResponseMessage borrowBook(@RequestBody BorrowData borrowData)
+    {
+        String bookName = borrowData.getBookName();
+        String phoneNumber = borrowData.getPhoneNumber();
+        Reader byPhoneNumber = readerService.findByPhoneNumber(phoneNumber);
+        Integer readerId = byPhoneNumber.getReaderId();
+        if (readerId==null)
+        {
+            return ResultUtil.error(ResultEnum.USER_NOT_EXIST,request.getRequestURL().toString());
+        }else{
+            // 增加一条借阅记录
+            ResponseMessage responseMessage = borrowAndOrderService.borrowBookWithBookNameAndReaderId(readerId, bookName);
+            System.out.println(responseMessage);
+            return responseMessage;
+        }
+    }
 
     /**
      *  图书管理员对 归还图书进行确认
      */
     @ResponseBody
-    @PostMapping("/librarian/confirm/bookReturn")
+    @PostMapping("/librarian/book/return")
     public ResponseMessage confirmBookReturn(@RequestBody IdManageData idManageData)
     {
         return librarianService.confirmReturnBook(idManageData);
     }
 
+    /**
+     *
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/librarian/upload")
+    public ResponseMessage uploadBarCodeImg(@RequestParam("file") MultipartFile multipartfile)
+    {
+        System.out.println(multipartfile);
+        String decode = librarianService.decodeBarCodeImg(multipartfile);
+        return ResultUtil.success(decode,request.getRequestURL().toString());
+    }
 
 }

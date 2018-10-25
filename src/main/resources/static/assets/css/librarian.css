@@ -18,7 +18,7 @@
 }
 
 .am-dropdown {
-    margin-top: 8px;
+    margin-top: 0px;
 }
 
 .footer p {
@@ -248,7 +248,7 @@ ul {
     .admin-offcanvas-bar {
         position: static;
         width: auto;
-        background: none;
+        background-color: #ececec;
         -webkit-transform: translate3d(0, 0, 0);
         -ms-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);

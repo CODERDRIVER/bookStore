@@ -22,4 +22,7 @@ public class BookOrderRecordData {
     private Integer bookId;
     private String bookName;
     private Integer readerId;
+    private int inventory;
+    private double price;
+    private String barCode;
 }

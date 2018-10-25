@@ -12,9 +12,7 @@ import java.time.LocalDateTime;
  * @date 2018/10/2
  **/
 @Entity
-@Table(name = "book_order", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"reader_id", "book_id"})
-})
+@Table(name = "book_order")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Order {
 

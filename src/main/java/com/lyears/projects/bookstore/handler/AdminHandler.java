@@ -166,6 +166,12 @@ public class AdminHandler {
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 
+    @ResponseBody
+    @GetMapping(value = "/exact/accounts")
+    public ResponseMessage findAccountsByUserNameAndEmail(@RequestParam("key")String key)
+    {
+        return ResultUtil.success(librarianService.findAllByUsernameOrEmail(key),request.getRequestURL().toString());
+    }
 
 
 }

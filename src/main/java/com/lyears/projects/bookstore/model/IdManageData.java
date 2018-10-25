@@ -17,4 +17,6 @@ public class IdManageData {
     private Integer returnId;
     private Integer bookId;
     private Integer readerId;
+    private String phoneNumber;
+    private String barCode;
 }

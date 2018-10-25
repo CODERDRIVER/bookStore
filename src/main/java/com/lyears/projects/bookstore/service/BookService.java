@@ -3,6 +3,7 @@ package com.lyears.projects.bookstore.service;
 import com.lyears.projects.bookstore.entity.Book;
 import com.lyears.projects.bookstore.repository.BookRepository;
 import com.lyears.projects.bookstore.util.IDGenerator;
+import com.lyears.projects.bookstore.util.ZxingCodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,12 @@ public class BookService {
                 .findAllByAuthorContainingOrBookNameContainingOrBookTypeContaining(keyStr, keyStr, keyStr, pageable);
     }
 
+    public Page<Book> getAllBorrowBooks(int pageNo,int pageSize)
+    {
+        Pageable pageable = new PageRequest(pageNo - 1, pageSize, Sort.Direction.ASC, "bookId");
+        return bookRepository.findAllByInventoryGreaterThanEqual(1,pageable);
+    }
+
     /**
      * 添加书籍信息
      * @param book
@@ -49,7 +56,6 @@ public class BookService {
             counts = 1;
         }
         book.setStatus(0);
-        book.setBarCode(IDGenerator.getUniqueId());
         if (book.getBookId()!=null)
         {
             //补全书籍的bar_code 信息
@@ -60,6 +66,14 @@ public class BookService {
 //            book.setInventory(one.getInventory());
             bookRepository.save(book);
         }else{
+            String barCode = IDGenerator.getUniqueId();
+            book.setBarCode(barCode);
+            /**
+             *  根据barCode 生成 条形码图片
+             */
+            String barCodeUrl = ZxingCodeUtil.createBarCode(barCode, 70, 25);
+
+            book.setBarCodeUrl(barCodeUrl);
             book.setInventory(1);
             bookRepository.save(book);
             bookRepository.updateInventoryByBookName(book.getBookName(),counts);
@@ -130,5 +144,18 @@ public class BookService {
     public void updateInventoryByBookName(String bookName,int inventory)
     {
         bookRepository.updateInventoryByBookName(bookName,inventory);
+    }
+
+    /**
+     *  根据名称查询书籍的剩余量
+     */
+    public int getInventoryByBookName(String bookName)
+    {
+        return bookRepository.findInventoryByBookName(bookName);
+    }
+
+    public Book findBookByBarCode(String barCode)
+    {
+        return bookRepository.findBookByBarCode(barCode);
     }
 }

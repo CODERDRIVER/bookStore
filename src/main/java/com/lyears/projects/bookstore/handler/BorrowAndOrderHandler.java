@@ -61,13 +61,24 @@ public class BorrowAndOrderHandler {
     }
 
     /**
-     *  获得所有读者的借阅情况
+     *  获得所有读者借阅情况
      */
     @GetMapping("/librarian/borrows")
     @ResponseBody
     public ResponseMessage getAllBorrows()
     {
-        return borrowAndOrderService.getAllBorrows();
+        return borrowAndOrderService.getAllBorrows(1);
+    }
+
+    /**
+     *  查询所有读者的借阅历史
+     * @return
+     */
+    @GetMapping("/librarian/borrow/historys")
+    @ResponseBody
+    public ResponseMessage findAllBorrowHistory()
+    {
+        return borrowAndOrderService.getAllBorrows(2);
     }
 
     /**

@@ -1,51 +1,8 @@
-/* Write your styles */
-/* change am css */
-
-    .announcebody{
-        position: absolute;
-        left:75%;
-        top:8%;
-        border:rgb(64,100,133);
-
-    }
-    .announcecontainer{
-        width:300px;
-        position:relative;
-        top:50px;
-        }
-    .announcetitle{
-        width:100%;
-        height:50px;
-        text-align:center;
-        line-height:50px;
-        font-size:1.3em;
-        background-color:rgba(152,245,255,0.2);
-        border-radius: 45%;
-        }
-    #scrollBox{
-    width:300px;
-    height:100px;
-    overflow:hidden;
-        }
-    #scrollBox ul{
-        height:144px;
-        width:300px;
-        }
-    #scrollBox ul li{
-        height:24px;
-        width:100%;
-        text-align:left;
-        font-size:24px;
-        line-height:24px;
-        }
-    #scrollBox ul li a{
-        text-decoration:none;
-        color:rgba(245, 247, 250, 0.986);
-        }
-    #scrollBox ul li a:hover {
-        color: rgb(233, 245, 69);
-    }
-    .scrollBox ul li a:hover{
-            color:rgb(9, 255, 0);
-            font-size:16px;
-    }
+#announcement{
+    position: absolute;
+    left:0;
+    top:5%;
+    background-color: rgba(0 ,255, 255,0.2);
+    text-align: center;
+    width: 100%;
+}

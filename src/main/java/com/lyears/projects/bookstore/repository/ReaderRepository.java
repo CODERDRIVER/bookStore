@@ -17,7 +17,8 @@ public interface ReaderRepository extends JpaRepository<Reader,Integer> {
 
     Reader findByEmail(String email);
 
-    Reader findByPhoneNumber(String phoneNumber);
+    @Query(nativeQuery = true,value = "SELECT * FROM reader as r WHERE  r.phone_number = :phoneNumber")
+    Reader findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
     //设置读者创建账户时所要缴纳的保证金
     @Modifying

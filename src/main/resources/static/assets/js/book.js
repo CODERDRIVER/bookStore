@@ -347,6 +347,7 @@ function loadData() {
             '<td>'+description+'</td>'+
             '<td>'+location+'</td>'+
             '<td>'+
+            '<td>'+
             '<div class="am-btn-toolbar">'+
 			' <div class="am-btn-group am-btn-group-xs">\n' +
             '         <button type="button" onclick="modTr(this)"  class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> Edit</button>\n' +

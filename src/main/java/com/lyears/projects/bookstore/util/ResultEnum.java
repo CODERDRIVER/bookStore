@@ -27,6 +27,9 @@ public enum ResultEnum {
     PHONENUMBER_EXITS(-15,"phone number exits"),
     FAILURE(-16,"failure"),
     CAN_NOT_DELETE(-17,"can not be deleted"),
+    BOOK_NO_BORROW(-18,"book has not borrowd"),
+    BARCODE_GENERATE_FAILURE(-19,"barcode generate failure"),
+    NO_IMAGE_FILE(-20,"image does not esits"),
     SYSTEM_ERROR(-1000001, "system error!");
 
 

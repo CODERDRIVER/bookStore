@@ -18,3 +18,9 @@ https://blog.csdn.net/wqh8522/article/details/79224290
 - 月
 - 星期（1-7 1=sun）
 - 年份
+
+# 条形码生成解决方案
+https://yq.aliyun.com/articles/43462
+
+# springboot 文件上传
+https://www.jianshu.com/p/6572888b2e23

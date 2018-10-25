@@ -36,6 +36,9 @@ public class Book {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate pubdate;  //发布时间
     private String publisher;   //发布者
+    private String barCodeUrl;  //条形码图片地址
+
+    private String bookIsbn;
 
 
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
@@ -162,5 +165,13 @@ public class Book {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    public String getBarCodeUrl() {
+        return barCodeUrl;
+    }
+
+    public void setBarCodeUrl(String barCodeUrl) {
+        this.barCodeUrl = barCodeUrl;
     }
 }

@@ -208,45 +208,25 @@ public class ReaderHandler {
         return null;
     }
 
-    /**
-     *  书籍借阅功能
-     */
-    @RequestMapping(value = "/book/borrow",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
-    @ResponseBody
-    public ResponseMessage borrowBook(@RequestBody BorrowData borrowData)
-    {
-        String bookName = borrowData.getBookName();
-        String phoneNumber = borrowData.getPhoneNumber();
-        Reader byPhoneNumber = readerService.findByPhoneNumber(phoneNumber);
-        Integer readerId = byPhoneNumber.getReaderId();
-        if (readerId==null)
-        {
-            return ResultUtil.error(ResultEnum.USER_NOT_EXIST,request.getRequestURL().toString());
-        }else{
-            // 增加一条借阅记录
-            ResponseMessage responseMessage = borrowAndOrderService.borrowBookWithBookNameAndReaderId(readerId, bookName);
-            System.out.println(responseMessage);
-            return responseMessage;
-        }
-    }
 
-    /**
-     *  书籍归还请求
-     */
-    @ResponseBody
-    @PostMapping("/reader/book/return")
-    public ResponseMessage returnBook(@RequestBody IdManageData idManageData,@CookieValue("readerId")Cookie readerId)
-    {
-         // 增加一条归还记录
-        BookReturnRecord bookReturnRecord = new BookReturnRecord();
-        bookReturnRecord.setBookId(idManageData.getBookId());
-        bookReturnRecord.setBorrowId(idManageData.getBorrowId());
-        bookReturnRecord.setReaderId(Integer.parseInt(readerId.getValue()));
-        bookReturnRecord.setReturnDate(LocalDate.now());
-        bookReturnRecord.setReturnStatus(0);
-        bookReturnRecordService.saveReturnRecord(bookReturnRecord);
-        return ResultUtil.successNoData(request.getRequestURL().toString());
-    }
+
+//    /**
+//     *  书籍归还请求
+//     */
+//    @ResponseBody
+//    @PostMapping("/reader/book/return")
+//    public ResponseMessage returnBook(@RequestBody IdManageData idManageData,@CookieValue("readerId")Cookie readerId)
+//    {
+//         // 增加一条归还记录
+//        BookReturnRecord bookReturnRecord = new BookReturnRecord();
+//        bookReturnRecord.setBookId(idManageData.getBookId());
+//        bookReturnRecord.setBorrowId(idManageData.getBorrowId());
+//        bookReturnRecord.setReaderId(Integer.parseInt(readerId.getValue()));
+//        bookReturnRecord.setReturnDate(LocalDate.now());
+//        bookReturnRecord.setReturnStatus(0);
+//        bookReturnRecordService.saveReturnRecord(bookReturnRecord);
+//        return ResultUtil.successNoData(request.getRequestURL().toString());
+//    }
     /**
      * 使用Stream避免栈溢出
      * @param readers 传入的readerList

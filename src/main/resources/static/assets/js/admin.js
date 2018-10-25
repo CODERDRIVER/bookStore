@@ -3,7 +3,8 @@ $('#addLibrarian').click(function () {
     $('#input-deposit').css('display','none')
     $('#addAccountPrompt').modal({
         relatedTarget: this,
-
+        closeViaDimmer:false,
+        closeOnConfirm:false,
         onConfirm: function (e) {
             var data = e.data;
             var email = data[0];
@@ -44,12 +45,20 @@ $('#addLibrarian').click(function () {
 $('#changeFine').click(function () {
     $('#changeFinePrompt').modal({
         relatedTarget: this,
-
+        closeViaDimmer:false,
+        closeOnConfirm:false,
         onConfirm: function (e) {
-            var requestData = {
-                "fine": e.data,
-            };
-            addAccount(requestData, '/admin/book/fine')
+        	var fine = e.data;
+        	if(fine == '')
+			{
+				alert("please set your fine");
+			}else{
+                var requestData = {
+                    "fine": e.data,
+                };
+                addAccount(requestData, '/admin/book/fine');
+			}
+
         },
         onCancel: function (e) {
         }
@@ -59,12 +68,19 @@ $('#changeFine').click(function () {
 $('#changeReturnperiod').click(function () {
     $('#changeReturnperiodPrompt').modal({
         relatedTarget: this,
-
+        closeViaDimmer:false,
+        closeOnConfirm:false,
         onConfirm: function (e) {
-            var requestData = {
-                "days": e.data+"",
-            };
-            addAccount(requestData, '/admin/book/returnDate')
+        	var days  = e.data;
+        	if (days == '')
+			{
+				alert("please set your returnPeriod");
+			}else{
+                var requestData = {
+                    "days": e.data+"",
+                };
+                addAccount(requestData, '/admin/book/returnDate')
+			}
         },
         onCancel: function (e) {
         }
@@ -74,12 +90,20 @@ $('#changeReturnperiod').click(function () {
 $('#changeDeposit').click(function () {
     $('#changeDepositPrompt').modal({
         relatedTarget: this,
-
+        closeViaDimmer:false,
+        closeOnConfirm:false,
         onConfirm: function (e) {
-            var requestData = {
-                "deposit": e.data+"",
-            };
-            addAccount(requestData, '/admin/reader/deposit')
+        	var deposit = e.data;
+        	if (deposit == '')
+			{
+				alert("please set your deposit");
+			}else{
+                var requestData = {
+                    "deposit": e.data+"",
+                };
+                addAccount(requestData, '/admin/reader/deposit')
+			}
+
         },
         onCancel: function (e) {
         }
@@ -95,7 +119,6 @@ function addAccount(data, url) {
         contentType: "application/json;charset=UTF-8",
         success: function (e) {
             alert(e.message)
-			location.reload()
 			loadData();
         }
     })
@@ -115,10 +138,35 @@ $('#log-out').click(function () {
               }
           }
       })
-  })
+  });
+//搜索账户 根据用户名 邮箱
+function searchAccount()
+{
+	var key = $("#account-key").val();
+    $.ajax({
+        type: 'get',
+        url: "/admin/exact/accounts?key="+key,
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success: function (e) {
+			var accounts = e.data;
+            var tbodys = $("#table")[0].getElementsByTagName("tbody");
+            var len = tbodys.length;
+            for (var i=0;i<len;i++)
+            {
+                $("#table")[0].removeChild(tbodys[0]);
+            }
+            var librarianlist = new Array();
+            for(var i=0; i<accounts.length;i++){
 
+                librarianlist.push(new librarian(accounts[i].id,accounts[i].userName,accounts[i].email,accounts[i].password));
+            }
+            loadData(librarianlist);
+        }
+    })
+}
 // 获取图书管理员列表
-var librarianlist = new Array();
+
 
 $(document).ready(function(){ 				
     $.ajax({
@@ -130,11 +178,12 @@ $(document).ready(function(){
             
             success:function(data){//返回结果
 				console.log(data);
+                var librarianlist = new Array();
                 for(var i=0; i<data.length;i++){
                     
                     librarianlist.push(new librarian(data[i].id,data[i].userName,data[i].email,data[i].password));
                     }
-                loadData();
+                loadData(librarianlist);
 
             } 
             
@@ -239,32 +288,12 @@ var changeColor = function() {
 
 
 /* 加载数据 */
-function loadData() {
+function loadData(librarianlist) {
 	for (var i = 0; i < librarianlist.length; i++) {
 		var librarianId = librarianlist[i].librarianId;
         var username = librarianlist[i].username;
         var email = librarianlist[i].email;
 		var password = librarianlist[i].password;
-		/**
-		 * <tbody>
-                        <tr>
-                        <td><input type="checkbox" /></td>
-                        <td>1</td>
-                        <td>Librarian 1</td>
-                        <td>Librarian</td>
-                        <td class="am-hide-sm-only">xxxxxxxxxxxx@email.com</td>
-                        <td>123456</td>
-                        <td>
-                            <div class="am-btn-toolbar">
-                            <div class="am-btn-group am-btn-group-xs">
-                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> Edit</button>
-                                <!-- <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash"></span> Delete</button> -->
-                            </div>
-                            </div>
-                        </td>
-                        </tr>
-                        </tbody>
-		 */
 		$("#table").append('<tbody>'+
 		'<tr>'+
 		'<td><input type="checkbox" /></td>'+
@@ -278,76 +307,7 @@ function loadData() {
 				'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="modTr(this)"><span class="am-icon-pencil-square-o"></span> Edit</button>'+
 			'</div>'+
 		'</td></tr></tbody>');
-		// 创建tr
-		// var tr = createObj("tr");
-		// // 创建td
-		// var checkTd = createObj("td");
-		// var serialTd = createObj("td");
-		// var librarianIdTd = createObj("td");
-        // var usernameTd = createObj("td");
-        // var emailTd = createObj("td");
-        // var passwordTd = createObj("td");
-		// var dmlTd = createObj("td");
-
-		// var checkBtn = createObj("input");
-		// checkBtn.type = "checkbox";
-		// checkBtn.value=librarianlist[i].librarianId;
-		// // 将复选框添加到第一列；
-		// checkTd.appendChild(checkBtn);
-		// // 将获得的值添加到创建的指定Td中；
-		// var tbody = getId("tb");
-		// var rows = tbody.rows.length;
-		// // 将获得的信息添加到指定的为td中
-		// serialTd.innerHTML = rows + 1;
-		// librarianIdTd.innerHTML = librarianId;
-        // usernameTd.innerHTML = username;
-		// emailTd.innerHTML = email;
-		// passwordTd.innerHTML = password;
-        
-		// // 创建个button按钮，添加到操作列；
-		// var lookBtn = createObj("input");
-		// lookBtn.type = "button";
-		// lookBtn.value = "View";
-		// // 为新建的lookBtn创建监听属性；
-		// lookBtn.onclick = function() {
-		// 	lookTr(this);
-		// };
-
-        // // 创建个button按钮，添加到操作列；
-		// var changeBtn = createObj("input");
-		// changeBtn.type = "button";
-		// changeBtn.value = "Edit";
-
-		// // 为新建的changeBtn创建监听属性；
-		// changeBtn.onclick = function() {
-		// 	modTr(this);
-        // }
-        
-		// dmlTd.appendChild(lookBtn);
-        // dmlTd.appendChild(changeBtn);
-        
-		// // 将新建的td加入到新建的行中
-		// tr.appendChild(checkTd);
-		// tr.appendChild(serialTd);
-		// tr.appendChild(librarianIdTd);
-        // tr.appendChild(usernameTd);
-        // tr.appendChild(emailTd);
-        // tr.appendChild(passwordTd);
-		// tr.appendChild(dmlTd);
-
-		// // 将新建的tr加入到tbody中
-		// var tbody = getId("tb");
-		// tbody.appendChild(tr);
-
-		// 隔行换色。
-		// var table = document.getElementById("table");
-		// table.tBodies[0].rows[table.tBodies[0].rows.length - 1].style.display = 'none';
-		// numberRowsInTable++;
-		// totalPage.innerHTML = pageCount();
-		// numRows.innerHTML = numberRowsInTable;
-		// first();
 	}
-	// changeColor();
 }
 
 /* 增加读者信息 */

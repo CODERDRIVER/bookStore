@@ -203,7 +203,7 @@ public class BorrowAndOrderService {
                        borrow.setBook(book);
                        borrow.setBorrowDate(LocalDate.now());
                        borrow.setReader(one);
-                       borrow.setBorrowStatus(0);    // 设置为借阅中
+                       borrow.setBorrowStatus(1);    // 设置为借阅中
                        borrowRepository.save(borrow);
                        one.setBorrowNum(one.getBorrowNum()+1);
                        readerRepository.save(one);
@@ -218,12 +218,21 @@ public class BorrowAndOrderService {
     }
 
     /**
-     *  获得所有读者的借阅记录
+     *  获得所有读者的借阅记录  已经借阅成功
      * @return
      */
-    public ResponseMessage getAllBorrows()
+    public ResponseMessage getAllBorrows(int type)
     {
-        List<Borrow> all = borrowRepository.findAllByBorrowStatus(0);
+        List<Borrow> all = null;
+        if (type ==1)
+        {
+            // 查询已经借阅成功的
+            all= borrowRepository.findAllByBorrowStatus(1);
+        }else if(type==2){
+            // 查询所有的借阅信息
+            all = borrowRepository.findAll();
+        }
+
         List<BookBorrowRecordData> bookBorrowRecordDatas = new ArrayList<>();
         for (Borrow borrow : all) {
             BookBorrowRecordData bookBorrowRecordData = new BookBorrowRecordData();
@@ -251,6 +260,8 @@ public class BorrowAndOrderService {
             bookOrderRecordData.setBookName(order.getBook().getBookName());
             bookOrderRecordData.setOrderDate(order.getOrderDate());
             bookOrderRecordData.setReaderId(order.getReader().getReaderId());
+            bookOrderRecordData.setBarCode(order.getBook().getBarCode());
+            bookOrderRecordData.setPrice(order.getBook().getPrice());
             bookOrderRecordDatas.add(bookOrderRecordData);
         }
         return ResultUtil.success(bookOrderRecordDatas,request.getRequestURL().toString());
@@ -381,5 +392,10 @@ public class BorrowAndOrderService {
     public void updateOrderInfo(Order order)
     {
         orderRepository.save(order);
+    }
+
+    public Borrow findBorrowByReaderIdAndBookIdAndBorrowStatus(int readerId,int bookId,int borrowStatus)
+    {
+        return borrowRepository.findBorrowByReaderIdAndBookIdAndBAndBorrowStatus(readerId,bookId,borrowStatus);
     }
 }

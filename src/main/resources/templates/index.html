@@ -118,7 +118,7 @@
                             reader
                         </label>
                     </div>
-                    <div><button onclick="findKey()" type="button" class="am-btn am-btn-sm" style="color: #7c7c7c; background-color: #fff0">forgot password?</button></div>
+                    <div id="forget-password" style="display: none;"><button  onclick="findKey()" type="button" class="am-btn am-btn-sm" style="color: #7c7c7c; background-color: #fff0">forgot password?</button></div>
                 </form>
 
             </div>
@@ -130,14 +130,17 @@
     </div>
 
     <div class="get-full" id="backGround">
-            <div class="announcebody">
-               <div class="announcecontainer" class="am-g">
-                        <div class="announcetitle"><a href="#">Announcement</a></div>
-                            <div id="scrollBox" style="height: 100px">
+            <!--<div class="announcebody">-->
+               <!--<div class="announcecontainer" class="am-g">-->
+                        <!--<div class="announcetitle"><a href="#">Announcement</a></div>-->
+                            <!--<div id="scrollBox" style="height: 100px">-->
 
-                            </div>
-                            <!-- <div><input type="text" id="demo"></div> -->
-                    </div>
+                            <!--</div>-->
+                            <!--&lt;!&ndash; <div><input type="text" id="demo"></div> &ndash;&gt;-->
+                    <!--</div>-->
+            <!--</div>-->
+            <div id="announcement">
+                <!--放假了-->
             </div>
         <div class="am-g">
             <div class="am-u-lg-12">
@@ -259,8 +262,7 @@
 <![endif]-->
 <script src="../assets/js/amazeui.min.js"></script>
 <script src="../assets/js/style.js"></script>
-<!-- <script src="../assets/js/scroll.js"></script> -->
-<script src="../assets/js/scroll.js"></script>
+ <script src="../assets/js/scroll.js"></script>
 <script>
 //    $(function() {
 //        var script = document.createElement("script");

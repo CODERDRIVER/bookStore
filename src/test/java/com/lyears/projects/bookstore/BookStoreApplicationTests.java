@@ -10,6 +10,7 @@ import com.lyears.projects.bookstore.repository.OrderRepository;
 import com.lyears.projects.bookstore.repository.ReaderRepository;
 import com.lyears.projects.bookstore.service.BookService;
 import com.lyears.projects.bookstore.service.BorrowAndOrderService;
+import com.lyears.projects.bookstore.util.ZxingCodeUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +49,18 @@ public class BookStoreApplicationTests {
     public void contextLoads() {
     }
 
+//    @Test
+//    public void testBarCode()
+//    {
+//        ZxingCodeUtil.createBarCode("1234567891011",70,25);
+//    }
+
     @Test
     public void testMail()
     {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("1187697635@qq.com");
-        message.setTo("2454779230@qq.com");
+        message.setTo("longmaythess@outlook.com");
         message.setSubject("主题：密码修改");
         message.setText("你的密码为123456");
         javaMailSender.send(message);

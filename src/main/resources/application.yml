@@ -26,17 +26,24 @@ spring:
   mail:
     host: smtp.qq.com
     username: 1187697635@qq.com
-    password: omzpbrwtziqwjabb
+    password: xzaadjblfjocgica
     properties:
       mail:
         smtp:
-          auth:true
+          auth: true
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 500000KB
+      max-request-size: 500000KB
+
 ftp:
   address: 119.23.75.180
   port: 21
   username: ftptest
   password: ftptest
   basepath: /home/ftptest/templates
+
 
 
 

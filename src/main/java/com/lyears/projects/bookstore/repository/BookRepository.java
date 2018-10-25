@@ -22,6 +22,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Override
     Page<Book> findAll(Pageable pageable);
 
+    Page<Book> findAllByInventoryGreaterThanEqual(int inventory,Pageable pageable);
+
     /**
      * 根据传入的字段进行分页模糊查询
      *
@@ -64,5 +66,18 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Modifying
     @Transactional
     void updateStatusByBookId(@Param("stat") int stat,@Param("bookId") int bookId);
+
+    /**
+     *  查看某本书的剩余库存
+     */
+    @Query(value = "SELECT COUNT(*) FROM book as b where b.status = 0 group by b.book_name",nativeQuery = true)
+    int findInventoryByBookName(@Param("bookName")String bookName);
+
+    /**
+     *  根据barcode 查询书籍
+     * @param barCode
+     * @return
+     */
+    Book findBookByBarCode(String barCode);
 
 }

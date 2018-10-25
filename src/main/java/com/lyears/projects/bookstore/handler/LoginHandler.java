@@ -16,7 +16,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import sun.plugin2.message.Message;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +54,7 @@ public class LoginHandler {
         String password = administrator.getPassword();
 
         Administrator one = adminService.findByEmail(email);
+        System.out.println(one);
         if (one != null) {
             if (one.getPassword().equals(password)) {
                 String jwtToken = JwtToken.createToken(email, one.getUserName(), "admin");
@@ -113,7 +113,6 @@ public class LoginHandler {
         String phone  = reader.getPhoneNumber();
         String password = reader.getPassword();
         Reader one = readerService.findByPhoneNumber(phone);
-        System.out.println(one);
         if (one.getStatus()!=0)
         {
             return ResultUtil.error(ResultEnum.USER_NOT_EXIST,request.getRequestURL().toString());
