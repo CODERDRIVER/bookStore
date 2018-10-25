@@ -36,6 +36,9 @@ spring:
       enabled: true
       max-file-size: 500000KB
       max-request-size: 500000KB
+  messages:
+    fallback-to-system-locale: false
+    basename: i18n/messages
 
 ftp:
   address: 119.23.75.180

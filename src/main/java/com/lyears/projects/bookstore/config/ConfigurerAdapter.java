@@ -15,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -73,7 +74,16 @@ public class ConfigurerAdapter extends WebMvcConfigurerAdapter {
         };
     }
 
-
+    /**
+     *  添加语言解析器
+     * @return
+     */
+    public LocaleChangeInterceptor localeChangeInterceptor()
+    {
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("lang");
+        return localeChangeInterceptor;
+    }
     /**
      * 添加拦截器
      *
@@ -83,6 +93,7 @@ public class ConfigurerAdapter extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         //registry.addInterceptor(getAdminInterceptor()).addPathPatterns("/admin", "/admin.*");
 //        registry.addInterceptor(getModifyInterceptor()).addPathPatterns("/**").excludePathPatterns("/logout", "/login/**","/add/**","/book/**");
+        registry.addInterceptor(localeChangeInterceptor());
         super.addInterceptors(registry);
     }
 
