@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+<html xmlns:th="http://www.thymeleaf.org">	
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,7 +42,7 @@
 	<header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
 		<div class="am-container" style="max-width: unset">
 			<h1 class="am-topbar-brand">
-				<a href="/">Book Delete History</a>
+				<a href="/" th:text="#{bookDeleteHistory}">Book Delete History</a>
 			</h1>
 
 			<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
@@ -50,19 +51,19 @@
 
 			<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
 				<div class="am-topbar-right">
-					<button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home">Back</button>
-					<button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
+					<button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home" th:text="#{back}">Back</button>
+					<button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm" th:text="#{logOut}">Log out</button>
 				</div>
 
 				<div class="am-topbar-right">
 					<li class="am-dropdown am-dropdown-header" data-am-dropdown>
-						<a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+						<a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;" th:text="#{English}">
 							English <span class="am-icon-caret-down"></span>
 						</a>
 						<ul class="am-dropdown-content">
-							<li class="am-dropdown-header">Language Setting</li>
-							<li><a id="English" href="#">English</a></li>
-							<li><a id="Chinese" href="#">中文</a></li>
+							<li class="am-dropdown-header" th:text="#{LanguageSetting}">Language Setting</li>
+							<li><a id="English" href="#" th:text="#{English}">English</a></li>
+							<li><a id="Chinese" href="#" th:text="#{Chinese}">中文</a></li>
 						</ul>
 					</li>
 				</div>
@@ -82,10 +83,10 @@
 					<tr>
 					
 					<th class="table-check"><input type="checkbox" /></th>
-						<th >Serial ID</th>
-						<th>Book Id</th>
-						<th>Delete Date</th>
-						<th>Librarain Id</th>
+						<th th:text="#{serialID}">Serial ID</th>
+						<th th:text="#{bookID}">Book Id</th>
+						<th th:text="#{deleteDate}">Delete Date</th>
+						<th th:text="#{LibrarainId}">Librarain Id</th>
 					</tr>
 					</thead>
 

@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+<html xmlns:th="http://www.thymeleaf.org"></html>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,19 +51,19 @@
 
 			<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
 				<div class="am-topbar-right">
-					<button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home">Back</button>
-					<button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
+					<button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home" th:text="#{back}">Back</button>
+					<button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm" th:text="#{logOut}">Log out</button>
 				</div>
 
 				<div class="am-topbar-right">
 					<li class="am-dropdown am-dropdown-header" data-am-dropdown>
-						<a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+						<a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;" th:text="#{English}">
 							English <span class="am-icon-caret-down"></span>
 						</a>
 						<ul class="am-dropdown-content">
-							<li class="am-dropdown-header">Language Setting</li>
-							<li><a id="English" href="#">English</a></li>
-							<li><a id="Chinese" href="#">中文</a></li>
+							<li class="am-dropdown-header" th:text="#{LanguageSetting}">Language Setting</li>
+							<li><a id="English" href="#" th:text="#{English}">English</a></li>
+							<li><a id="Chinese" href="#" th:text="#{Chinese}">中文</a></li>
 						</ul>
 					</li>
 				</div>
@@ -75,7 +76,7 @@
 		<div class="admin-content-body">
 			<div class="am-cf am-padding am-padding-bottom-0">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-xxl" style="color: rgb(64, 100, 133);">Book List</strong>
+					<strong class="am-text-primary am-text-xxl" style="color: rgb(64, 100, 133);" th:text="#{bookList}">Book List</strong>
 				</div>
 			</div>
 
@@ -85,7 +86,7 @@
 				<div class="am-input-group am-input-group-sm">
 					<input type="text" class="am-form-field" placeholder="Book Name,Author,Book Type" id="search-key">
 					<span class="am-input-group-btn">
-                    <button class="am-btn am-btn-default" type="button" id="search" onclick="searchBook()">Search</button>
+                    <button class="am-btn am-btn-default" type="button" id="search" onclick="searchBook()" th:text="#{search}">Search</button>
                     </span>
 				</div>
 			</div>
@@ -97,13 +98,13 @@
 							<thead id="thead">
 							<tr>
 								<th class="table-check"><input type="checkbox"/></th>
-								<th>Serial ID</th>
-								<th>Inventory</th>
-								<th>BarCode</th>
-								<th>BookName</th>
-								<th>Location</th>
-								<th>Price</th>
-								<th>Operations</th>
+								<th th:text="#{serialID}">Serial ID</th>
+								<th th:text="#{inventory}">Inventory</th>
+								<th th:text="#{barCode}">BarCode</th>
+								<th th:text="#{bookName}">BookName</th>
+								<th th:text="#{location}">Location</th>
+								<th th:text="#{price}">Price</th>
+								<th th:text="#{operations}">Operations</th>
 							</tr>
 							</thead>
 							<!--<tbody>-->
@@ -134,13 +135,13 @@
 </div>
 <div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt" ><!--style="display: none"-->
 	<div class="am-modal-dialog">
-		<div class="am-modal-hd">Reader Phone Number</div>
+		<div class="am-modal-hd" th:text="#{readerPhoneNumber}">Reader Phone Number</div>
 		<div class="am-modal-bd">
 			<input type="text" class="am-modal-prompt-input">
 		</div>
 		<div class="am-modal-footer">
-			<span class="am-modal-btn" data-am-modal-cancel>Cancel</span>
-			<span class="am-modal-btn" data-am-modal-confirm>Commit</span>
+			<span class="am-modal-btn" data-am-modal-cancel th:text="#{cancel}">Cancel</span>
+			<span class="am-modal-btn" data-am-modal-confirm th:text="#{commit}">Commit</span>
 		</div>
 	</div>
 </div>

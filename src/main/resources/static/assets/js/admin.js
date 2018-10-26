@@ -1,5 +1,5 @@
 $('#addLibrarian').click(function () {
-    $('#prompt-title').text('Add Librarian')
+  //  $('#prompt-title').text('Add Librarian')
     $('#input-deposit').css('display','none')
     $('#addAccountPrompt').modal({
         relatedTarget: this,

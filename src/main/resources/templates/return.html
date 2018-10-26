@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <title>Bibliosoft-ReturnRecord</title>
@@ -18,17 +19,17 @@
 			</div>
 			
 			<div class="addOrDelete">
-				<button class="index" type="button" id="home">Back Home </button>
+				<button class="index" type="button" id="home" th:text="#{back}">Back</button>
 			</div>
 			<!--信息部分-->
 			<table class="contentTable" id="table">
 				<thead id="thead">
 					<tr class="contentTable1">
-                        <td>SerialID</td>
-                        <td>ReturnId</td>
-                        <td>ReadId</td>
-						<td>BookId</td>
-                        <td>ReturnDate</td>
+                        <td th:text="#{serialID}">SerialID</td>
+                        <td th:text="#{returnID}">Return ID</td>
+                        <td th:text="#{readerID}">Reader ID</td>
+						<td th:text="#{bookID}">Book ID</td>
+                        <td th:text="#{returnDate}">Return Date</td>
 					</tr>
 				</thead>
 				<tbody class="tb" id="tb">

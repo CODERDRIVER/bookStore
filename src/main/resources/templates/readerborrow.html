@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -52,18 +53,18 @@
 			<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
 
 				<div class="am-topbar-right">
-					<button type="button" id="home" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Back</button>
+					<button type="button" id="home" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm" th:text="#{back}">Back</button>
 				</div>
 
 				<div class="am-topbar-right">
 					<li class="am-dropdown am-dropdown-header" data-am-dropdown>
-						<a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+						<a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;" th:text="#{English}">
 							English <span class="am-icon-caret-down"></span>
 						</a>
 						<ul class="am-dropdown-content">
-							<li class="am-dropdown-header">Language Setting</li>
-							<li><a id="English" href="#">English</a></li>
-							<li><a id="Chinese" href="#">中文</a></li>
+							<li class="am-dropdown-header" th:text="#{LanguageSetting}">Language Setting</li>
+							<li><a id="English" href="#" th:text="#{English}">English</a></li>
+							<li><a id="Chinese" href="#" th:text="#{Chinese}">中文</a></li>
 						</ul>
 					</li>
 				</div>
@@ -75,7 +76,7 @@
 		<div class="admin-content-body">
 			<div class="am-cf am-padding am-padding-bottom-0">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-xxl" style="color: rgb(64, 100, 133);">Borrow Records</strong>
+					<strong class="am-text-primary am-text-xxl" style="color: rgb(64, 100, 133);" th:text="#{borrowRecords}">Borrow Records</strong>
 				</div>
 			</div>
 
@@ -88,11 +89,11 @@
 						<thead id="thead">
 						<tr>
 						
-						<th >Serial ID</th>
-						<th>Book ID</th>
-						<th>Book Name</th>
-						<th>Fine</th>
-						<th>Borrow Date</th>
+						<th th:text="#{serialID}">Serial ID</th>
+						<th th:text="#{bookID}">Book ID</th>
+						<th th:text="#{bookName}">BookName</th>
+						<th th:text="#{fine}">Fine</th>
+						<th th:text="#{borrowDate}">Borrow Date</th>
 						</tr>
 						</thead>
 

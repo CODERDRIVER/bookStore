@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,19 +51,19 @@
 
 		<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
 			<div class="am-topbar-right">
-				<button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home">Back Home </button>
-				<button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
+				<button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home" th:text="#{back}">Back </button>
+				<button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm" th:text="#{logOut}">Log out</button>
 			</div>
 
 			<div class="am-topbar-right">
 				<li class="am-dropdown am-dropdown-header" data-am-dropdown>
-					<a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+					<a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;" th:text="#{English}">
 						English <span class="am-icon-caret-down"></span>
 					</a>
 					<ul class="am-dropdown-content">
-						<li class="am-dropdown-header">Language Setting</li>
-						<li><a id="English" href="#">English</a></li>
-						<li><a id="Chinese" href="#">中文</a></li>
+						<li class="am-dropdown-header" th:text="#{LanguageSetting}">Language Setting</li>
+						<li><a id="English" href="#" th:text="#{English}">English</a></li>
+						<li><a id="Chinese" href="#" th:text="#{Chinese}">中文</a></li>
 					</ul>
 				</li>
 			</div>
@@ -80,12 +81,12 @@
 			<table class="contentTable" id="table">
 				<thead id="thead">
 					<tr class="contentTable1">
-                        <td>SerialID</td>
-                        <td>ReaderId</td>
-                        <td>BookId</td>
-						<td>BookName</td>
-						<td>ReturnDate</td>
-						<td>Operation</td>
+                        <td th:text="#{serialID}">SerialID</td>
+                        <td th:text="#{readerID}">Reader ID</td>
+						<td th:text="#{bookID}">Book ID</td>
+						<td th:text="#{bookName}">BookName</td>
+						<td th:text="#{returnDate}">ReturnDate</td>
+						<td th:text="#{operations}">Operations</td>
 					</tr>
 				</thead>
 				<tbody class="tb" id="tb">

@@ -1,6 +1,6 @@
 <!doctype html>
 <html class="no-js">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,19 +51,19 @@
 
             <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
                 <div class="am-topbar-right">
-                    <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home">Back</button>
-                    <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
+                    <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home" th:text="#{back}">Back</button>
+                    <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm" th:text="#{logOut}">Log out</button>
                 </div>
 
                 <div class="am-topbar-right">
                     <li class="am-dropdown am-dropdown-header" data-am-dropdown>
-                        <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                        <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;" th:text="#{English}">
                             English <span class="am-icon-caret-down"></span>
                         </a>
                         <ul class="am-dropdown-content">
-                            <li class="am-dropdown-header">Language Setting</li>
-                            <li><a id="English" href="#">English</a></li>
-                            <li><a id="Chinese" href="#">中文</a></li>
+                            <li class="am-dropdown-header" th:text="#{LanguageSetting}">Language Setting</li>
+                            <li><a id="English" href="#" th:text="#{English}">English</a></li>
+                            <li><a id="Chinese" href="#" th:text="#{Chinese}">中文</a></li>
                         </ul>
                     </li>
                 </div>
@@ -73,11 +73,11 @@
     </header>
     <div class="am-modal am-modal-prompt" tabindex="-1" id="addAccountPrompt">
             <div class="am-modal-dialog">
-                <div class="am-modal-hd"><h4 id="prompt-title"></h4></div>
+                <div class="am-modal-hd"><h4 id="prompt-title" th:text="#{addReader}">Add Reader</h4></div>
                 <div class="am-modal-bd">
                     <form class="am-form am-form-horizontal">
                         <div class="am-form-group">
-                                <label for="doc-userName" class="am-u-sm-3 am-form-label">UserName:</label>
+                                <label for="doc-userName" class="am-u-sm-3 am-form-label" th:text="#{userName}">UserName</label>
                                 <div class="am-u-sm-9">
                                     <input class="am-modal-prompt-input" type="text" id="doc1"
                                             placeholder="Enter your name">
@@ -85,7 +85,7 @@
                         </div>
 
                         <div class="am-form-group">
-                            <label for="doc-email" class="am-u-sm-3 am-form-label">Email:</label>
+                            <label for="doc-email" class="am-u-sm-3 am-form-label" th:text="#{emails}">Email</label>
                             <div class="am-u-sm-9">
                                 <input class="am-modal-prompt-input" type="email" id="doc2"
                                        placeholder="Enter your email">
@@ -93,7 +93,7 @@
                         </div>
     
                         <div class="am-form-group">
-                            <label for="doc-pwd" class="am-u-sm-3 am-form-label">PhoneNumber:</label>
+                            <label for="doc-pwd" class="am-u-sm-3 am-form-label" th:text="#{phoneNumber}">PhoneNumber</label>
                             <div class="am-u-sm-9">
                                 <input class="am-modal-prompt-input" type="text" id="doc3"
                                        placeholder="Enter your phoneNumber">
@@ -104,8 +104,8 @@
     
                 </div>
                 <div class="am-modal-footer">
-                    <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
-                    <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
+                    <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+                    <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{confirm}">confirm</span>
                 </div>
             </div>
         </div>
@@ -114,7 +114,7 @@
             <div class="admin-content-body">
                 <div class="am-cf am-padding am-padding-bottom-0">
                     <div class="am-fl am-cf">
-                        <strong class="am-text-primary am-text-xxl" style="color: rgb(64, 100, 133);">Reader Account List</strong>
+                        <strong class="am-text-primary am-text-xxl" style="color: rgb(64, 100, 133);" th:text="#{readerList}">Reader Account List</strong>
                     </div>
                 </div>
     
@@ -124,10 +124,10 @@
                     <div class="am-u-sm-12 am-u-md-6">
                         <div class="am-btn-toolbar">
                             <div class="am-btn-group am-btn-group-xs">
-                                <button id="addReader" type="button" class="am-btn am-btn-default"><span
+                                <button id="addReader" type="button" class="am-btn am-btn-default"th:text="#{add}" ><span
                                         class="am-icon-plus"></span> Add
                                 </button>
-                                <button id="delete" type="button" class="am-btn am-btn-default"  onclick="delSel();">
+                                <button id="delete" type="button" class="am-btn am-btn-default"  onclick="delSel();" th:text="#{delete}">
                                     <span class="am-icon-trash" ></span> Delete
                                 </button>
                             </div>
@@ -142,13 +142,13 @@
                             <thead id="thead">
                             <tr>
                             <th class="table-check"><input type="checkbox" onclick="selAll(this);"/></th>
-                                <th>Serial ID</th>
-                                <th>Reader ID</th>
-                                <th>User Name</th>
-                                <th>Email</th>
-                                <th>Phone Number</th>
-                                <th>Password</th>
-                                <th>Operations</th>
+                                <th th:text="#{serialID}">Serial ID</th>
+                                <th th:text="#{readerID}">Reader ID</th>
+                                <th th:text="#{userName}">UserName</th>
+                                <th th:text="#{emails}">Email</th>
+                                <th th:text="#{phoneNumber}">PhoneNumber</th>
+                                <th th:text="#{passwords}">Password</th>
+                                <th th:text="#{operations}">Operations</th>
                             </tr>
                             </thead>
 
@@ -212,27 +212,27 @@
             </div> -->
     <div class="over" style="display:none;" id="over">
         <div class="over_child">
-            <p>Add reader</p>
+            <p th:text="#{addReader}">Add reader</p>
             <table>
                 <tbody id="over_tb">
                     <tr>
-                        <td>UserName：</td>
+                        <td th:text="#{userName}">UserName</td>
                         <td><input type="text" id="i1"></td>
                     </tr>
                     <tr>
-                        <td>Email：</td>
+                        <td th:text="#{emails}">Email</td>
                         <td><input type="text" id="i2"></td>
                     </tr>
                     <tr>
-                        <td>PhoneNumber：</td>
+                        <td th:text="#{phoneNumber}">PhoneNumber</td>
                         <td><input type="text" id="i3"></td>
                     </tr>
                     
                 </tbody>
                 <tr>
                     <td colspan="2">
-                    <input type="button" value="cancel" id="hide23" class="button1" /> 
-                    <input type="button" value="confirm" onclick="addTr();" class="button2" />
+                    <input type="button" value="cancel" id="hide23" class="button1" th:text="#{cancel}"/> 
+                    <input type="button" value="confirm" onclick="addTr();" class="button2" th:text="#{confirm}"/>
                     </td>
                 </tr>
             </table>
@@ -241,30 +241,30 @@
     </div>
     <div class="over2" style="display:none;" id="over2">
         <div class="over_child2">
-            <p id="lookMessages">Edit account</p>
+            <p id="lookMessages" th:text="#{editAccount}">Edit account</p>
             <table>
                 <tbody id="over_tb2">
                     <tr>
-                            <td>readerId：</td>
+                            <td th:text="#{readerID}">readerId</td>
                             <td><input type="text" ></td>
                     </tr>
                     <tr>
-                        <td>UserName：</td>
+                        <td th:text="#{userName}">UserName</td>
                         <td><input type="text" ></td>
                     </tr>
                     <tr>
-                        <td>Email：</td>
+                        <td th:text="#{emails}">Email</td>
                         <td><input type="text" ></td>
                     </tr>
                     <tr>
-                        <td>PhoneNumber：</td>
+                        <td th:text="#{phoneNumber}">PhoneNumber</td>
                         <td><input type="text" ></td>
                     </tr>
                 </tbody>
                 <tr>
                     <td colspan="2">
-                    <input type="button" value="cancel" onclick="showHide2(this);" class="button1" /> 
-                    <input type="button" value="save" onclick="okBtn();" class="button2" id="hide" />
+                    <input type="button" value="cancel" onclick="showHide2(this);" class="button1" th:text="#{cancel}"/> 
+                    <input type="button" value="save" onclick="okBtn();" class="button2" id="hide" th:text="#{save}"/>
                     </td>
                 </tr>
             </table>
@@ -274,30 +274,30 @@
 
     <div class="over3" style="display:none;" id="over3">
         <div class="over_child2">
-            <p id="lookMessages3">Edit account</p>
+            <p id="lookMessages3" th:text="#{editAccount}">Edit account</p>
             <table>
                 <tbody id="over_tb3">
                     <tr>
-                        <td>BorrowId：</td>
+                        <td th:text="#{borrowID}">Borrow ID</td>
                         <td><input type="text" ></td>
                     </tr>
                     <tr>
-                        <td>ReaderId：</td>
+                        <td th:text="#{readerID}">Reader ID</td>
                         <td><input type="text" ></td>
                     </tr>
                     <tr>
-                        <td>BookId：</td>
+                        <td th:text="#{bookID}">Book ID</td>
                         <td><input type="text" ></td>
                     </tr>
                     <tr>
-                        <td>BorrowDate：</td>
+                        <td th:text="#{borrowDate}">Borrow Date</td>
                         <td><input type="text" ></td>
                     </tr>
                 </tbody>
                 <tr>
                     <td colspan="2">
-                    <input type="button" value="cancel" onclick="showHide2(this);" class="button1" /> 
-                    <input type="button" value="save" onclick="okBtn();" class="button2" id="hide3" />
+                    <input type="button" value="cancel" onclick="showHide2(this);" class="button1" th:text="#{cancel}"/> 
+                    <input type="button" value="save" onclick="okBtn();" class="button2" id="hide3" th:text="#{save}"/>
                     </td>
                 </tr>
             </table>
@@ -307,30 +307,30 @@
 
     <div class="over4" style="display:none;" id="over4">
         <div class="over_child2">
-            <p id="lookMessages4">Edit account</p>
+            <p id="lookMessages4" th:text="#{editAccount}">Edit account</p>
             <table>
                 <tbody id="over_tb4">
                     <tr>
-                        <td>ReturnId：</td>
+                        <td th:text="#{returnID}">Return ID</td>
                         <td><input type="text" ></td>
                     </tr>
                     <tr>
-                        <td>ReaderId：</td>
+                        <td th:text="#{readerID}">Reader ID</td>
                         <td><input type="text" ></td>
                     </tr>
                     <tr>
-                        <td>BookId：</td>
+                        <td th:text="#{bookID}">Book ID</td>
                         <td><input type="text" ></td>
                     </tr>
                     <tr>
-                        <td>ReturnDate：</td>
+                        <td th:text="#{returnDate}">ReturnDate</td>
                         <td><input type="text" ></td>
                     </tr>
                 </tbody>
                 <tr>
                     <td colspan="2">
-                    <input type="button" value="cancel" onclick="showHide2(this);" class="button1" /> 
-                    <input type="button" value="save" onclick="okBtn();" class="button2" id="hide4" />
+                    <input type="button" value="cancel" onclick="showHide2(this);" class="button1" th:text="#{cancel}"/> 
+                    <input type="button" value="save" onclick="okBtn();" class="button2" id="hide4" th:text="#{save}"/>
                     </td>
                 </tr>
             </table>
@@ -340,26 +340,26 @@
 
     <div class="over5" style="display:none;" id="over5">
         <div class="over_child5">
-            <p id="lookMessages5">Edit account</p>
+            <p id="lookMessages5" th:text="#{editAccount}">Edit account</p>
             <table>
                 <tbody id="over_tb5">
                     <tr>
-                        <td>ReaderId：</td>
+                        <td th:text="#{readerID}">Reader ID</td>
                         <td><input type="text" ></td>
                     </tr>
                     <tr>
-                        <td>PaidFine：</td>
+                        <td th:text="#{paidFine}">PaidFine</td>
                         <td><input type="text" ></td>
                     </tr>
                     <tr>
-                        <td>UnpaidFine：</td>
+                        <td th:text="#{unpaidFine}">UnpaidFine</td>
                         <td><input type="text" ></td>
                     </tr>
                 </tbody>
                 <tr>
                     <td colspan="2">
-                    <input type="button" value="cancel" onclick="showHide5(this);" class="button1" /> 
-                    <input type="button" value="save" onclick="okBtn();" class="button2" id="hide5" />
+                    <input type="button" value="cancel" onclick="showHide5(this);" class="button1" th:text="#{cancel}"/> 
+                    <input type="button" value="save" onclick="okBtn();" class="button2" id="hide5" th:text="#{save}"/>
                     </td>
                 </tr>
             </table>

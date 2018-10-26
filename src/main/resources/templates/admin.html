@@ -1,6 +1,6 @@
 <!doctype html>
 <html class="no-js">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,18 +50,18 @@
 
             <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
                 <div class="am-topbar-right">
-                    <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
+                    <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm" th:text="#{logOut}">Log out</button>
                 </div>
 
                 <div class="am-topbar-right">
                     <li class="am-dropdown am-dropdown-header" data-am-dropdown>
-                        <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                        <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;" th:text="#{English}">
                             English <span class="am-icon-caret-down"></span>
                         </a>
                         <ul class="am-dropdown-content">
-                            <li class="am-dropdown-header">Language Setting</li>
-                            <li><a id="English" href="#">English</a></li>
-                            <li><a id="Chinese" href="#">中文</a></li>
+                            <li class="am-dropdown-header" th:text="#{LanguageSetting}">Language Setting</li>
+                            <li><a id="English" href="#" th:text="#{English}">English</a></li>
+                            <li><a id="Chinese" href="#" th:text="#{Chinese}">中文</a></li>
                         </ul>
                     </li>
                 </div>
@@ -72,9 +72,9 @@
                             Settings <span class="am-icon-caret-down"></span>
                         </a>
                         <ul class="am-dropdown-content">
-                            <li><a id="changeFine" href="#">Set Fine</a></li>
-                            <li><a id="changeReturnperiod" href="#">Set ReturnPeriod</a></li>
-                            <li><a id="changeDeposit" href="#">Set Deposit</a></li>
+                            <li><a id="changeFine" href="#" th:text="#{setFine}">Set Fine</a></li>
+                            <li><a id="changeReturnperiod" href="#" th:text="#{setReturnPeriod}">Set ReturnPeriod</a></li>
+                            <li><a id="changeDeposit" href="#" th:text="#{setDeposit}">Set Deposit</a></li>
                         </ul>
                     </li>
                 </div>
@@ -85,11 +85,11 @@
     
     <div class="am-modal am-modal-prompt" tabindex="-1" id="changeFinePrompt">
         <div class="am-modal-dialog">
-            <div class="am-modal-hd"><h4> Set Fine</h4></div>
+            <div class="am-modal-hd"><h4 th:text="#{setFine}"> Set Fine</h4></div>
             <div class="am-modal-bd">
                 <form class="am-form am-form-horizontal">
                     <div class="am-form-group">
-                        <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">Fine:</label>
+                        <label for="doc-ipt-3" class="am-u-sm-2 am-form-label" th:text="#{fine}">Fine:</label>
                         <div class="am-u-sm-10">
                             <input class="am-modal-prompt-input" type="number" id="doc-ipt-3" placeholder="1">
                         </div>
@@ -97,19 +97,19 @@
                 </form>
             </div>
             <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
-                <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
+                <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+                <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{confirm}">confirm</span>
             </div>
         </div>
     </div>
 
     <div class="am-modal am-modal-prompt" tabindex="-1" id="changeReturnperiodPrompt">
         <div class="am-modal-dialog">
-            <div class="am-modal-hd"><h4>Set ReturnPeriod</h4></div>
+            <div class="am-modal-hd"><h4 th:text="#{setReturnPeriod}">Set ReturnPeriod</h4></div>
             <div class="am-modal-bd">
                 <form class="am-form am-form-horizontal">
                     <div class="am-form-group">
-                        <label for="doc-ipt-rep-2" class="am-u-sm-2 am-form-label">Days:</label>
+                        <label for="doc-ipt-rep-2" class="am-u-sm-2 am-form-label" th:text="#{days}">Days:</label>
                         <div class="am-u-sm-10">
                             <input class="am-modal-prompt-input" type="number" id="doc-ipt-rep-2" placeholder="30">
                         </div>
@@ -117,19 +117,19 @@
                 </form>
             </div>
             <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
-                <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
+                <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+                <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{confirm}">confirm</span>
             </div>
         </div>
     </div>
 
     <div class="am-modal am-modal-prompt" tabindex="-1" id="changeDepositPrompt">
         <div class="am-modal-dialog">
-            <div class="am-modal-hd"><h4>Set Deposit</h4></div>
+            <div class="am-modal-hd"><h4 th:text="#{setDeposit}">Set Deposit</h4></div>
             <div class="am-modal-bd">
                 <form class="am-form am-form-horizontal">
                     <div class="am-form-group">
-                        <label for="doc-ipt-dep-3" class="am-u-sm-2 am-form-label">Deposit:</label>
+                        <label for="doc-ipt-dep-3" class="am-u-sm-2 am-form-label" th:text="#{deposits}">Deposit:</label>
                         <div class="am-u-sm-10">
                             <input class="am-modal-prompt-input" type="number" id="doc-ipt-dep-3" placeholder="300">
                         </div>
@@ -137,19 +137,19 @@
                 </form>
             </div>
             <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
-                <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
+                <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+                <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{confirm}">confirm</span>
             </div>
         </div>
     </div>
 
     <div class="am-modal am-modal-prompt" tabindex="-1" id="addAccountPrompt">
         <div class="am-modal-dialog">
-            <div class="am-modal-hd"><h4 id="prompt-title"></h4></div>
+            <div class="am-modal-hd"><h4 th:text="#{addLibrarian}">Add Librarian</h4></div>
             <div class="am-modal-bd">
                 <form class="am-form am-form-horizontal">
                     <div class="am-form-group">
-                        <label for="doc-email" class="am-u-sm-2 am-form-label">email:</label>
+                        <label for="doc-email" class="am-u-sm-2 am-form-label" th:text="#{email}">email:</label>
                         <div class="am-u-sm-10">
                             <input class="am-modal-prompt-input" type="email" id="doc1"
                                    placeholder="Enter your email">
@@ -157,7 +157,7 @@
                     </div>
 
                     <div class="am-form-group">
-                        <label for="doc-userName" class="am-u-sm-2 am-form-label">name:</label>
+                        <label for="doc-userName" class="am-u-sm-2 am-form-label" th:text="#{name}">name:</label>
                         <div class="am-u-sm-10">
                             <input class="am-modal-prompt-input" type="text" id="doc2"
                                    placeholder="Enter your name">
@@ -165,7 +165,7 @@
                     </div>
 
                     <div class="am-form-group">
-                        <label for="doc-pwd" class="am-u-sm-2 am-form-label">password:</label>
+                        <label for="doc-pwd" class="am-u-sm-2 am-form-label" th:text="#{password}">password:</label>
                         <div class="am-u-sm-10">
                             <input class="am-modal-prompt-input" type="password" id="doc3"
                                    placeholder="Enter your deposit">
@@ -173,7 +173,7 @@
                     </div>
 
                     <div class="am-form-group" id="input-deposit">
-                        <label for="doc-deposit" class="am-u-sm-2 am-form-label">deposit:</label>
+                        <label for="doc-deposit" class="am-u-sm-2 am-form-label" th:text="#{deposit}">deposit:</label>
                         <div class="am-u-sm-10">
                             <input class="am-modal-prompt-input" type="number" id="doc-deposit"
                                    placeholder="Enter your deposit">
@@ -184,8 +184,8 @@
 
             </div>
             <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
-                <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
+                <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+                <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{confirm}">confirm</span>
             </div>
         </div>
     </div>
@@ -194,7 +194,7 @@
         <div class="admin-content-body">
             <div class="am-cf am-padding am-padding-bottom-0">
                 <div class="am-fl am-cf">
-                    <strong class="am-text-primary am-text-xxl" style="color: rgb(64, 100, 133);">Account Table</strong>
+                    <strong class="am-text-primary am-text-xxl" style="color: rgb(64, 100, 133);" th:text="#{accountTable}">Account Table</strong>
                 </div>
             </div>
 
@@ -204,10 +204,10 @@
                 <div class="am-u-sm-12 am-u-md-6">
                     <div class="am-btn-toolbar">
                         <div class="am-btn-group am-btn-group-xs">
-                            <button id="addLibrarian" type="button" class="am-btn am-btn-default"><span
+                            <button id="addLibrarian" type="button" class="am-btn am-btn-default" th:text="#{add}"><span
                                     class="am-icon-plus"></span> Add
                             </button>
-                            <button id="delete" type="button" class="am-btn am-btn-default"  onclick="delSel();">
+                            <button id="delete" type="button" class="am-btn am-btn-default"  onclick="delSel();" th:text="#{delete}">
                                 <span class="am-icon-trash" ></span> Delete
                             </button>
                         </div>
@@ -232,7 +232,7 @@
                         <tr>
                         <!--总的checkbox，未加js全选-->
                         <th class="table-check"><input type="checkbox" onclick="selAll(this);"/></th>
-                        <th class="table-serial">Serial ID</th><th class="table-id">Librarian ID</th><th class="table-user">User Name</th><th class="am-hide-sm-only">Email</th><th class="table-pwd">Password</th><th class="table-set">Operations</th>
+                        <th class="table-serial" th:text="#{serialID}">Serial ID</th><th class="table-id" th:text="#{librarianID}">Librarian ID</th><th class="table-user" th:text="#{userName}">User Name</th><th class="am-hide-sm-only" th:text="#{emails}">Email</th><th class="table-pwd" th:text="#{passwords}">Password</th><th class="table-set" th:text="#{operations}">Operations</th>
                         <!--每一个tr之间为一个表单数据，后期改为动态，保持一个页面15个数据,否则全屏可能出现空白-->
                         </tr>
                         </thead>
@@ -305,30 +305,30 @@
             <!--</div>-->
             <div class="over2" style="display:none;" id="over2">
                 <div class="over_child2">
-                    <p id="lookMessages">Edit account</p>
+                    <p id="lookMessages" th:text="#{editAccount}" >Edit Account</p>
                     <table>
                         <tbody id="over_tb2">
                         <tr>
-                            <td>LibrarianId：</td>
+                            <td th:text="#{librarianId}">LibrarianId：</td>
                             <td><input type="text" id="i1"></td>
                         </tr>
                         <tr>
-                            <td>UserName：</td>
+                            <td th:text="#{username}">UserName：</td>
                             <td><input type="text" id="i2"></td>
                         </tr>
                         <tr>
-                            <td>Email：</td>
+                            <td th:text="#{emails}">Email：</td>
                             <td><input type="text" id="i3"></td>
                         </tr>
                         <tr>
-                            <td>Password：</td>
+                            <td th:text="#{passwords}">Password：</td>
                             <td><input type="text" id="i4"></td>
                         </tr>
                     </tbody>
                     <tr>
                         <td colspan="2">
-                        <input type="button" value="cancel" onclick="showHide2(this);" class="button1" /> 
-                        <input type="button" value="save" onclick="okBtn();" class="button2" id="hide" />
+                        <input type="button" value="cancel" onclick="showHide2(this);" class="button1" th:text="#{cancel}"/>
+                        <input type="button" value="save" onclick="okBtn();" class="button2" id="hide" th:text="#{save}"/>
                         </td>
                     </tr>
                 </table>

@@ -1,5 +1,5 @@
 $('#addAnnouncement').click(function () {
-    $('#prompt-title').text('Add Announcement')
+    //$('#prompt-title').text('Add Announcement')
     $('#addAccountPrompt').modal({
         relatedTarget: this,
 

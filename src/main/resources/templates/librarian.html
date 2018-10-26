@@ -39,7 +39,7 @@
     <header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
         <div class="am-container" style="max-width: unset">
             <h1 class="am-topbar-brand">
-                <a href="#">Bibliosoft-Librarian</a>
+                <a href="#" >Bibliosoft-Librarian</a>
             </h1>
 
             <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
@@ -47,18 +47,18 @@
 
             <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
                 <div class="am-topbar-right">
-                    <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
+                    <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm" th:text="#{logOut}">Log out</button>
                 </div>
 
                 <div class="am-topbar-right">
                     <li class="am-dropdown am-dropdown-header" style="margin-top: 8px" data-am-dropdown>
-                        <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                        <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;" th:text="#{English}">
                             English <span class="am-icon-caret-down"></span>
                         </a>
                         <ul class="am-dropdown-content">
-                            <li class="am-dropdown-header">Language Setting</li>
-                            <li><a id="English" href="#">English</a></li>
-                            <li><a id="Chinese" href="#">中文</a></li>
+                            <li class="am-dropdown-header" th:text="#{LanguageSetting}">Language Setting</li>
+                            <li><a id="English" href="#" th:text="#{English}">English</a></li>
+                            <li><a id="Chinese" href="#" th:text="#{Chinese}">中文</a></li>
                         </ul>
                     </li>
                 </div>
@@ -77,34 +77,34 @@
         <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
             <div class="am-offcanvas-bar admin-offcanvas-bar">
                 <ul class="am-list admin-sidebar-list">
-                    <li><a href="#"><span class="am-icon-home"></span> Homepage</a></li>
+                    <li><a href="#" th:text="#{homepage}"><span class="am-icon-home"></span> Homepage</a></li>
                     <li class="book-parent">
-                        <a class="am-cf" data-am-collapse="{target: '#book-nav'}"><span class="am-icon-bookmark"></span>
+                        <a class="am-cf" data-am-collapse="{target: '#book-nav'}" th:text="#{bookManage}"><span class="am-icon-bookmark" ></span>
                             Book Management <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
                         <ul class="am-list am-collapse admin-sidebar-sub am-in" id="book-nav">
-                            <li><a href="javascript:;" onclick="clickFun(0)"><span class="am-icon-pencil-square-o"></span>
+                            <li><a href="javascript:;" onclick="clickFun(0)" th:text="#{addedit}"><span class="am-icon-pencil-square-o"></span>
                                     Add/Edit Books</a></li>
-                            <li><a href="javascript:;" onclick="clickFun(1)"><span class="am-icon-arrow-circle-right"></span> Borrow Books</a></li>
-                            <li><a href="javascript:;" onclick="clickFun(2)"><span class="am-icon-arrow-circle-left"></span> Return Books</a></li>
+                            <li><a href="javascript:;" onclick="clickFun(1)" th:text="#{borrowBooks}"><span class="am-icon-arrow-circle-right"></span> Borrow Books</a></li>
+                            <li><a href="javascript:;" onclick="clickFun(2)" th:text="#{returnBooks}"><span class="am-icon-arrow-circle-left"></span> Return Books</a></li>
                         </ul>
                     </li>
                     <li class="reader-parent">
-                        <a class="am-cf" data-am-collapse="{target: '#reader-nav'}"><span class="am-icon-user"></span>
+                        <a class="am-cf" data-am-collapse="{target: '#reader-nav'}" th:text="#{readerManage}"><span class="am-icon-user"></span>
                             Reader Management <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
                         <ul class="am-list am-collapse admin-sidebar-sub am-in" id="reader-nav">
-                            <li><a href="javascript:;" onclick="clickFun(3)"><span class="am-icon-plus"></span> Account Management</a></li>
-                            <li><a href="javascript:;" onclick="clickFun(4)"><span class="am-icon-clock-o"></span> Reader
+                            <li><a href="javascript:;" onclick="clickFun(3)" th:text="#{accountManagement}"><span class="am-icon-plus"></span> Account Management</a></li>
+                            <li><a href="javascript:;" onclick="clickFun(4)" th:text="#{readerReservation}"><span class="am-icon-clock-o"></span> Reader
                                     Reservation</a></li>
-                            <li><a href="javascript:;" onclick="clickFun(5)"><span class="am-icon-bars"></span> Borrow History</a></li>
-                            <li><a href="javascript:;" onclick="clickFun(6)"><span class="am-icon-bars"></span> Return History</a></li>
+                            <li><a href="javascript:;" onclick="clickFun(5)" th:text="#{borrowHistory}"><span class="am-icon-bars"></span> Borrow History</a></li>
+                            <li><a href="javascript:;" onclick="clickFun(6)" th:text="#{returnHistory}"><span class="am-icon-bars"></span> Return History</a></li>
                         </ul>
                     </li>
 
                     <li class="reader-parent">
-                        <a class="am-cf" data-am-collapse="{target: '#ann-nav'}"><span class="am-icon-comment"></span>
+                        <a class="am-cf" data-am-collapse="{target: '#ann-nav'}" th:text="#{announcement}"><span class="am-icon-comment"></span>
                             Announcement <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
                         <ul class="am-list am-collapse admin-sidebar-sub am-in" id="ann-nav">
-                            <li><a href="#" onclick="clickFun(7)"><span class="am-icon-pencil-square-o"></span> Edit
+                            <li><a href="#" onclick="clickFun(7)" th:text="#{editAnnouncement}"><span class="am-icon-pencil-square-o"></span> Edit
                                     Announcement
                                 </a></li>
                         </ul>
@@ -118,7 +118,7 @@
         <div class="admin-content librarian-display" id="edit-book">
             <div class="admin-content-body">
                 <div class="am-cf am-padding am-padding-bottom-0">
-                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">Add/Edit Books</strong></div>
+                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg" th:text="#{addedit}">Add/Edit Books</strong></div>
                 </div>
                 <hr>
 
@@ -126,10 +126,10 @@
                     <div class="am-u-sm-12 am-u-md-6">
                         <div class="am-btn-toolbar">
                             <div class="am-btn-group am-btn-group-xs">
-                                <button id="addNewBook" type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span>
+                                <button id="addNewBook" type="button" class="am-btn am-btn-default" th:text="#{add}"><span class="am-icon-plus"></span>
                                     Add
                                 </button>
-                                <button id="deleteAccount" type="button" class="am-btn am-btn-default" onclick="delSel();">
+                                <button id="deleteAccount" type="button" class="am-btn am-btn-default" onclick="delSel();" th:text="#{delete}">
                                     <span class="am-icon-trash"></span> Delete
                                 </button>
                             </div>
@@ -140,7 +140,7 @@
                         <div class="am-input-group am-input-group-sm">
                             <input type="text" class="am-form-field" placeholder="BarCode, Reader ID" id="book-search">
                             <span class="am-input-group-btn">
-                                <button class="am-btn am-btn-default" type="button" onclick="searchBook()">Search</button>
+                                <button class="am-btn am-btn-default" type="button" onclick="searchBook()" th:text="#{search}">Search</button>
                             </span>
                         </div>
                     </div>
@@ -154,15 +154,15 @@
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox"/></th>
-                                        <th>Serial ID</th>
-                                        <th>Book ID</th>
-                                        <th>Inventory</th>
-                                        <th>Author</th>
-                                        <th>BarCode</th>
-                                        <th>BookName</th>
-                                        <th>BookType</th>
-                                        <th>Location</th>
-                                        <th>Operation</th>
+                                        <th th:text="#{serialID}">Serial ID</th>
+                                        <th th:text="#{bookID}">Book ID</th>
+                                        <th th:text="#{inventory}">Inventory</th>
+                                        <th th:text="#{author}">Author</th>
+                                        <th th:text="#{barCode}">BarCode</th>
+                                        <th th:text="#{bookName}">BookName</th>
+                                        <th th:text="#{bookType}">BookType</th>
+                                        <th th:text="#{location}">Location</th>
+                                        <th th:text="#{operations}">Operations</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -183,7 +183,7 @@
                                         </div>
                                 </div>
                                 <div class="am-form-group">
-                                    <label  class="am-u-sm-2 am-form-label">BookImg:</label>
+                                    <label  class="am-u-sm-2 am-form-label" th:text="#{bookImg}">BookImg</label>
                                     <div class="am-u-sm-10">
                                         <input class="am-modal-prompt-input" type="text" id="doc1"
                                                placeholder="Enter your bookImg">
@@ -191,7 +191,7 @@
                                 </div>
             
                                 <div class="am-form-group">
-                                    <label  class="am-u-sm-2 am-form-label">Author：</label>
+                                    <label  class="am-u-sm-2 am-form-label" th:text="#{author}">Author</label>
                                     <div class="am-u-sm-10">
                                         <input class="am-modal-prompt-input" type="text" id="doc2"
                                                placeholder="Enter your name">
@@ -199,7 +199,7 @@
                                 </div>
             
                                 <div class="am-form-group">
-                                    <label for="doc-bookname" class="am-u-sm-2 am-form-label">BookName：</label>
+                                    <label for="doc-bookname" class="am-u-sm-2 am-form-label" th:text="#{bookName}">BookName</label>
                                     <div class="am-u-sm-10">
                                         <input class="am-modal-prompt-input" type="text" id="doc3"
                                                placeholder="Enter your bookName">
@@ -207,7 +207,7 @@
                                 </div>
             
                                 <div class="am-form-group" id="input-deposit-0">
-                                    <label for="doc-bookType" class="am-u-sm-2 am-form-label">BookType:</label>
+                                    <label for="doc-bookType" class="am-u-sm-2 am-form-label" th:text="#{bookType}">BookType</label>
                                     <div class="am-u-sm-10">
                                         <input class="am-modal-prompt-input" type="text" id="doc4"
                                                placeholder="Enter your bookType">
@@ -215,14 +215,14 @@
                                 </div>
             
                                 <div class="am-form-group" id="input-deposit-1">
-                                        <label for="doc-price" class="am-u-sm-2 am-form-label">Price:</label>
+                                        <label for="doc-price" class="am-u-sm-2 am-form-label" th:text="#{price}">Price</label>
                                         <div class="am-u-sm-10">
                                             <input class="am-modal-prompt-input" type="number" id="doc5"
                                                    placeholder="Enter your price">
                                         </div>
                                 </div>
                                 <div class="am-form-group" id="input-deposit-2">
-                                        <label for="doc-decription" class="am-u-sm-2 am-form-label">Decription:</label>
+                                        <label for="doc-decription" class="am-u-sm-2 am-form-label" th:text="#{description}">Description</label>
                                         <div class="am-u-sm-10">
                                             <input class="am-modal-prompt-input" type="text" id="doc6"
                                                    placeholder="Enter your decription">
@@ -230,7 +230,7 @@
                                 </div>
             
                                 <div class="am-form-group" id="input-deposit">
-                                        <label for="doc-location" class="am-u-sm-2 am-form-label">Location:</label>
+                                        <label for="doc-location" class="am-u-sm-2 am-form-label" th:text="#{location}">Location</label>
                                         <div class="am-u-sm-10">
                                             <input class="am-modal-prompt-input" type="text" id="doc7"
                                                    placeholder="Enter your location">
@@ -241,8 +241,8 @@
             
                         </div>
                         <div class="am-modal-footer">
-                            <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
-                            <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
+                            <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+                            <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{confirm}">confirm</span>
                         </div>
                 </div>
             </div>
@@ -252,14 +252,14 @@
                         <div class="am-modal-bd">
                             <form class="am-form am-form-horizontal" id="editBookForm">
                                 <div class="am-form-group">
-                                    <label  class="am-u-sm-2 am-form-label">BookId:</label>
+                                    <label  class="am-u-sm-2 am-form-label" th:text="#{bookID}">Book ID</label>
                                     <div class="am-u-sm-10">
                                         <input class="am-modal-prompt-input" type="text"
                                                placeholder="Enter your ISBN" disabled>
                                     </div>
                                 </div>
                                 <div class="am-form-group">
-                                    <label  class="am-u-sm-2 am-form-label">Inventory:</label>
+                                    <label  class="am-u-sm-2 am-form-label" th:text="#{inventory}">Inventory</label>
                                     <div class="am-u-sm-10">
                                         <input class="am-modal-prompt-input" type="text"
                                                placeholder="Enter your bookImg">
@@ -267,14 +267,14 @@
                                 </div>
 
                                 <div class="am-form-group">
-                                    <label  class="am-u-sm-2 am-form-label">Author：</label>
+                                    <label  class="am-u-sm-2 am-form-label" th:text="#{author}">Author</label>
                                     <div class="am-u-sm-10">
                                         <input class="am-modal-prompt-input" type="text"
                                                placeholder="Enter your name" disabled>
                                     </div>
                                 </div>
                                 <div class="am-form-group">
-                                    <label  class="am-u-sm-2 am-form-label">BarCode：</label>
+                                    <label  class="am-u-sm-2 am-form-label" th:text="#{barCode}">BarCode</label>
                                     <div class="am-u-sm-10">
                                         <input class="am-modal-prompt-input" type="text"
                                                placeholder="" disabled>
@@ -282,7 +282,7 @@
                                 </div>
 
                                 <div class="am-form-group">
-                                    <label for="doc-bookname" class="am-u-sm-2 am-form-label">BookName：</label>
+                                    <label for="doc-bookname" class="am-u-sm-2 am-form-label" th:text="#{bookName}">BookName</label>
                                     <div class="am-u-sm-10">
                                         <input class="am-modal-prompt-input" type="text"
                                                placeholder="Enter your bookName" disabled>
@@ -290,7 +290,7 @@
                                 </div>
 
                                 <div class="am-form-group" id="input-deposit-0">
-                                    <label for="doc-bookType" class="am-u-sm-2 am-form-label">BookType:</label>
+                                    <label for="doc-bookType" class="am-u-sm-2 am-form-label" th:text="#{bookType}">BookType</label>
                                     <div class="am-u-sm-10">
                                         <input class="am-modal-prompt-input" type="text"
                                                placeholder="Enter your bookType">
@@ -298,14 +298,14 @@
                                 </div>
 
                                 <div class="am-form-group" id="input-deposit-1">
-                                    <label for="doc-price" class="am-u-sm-2 am-form-label">Price:</label>
+                                    <label for="doc-price" class="am-u-sm-2 am-form-label" th:text="#{price}">Price</label>
                                     <div class="am-u-sm-10">
                                         <input class="am-modal-prompt-input" type="number"
                                                placeholder="Enter your price">
                                     </div>
                                 </div>
                                 <div class="am-form-group" id="input-deposit-2">
-                                    <label for="doc-decription" class="am-u-sm-2 am-form-label">Decription:</label>
+                                    <label for="doc-decription" class="am-u-sm-2 am-form-label" th:text="#{description}">Description</label>
                                     <div class="am-u-sm-10">
                                         <input class="am-modal-prompt-input" type="text"
                                                placeholder="Enter your decription">
@@ -313,7 +313,7 @@
                                 </div>
 
                                 <div class="am-form-group" id="input-deposit">
-                                    <label for="doc-location" class="am-u-sm-2 am-form-label">Location:</label>
+                                    <label for="doc-location" class="am-u-sm-2 am-form-label" th:text="#{location}">Location</label>
                                     <div class="am-u-sm-10">
                                         <input class="am-modal-prompt-input" type="text"
                                                placeholder="Enter your location">
@@ -323,8 +323,8 @@
 
                         </div>
                         <div class="am-modal-footer">
-                            <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
-                            <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
+                            <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+                            <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{confirm}">confirm</span>
                         </div>
                     </div>
                 </div>
@@ -337,7 +337,7 @@
                         <img class="am-radius" src="" alt="..." >
                     </div>
                     <div class="am-modal-footer">
-                        <span class="am-modal-btn" data-am-modal-cancel="">close</span>
+                        <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{close}">Close</span>
                     </div>
                 </div>
             </div>
@@ -347,7 +347,7 @@
         <div class="admin-content librarian-display" id="borrow-book" style="display:none">
             <div class="admin-content-body">
                 <div class="am-cf am-padding am-padding-bottom-0">
-                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">Borrow Books</strong></div>
+                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg" th:text="#{borrowBooks}">Borrow Books</strong></div>
                 </div>
                 <hr>
 
@@ -355,7 +355,7 @@
                     <div class="am-u-sm-12 am-u-md-6">
                         <div class="am-btn-toolbar">
                             <div class="am-btn-group am-btn-group-xs">
-                                <button id="borrowButton" type="button" class="am-btn am-btn-default"><span class="am-icon-arrow-circle-right"></span>
+                                <button id="borrowButton" type="button" class="am-btn am-btn-default" th:text="#{borrow}"><span class="am-icon-arrow-circle-right"></span>
                                     Borrow
                                 </button>
                             </div>
@@ -366,7 +366,7 @@
                         <div class="am-input-group am-input-group-sm">
                             <input type="text" class="am-form-field" placeholder="Book Name,Author,Book Type" id="search-key">
                             <span class="am-input-group-btn">
-                                <button class="am-btn am-btn-default" type="button" id="search" onclick="searchBook()">Search</button>
+                                <button class="am-btn am-btn-default" type="button" id="search" onclick="searchBook()" th:text="#{search}">Search</button>
                             </span>
                         </div>
                     </div>
@@ -379,12 +379,12 @@
                                 <thead>
                                     <tr>
                                         <th class="table-check"><input type="checkbox" /></th>
-                                        <th>Serial ID</th>
-                                        <th>BarCode</th>
-                                        <th>BookName</th>
-                                        <th>Location</th>
-                                        <th>Price</th>
-                                        <th>Operations</th>
+                                        <th th:text="#{serialID}">Serial ID</th>
+                                        <th th:text="#{barCode}">BarCode</th>
+                                        <th th:text="#{bookName}">BookName</th>
+                                        <th th:text="#{location}">Location</th>
+                                        <th th:text="#{price}">Price</th>
+                                        <th th:text="#{operations}">Operations</th>
                                     </tr>
                                 </thead>
                                 <!--insert tbody here-->
@@ -396,25 +396,25 @@
 
             <div class="am-modal am-modal-prompt" tabindex="-1" id="borrowPrompt">
                 <div class="am-modal-dialog">
-                    <div class="am-modal-hd"><h4>Borrow Books</h4></div>
+                    <div class="am-modal-hd"><h4 th:text="#{borrowBooks}">Borrow Books</h4></div>
                     <div class="am-modal-bd">
                         <form class="am-form am-form-horizontal">
                             <div class="am-form-group">
-                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label am-text-truncate">barCode:</label>
+                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label am-text-truncate" th:text="#{barCode}">BarCode</label>
                                 <div class="am-u-sm-9">
                                     <input class="am-modal-prompt-input" type="number" id="doc-barCode" placeholder="Enter your barCode">
                                 </div>
                             </div>
         
                             <div class="am-form-group">
-                                <label for="dock-borrow-reader" class="am-u-sm-3 am-form-label am-text-truncate">reader ID:</label>
+                                <label for="dock-borrow-reader" class="am-u-sm-3 am-form-label am-text-truncate" th:text="#{readerID}">Reader ID</label>
                                 <div class="am-u-sm-9">
                                     <input class="am-modal-prompt-input" type="number" id="doc-borrow-reader" placeholder="Enter reader ID">
                                 </div>
                             </div>
 
                             <div class="am-form-group">
-                                <label for="doc-borrow-book" class="am-u-sm-3 am-form-label am-text-truncate">book ID:</label>
+                                <label for="doc-borrow-book" class="am-u-sm-3 am-form-label am-text-truncate" th:text="#{bookID}">Book ID</label>
                                 <div class="am-u-sm-9">
                                     <input class="am-modal-prompt-input" type="number" id="doc-borrow-book" placeholder="Enter book ID">
                                 </div>
@@ -424,20 +424,20 @@
         
                     </div>
                     <div class="am-modal-footer">
-                        <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
-                        <span class="am-modal-btn" data-am-modal-confirm="">login</span>
+                        <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+                        <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{login}">login</span>
                     </div>
                 </div>
             </div>
             <div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt" ><!--style="display: none"-->
                 <div class="am-modal-dialog">
-                    <div class="am-modal-hd">Reader Phone Number</div>
+                    <div class="am-modal-hd" th:text="#{readerPhoneNumber}">Reader Phone Number</div>
                     <div class="am-modal-bd">
                         <input type="text" class="am-modal-prompt-input">
                     </div>
                     <div class="am-modal-footer">
-                        <span class="am-modal-btn" data-am-modal-cancel>Cancel</span>
-                        <span class="am-modal-btn" data-am-modal-confirm>Commit</span>
+                        <span class="am-modal-btn" data-am-modal-cancel th:text="#{cancel}">Cancel</span>
+                        <span class="am-modal-btn" data-am-modal-confirm th:text="#{commit}">Commit</span>
                     </div>
                 </div>
             </div>
@@ -447,7 +447,7 @@
         <div class="admin-content librarian-display" id="return-book" style="display:none">
             <div class="admin-content-body">
                 <div class="am-cf am-padding am-padding-bottom-0">
-                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">Return Book</strong></div>
+                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg" th:text="#{returnBook}">Return Book</strong></div>
                 </div>
 
                 <hr>
@@ -461,8 +461,8 @@
                                         <form class="am-form" id="bar-code-form" enctype="multipart/form-data">
                                             <div class="am-form-group">
                                                 <input type="file" id="user-pic" name="file">
-                                                <p class="am-form-help">Scan the Bar Code...</p>
-                                                <p><button type="button" onclick="submitBarCode(this)" class="am-btn am-btn-default">提交</button></p>
+                                                <p class="am-form-help" th:text="#{scanBarCode}">Scan the Bar Code...</p>
+                                                <p><button type="button" onclick="submitBarCode(this)" class="am-btn am-btn-default" th:text="#{confirm}">confirm</button></p>
                                             </div>
                                         </form>
                                     </div>
@@ -475,21 +475,21 @@
                         <form class="am-form am-form-horizontal" id="return-form">
 
                             <div class="am-form-group">
-                                <label for="bar-code" class="am-u-sm-3 am-form-label">Bar Code</label>
+                                <label for="bar-code" class="am-u-sm-3 am-form-label" th:text="#{barCode}">BarCode</label>
                                 <div class="am-u-sm-9">
                                     <input type="text" d="bar-code" placeholder="enter bar code">
                                 </div>
                             </div>
 
                             <div class="am-form-group">
-                                <label for="book-id" class="am-u-sm-3 am-form-label">Book ID</label>
+                                <label for="book-id" class="am-u-sm-3 am-form-label" th:text="#{bookID}">Book ID</label>
                                 <div class="am-u-sm-9">
                                     <input type="number" pattern="[0-9]*" id="book-id" placeholder="enter book id">
                                 </div>
                             </div>
 
                             <div class="am-form-group">
-                                <label for="book-inventery" class="am-u-sm-3 am-form-label">Reader Phone</label>
+                                <label for="book-inventery" class="am-u-sm-3 am-form-label" th:text="#{readerPhone}">Reader Phone</label>
                                 <div class="am-u-sm-9">
                                     <input type="text"  id="reader-id" placeholder="enter your phone number">
                                 </div>
@@ -497,7 +497,7 @@
 
                             <div class="am-form-group">
                                 <div class="am-u-sm-9 am-u-sm-push-3">
-                                    <button type="button" class="am-btn am-btn-primary" onclick="returnBook(this)">Return</button>
+                                    <button type="button" class="am-btn am-btn-primary" onclick="returnBook(this)" th:text="#{return}">Return</button>
                                 </div>
                             </div>
                         </form>
@@ -510,7 +510,7 @@
         <div class="admin-content librarian-display" id="readerlist" style="display:none">
             <div class="admin-content-body">
                 <div class="am-cf am-padding am-padding-bottom-0">
-                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">Account Management</strong></div>
+                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg" th:text="#{accountManagement}">Account Management</strong></div>
                 </div>
 
                 <hr>
@@ -519,10 +519,10 @@
                     <div class="am-u-sm-12 am-u-md-6">
                         <div class="am-btn-toolbar">
                             <div class="am-btn-group am-btn-group-xs">
-                                <button id="addReader" type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span>
+                                <button id="addReader" type="button" class="am-btn am-btn-default" th:text="#{add}"><span class="am-icon-plus"></span>
                                     Add
                                 </button>
-                                <button id="delete" type="button" class="am-btn am-btn-default" onclick="delSel();">
+                                <button id="delete" type="button" class="am-btn am-btn-default" onclick="delSel();" th:text="#{delete}">
                                     <span class="am-icon-trash"></span> Delete
                                 </button>
                             </div>
@@ -537,13 +537,13 @@
                                 <thead id="reader-thead">
                                     <tr>
                                         <th class="table-check"><input type="checkbox" onclick="selAll(this);" /></th>
-                                        <th>Serial ID</th>
-                                        <th>Reader ID</th>
-                                        <th>User Name</th>
-                                        <th>Email</th>
-                                        <th>Phone Number</th>
-                                        <th>Password</th>
-                                        <th>Operations</th>
+                                        <th th:text="#{serialID}">Serial ID</th>
+                                        <th th:text="#{readerID}">Reader ID</th>
+                                        <th th:text="#{userName}">UserName</th>
+                                        <th th:text="#{emails}">Email</th>
+                                        <th th:text="#{phoneNumber}">PhoneNumber</th>
+                                        <th th:text="#{passwords}">Password</th>
+                                        <th th:text="#{operations}">Operations</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -557,7 +557,7 @@
                     <div class="am-modal-bd">
                         <form class="am-form am-form-horizontal" id="addAccountForm">
                             <div class="am-form-group">
-                                <label  class="am-u-sm-3 am-form-label">UserName:</label>
+                                <label  class="am-u-sm-3 am-form-label" th:text="#{userName}">UserName</label>
                                 <div class="am-u-sm-9">
                                     <input class="am-modal-prompt-input" type="text"
                                            placeholder="Enter your name">
@@ -565,7 +565,7 @@
                             </div>
 
                             <div class="am-form-group">
-                                <label for="doc-email" class="am-u-sm-3 am-form-label">Email:</label>
+                                <label for="doc-email" class="am-u-sm-3 am-form-label" th:text="#{emails}">Email</label>
                                 <div class="am-u-sm-9">
                                     <input class="am-modal-prompt-input" type="email"
                                            placeholder="Enter your email">
@@ -573,7 +573,7 @@
                             </div>
 
                             <div class="am-form-group">
-                                <label for="doc-pwd" class="am-u-sm-3 am-form-label">PhoneNumber:</label>
+                                <label for="doc-pwd" class="am-u-sm-3 am-form-label" th:text="#{phoneNumber}">PhoneNumber</label>
                                 <div class="am-u-sm-9">
                                     <input class="am-modal-prompt-input" type="text"
                                            placeholder="Enter your phoneNumber">
@@ -584,26 +584,26 @@
 
                     </div>
                     <div class="am-modal-footer">
-                        <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
-                        <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
+                        <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+                        <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{confirm}" >confirm</span>
                     </div>
                 </div>
             </div>
             <div class="am-modal am-modal-prompt" tabindex="-1" id="editAccountPrompt">
                 <div class="am-modal-dialog">
-                    <div class="am-modal-hd"><h4 id="edit-account-title"></h4></div>
+                    <div class="am-modal-hd"><h4 id="edit-account-title" th:text="#{editAccount}">Edit Account</h4></div>
                     <div class="am-modal-bd">
                         <form class="am-form am-form-horizontal" id="editAccountForm">
                             <div class="am-form-group">
-                                <label  class="am-u-sm-3 am-form-label">ReaderId:</label>
-                                <div class="am-u-sm-9">
+                                <label  class="am-u-sm-4 am-form-label" th:text="#{readerID}">Reader ID</label>
+                                <div class="am-u-sm-8">
                                     <input class="am-modal-prompt-input" type="text"
                                            placeholder="Enter your name" disabled>
                                 </div>
                             </div>
 
                             <div class="am-form-group">
-                                <label for="doc-email" class="am-u-sm-3 am-form-label">UserName:</label>
+                                <label for="doc-email" class="am-u-sm-3 am-form-label" th:text="#{userName}">UserName</label>
                                 <div class="am-u-sm-9">
                                     <input class="am-modal-prompt-input" type="email"
                                            placeholder="Enter your email">
@@ -611,21 +611,21 @@
                             </div>
 
                             <div class="am-form-group">
-                                <label for="doc-pwd" class="am-u-sm-3 am-form-label">Email:</label>
+                                <label for="doc-pwd" class="am-u-sm-3 am-form-label" th:text="#{emails}">Email</label>
                                 <div class="am-u-sm-9">
                                     <input class="am-modal-prompt-input" type="text"
                                            placeholder="Enter your phoneNumber">
                                 </div>
                             </div>
                             <div class="am-form-group">
-                                <label for="doc-pwd" class="am-u-sm-3 am-form-label">Phone:</label>
-                                <div class="am-u-sm-9">
+                                <label for="doc-pwd" class="am-u-sm-4 am-form-label" th:text="#{phoneNumber}">PhoneNumber</label>
+                                <div class="am-u-sm-8">
                                     <input class="am-modal-prompt-input" type="text"
                                            placeholder="Enter your phoneNumber">
                                 </div>
                             </div>
                             <div class="am-form-group">
-                                <label for="doc-pwd" class="am-u-sm-3 am-form-label">Password:</label>
+                                <label for="doc-pwd" class="am-u-sm-3 am-form-label" th:text="#{passwords}">Password</label>
                                 <div class="am-u-sm-9">
                                     <input class="am-modal-prompt-input" type="text"
                                            placeholder="Enter your phoneNumber">
@@ -636,8 +636,8 @@
 
                     </div>
                     <div class="am-modal-footer">
-                        <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
-                        <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
+                        <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+                        <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{confirm}">confirm</span>
                     </div>
                 </div>
             </div>
@@ -647,17 +647,17 @@
         <div class="admin-content librarian-display" id="reservation" style="display:none">
             <div class="admin-content-body">
                 <div class="am-cf am-padding am-padding-bottom-0">
-                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">Reader Reservation</strong></div>
+                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg" th:text="#{readerReservation}">Reader Reservation</strong></div>
                 </div>
                 <hr>
                 <div class="am-g">
                     <div class="am-u-sm-12 am-u-md-6">
                         <div class="am-btn-toolbar">
                             <div class="am-btn-group am-btn-group-xs">
-                                <button id="complete" type="button" class="am-btn am-btn-default"><span class="am-icon-check"></span>
+                                <button id="complete" type="button" class="am-btn am-btn-default" th:text="#{complete}"><span class="am-icon-check" ></span>
                                     Complete
                                 </button>
-                                <button id="close" type="button" class="am-btn am-btn-default">
+                                <button id="close" type="button" class="am-btn am-btn-default" th:text="#{close}">
                                     <span class="am-icon-close"></span> Close
                                 </button>
                             </div>
@@ -668,7 +668,7 @@
                         <div class="am-input-group am-input-group-sm">
                             <input type="text" class="am-form-field" placeholder="BarCode, Reader ID">
                             <span class="am-input-group-btn">
-                                <button class="am-btn am-btn-default" type="button" id="search" onclick="searchBook()">Search</button>
+                                <button class="am-btn am-btn-default" type="button" id="search" onclick="searchBook()" th:text="#{search}">Search</button>
                             </span>
                         </div>
                     </div>
@@ -682,13 +682,13 @@
                                     <tr>
 
                                         <th class="table-check"><input type="checkbox" /></th>
-                                        <th>Serial ID</th>
-                                        <th>Order ID</th>
-                                        <th>Reader ID</th>
-                                        <th>BarCode</th>
-                                        <th>BookName</th>
-                                        <th>Price</th>
-                                        <th>Operations</th>
+                                        <th th:text="#{serialID}">Serial ID</th>
+                                        <th th:text="#{orderID}">Order ID</th>
+                                        <th th:text="#{readerID}">Reader ID</th>
+                                        <th th:text="#{barCode}">BarCode</th>
+                                        <th th:text="#{bookName}">BookName</th>
+                                        <th th:text="#{price}">Price</th>
+                                        <th th:text="#{operations}">Operations</th>
                                     </tr>
                                 </thead>
 
@@ -725,7 +725,7 @@
         <div class="admin-content librarian-display" id="borrow-his" style="display:none">
             <div class="admin-content-body">
                 <div class="am-cf am-padding am-padding-bottom-0">
-                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">Borrow History</strong></div>
+                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg" th:text="#{borrowHistory}">Borrow History</strong></div>
                 </div>
                 <hr>
 
@@ -736,11 +736,11 @@
                                 <thead id="borrow-history-thead">
                                     <tr>
 
-                                        <th>Serial ID</th>
-                                        <th>Borrow ID</th>
-                                        <th>Reader ID</th>
-                                        <th>Book ID</th>
-                                        <th>Borrow Date</th>
+                                        <th th:text="#{serialID}">Serial ID</th>
+                                        <th th:text="#{borrowID}">Borrow ID</th>
+                                        <th th:text="#{readerID}">Reader ID</th>
+                                        <th th:text="#{bookID}">Book ID</th>
+                                        <th th:text="#{borrowDate}">BorrowDate</th>
                                     </tr>
                                 </thead>
 
@@ -765,7 +765,7 @@
         <div class="admin-content librarian-display" id="return-his" style="display:none">
             <div class="admin-content-body">
                 <div class="am-cf am-padding am-padding-bottom-0">
-                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">Return History</strong></div>
+                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg" th:text="#{returnHistory}">Return History</strong></div>
                 </div>
                 <hr>
 
@@ -775,11 +775,11 @@
                             <table id="return-history-table" class="am-table am-table-striped am-table-hover table-main">
                                 <thead id="return-history-thead">
                                     <tr>
-                                        <th>Serial ID</th>
-                                        <th>Return ID</th>
-                                        <th>Reader ID</th>
-                                        <th>Book ID</th>
-                                        <th>Return Date</th>
+                                        <th th:text="#{serialID}">Serial ID</th>
+                                        <th th:text="#{returnID}">Return ID</th>
+                                        <th th:text="#{readerID}">Reader ID</th>
+                                        <th th:text="#{bookID}">Book ID</th>
+                                        <th th:text="#{returnDate}">ReturnDate</th>
                                     </tr>
                                 </thead>
 
@@ -809,10 +809,10 @@
                     <div class="am-u-sm-12 am-u-md-6">
                         <div class="am-btn-toolbar">
                             <div class="am-btn-group am-btn-group-xs">
-                                <button id="addAnnouncement" type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span>
+                                <button id="addAnnouncement" type="button" class="am-btn am-btn-default"><span class="am-icon-plus" th:text="#{add}"></span>
                                     Add
                                 </button>
-                                <button id="delete" type="button" class="am-btn am-btn-default" onclick="delSel();">
+                                <button id="delete" type="button" class="am-btn am-btn-default" onclick="delSel();" th:text="#{delete}">
                                     <span class="am-icon-trash"></span> Delete
                                 </button>
                             </div>
@@ -828,11 +828,11 @@
                                     <tr>
 
                                         <th class="table-check"><input type="checkbox" /></th>
-                                        <th>Serial ID</th>
-                                        <th>Announcement ID</th>
-                                        <th>Title</th>
-                                        <th>Content</th>
-                                        <th>Operations</th>
+                                        <th th:text="#{serialID}">Serial ID</th>
+                                        <th th:text="#{announcementID}">Announcement ID</th>
+                                        <th th:text="#{title}">Title</th>
+                                        <th th:text="#{content}">Content</th>
+                                        <th th:text="#{operations}">Operations</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -842,19 +842,19 @@
             </div>
             <div class="am-modal am-modal-prompt" tabindex="-1" id="addAnnouncementPrompt">
                 <div class="am-modal-dialog">
-                    <div class="am-modal-hd"><h4 id="announcement-title"></h4></div>
+                    <div class="am-modal-hd"><h4 id="announcement-title" th:text="#{addAnnouncement}">Add Announcement</h4></div>
                     <div class="am-modal-bd">
                         <form class="am-form am-form-horizontal" id="addAnnouncementForm">
                             <div class="am-form-group">
-                                <label for="doc-email" class="am-u-sm-3 am-form-label">Title:</label>
+                                <label for="doc-email" class="am-u-sm-3 am-form-label" th:text="#{title}">Title</label>
                                 <div class="am-u-sm-9">
-                                    <input class="am-modal-prompt-input" type="email"
+                                    <input class="am-modal-prompt-input" type="text"
                                            placeholder="Enter your title">
                                 </div>
                             </div>
 
                             <div class="am-form-group">
-                                <label for="doc-pwd" class="am-u-sm-3 am-form-label">Content:</label>
+                                <label for="doc-pwd" class="am-u-sm-3 am-form-label" th:text="#{content}">Content</label>
                                 <div class="am-u-sm-9">
                                     <input class="am-modal-prompt-input" type="text"
                                            placeholder="Enter your content">
@@ -865,8 +865,8 @@
 
                     </div>
                     <div class="am-modal-footer">
-                        <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
-                        <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
+                        <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+                        <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{confirm}">confirm</span>
                     </div>
                 </div>
             </div>
@@ -876,42 +876,42 @@
     <!--add book pop up-->
     <div class="over" style="display:none;" id="over">
         <div class="over_child">
-            <p>add book information</p>
+            <p th:text="#{addBook}">add book information</p>
             <table>
                 <tbody id="over_tb">
                     <tr>
-                        <td>Inventory：</td>
+                        <td th:text="#{inventory}">Inventory</td>
                         <td><input type="text" id="i1"></td>
                     </tr>
                     <tr>
-                        <td>Author：</td>
+                        <td th:text="#{author}">Author</td>
                         <td><input type="text" id="i2"></td>
                     </tr>
                     <tr>
-                        <td>BookName：</td>
+                        <td th:text="#{bookName}">BookName</td>
                         <td><input type="text" id="i3"></td>
                     </tr>
                     <tr>
-                        <td>BookType：</td>
+                        <td th:text="#{bookType}">BookType</td>
                         <td><input type="text" id="i4"></td>
                     </tr>
                     <tr>
-                        <td>Price：</td>
+                        <td th:text="#{price}">Price</td>
                         <td><input type="number" id="i5"></td>
                     </tr>
                     <tr>
-                        <td>Decription：</td>
+                        <td th:text="#{description}">Description</td>
                         <td><input type="text" id="i6"></td>
                     </tr>
                     <tr>
-                        <td>Location：</td>
+                        <td th:text="#{location}">Location</td>
                         <td><input type="text" id="i7"></td>
                     </tr>
                 </tbody>
                 <tr>
                     <td colspan="2">
-                        <input type="button" value="cancel" id="hide23" class="button1" />
-                        <input type="button" value="confirm" onclick="addTr();" class="button2" />
+                        <input type="button" value="cancel" id="hide23" class="button1" th:text="#{cancel}"/>
+                        <input type="button" value="confirm" onclick="addTr();" class="button2" th:text="#{confirm}"/>
                     </td>
                 </tr>
             </table>

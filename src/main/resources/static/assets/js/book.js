@@ -12,7 +12,7 @@ $('#addBook').click(function () {
 	// 		publisher = data.publisher;
      //    }
 	// });
-	$('#prompt-title').text('Add Book')
+	//$('#prompt-title').text('Add Book')
     $('#addAccountPrompt').modal({
 		relatedTarget: this,
 		

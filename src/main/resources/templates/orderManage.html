@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,19 +51,19 @@
 
             <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
                 <div class="am-topbar-right">
-                    <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home">Back Home </button>
-                    <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
+                    <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"  id="home" th:text="#{back}">Back Home </button>
+                    <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm" th:text="#{logOut}">Log out</button>
                 </div>
 
                 <div class="am-topbar-right">
                     <li class="am-dropdown am-dropdown-header" data-am-dropdown>
-                        <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                        <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;" th:text="#{English}">
                             English <span class="am-icon-caret-down"></span>
                         </a>
                         <ul class="am-dropdown-content">
-                            <li class="am-dropdown-header">Language Setting</li>
-                            <li><a id="English" href="#">English</a></li>
-                            <li><a id="Chinese" href="#">中文</a></li>
+                            <li class="am-dropdown-header" th:text="#{LanguageSetting}">Language Setting</li>
+                            <li><a id="English" href="#" th:text="#{English}">English</a></li>
+                            <li><a id="Chinese" href="#" th:text="#{Chinese}">中文</a></li>
                         </ul>
                     </li>
                 </div>
@@ -77,7 +78,7 @@
         <div class="admin-content-body">
             <div class="am-cf am-padding am-padding-bottom-0">
                 <div class="am-fl am-cf">
-                    <strong class="am-text-primary am-text-xxl" style="color: rgb(64, 100, 133);">Reservation List</strong>
+                    <strong class="am-text-primary am-text-xxl" style="color: rgb(64, 100, 133);" th:text="#{reservationList}">Reservation List</strong>
                 </div>
             </div>
 
@@ -86,10 +87,10 @@
             <div class="am-u-sm-12 am-u-md-6">
                 <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-xs">
-                        <button id="complete" type="button" class="am-btn am-btn-default"><span
+                        <button id="complete" type="button" class="am-btn am-btn-default" th:text="#{complete}"><span
                                 class="am-icon-check"></span> Complete
                         </button>
-                        <button id="close" type="button" class="am-btn am-btn-default">
+                        <button id="close" type="button" class="am-btn am-btn-default" th:text="#{close}">
                             <span class="am-icon-close" ></span> Close
                         </button>
                     </div>
@@ -100,7 +101,7 @@
                 <div class="am-input-group am-input-group-sm">
                     <input type="text" class="am-form-field" placeholder="BarCode, Reader ID">
                     <span class="am-input-group-btn">
-                    <button class="am-btn am-btn-default" type="button" id="search" onclick="searchBook()">Search</button>
+                    <button class="am-btn am-btn-default" type="button" id="search" onclick="searchBook()" th:text="#{search}">Search</button>
                     </span>
                 </div>
             </div>
@@ -113,13 +114,13 @@
                         <tr>
                         
                         <th class="table-check"><input type="checkbox" /></th>
-                            <th>Serial ID</th>
-                            <th>Book ID</th>
-                            <th>BookName</th>
-                            <th>ReaderId</th>
-                            <th>OrderDate</th>
-                            <th>OrderId</th>
-                            <th>Operations</th>
+                            <th th:text="#{serialID}">Serial ID</th>
+                            <th th:text="#{bookID}">Book ID</th>
+                            <th th:text="#{bookName}">BookName</th>
+                            <th th:text="#{readerID}">Reader ID</th>
+                            <th th:text="#{orderDate}">OrderDate</th>
+                            <th th:text="#{orderID}">Order ID</th>
+                            <th th:text="#{operations}">Operations</th>
                         </tr>
                         </thead>
     

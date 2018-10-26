@@ -1,5 +1,5 @@
 $('#addReader').click(function () {
-    $('#prompt-title').text('Add Reader')
+   // $('#prompt-title').text('Add Reader')
     $('#addAccountPrompt').modal({
         relatedTarget: this,
 

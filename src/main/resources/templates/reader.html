@@ -1,5 +1,6 @@
 <!doctype html>
 <html class="no-js">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,30 +45,30 @@
 
         <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
             <div class="am-topbar-right">
-                <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">Log out</button>
+                <button id="log-out" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm" th:text="#{logOut}">Log out</button>
             </div>
             <div class="am-topbar-right">
                 <li class="am-dropdown am-dropdown-header" data-am-dropdown>
-                    <a id="l" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                    <a id="l" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;" th:text="#{service}">
                         Service <span class="am-icon-caret-down"></span>
                     </a>
                     <ul class="am-dropdown-content">
-                        <li><a id="borrowHistory" >Borrow History</a></li>
-                        <li><a id="returnHistory" >Return History</a></li>
-                        <li><a id="unpaidFine" >Unpaid Fine</a></li>
+                        <li><a id="borrowHistory" th:text="#{borrowHistory}">Borrow History</a></li>
+                        <li><a id="returnHistory" th:text="#{returnHistory}">Return History</a></li>
+                        <li><a id="unpaidFine" th:text="#{unpaidFine}">Unpaid Fine</a></li>
                         <!--<li><a id="order" >Order</a></li>-->
                     </ul>
                 </li>
             </div>
             <div class="am-topbar-right">
                 <li class="am-dropdown am-dropdown-header" data-am-dropdown>
-                    <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                    <a id="language" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;" th:text="#{English}">
                         English <span class="am-icon-caret-down"></span>
                     </a>
                     <ul class="am-dropdown-content">
-                        <li class="am-dropdown-header">Language Setting</li>
-                        <li><a id="English" href="#">English</a></li>
-                        <li><a id="Chinese" href="#">中文</a></li>
+                        <li class="am-dropdown-header" th:text="#{LanguageSetting}">Language Setting</li>
+                        <li><a id="English" href="#" th:text="#{English}">English</a></li>
+                        <li><a id="Chinese" href="#" th:text="#{Chinese}">中文</a></li>
                     </ul>
                 </li>
             </div>
@@ -81,11 +82,11 @@
 
 <div class="am-modal am-modal-prompt" tabindex="-1" id="unpaidFinePrompt">
     <div class="am-modal-dialog">
-        <div class="am-modal-hd"><h4>Unpaid Fine</h4></div>
+        <div class="am-modal-hd"><h4 th:text="#{unpaidFine}">Unpaid Fine</h4></div>
         <div class="am-modal-bd">
             <form class="am-form am-form-horizontal">
                 <div class="am-form-group">
-                    <label for="doc-ipt-3" class="am-u-sm-4 am-form-label"> UnpaidFine:</label>
+                    <label for="doc-ipt-3" class="am-u-sm-4 am-form-label" th:text="#{UnpaidFine}"> UnpaidFine</label>
                     <div class="am-u-sm-8">
                         <input class="am-modal-prompt-input" type="text" id="unpaid-fine" disabled>
                     </div>
@@ -93,7 +94,7 @@
             </form>
         </div>
         <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel="">close</span>
+            <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{close}">Close</span>
             
         </div>
     </div>
@@ -101,11 +102,11 @@
 
 <div class="am-modal am-modal-prompt" tabindex="-1" id="readerPrompt">
     <div class="am-modal-dialog">
-        <div class="am-modal-hd"><h4 id="prompt-title">Edit Reader-information</h4></div>
+        <div class="am-modal-hd"><h4 id="prompt-title" th:text="#{editReader}">Edit Reader-information</h4></div>
         <div class="am-modal-bd">
             <form class="am-form am-form-horizontal">
                 <div class="am-form-group">
-                    <label for="doc-title" class="am-u-sm-2 am-form-label">Email:</label>
+                    <label for="doc-title" class="am-u-sm-2 am-form-label" th:text="#{emails}">Email</label>
                     <div class="am-u-sm-10">
                         <input class="am-modal-prompt-input" type="text" id="email"
                             placeholder="Enter your eamil">
@@ -113,7 +114,7 @@
                 </div>
 
                 <div class="am-form-group">
-                    <label for="doc-content" class="am-u-sm-2 am-form-label">UserName：</label>
+                    <label for="doc-content" class="am-u-sm-2 am-form-label" th:text="#{userName}">UserName</label>
                     <div class="am-u-sm-10">
                         <input class="am-modal-prompt-input" type="text" id="userName"
                             placeholder="Enter your userName">
@@ -121,7 +122,7 @@
                 </div>
 
                 <div class="am-form-group">
-                    <label for="doc-content" class="am-u-sm-2 am-form-label">PhoneNumber：</label>
+                    <label for="doc-content" class="am-u-sm-2 am-form-label" th:text="#{phoneNumber}">PhoneNumber</label>
                     <div class="am-u-sm-10">
                         <input class="am-modal-prompt-input" type="text" id="phoneNumber"
                             placeholder="Enter your phoneNumber">
@@ -129,7 +130,7 @@
                 </div>
 
                 <div class="am-form-group">
-                    <label for="doc-content" class="am-u-sm-2 am-form-label">Password：</label>
+                    <label for="doc-content" class="am-u-sm-2 am-form-label" th:text="#{passwords}">Password</label>
                     <div class="am-u-sm-10">
                         <input class="am-modal-prompt-input" type="password" id="password"
                             placeholder="Enter your password">
@@ -141,8 +142,8 @@
 
         </div>
         <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
-            <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
+            <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+            <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{confirm}">confirm</span>
         </div>
     </div>
 </div>
@@ -156,7 +157,7 @@
                 </div>
             </div>
 
-            <p>
+            <p th:text="#{projectName}">
                 Online Library Management System
             </p>
 
@@ -174,7 +175,7 @@
         <div id="bookPane" data-am-widget="list_news" class="am-list-news am-list-news-default" style="display: none">
             <div class="am-list-news-hd am-cf">
                 <a href="#" onclick="return false">
-                    <h2>Search Results</h2>
+                    <h2 th:text="#{searchResults}">Search Results</h2>
                 </a>
             </div>
             <div class="am-list-news-bd">
@@ -190,49 +191,49 @@
             <div class="am-modal-bd">
                 <form class="am-form am-form-horizontal">
                     <div class="am-form-group">
-                        <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">Author:</label>
+                        <label for="doc-ipt-3" class="am-u-sm-2 am-form-label" th:text="#{author}">Author</label>
                         <div class="am-u-sm-10">
                             <input class="am-modal-prompt-input" type="text" id="doc-ipt-3">
                         </div>
                     </div>
 
                     <div class="am-form-group">
-                        <label for="doc-ipt-2" class="am-u-sm-2 am-form-label">Name:</label>
+                        <label for="doc-ipt-2" class="am-u-sm-2 am-form-label" th:text="#{bookName}">BookName</label>
                         <div class="am-u-sm-10">
                             <input class="am-modal-prompt-input" type="text" id="doc-ipt-2" >
                         </div>
                     </div>
 
                     <div class="am-form-group">
-                        <label for="doc-ipt-1" class="am-u-sm-2 am-form-label">Type:</label>
+                        <label for="doc-ipt-1" class="am-u-sm-2 am-form-label" th:text="#{bookType}">BookType</label>
                         <div class="am-u-sm-10">
                             <input class="am-modal-prompt-input" type="text" id="doc-ipt-1" >
                         </div>
                     </div>
 
                     <div class="am-form-group">
-                        <label for="doc-ipt-4" class="am-u-sm-2 am-form-label">Location:</label>
+                        <label for="doc-ipt-4" class="am-u-sm-2 am-form-label" th:text="#{location}">Location</label>
                         <div class="am-u-sm-10">
                             <input class="am-modal-prompt-input" type="text" id="doc-ipt-4" >
                         </div>
                     </div>
 
                     <div class="am-form-group">
-                        <label for="doc-ipt-5" class="am-u-sm-2 am-form-label">Description:</label>
+                        <label for="doc-ipt-5" class="am-u-sm-2 am-form-label" th:text="#{description}">Description</label>
                         <div class="am-u-sm-10">
                             <input class="am-modal-prompt-input" type="text" id="doc-ipt-5" >
                         </div>
                     </div>
 
                     <div class="am-form-group">
-                        <label for="doc-ipt-6" class="am-u-sm-2 am-form-label">Price:</label>
+                        <label for="doc-ipt-6" class="am-u-sm-2 am-form-label" th:text="#{price}">Price</label>
                         <div class="am-u-sm-10">
                             <input class="am-modal-prompt-input" type="number" id="doc-ipt-6" >
                         </div>
                     </div>
 
                     <div class="am-form-group">
-                        <label for="doc-ipt-7" class="am-u-sm-2 am-form-label">BookImg:</label>
+                        <label for="doc-ipt-7" class="am-u-sm-2 am-form-label" th:text="#{bookImg}">BookImg</label>
                         <div class="am-u-sm-10">
                             <input class="am-modal-prompt-input" type="file" id="doc-ipt-7" >
                         </div>
@@ -243,8 +244,8 @@
 
             </div>
             <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
-                <span class="am-modal-btn" data-am-modal-confirm="">add</span>
+                <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+                <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{add}">add</span>
             </div>
         </div>
     </div>
