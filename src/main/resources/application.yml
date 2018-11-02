@@ -45,7 +45,7 @@ ftp:
   port: 21
   username: ftptest
   password: ftptest
-  basepath: /home/ftptest/templates
+  basepath: /home/ftptest/barcode
 
 
 

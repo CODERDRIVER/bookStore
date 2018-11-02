@@ -1079,7 +1079,7 @@ $('#log-out').click(function () {
 });
 
 function showBarCode(e){
-    var barCodeUrl = e.name;
+    var barCodeUrl = "http://"+e.name;
     //assets/i/bookicon1.png
     // 设置src
     $("#showBarCode").find("img")[0].src=barCodeUrl;

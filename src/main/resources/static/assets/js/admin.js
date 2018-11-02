@@ -531,39 +531,47 @@ var selAll = function() {
 }
 
 
-/* 获取修改当前公告信息 */
-var modTr = function(obj) {
-	var buttonConfirm = getId("hide");
-	getId("lookMessages").innerHTML = "Edit account";
-	buttonConfirm.style.display = "block";
-	// 获得隐藏的DIV
-	// var overDiv = getId("over2");
-    // // 将隐藏的div有隐藏显现出来
-    // console.log(getId("over2"));
-    // overDiv.style.display = "block";
-	getId("over2").style.display = "block";
-	// 通过按钮来获得tr;
-	var tr = obj.parentNode.parentNode.parentNode;
-    
-    // 获得需要修改的内容
-    var librarianId = tr.cells[2].innerHTML;
-	var username = tr.cells[3].innerHTML;
-    var email = tr.cells[4].innerHTML;
-    var password = tr.cells[5].innerHTML;
-   
-	// 获得遮罩层的tbody
-	var tb = getId("over_tb2");
-	// 获得tb中所有的input
-    var inputs = tb.getElementsByTagName("input");
-	// 往遮罩层中的input填入从表格中取得来的数据
-	inputs[0].value = librarianId;
-    inputs[1].value = username;
-    inputs[2].value = email;
-    inputs[3].value = password;
-	inputs[0].disabled = "disabled";
-    inputs[1].disabled = "";
-    inputs[2].disabled = "";
-    inputs[3].disabled = "";
+/* 修改管理员账户信息 */
+var modTr = function(e) {
+    var tds = e.parentNode.parentNode.parentNode.childNodes;
+    $('#edit-account-title').text('Edit Librarian');
+    var inputs = $("#editAccountForm").find("input");
+    /**
+     * var readerId = tr.cells[2].innerHTML;
+     var username = tr.cells[3].innerHTML;
+     var email = tr.cells[4].innerHTML;
+     var phoneNumber = tr.cells[5].innerHTML;
+     */
+    inputs[0].value = tds[2].innerHTML;	//readerId
+    inputs[1].value = tds[3].innerHTML;	//UserName
+    inputs[2].value = tds[4].innerHTML;	//Email
+    inputs[3].value = tds[5].innerHTML;	//Password
+    $('#editAccountPrompt').modal({
+        relatedTarget: this,
+        onConfirm: function (e) {
+            var data = e.data;
+            var librarianId = data[0];
+            var username = data[1];
+            var email = data[2];
+            var password = data[3];
+            $.ajax({
+                type:'POST',
+                dataType:'json',
+                url:'/admin/edit/librarian/',
+                contentType:'application/json;charset=UTF-8',
+                data:JSON.stringify({"id":librarianId,"userName":username,"email":email,"password":password}),
+                success:function(data){//返回结果
+                    location.reload();
+                    alert("Success");
+                },
+                error:function(data){
+                    alert('更新修改数据失败!');
+                }
+            });
+        },
+        onCancel: function (e) {
+        }
+    });
 }
 
 // /* 查看公告信息 */

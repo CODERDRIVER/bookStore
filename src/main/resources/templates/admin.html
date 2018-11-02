@@ -303,6 +303,51 @@
                     <!--<div class="string"></div>-->
                 <!--</div>-->
             <!--</div>-->
+    <div class="am-modal am-modal-prompt" tabindex="-1" id="editAccountPrompt">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd"><h4 id="edit-account-title" th:text="#{editAccount}">Edit Account</h4></div>
+            <div class="am-modal-bd">
+                <form class="am-form am-form-horizontal" id="editAccountForm">
+                    <div class="am-form-group">
+                        <label  class="am-u-sm-3 am-form-label" th:text="#{librarianID}">Librarian ID</label>
+                        <div class="am-u-sm-9">
+                            <input class="am-modal-prompt-input" type="text"
+                                   placeholder="Enter your name" disabled>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-email" class="am-u-sm-3 am-form-label" th:text="#{userName}">UserName</label>
+                        <div class="am-u-sm-9">
+                            <input class="am-modal-prompt-input" type="email"
+                                   placeholder="Enter your email">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-pwd" class="am-u-sm-3 am-form-label" th:text="#{emails}">Email</label>
+                        <div class="am-u-sm-9">
+                            <input class="am-modal-prompt-input" type="text"
+                                   placeholder="Enter your phoneNumber">
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="doc-pwd" class="am-u-sm-3 am-form-label" th:text="#{passwords}">Password</label>
+                        <div class="am-u-sm-9">
+                            <input class="am-modal-prompt-input" type="text"
+                                   placeholder="Enter your phoneNumber">
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+                <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{confirm}">confirm</span>
+            </div>
+        </div>
+    </div>
             <div class="over2" style="display:none;" id="over2">
                 <div class="over_child2">
                     <p id="lookMessages" th:text="#{editAccount}" >Edit Account</p>

@@ -6,14 +6,13 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.lyears.projects.bookstore.exception.UserDefinedException;
+import org.aspectj.util.FileUtil;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -27,7 +26,7 @@ import java.util.Date;
 public class ZxingCodeUtil {
 
     final static String ROOT_BARCODE_IMAGE_PATH = "/Users/mac/bookStore/src/main/resources/static/assets/images/barcode/";
-    final static String REMOTE_RELATIVE_PATH = "/assets/images/barcode/";
+    final static String REMOTE_RELATIVE_PATH = "119.23.75.180/";
 
     /**
      *  生成条形码
@@ -52,7 +51,7 @@ public class ZxingCodeUtil {
             String fileName = IDGenerator.getFileName();
              filePath= file.getAbsolutePath()+"/"+fileName+".png";
             relPath +=REMOTE_RELATIVE_PATH+format+"/"+fileName+".png"; //+format
-            encode(contents,width,height,filePath);
+            encode(contents,width,height,filePath,fileName+".png");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,7 +64,7 @@ public class ZxingCodeUtil {
      * @param height
      * @param imgPath
      */
-    public static void encode(String contents,int width,int height,String imgPath)
+    public static void encode(String contents,int width,int height,String imgPath,String fileName)
     {
         int codeWidth = Math.max(70,width);
         int codeHeight = Math.max(25,height);
@@ -75,12 +74,14 @@ public class ZxingCodeUtil {
 
             // 生成png 格式的图片保存到imgPath上
             MatrixToImageWriter.writeToStream(bitMatrix,"png",new FileOutputStream(imgPath));
-
-            File file = new File("/Users/mac/bookStore/src/main/resources/static/assets/images/barcode/2018/10/24/");
+            File file = new File(imgPath);
             if (file.exists())
             {
-                System.out.println(file.listFiles().length);
+                FtpUtil.uploadFile(file,fileName);
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+                System.out.println(bufferedReader.readLine());
             }
+
         }catch (Exception e)
         {
             System.out.println(e);

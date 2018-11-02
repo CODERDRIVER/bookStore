@@ -1,10 +1,12 @@
 package com.lyears.projects.bookstore.util;
 
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.io.*;
 
 /**
  * @Description 文件上传工具类
@@ -45,4 +47,36 @@ public class FtpUtil {
             return false;
         }
     }
+
+    public static boolean uploadFile(File file,String name)
+    {
+        FTPClient ftpClient = new FTPClient();
+        try {
+            ftpClient.connect("119.23.75.180", 21);
+            ftpClient.login("ftptest","ftptest");
+
+            //更改图片保存路径
+            ftpClient.changeWorkingDirectory("/home/ftptest/barcode");
+
+            /**
+             * 按照年月日的文件夹目录进行保存
+             */
+            Date now = new Date();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String[] paths = simpleDateFormat.format(now).split("-");
+
+            for (String s:paths)
+            {
+                ftpClient.makeDirectory(s);
+                ftpClient.changeWorkingDirectory(s);
+            }
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+            return ftpClient.storeFile(name,new FileInputStream(file));
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
