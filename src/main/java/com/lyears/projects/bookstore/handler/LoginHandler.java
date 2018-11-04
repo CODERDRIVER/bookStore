@@ -218,7 +218,12 @@ public class LoginHandler {
         {
             case "admin":password = adminService.findByEmail(email).getPassword();break;
             case "librarian":password = librarianService.findByEmail(email).getPassword();break;
-            case "reader":password = readerService.findByEmail(email).getPassword();break;
+            case "reader":
+                String phone = email;
+                Reader byPhoneNumber = readerService.findByPhoneNumber(phone);
+                password = byPhoneNumber.getPassword();
+                email = byPhoneNumber.getEmail();
+                break;
         }
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(FROM);

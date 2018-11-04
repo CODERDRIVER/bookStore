@@ -20,12 +20,16 @@ public class Constants {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Column(columnDefinition = "double default 1")
     private double fine = 1;    //罚金
 
+    @Column(columnDefinition = "int default 30")
     private Integer returnPeriod= 30;   //归还期限
 
+    @Column(columnDefinition = "double default 300")
     private Double deposit; //保证金
 
+    @Column(columnDefinition = "int default 3")
     private Integer totalBorrowNums;    //总共可以借阅的数量
 
 }

@@ -150,6 +150,7 @@ public class LibrarianHandler {
         for (String bookId:bookIds.split(","))
         {
             boolean b = bookService.deleteBookById(Integer.parseInt(bookId));
+            System.out.println(b);
             if (!b)
             {
                 return ResultUtil.error(ResultEnum.CAN_NOT_DELETE,request.getRequestURL().toString());

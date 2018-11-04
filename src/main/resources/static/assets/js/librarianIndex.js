@@ -518,7 +518,7 @@ $("#book-search").keyup(function (e) {
  *  搜书
  */
 function searchBook(){
-    var key = document.getElementById("book-search").value;
+    var key = document.getElementById("search-key").value;
     console.log(key);
     $("#tb").html("");
     $.ajax({
@@ -542,13 +542,13 @@ function searchBook(){
             /**
 			 *  清空数据
              */
-            var tbodys = $("#book-table")[0].getElementsByTagName("tbody");
+            var tbodys = $("#borrow-table")[0].getElementsByTagName("tbody");
             var len = tbodys.length;
             for (var i=0;i<len;i++)
             {
-                $("#book-table")[0].removeChild(tbodys[0]);
+                $("#borrow-table")[0].removeChild(tbodys[0]);
             }
-            loadBookData(message);
+            loadBorrowBooks(message);
         }
 
     });
@@ -942,7 +942,12 @@ function delBookItem(e) {
             "bookIds":bookId+""
         },
         success: function(data) {
-            alert("删除成功");
+            if(data.code == 0)
+            {
+                alert("删除成功");
+            }else{
+                alert(data.message)
+            }
             location.reload();
         },
         error:function(data){
@@ -961,7 +966,9 @@ function delReaderItem(e)
         url: "/reader",
         data: {'readerIds':readerId+""},
         success: function(data) {
-            location.reload();
+            // location.reload();
+            alert("success");
+            clickFun(3);
         },
         error:function(data){
             alert('删除失败!');
@@ -1019,6 +1026,7 @@ function addAccount(data, url) {
         contentType: "application/json;charset=UTF-8",
         success: function (e) {
             alert(e.message)
+            clickFun(3);
         }
     })
 }
