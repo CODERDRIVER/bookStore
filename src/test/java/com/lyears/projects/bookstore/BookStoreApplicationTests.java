@@ -59,8 +59,8 @@ public class BookStoreApplicationTests {
     public void testMail()
     {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("1187697635@qq.com");
-        message.setTo("longmaythess@outlook.com");
+        message.setFrom("ericfbt@163.com");
+        message.setTo("2421988828@qq.com");
         message.setSubject("主题：密码修改");
         message.setText("你的密码为123456");
         javaMailSender.send(message);

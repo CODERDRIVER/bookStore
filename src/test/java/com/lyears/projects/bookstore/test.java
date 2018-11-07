@@ -41,13 +41,7 @@ public class test {
         }
     }
 
-    @Test
-    public void test() {
-        Date date = new Date();
-        System.out.println(date);
-        Date beginDayOfMonth = DateUtil.getBeginDayOfMonth();
-        System.out.println(beginDayOfMonth);
-    }
+
 
     @Test
     public void testBarcode()

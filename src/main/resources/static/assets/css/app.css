@@ -137,3 +137,6 @@ body{
 #change{
     color: white;
 }
+a:hover{
+    cursor: hand;
+}

@@ -238,7 +238,7 @@ function loadBookPage(pageNo, pageSize, keyStr) {
             '                </p>\n' +
             '                <!--书名作为h2标题-->\n' +
             '                <h2 style="margin: 2px 0 0 0">\n' +
-            '                    <strong class="am-text-middle" href="">' + Name + '</strong>\n' +
+            '                    <a class="booklist-a" onclick="showBookInfo(this)"><strong class="am-text-middle">' + Name + '</strong></a>\n' +
             '                </h2>\n' +
             '                <!--书籍信息-->\n' +
             '                <p class="am-text-top" style="margin: 0 0 0 0">by\n' +
@@ -247,7 +247,7 @@ function loadBookPage(pageNo, pageSize, keyStr) {
             '                <p class="book-info-p am-text-middle am-text-sm">\n' +
             '                    Remain:\n' +
             '                    <em>' + inventory + '</em>\n' +
-            '                <button id="reserve" onclick="reserve(this)" class="am-btn am-btn-default am-btn-xs am-text-secondary am-align-right" type="button" style="margin-left: 30px">\n' +
+            '                <button class="reserve" onclick="reserve(this)" class="am-btn am-btn-default am-btn-xs am-text-secondary am-align-right" type="button" style="margin-left: 30px">\n' +
             '                <span class="am-icon-clock-o"></span> Reserve</button>\n' +
             '                </p>\n' +
             '                <p class="book-info-p am-text-middle am-text-xs">' + bookType + '</p>\n' +
@@ -255,9 +255,9 @@ function loadBookPage(pageNo, pageSize, keyStr) {
             '            </li>\n');
         if(cookieUtil.get('token') == null)
         {
-            $("#reserve").hide();
+            $(".reserve").hide();
         }else{
-            $("#reserve").show();
+            $(".reserve").show();
         }
     }
 
@@ -318,6 +318,42 @@ function reserve(e)
         },
         error:function(data){
             alert('预约失败!');
+        }
+    });
+}
+
+/**
+ *  显示书籍的具体信息
+ */
+function showBookInfo(e) {
+    var li = e.parentNode.parentNode;
+    var barCode = li.childNodes.item(17).innerHTML;
+    console.log(barCode);
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: '/book/info/' + barCode,
+        contentType: 'application/json;charset=UTF-8',
+        success: function (data) {//返回结果
+            console.log(data);
+            $('#show-book-title').text('Book Info');
+            var inputs = $("#showBookForm").find("input");
+            inputs[0].value = data.data.bookId;
+            inputs[1].value = data.data.author;
+            inputs[2].value = data.data.bookName;
+            inputs[3].value = data.data.bookType;
+            inputs[4].value = data.data.price;
+            inputs[5].value = data.data.description;
+            inputs[6].value = data.data.location;
+            $('#showBookPrompt').modal({
+                relatedTarget: this,
+                onConfirm: function (e) {
+                },
+                onCancel: function (e) {
+                }
+            })
+        },
+        error: function (data) {
         }
     });
 }

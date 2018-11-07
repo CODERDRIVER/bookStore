@@ -86,6 +86,7 @@ public class ReaderService {
         {
             reader.setBorrowNum(one.getBorrowNum());
         }
+        reader.setBorrowNum(one.getBorrowNum());
         reader.setUnPaidFine(one.getUnPaidFine());
         reader.setPaidFine(one.getPaidFine());
         readerRepository.save(reader);
@@ -171,5 +172,18 @@ public class ReaderService {
         responseMessage.setCode(0);
         responseMessage.setMessage("删除成功");
         return responseMessage;
+    }
+
+    /**
+     *  清空读者的欠费金额
+     * @param readerId
+     * @param unpaidFine
+     */
+    public void balanceUnpaidFine(int readerId,double unpaidFine)
+    {
+        Reader one = readerRepository.findOne(readerId);
+        one.setUnPaidFine(0);
+        one.setPaidFine(one.getPaidFine()+unpaidFine);
+        readerRepository.save(one);
     }
 }

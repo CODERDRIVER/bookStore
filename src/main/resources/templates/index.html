@@ -42,7 +42,7 @@
     <header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
         <div class="am-container" style="max-width: unset">
             <h1 class="am-topbar-brand">
-                <a href="#">Bibliosoft</a>
+                <a href="#"><img src="../assets/i/logo.png" class="am-img-responsive" width="150" height="150" style="background-color: white;margin-top: 3px;"></a>
             </h1>
 
             <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
@@ -101,12 +101,12 @@
                             <input class="am-modal-prompt-input" type="password" id="doc-ipt-pwd-2" placeholder="Enter you password">
                         </div>
                     </div>
-                    <div class="am-radio-inline" style="padding-top: 0">
-                        <label >
-                            <input type="radio" name="loginType" value="admin" data-am-ucheck=""/>
-                            admin
-                        </label>
-                    </div>
+                    <!--<div class="am-radio-inline" style="padding-top: 0">-->
+                        <!--<label >-->
+                            <!--<input type="radio" name="loginType" value="admin" data-am-ucheck=""/>-->
+                            <!--admin-->
+                        <!--</label>-->
+                    <!--</div>-->
                     <div class="am-radio-inline" style="padding-top: 0">
                         <label >
                             <input type="radio" name="loginType" value="librarian" data-am-ucheck=""/>
@@ -244,6 +244,89 @@
 
             </ul>
         </div>
+    </div>
+    <div class="am-modal am-modal-prompt" tabindex="-1" id="showBookPrompt">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd"><h4 id="show-book-title"></h4></div>
+            <div class="am-modal-bd">
+                <form class="am-form am-form-horizontal" id="showBookForm">
+                    <div class="am-form-group">
+                        <label  class="am-u-sm-2 am-form-label" th:text="#{bookID}">Book ID</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text"
+                                   placeholder="Enter your ISBN" disabled>
+                        </div>
+                    </div>
+                    <!--<div class="am-form-group">-->
+                        <!--<label  class="am-u-sm-2 am-form-label" th:text="#{inventory}">Inventory</label>-->
+                        <!--<div class="am-u-sm-10">-->
+                            <!--<input class="am-modal-prompt-input" type="text"-->
+                                   <!--placeholder="" disabled>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="am-form-group">
+                        <label  class="am-u-sm-2 am-form-label" th:text="#{author}">Author</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text"
+                                   placeholder="Enter your name" disabled>
+                        </div>
+                    </div>
+                    <!--<div class="am-form-group">-->
+                        <!--<label  class="am-u-sm-2 am-form-label" th:text="#{barCode}">BarCode</label>-->
+                        <!--<div class="am-u-sm-10">-->
+                            <!--<input class="am-modal-prompt-input" type="text"-->
+                                   <!--placeholder="" disabled>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="am-form-group">
+                        <label for="doc-bookname" class="am-u-sm-2 am-form-label" th:text="#{bookName}">BookName</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text"
+                                   placeholder="" disabled>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group" id="input-deposit-0">
+                        <label for="doc-bookType" class="am-u-sm-2 am-form-label" th:text="#{bookType}">BookType</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text"
+                                   placeholder="" disabled>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group" id="input-deposit-1">
+                        <label for="doc-price" class="am-u-sm-2 am-form-label" th:text="#{price}">Price</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="number"
+                                   placeholder="" disabled>
+                        </div>
+                    </div>
+                    <div class="am-form-group" id="input-deposit-2">
+                        <label for="doc-decription" class="am-u-sm-2 am-form-label" th:text="#{description}">Description</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text"
+                                   placeholder="" disabled>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group" id="input-deposit">
+                        <label for="doc-location" class="am-u-sm-2 am-form-label" th:text="#{location}">Location</label>
+                        <div class="am-u-sm-10">
+                            <input class="am-modal-prompt-input" type="text"
+                                   placeholder="" disabled>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{OK}">OK</span>
+            </div>
+        </div>
+    </div>
+</div>
     </div>
 </div>
 </div>

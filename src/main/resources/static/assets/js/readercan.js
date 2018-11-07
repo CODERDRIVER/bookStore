@@ -58,16 +58,16 @@ $('#lib-icon').on('click', function () {
                     var userName = data[1];
                     var phoneNumber = data[2];
                     var password = data[3];
-                    var requestData = {
+                    var requestData = JSON.stringify({
                         "email": email,
                         "userName": userName,
                         "phoneNumber": phoneNumber,
                         "password": password,
-                    };
+                    });
 
                     $.ajax({
                         type: 'post',
-                        url: '/reader/information/change',
+                        url: '/reader/edit',
                         data: requestData,
                         dataType: "json",
                         contentType: "application/json;charset=UTF-8",

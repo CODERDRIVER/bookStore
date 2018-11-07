@@ -20,10 +20,10 @@ public class DateUtil {
      * 获取本周开始时间
      * @return
      */
-    public static Date getBeginDayOfWeek()
+    public static Timestamp getBeginDayOfWeek(Date date)
     {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
+        calendar.setTime(date);
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
         //默认周日是 1
@@ -38,11 +38,11 @@ public class DateUtil {
     /**
      *  获取本周结束时间
      */
-    public static Date getEndDayOfWeek()
+    public static Timestamp getEndDayOfWeek(Date date)
     {
         Calendar calendar = Calendar.getInstance();
         // 给本周开始时间加6
-        calendar.setTime(getBeginDayOfWeek());
+        calendar.setTime(getBeginDayOfWeek(date));
         calendar.add(Calendar.DAY_OF_WEEK,6);
         return getDateEndTime(calendar.getTime());
     }
@@ -50,23 +50,23 @@ public class DateUtil {
     /**
      *  获取本月开始时间
      */
-    public static Date getBeginDayOfMonth()
+    public static Timestamp getBeginDayOfMonth(Date date)
     {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),1);
+        calendar.set(calendar.get(Calendar.YEAR),date.getMonth(),1);
         return getDateStartTime(calendar.getTime());
     }
 
     /**
      *  获取本月结束时间
      */
-    public static Date getEndDayOfMonth()
+    public static Timestamp getEndDayOfMonth(Date date)
     {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),1);
+        calendar.set(calendar.get(Calendar.YEAR),date.getMonth(),1);
         // 获得该月总共有多少天
         int actualMaximum = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),actualMaximum);
+        calendar.set(calendar.get(Calendar.YEAR),date.getMonth(),actualMaximum);
         return getDateEndTime(calendar.getTime());
     }
 
@@ -83,6 +83,7 @@ public class DateUtil {
         }
         calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH),0,0,0);
         calendar.set(Calendar.MILLISECOND,0);
+        System.out.println(calendar.getTime());
         return new Timestamp(calendar.getTimeInMillis());
     }
 

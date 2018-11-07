@@ -23,7 +23,7 @@ public class SendEmail {
 
     //qq邮箱服务器
     public static final String FROM = "1187697635@qq.com";
-    public static final String PASSWORD = "omzpbrwtziqwjabb";
+    public static final String PASSWORD = "tacyjfvdeqbfbadf";
 
     public static boolean sendMail(String to,String subject,String content)
     {

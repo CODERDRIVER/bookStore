@@ -136,7 +136,7 @@ public class ReaderHandler {
         double deposit = constantsService.getDeposit();
         incomeService.addIncome(deposit);
         // 设置读者的已付钱数
-        reader.setPaidFine(deposit);
+//        reader.setPaidFine(deposit);
         readerService.save(reader);
 
 
@@ -255,5 +255,20 @@ public class ReaderHandler {
                 }
         );
         return readers;
+    }
+
+    /**
+     *  根据id 将读者的欠费金额清零
+     * @param readerId
+     * @param unpaidFine
+     * @return
+     */
+    @RequestMapping(value = "/reader/{readerId}/unpaidFine",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage balanceUnpaidFine(@PathVariable("readerId") String readerId,@RequestBody String unpaidFine)
+    {
+        unpaidFine = unpaidFine.split("=")[1];
+        readerService.balanceUnpaidFine(Integer.parseInt(readerId),Double.parseDouble(unpaidFine));
+        return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 }

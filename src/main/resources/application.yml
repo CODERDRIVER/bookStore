@@ -24,9 +24,9 @@ spring:
     cache: false
     mode: LEGACYHTML5
   mail:
-    host: smtp.qq.com
-    username: 1187697635@qq.com
-    password: xzaadjblfjocgica
+    host: smtp.163.com
+    username: ericfbt@163.com
+    password: admin123
     properties:
       mail:
         smtp:

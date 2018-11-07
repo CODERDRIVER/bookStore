@@ -40,6 +40,8 @@ public class Book {
 
     private String bookIsbn;
 
+    private Integer quantity;   // 书籍数量
+
 
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Set<Borrow> borrows = new HashSet<>();
@@ -173,5 +175,36 @@ public class Book {
 
     public void setBarCodeUrl(String barCodeUrl) {
         this.barCodeUrl = barCodeUrl;
+    }
+
+    public String getBookIsbn() {
+        return bookIsbn;
+    }
+
+    public void setBookIsbn(String bookIsbn) {
+        this.bookIsbn = bookIsbn;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Book clone(Book book)
+    {
+        Book cloneBook = new Book();
+        cloneBook.setInventory(book.getInventory());
+        cloneBook.setStatus(book.getStatus());
+        cloneBook.setBookType(book.getBookType());
+        cloneBook.setAuthor(book.getAuthor());
+        cloneBook.setBookUrl(book.getBookUrl());
+        cloneBook.setDescription(book.getDescription());
+        cloneBook.setLocation(book.getLocation());
+        cloneBook.setQuantity(book.getQuantity());
+        cloneBook.setBookName(book.getBookName());
+        return cloneBook;
     }
 }

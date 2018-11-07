@@ -83,8 +83,17 @@ public class BookHandler {
 
     @PostMapping("/book/add")
     public ResponseMessage addNewBook(@RequestBody Book book){
-        System.out.println(book.getPubdate());
-        bookService.save(book);
+        Integer quantity = book.getQuantity();
+        if (quantity==null||quantity==1)
+        {
+            bookService.save(book);
+        }else{
+            for (int i=0;i<quantity;i++)
+            {
+                Book temp = book.clone(book);
+                bookService.save(temp);
+            }
+        }
         return ResultUtil.successNoData(request.getRequestURL().toString());
     }
 
@@ -204,10 +213,22 @@ public class BookHandler {
     /**
      *  获取书的删除记录列表
      */
-
     @RequestMapping(value = "/book/deleteRecords",method = RequestMethod.GET)
     public ResponseMessage getAllDeleteRecords()
     {
         return ResultUtil.success(bookDeleteRecordService.findAllRecord(),request.getRequestURL().toString());
+    }
+
+
+    /**
+     *  根据barcode 获得该书
+     */
+    @RequestMapping(value = "/book/info/{barCode}",method = RequestMethod.GET)
+    public ResponseMessage findBookByBarCode(@PathVariable("barCode")String barCode)
+    {
+        Book bookByBarCode = bookService.findBookByBarCode(barCode);
+        bookByBarCode.setBorrows(null);
+        bookByBarCode.setOrders(null);
+        return ResultUtil.success(bookByBarCode,request.getRequestURL().toString());
     }
 }

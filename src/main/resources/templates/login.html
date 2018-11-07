@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bibliosoft Admin Login</title>
+
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="icon" type="image/png" href="/assets/i/bookicon2.png">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="/assets/i/bookicon2.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <link rel="apple-touch-icon-precomposed" href="/assets/i/bookicon2.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="/assets/i/bookicon2.png">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+
+    <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="/assets/css/scroll.css">
+    <style>
+        .header1 {
+      text-align: center;
+      background-color: rgb(64, 100, 133);
+    }
+    .header1 h1 {
+      font-size: 200%;
+      color: #fff;
+      margin-top: 30px;
+    }
+    .header1 p {
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header1">
+            <div class="am-g">
+                <h1>Administrator Login Page</h1>
+            </div>
+            <hr />
+        </div>
+        <div class="am-g">
+            <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+                <h3>LogIn</h3>
+                <hr>
+                <br>
+
+                <form class="am-form" id="admin-form">
+                    <label for="email">Email:</label>
+                    <input type="email" name="" id="email" value="">
+                    <br>
+                    <label for="password">password:</label>
+                    <input type="password" name="" id="password" value="">
+                    <br>
+                    <label for="remember-me">
+                        <input id="remember-me" type="checkbox">
+                        Remember password
+                    </label>
+                    <br />
+                    <div class="am-cf">
+                        <input type="button" name="" onclick="adminLogin(this)" value="Login" class="am-btn am-btn-primary am-btn-l am-align-right">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>2018. by Team A12.</p>
+    </footer>
+</body>
+
+<script src="/assets/js/jquery-3.1.1.min.js"></script>
+<script src="/assets/js/amazeui.min.js"></script>
+<script src="/assets/js/app.js"></script>
+<script src="/assets/js/librarianIndex.js"></script>
+<script src="/assets/js/librarian.js"></script>
+
+</html>

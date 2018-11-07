@@ -112,7 +112,9 @@ public class BookService {
     public boolean deleteBookById(int id)
     {
         //判断该书能否被删除
+        System.out.println("###################");
         Book one = bookRepository.findOne(id);
+        System.out.println("###################");
         if (one.getStatus()!=0)
         {
             return false;

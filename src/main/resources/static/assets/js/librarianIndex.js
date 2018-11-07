@@ -1,5 +1,8 @@
 
 var display = $('.admin-main .librarian-display');
+var categories = new Array();
+var locations = new Array();
+var cookieUtil = $.AMUI.utils.cookie;
 /* 创建书籍对象 */
 function book(bookId,bookImg, author, barcode, bookName, bookType, price,
               description,location,inventory,barCodeUrl) {
@@ -16,12 +19,14 @@ function book(bookId,bookImg, author, barcode, bookName, bookType, price,
     this.barcodeUrl = barCodeUrl;
 }
 /* 创建读者对象 */
-function reader(readerId,username,email,phoneNumber,password) {
+function reader(readerId,username,email,phoneNumber,password,paidFine,unpaidFine) {
     this.readerId = readerId;
     this.username = username;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.password = password;
+    this.paidFine = paidFine;
+    this.unpaidFine = unpaidFine;
 }
 /* 创建借书记录对象 */
 function order(orderId,readerId,bookId,bookName,orderDate,barCode,price) {
@@ -53,6 +58,34 @@ function announcement(id,title,content) {
     this.title = title;
     this.content = content;
 }
+/* 创建书籍历史删除对象*/
+function bookDeleteHistory(id,bookId,bookName,librarianId,deleteDate)
+{
+    this.id = id;
+    this.bookId = bookId;
+    this.bookName = bookName;
+    this.librarainId = librarianId;
+    this.deleteDate = deleteDate;
+}
+/* 书籍列表对象*/
+function Category(id,name)
+{
+    this.id = id;
+    this.name = name;
+}
+/*  书籍位置对象 */
+function Location(id,name)
+{
+    this.id = id;
+    this.name = name;
+}
+function Income(depositIncome,fineIncome)
+{
+    this.depositIncome = depositIncome;
+    this.fineIncome = fineIncome;
+}
+
+
 function clickFun(index){
     display.css('display','none')
     $(display[index]).css('display','block');
@@ -64,6 +97,7 @@ function clickFun(index){
 		{
             $("#book-table")[0].removeChild(tbodys[0]);
 		}
+        loadCategoryAndLocation();
         loadBooks(0);
 	}else if(index == 1){
         // 借书管理
@@ -77,7 +111,34 @@ function clickFun(index){
 	}else if(index==2){
 		// 还书管理
 
-    } if(index ==3)
+    }else if(index==3)
+    {
+        // 书籍删除记录
+        var tbodys = $("#book-delete-form")[0].getElementsByTagName("tbody");
+        var len = tbodys.length;
+        for (var i=0;i<len;i++)
+        {
+            $("#book-delete-form")[0].removeChild(tbodys[0]);
+        }
+        loadBookDeleteHistory();
+    }else if(index==4){
+
+	    // category and location manage
+        var tbodys = $("#category-table")[0].getElementsByTagName("tbody");
+        var len = tbodys.length;
+        for (var i=0;i<len;i++)
+        {
+            $("#category-table")[0].removeChild(tbodys[0]);
+        }
+        var tbodys = $("#location-table")[0].getElementsByTagName("tbody");
+        var len = tbodys.length;
+        for (var i=0;i<len;i++)
+        {
+            $("#location-table")[0].removeChild(tbodys[0]);
+        }
+        loadLocation();
+        loadCategory();
+    } if(index ==5)
 	{
 		// Account Manager
         var tbodys = $("#reader-table")[0].getElementsByTagName("tbody");
@@ -87,7 +148,7 @@ function clickFun(index){
             $("#reader-table")[0].removeChild(tbodys[0]);
         }
 		loadReaders();
-	}else if(index == 4)
+	}else if(index == 6)
 	{
 		// Reader Reservation
         var tbodys = $("#reserve-table")[0].getElementsByTagName("tbody");
@@ -97,7 +158,7 @@ function clickFun(index){
             $("#reserve-table")[0].removeChild(tbodys[0]);
         }
         loadOrders();
-	}else if(index == 5)
+	}else if(index == 7)
 	{
 		// Borrow History
         var tbodys = $("#borrow-history-table")[0].getElementsByTagName("tbody");
@@ -107,7 +168,7 @@ function clickFun(index){
             $("#borrow-history-table")[0].removeChild(tbodys[0]);
         }
 		loadBorrowHistorys();
-	}else if(index ==6)
+	}else if(index ==8)
 	{
 		// Return History
         var tbodys = $("#return-history-table")[0].getElementsByTagName("tbody");
@@ -117,7 +178,7 @@ function clickFun(index){
             $("#return-history-table")[0].removeChild(tbodys[0]);
         }
 		loadReturnHistorys();
-	}else if(index ==7)
+	}else if(index ==9)
 	{
 		// Announcement Manager
         var tbodys = $("#announcement-table")[0].getElementsByTagName("tbody");
@@ -127,11 +188,117 @@ function clickFun(index){
             $("#announcement-table")[0].removeChild(tbodys[0]);
         }
         loadAnnouncements();
-	}
+	}else if(index==10)
+    {
+        $.ajax({
+            type:'GET',
+            dataType:'json',
+            url:'/libralian/income/records',
+            contentType:'application/json;charset=UTF-8',
+            async: false,
+
+            success:function(data){//返回结果
+                incomes = data.data;
+                console.log(data);
+                var incomeList = new Array();
+                for(var i=0; i<incomes.length;i++){
+
+                    incomeList.push(new Income(incomes[i].deposit,incomes[i].fine));
+                }
+                loadIncome(incomeList);
+            }
+        });
+    }
 }
 
+/**
+ *  加载income 信息
+ *  0 -- daily
+ *  1 -- weekly
+ *  2 --- montyly
+ */
+function loadIncome(incomelist)
+{
+    var dailyIncome = incomelist[0];
+    var weeklyIncome = incomelist[1];
+    var monthlyIncome = incomelist[2];
+
+    // 填充html
+    console.log($('#income-table').find('tbody'));
+
+    // dailyTbody
+    var dailyTbody = $('#income-table tbody')[0];
+    dailyTbody.getElementsByTagName('th')[1].innerHTML=dailyIncome.depositIncome
+    dailyTbody.getElementsByTagName('th')[2].innerHTML=dailyIncome.fineIncome;
+
+    var weeklyTbody = $('#income-table tbody')[1];
+    weeklyTbody.getElementsByTagName('th')[1].innerHTML=weeklyIncome.depositIncome
+    weeklyTbody.getElementsByTagName('th')[2].innerHTML=weeklyIncome.fineIncome;
+
+    var monthlyTbody = $('#income-table tbody')[2];
+    monthlyTbody.getElementsByTagName('th')[1].innerHTML=monthlyIncome.depositIncome
+    monthlyTbody.getElementsByTagName('th')[2].innerHTML=monthlyIncome.fineIncome;
+}
+function loadCategoryAndLocation()
+{
+    categories = new Array();
+    locations = new Array();
+    $.ajax({
+        type: 'get',
+        url: "/categories",
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success: function (e) {
+            datas = e.data;
+            for(var i=0;i<datas.length;i++)
+            {
+                categories.push(new Category(datas[i].id,datas[i].name));
+            }
+        }
+    });
+    $.ajax({
+        type: 'get',
+        url: "/locations",
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success: function (e) {
+            datas = e.data;
+            for(var i=0;i<datas.length;i++)
+            {
+                locations.push(new Location(datas[i].id,datas[i].name));
+            }
+        }
+    });
+}
 
 $('#addNewBook').click(function () {
+
+    /**
+     *  查找出 所有的 category 和 location
+     */
+    //category-select
+    //location-select
+    console.log(categories);
+    var select = $("#category-select")[0].getElementsByTagName("option");
+    var len1 = select.length;
+    for (var i=0;i<len1;i++)
+    {
+        $("#category-select")[0].removeChild(select[0]);
+    }
+    var location = $("#location-select")[0].getElementsByTagName("option");
+    var len2 = location.length;
+    for (var i=0;i<len2;i++)
+    {
+        $("#location-select")[0].removeChild(location[0]);
+    }
+    for(var i=0;i<categories.length;i++)
+    {
+        $("#category-select").append('<option value="'+categories[i].name+'">'+categories[i].name+'</option>')
+    }
+    for(var i=0;i<locations.length;i++)
+    {
+        $("#location-select").append('<option value="'+locations[i].name+'">'+locations[i].name+'</option>')
+    }
 
 	$('#prompt-title').text('Add Book')
     $('#addBookPrompt').modal({
@@ -139,14 +306,16 @@ $('#addNewBook').click(function () {
 		
         onConfirm: function (e) {
 			var data = e.data;
+			console.log(data);
 			var ISBN = data[0];
             var bookImg = data[1];
             var author = data[2];
 			var bookName = data[3];
-			var bookType = data[4];
-            var price = data[5];
-			var description = data[6];
-			var location = data[7];
+			var bookType = $("#category-select option:selected").text();
+            var price = data[4];
+			var description = data[5];
+			var location = $("#location-select option:selected").text();
+			var quantity = data[6];
             var requestData = JSON.stringify({
                 "bookIsbn":ISBN,
                 "bookUrl": bookImg,
@@ -157,7 +326,8 @@ $('#addNewBook').click(function () {
 				"description": description,
 				"location":location,
 				// "pubdate" :pubdate,
-				"publisher" :publisher
+				"publisher" :publisher,
+                "quantity":quantity
             });
             addBook(requestData, '/book/add')
         },
@@ -217,6 +387,7 @@ var getId = function(id)
 // 获取书籍信息列表
 $(document).ready(function(){
 	 loadBooks(0);
+    loadCategoryAndLocation();
 })
 
 
@@ -506,6 +677,189 @@ function returnBook(e)
 }
 
 /**
+ *  加载书籍删除历史
+ */
+function loadBookDeleteHistory()
+{
+    $.ajax({
+        type:'GET',
+        dataType:'json',
+        url:"/book/deleteRecords",
+        contentType:'application/json;charset=UTF-8',
+        async: false,
+        success:function(data){//返回结果
+            var books = []
+            books =data.data
+            console.log(data.data);
+            var history = new Array();
+            for(var i=0; i<books.length;i++){
+
+                history.push(new bookDeleteHistory(books[i].id,books[i].bookId,books[i].bookName,books[i].librarainId,books[i].deleteDate));
+            }
+            loadBookDeleteHistoryData(history);
+        }
+
+    });
+}
+
+/**
+ *   加载位置信息
+ */
+function loadLocation()
+{
+    $.ajax({
+        type:'GET',
+        dataType:'json',
+        url:"/locations",
+        contentType:'application/json;charset=UTF-8',
+        async: false,
+        success:function(data){//返回结果
+            var books = []
+            locations =data.data
+            console.log(data.data);
+            var locationList = new Array();
+            for(var i=0; i<locations.length;i++){
+
+                locationList.push(new Category(locations[i].id,locations[i].name));
+            }
+            loadLocationData(locationList);
+        }
+
+    });
+}
+function loadLocationData(locationList)
+{
+    for (var i = 0; i < locationList.length; i++) {
+        var id = locationList[i].id;
+        var name = locationList[i].name;
+        $("#location-table").append('<tbody>'+
+            '<tr>'+
+            '<td>'+id+'</td>'+
+            '<td>'+name+'</td>'+
+            '<td>\n' +
+            '                                                <div class="am-btn-toolbar">\n' +
+            '                                                    <div class="am-btn-group am-btn-group-xs">\n' +
+            '                                                        <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="editLocation(this)"><span class="am-icon-pencil-square-o"></span>\n' +
+            '                                                            Edit</button>\n' +
+            '                                                    </div>\n' +
+            '                                                </div>\n' +
+            '                                            </td>'+
+            '</tr></tbody>');
+    }
+}
+
+/**
+ *  修改location
+ */
+function editLocation(e)
+{
+    var tr = e.parentNode.parentNode.parentNode.parentNode.childNodes;
+    var id = tr[0].innerHTML;
+    var name = tr[1].innerHTML;
+    $("#location-input").val(name);
+    $('#location-title').text('Edit Location')
+    $('#location-prompt').modal({
+        relatedTarget: this,
+        onConfirm: function (e) {
+            var data = e.data;
+            console.log(data)
+            var requestData = JSON.stringify({
+                "name": data
+            });
+            addAccount(requestData, '/location/'+id,4);
+        },
+        onCancel: function (e) {
+        }
+    })
+}
+/**
+ *  加载类别列表
+ */
+function loadCategory()
+{
+    $.ajax({
+        type:'GET',
+        dataType:'json',
+        url:"/categories",
+        contentType:'application/json;charset=UTF-8',
+        async: false,
+        success:function(data){//返回结果
+            var books = []
+            categories =data.data
+            console.log(data.data);
+            var categoryList = new Array();
+            for(var i=0; i<categories.length;i++){
+
+                categoryList.push(new Category(categories[i].id,categories[i].name));
+            }
+            loadCategoryData(categoryList);
+        }
+
+    });
+}
+function loadCategoryData(categoryList)
+{
+    for (var i = 0; i < categoryList.length; i++) {
+        var id = categoryList[i].id;
+        var name = categoryList[i].name;
+        $("#category-table").append('<tbody>'+
+            '<tr>'+
+            '<td>'+id+'</td>'+
+            '<td>'+name+'</td>'+
+            '<td>\n' +
+            '                                                <div class="am-btn-toolbar">\n' +
+            '                                                    <div class="am-btn-group am-btn-group-xs">\n' +
+            '                                                        <button type="button" onclick="editCategory(this)" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span>\n' +
+            '                                                            Edit</button>\n' +
+            '                                                    </div>\n' +
+            '                                                </div>\n' +
+            '                                            </td>'+
+            '</tr></tbody>');
+    }
+}
+
+function editCategory(e)
+{
+    var tr = e.parentNode.parentNode.parentNode.parentNode.childNodes;
+    var id = tr[0].innerHTML;
+    var name = tr[1].innerHTML;
+    $('#category-input').val(name);
+    $('#category-title').text('Edit Category')
+    $('#category-prompt').modal({
+        relatedTarget: this,
+        onConfirm: function (e) {
+            var data = e.data;
+            console.log(data)
+            var requestData = JSON.stringify({
+                "name": data
+            });
+            addAccount(requestData, '/category/'+id,4);
+        },
+        onCancel: function (e) {
+        }
+    })
+}
+
+function loadBookDeleteHistoryData(history)
+{
+    for (var i = 0; i < history.length; i++) {
+        var id = history[i].id;
+        var bookId = history[i].bookId;
+        var bookName = history[i].bookName;
+        var librarainId = history[i].librarainId;
+        var deleteDate = history[i].deleteDate;
+        $("#book-delete-table").append('<tbody>'+
+            '<tr>'+
+            '<td>'+(i+1)+'</td>'+
+            '<td>'+id+'</td>'+
+            '<td>'+bookId+'</td>'+
+            '<td>'+bookName+'</td>'+
+            '<td>'+librarainId+'</td>'+
+            '<td>'+deleteDate+'</td>'+
+           '</tr></tbody>');
+    }
+}
+/**
  *  添加回车事件
  */
 $("#book-search").keyup(function (e) {
@@ -573,7 +927,7 @@ function loadReaders()
             var readerList = new Array();
             for(var i=0; i<readers.length;i++){
 
-                readerList.push(new reader(readers[i].readerId,readers[i].userName,readers[i].email,readers[i].phoneNumber,readers[i].password));
+                readerList.push(new reader(readers[i].readerId,readers[i].userName,readers[i].email,readers[i].phoneNumber,readers[i].password,readers[i].paidFine,readers[i].unPaidFine));
             }
             loadReaderData(readerList);
         }
@@ -589,21 +943,24 @@ function loadReaderData(readerList)
 		var email = readerList[i].email;
 		var phoneNumber = readerList[i].phoneNumber;
 		var password = readerList[i].password;
+		var paidFine = readerList[i].paidFine;
+		var unpaidFine = readerList[i].unpaidFine;
 		console.log($("#reader-table"));
 		$("#reader-table").append('<tbody>'+
 			'<tr>'+
-			'<td><input type="checkbox" /></td>'+
-			'<td>'+(i+1)+'</td>'+
 			'<td>'+readerId+'</td>'+
 			'<td>'+username+'</td>'+
 			'<td>'+email+'</td>'+
 			'<td>'+phoneNumber+'</td>'+
 			'<td>'+password+'</td>'+
+			'<td>'+paidFine+'</td>'+
+			'<td>'+unpaidFine+'</td>'+
 			'<td>'+
 			'<div class="am-btn-toolbar">'+
 			' <div class="am-btn-group am-btn-group-xs">\n' +
 			'         <button type="button" onclick="modReader(this)"  class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> Edit</button>\n' +
 			'         <button type="button" onclick="delReaderItem(this)" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash"></span> Delete</button>\n' +
+			'         <button type="button" onclick="balanceAccount(this)" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-money"></span> Balance</button>\n' +
 			'         </div>'+
 			'</div>'+
 			'</td></tr></tbody>');
@@ -658,6 +1015,34 @@ function modReader(e)
         onCancel: function (e) {
         }
     })
+}
+
+function balanceAccount(e)
+{
+   var tr =  e.parentNode.parentNode.parentNode.parentNode.childNodes;
+   var readerId = tr[0].innerHTML;
+   var unpaidFine = tr[6].innerHTML;
+   console.log(tr[6].innerHTML);
+    $.ajax({
+        type:'POST',
+        dataType:'json',
+        url:'/reader/'+readerId+'/unpaidFine',
+        contentType:'application/json;charset=UTF-8',
+        data:{
+            "unpaidFine":unpaidFine
+        },
+        success:function(data){//返回结果
+            if(data.code==0)
+            {
+                alert("success");
+            }
+            // location.reload();
+            clickFun(3);
+        },
+        error:function(data){
+            art.dialog.tips('更新修改数据失败!');
+        }
+    });
 }
 /**
  *  加载所有的预约记录
@@ -975,6 +1360,40 @@ function delReaderItem(e)
         }
     });
 }
+// 更改公告
+function modAnnouncement()
+{
+    $('#editAnnouncementPrompt').modal({
+        relatedTarget: this,
+        onConfirm: function (e) {
+            var data = e.data;
+            var id = data[0];
+            var title = data[1];
+            var content = data[2];
+            $.ajax({
+                type:'POST',
+                dataType:'json',
+                url:'/announcement/'+id,
+                contentType:'application/json;charset=UTF-8',
+                data:JSON.stringify(
+                    {
+                        "title":title,
+                        "content":content
+                    }),
+                success:function(data){//返回结果
+                    alert("success");
+                    // location.reload();
+                    clickFun(9);
+                },
+                error:function(data){
+                    alert('更新修改数据失败!');
+                }
+            });
+        },
+        onCancel: function (e) {
+        }
+    })
+}
 // 删除公告
 function delAnnouncementItem(e)
 {
@@ -1010,14 +1429,14 @@ $('#addReader').click(function () {
                 "email": email,
                 "phoneNumber": phoneNumber,
             });
-            addAccount(requestData, '/add/reader')
+            addAccount(requestData, '/add/reader',5)
         },
         onCancel: function (e) {
         }
     })
 });
 
-function addAccount(data, url) {
+function addAccount(data, url,index) {
     $.ajax({
         type: 'post',
         url: url,
@@ -1026,7 +1445,7 @@ function addAccount(data, url) {
         contentType: "application/json;charset=UTF-8",
         success: function (e) {
             alert(e.message)
-            clickFun(3);
+            clickFun(index);
         }
     })
 }
@@ -1124,9 +1543,102 @@ $("#addAnnouncement").click(function () {
                 "title": title,
                 "content": content,
             });
-            addAccount(requestData, '/announcement/add')
+            addAccount(requestData, '/announcement/add',9);
         },
         onCancel: function (e) {
         }
     })
+});
+/**
+ *  添加category
+ */
+$('#addcategory').click(function () {
+    $('#category-title').text('Add Category')
+    $('#category-prompt').modal({
+        relatedTarget: this,
+
+        onConfirm: function (e) {
+            var data = e.data;
+            console.log(e.data);
+            var requestData = JSON.stringify({
+                "name": data
+            });
+            addAccount(requestData, '/add/category',4);
+        },
+        onCancel: function (e) {
+        }
+    })
+});
+
+/**
+ *  添加Location
+ */
+$('#addlocation').click(function () {
+    $('#location-title').text('Add Location')
+    $('#location-prompt').modal({
+        relatedTarget: this,
+
+        onConfirm: function (e) {
+            var data = e.data;
+            console.log(data)
+            var requestData = JSON.stringify({
+                "name": data
+            });
+            addAccount(requestData, '/add/location',4);
+        },
+        onCancel: function (e) {
+        }
+    })
+});
+function adminLogin(e)
+{
+        // admin-form
+        var form = e.parentNode.parentNode;
+        var inputs = form.getElementsByTagName('input');
+        var email = inputs[0].value;
+        var password = inputs[1].value;
+        var flag = inputs[2].checked;
+        console.log(inputs);
+        $.ajax({
+            type: 'post',
+            url: "/login/admin",
+            data: JSON.stringify({
+                "email": email,
+                "password": password
+            }),
+            dataType: "json",
+            contentType: "application/json;charset=UTF-8",
+            success: function (e) {
+                console.log(e);
+                if (e.code === 0) {
+                    window.location.href = "/";
+                } else {
+                    alert(e.message)
+                }
+            }
+        });
+}
+$('#my-datepicker').datepicker({locale:'en_US'}).
+    on('changeDate.datepicker.amui', function(event) {
+        var dateInput = $('#date-input')[0].value;
+        $.ajax({
+            type:'GET',
+            dataType:'json',
+            url:'/libralian/income/records',
+            contentType:'application/json;charset=UTF-8',
+            async: false,
+            data:{
+              "date":dateInput
+            },
+            success:function(data){//返回结果
+                incomes = data.data;
+                console.log(data);
+                var incomeList = new Array();
+                for(var i=0; i<incomes.length;i++){
+
+                    incomeList.push(new Income(incomes[i].deposit,incomes[i].fine));
+                }
+                loadIncome(incomeList);
+            }
+        });
 });

@@ -149,6 +149,7 @@ public class LibrarianHandler {
         bookIds = bookIds.split("=")[1];
         for (String bookId:bookIds.split(","))
         {
+            Book bookById = bookService.findBookById(Integer.parseInt(bookId));
             boolean b = bookService.deleteBookById(Integer.parseInt(bookId));
             System.out.println(b);
             if (!b)
@@ -163,6 +164,7 @@ public class LibrarianHandler {
             bookDeleteRecord.setBookId(Integer.parseInt(bookId));
             bookDeleteRecord.setDeleteDate(new Date());
             bookDeleteRecord.setLibrarainId(Integer.parseInt(cookie.getValue()));
+            bookDeleteRecord.setBookName(bookById.getBookName());
             bookDeleteRecordService.saveRecord(bookDeleteRecord);
         }
         return ResultUtil.successNoData(request.getRequestURL().toString());
@@ -201,19 +203,18 @@ public class LibrarianHandler {
      */
     @ResponseBody
     @GetMapping("/libralian/income/records")
-    public ResponseMessage getDailyRecord(String type)
+    public ResponseMessage getDailyRecord(@RequestParam(value = "date",required = false) String date)
     {
 
-        String date = "";
-        IncomeData dailyRecord = incomeService.getDailyRecord(type);
+        List<IncomeData> incomeRecord = incomeService.getDailyRecord(date);
         /**
          * 收入记录分为保证金收入和罚金收入
          *TODO 对收入进行区分
          */
 
-        if (dailyRecord!=null)
+        if (incomeRecord!=null)
         {
-            return ResultUtil.success(dailyRecord,request.getRequestURL().toString());
+            return ResultUtil.success(incomeRecord,request.getRequestURL().toString());
         }
         return null;
     }

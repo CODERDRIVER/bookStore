@@ -119,7 +119,8 @@ function addAccount(data, url) {
         contentType: "application/json;charset=UTF-8",
         success: function (e) {
             alert(e.message)
-			loadData();
+			window.location.reload();
+			// loadData();
         }
     })
 }

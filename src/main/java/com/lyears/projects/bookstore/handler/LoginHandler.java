@@ -45,7 +45,7 @@ public class LoginHandler {
 
     @Autowired
     private HttpServletRequest request;
-    public static final String FROM = "1187697635@qq.com";
+    public static final String FROM = "ericfbt@163.com";
 
     @PostMapping("/login/admin")
     @ResponseBody
@@ -232,5 +232,11 @@ public class LoginHandler {
         message.setText("你的密码为"+password);
         javaMailSender.send(message);
         return ResultUtil.successNoData(request.getRequestURL().toString());
+    }
+
+    @RequestMapping(value = "/admin/login",method = RequestMethod.GET)
+    public String adminLogin()
+    {
+        return "login";
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,31 +44,49 @@ public class IncomeService {
      * 获得每天的记录
      */
 
-    public IncomeData getDailyRecord(String type)
+    public List<IncomeData> getDailyRecord(String date)
     {
         /**
          *  根据type 确认查询的是 day/week/month
          */
-        //获得当前时间
-        Date now = new Date();
-        List<Income> list = new ArrayList<>();
-        switch (type){
-            case "daily":
-                Timestamp startDay = DateUtil.getDateStartTime(now);
-                Timestamp endDay = DateUtil.getDateEndTime(now);
-                list =  incomeRepository.getDailyIncome(startDay,endDay);
-            case "weekly":
-                Timestamp startWeek = DateUtil.getDateStartTime(DateUtil.getBeginDayOfWeek());
-                Timestamp endWeek = DateUtil.getDateEndTime(DateUtil.getEndDayOfWeek());
-                list =  incomeRepository.getDailyIncome(startWeek,endWeek);
-            case "monthly":
-                Timestamp startMonth = DateUtil.getDateStartTime(DateUtil.getBeginDayOfMonth());
-                Timestamp endMonth = DateUtil.getDateEndTime(DateUtil.getEndDayOfMonth());
-                list =  incomeRepository.getDailyIncome(startMonth,endMonth);
+        // 格式化日期
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date now  = null;
+        try {
+            if (date==null||date.equals(""))
+            {
+                now = new Date();
+            }else{
+                now = simpleDateFormat.parse(date);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+        //获得当前时间
+        // daily
+        Timestamp startDay = DateUtil.getDateStartTime(now);
+        Timestamp endDay = DateUtil.getDateEndTime(now);
+        System.out.println(startDay+"------"+endDay);
+        List<Income> dailyIncome = incomeRepository.getDailyIncome(startDay, endDay);
+
+        // weekly
+        Timestamp startWeek = DateUtil.getBeginDayOfWeek(now);
+        Timestamp endWeek =DateUtil.getEndDayOfWeek(now);
+        System.out.println(startWeek+"------"+endWeek);
+        List<Income> weeklyIncome = incomeRepository.getDailyIncome(startWeek, endWeek);
+
+        // monthly
+        Timestamp startMonth = DateUtil.getBeginDayOfMonth(now);
+        Timestamp endMonth = DateUtil.getEndDayOfMonth(now);
+        System.out.println(startMonth+"------"+endMonth);
+        List<Income> monthlyIncome = incomeRepository.getDailyIncome(startMonth, endMonth);
+
         //  对 income 进行处理 分为 保证金 收入 和  罚金收入
+        List<IncomeData> incomeDataList = new ArrayList<>();
+
+        // daily income
         IncomeData incomeData = new IncomeData();
-        for (Income income : list) {
+        for (Income income : dailyIncome) {
             if (income.getType()==1)
             {
                 // 保证金收入
@@ -75,6 +95,33 @@ public class IncomeService {
                 incomeData.setFine(incomeData.getFine()+income.getMoney());
             }
         }
-        return incomeData;
+        incomeDataList.add(incomeData);
+
+        // weekly
+        incomeData = new IncomeData();
+        for (Income income : weeklyIncome) {
+            if (income.getType()==1)
+            {
+                // 保证金收入
+                incomeData.setDeposit(incomeData.getDeposit()+income.getMoney());
+            }else{
+                incomeData.setFine(incomeData.getFine()+income.getMoney());
+            }
+        }
+        incomeDataList.add(incomeData);
+
+        // monthly
+        incomeData = new IncomeData();
+        for (Income income : monthlyIncome) {
+            if (income.getType()==1)
+            {
+                // 保证金收入
+                incomeData.setDeposit(incomeData.getDeposit()+income.getMoney());
+            }else{
+                incomeData.setFine(incomeData.getFine()+income.getMoney());
+            }
+        }
+        incomeDataList.add(incomeData);
+        return incomeDataList;
     }
 }

@@ -87,17 +87,19 @@
                                     Add/Edit Books</a></li>
                             <li><a href="javascript:;" onclick="clickFun(1)" th:text="#{borrowBooks}"><span class="am-icon-arrow-circle-right"></span> Borrow Books</a></li>
                             <li><a href="javascript:;" onclick="clickFun(2)" th:text="#{returnBooks}"><span class="am-icon-arrow-circle-left"></span> Return Books</a></li>
+                            <li><a href="javascript:;" onclick="clickFun(3)" th:text="#{bookDeleteHistory}"><span class="am-icon-arrow-circle-left"></span> Book Delete History</a></li>
+                            <li><a href="javascript:;" onclick="clickFun(4)" th:text="#{bookInformation}"><span class="am-icon-arrow-circle-left"></span> Book Information</a></li>
                         </ul>
                     </li>
                     <li class="reader-parent">
                         <a class="am-cf" data-am-collapse="{target: '#reader-nav'}" th:text="#{readerManage}"><span class="am-icon-user"></span>
                             Reader Management <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
                         <ul class="am-list am-collapse admin-sidebar-sub am-in" id="reader-nav">
-                            <li><a href="javascript:;" onclick="clickFun(3)" th:text="#{accountManagement}"><span class="am-icon-plus"></span> Account Management</a></li>
-                            <li><a href="javascript:;" onclick="clickFun(4)" th:text="#{readerReservation}"><span class="am-icon-clock-o"></span> Reader
+                            <li><a href="javascript:;" onclick="clickFun(5)" th:text="#{accountManagement}"><span class="am-icon-plus"></span> Account Management</a></li>
+                            <li><a href="javascript:;" onclick="clickFun(6)" th:text="#{readerReservation}"><span class="am-icon-clock-o"></span> Reader
                                     Reservation</a></li>
-                            <li><a href="javascript:;" onclick="clickFun(5)" th:text="#{borrowHistory}"><span class="am-icon-bars"></span> Borrow History</a></li>
-                            <li><a href="javascript:;" onclick="clickFun(6)" th:text="#{returnHistory}"><span class="am-icon-bars"></span> Return History</a></li>
+                            <li><a href="javascript:;" onclick="clickFun(7)" th:text="#{borrowHistory}"><span class="am-icon-bars"></span> Borrow History</a></li>
+                            <li><a href="javascript:;" onclick="clickFun(8)" th:text="#{returnHistory}"><span class="am-icon-bars"></span> Return History</a></li>
                         </ul>
                     </li>
 
@@ -105,9 +107,19 @@
                         <a class="am-cf" data-am-collapse="{target: '#ann-nav'}" th:text="#{announcement}"><span class="am-icon-comment"></span>
                             Announcement <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
                         <ul class="am-list am-collapse admin-sidebar-sub am-in" id="ann-nav">
-                            <li><a href="#" onclick="clickFun(7)" th:text="#{editAnnouncement}"><span class="am-icon-pencil-square-o"></span> Edit
+                            <li><a href="javascript:;" onclick="clickFun(9)" th:text="#{editAnnouncement}"><span class="am-icon-pencil-square-o"></span> Edit
                                     Announcement
                                 </a></li>
+                        </ul>
+                    </li>
+
+                    <li class="reader-parent">
+                        <a class="am-cf" data-am-collapse="{target: '#income-nav'}" th:text="#{incomeManagement}"><span class="am-icon-comment"></span>
+                            Income Management <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                        <ul class="am-list am-collapse admin-sidebar-sub am-in" id="income-nav">
+                            <li><a href="#" onclick="clickFun(10)" th:text="#{viewIncome}"><span class="am-icon-pencil-square-o"></span> View
+                                Income
+                            </a></li>
                         </ul>
                     </li>
 
@@ -207,22 +219,25 @@
                                     </div>
                                 </div>
             
-                                <div class="am-form-group" id="input-deposit-0">
+                                <div class="am-form-group" id="input-bookType">
                                     <label for="doc-bookType" class="am-u-sm-2 am-form-label" th:text="#{bookType}">BookType</label>
                                     <div class="am-u-sm-10">
-                                        <input class="am-modal-prompt-input" type="text" id="doc4"
-                                               placeholder="Enter your bookType">
+                                        <!--<input class="am-modal-prompt-input" type="text" id="doc4"-->
+                                               <!--placeholder="Enter your bookType">-->
+                                        <select id="category-select" data-am-selected="{btnWidth: '100%', btnSize: 'lg', btnStyle: 'primary'}">
+                                            <option value="Novel">Novel</option>
+                                        </select>
                                     </div>
                                 </div>
             
-                                <div class="am-form-group" id="input-deposit-1">
+                                <div class="am-form-group" id="input-price">
                                         <label for="doc-price" class="am-u-sm-2 am-form-label" th:text="#{price}">Price</label>
                                         <div class="am-u-sm-10">
                                             <input class="am-modal-prompt-input" type="number" id="doc5"
                                                    placeholder="Enter your price">
                                         </div>
                                 </div>
-                                <div class="am-form-group" id="input-deposit-2">
+                                <div class="am-form-group" id="input-description">
                                         <label for="doc-decription" class="am-u-sm-2 am-form-label" th:text="#{description}">Description</label>
                                         <div class="am-u-sm-10">
                                             <input class="am-modal-prompt-input" type="text" id="doc6"
@@ -230,12 +245,22 @@
                                         </div>
                                 </div>
             
-                                <div class="am-form-group" id="input-deposit">
-                                        <label for="doc-location" class="am-u-sm-2 am-form-label" th:text="#{location}">Location</label>
+                                <div class="am-form-group" id="input-location">
+                                        <label  class="am-u-sm-2 am-form-label" th:text="#{location}">Location</label>
                                         <div class="am-u-sm-10">
-                                            <input class="am-modal-prompt-input" type="text" id="doc7"
-                                                   placeholder="Enter your location">
+                                            <!--<input class="am-modal-prompt-input" type="text" id="doc7"-->
+                                                   <!--placeholder="Enter your location">-->
+                                            <select id="location-select" data-am-selected="{btnWidth: '100%', btnSize: 'lg', btnStyle: 'primary'}">
+                                                <option value="1#101">1#101</option>
+                                            </select>
                                         </div>
+                                </div>
+                                <div class="am-form-group" id="input-quantity">
+                                    <label  class="am-u-sm-2 am-form-label" th:text="#{quantity}">quantity</label>
+                                    <div class="am-u-sm-10">
+                                        <input class="am-modal-prompt-input" type="number" id="doc8" value="1"
+                                               placeholder="Enter your quantity">
+                                    </div>
                                 </div>
             
                             </form>
@@ -295,6 +320,7 @@
                                     <div class="am-u-sm-10">
                                         <input class="am-modal-prompt-input" type="text"
                                                placeholder="Enter your bookType">
+
                                     </div>
                                 </div>
 
@@ -332,7 +358,7 @@
             </div>
             <div class="am-modal am-modal-prompt" tabindex="-1" id="showBarCode">
                 <div class="am-modal-dialog">
-                    <div class="am-modal-hd"><h4>QR Code</h4></div>
+                    <div class="am-modal-hd"><h4>Bar Code</h4></div>
                     <div class="am-modal-bd">
                         <!--width="140" height="140"-->
                         <img class="am-radius" src="" alt="..." >
@@ -507,6 +533,190 @@
             </div>
         </div>
 
+        <!--book delete history-->
+        <div class="admin-content librarian-display" id="book-delete-history" style="display:none">
+            <div class="admin-content-body">
+                <div class="am-cf am-padding am-padding-bottom-0">
+                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg" th:text="#{bookDeleteHistory}">Book Delete History</strong></div>
+                </div>
+                <hr>
+                <div class="am-g">
+                    <div class="am-u-sm-12">
+                        <form class="am-form" id="book-delete-form">
+                            <table id="book-delete-table" class="am-table am-table-striped am-table-hover table-main">
+                                <thead>
+                                <tr>
+                                    <th th:text="#{serialID}">Serial ID</th>
+                                    <th th:text="#{DeleteId}">DeleteId</th>
+                                    <th th:text="#{BookId}">BookId</th>
+                                    <th th:text="#{bookName}">BookName</th>
+                                    <th th:text="#{LibrarianId}">LibrarianId</th>
+                                    <th th:text="#{DeleteDate}">DeleteDate</th>
+                                </tr>
+                                </thead>
+                                <!--insert tbody here-->
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Book Category & Location-->
+        <div class="admin-content librarian-display" id="book-info">
+            <div class="admin-content-body">
+                <hr>
+
+                <div class="am-g">
+                    <!--book category-->
+                    <div class="am-u-md-6">
+                        <div class="am-panel am-panel-default" style="height: -webkit-fill-available;">
+                            <div class="am-cf am-padding am-padding-bottom-0">
+                                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">Book Category</strong></div>
+                            </div>
+                            <hr>
+                            <div class="am-u-sm-12 am-u-md-6">
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                        <button id="addcategory" type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span>
+                                            Add Category
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12">
+                                <form class="am-form">
+                                    <table id="category-table" class="am-table am-table-striped am-table-hover table-main">
+                                        <thead>
+                                        <tr>
+                                            <th th:text="#{ID}">ID</th>
+                                            <th th:text="#{Category}">Category</th>
+                                            <th th:text="#{Operation}">Operation</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        <tr>
+                                            <td>Serial ID</td>
+                                            <td>Book Category</td>
+                                            <td>
+                                                <div class="am-btn-toolbar">
+                                                    <div class="am-btn-group am-btn-group-xs">
+                                                        <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span>
+                                                            Edit</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--book location-->
+                    <div class="am-u-md-6">
+                        <div class="am-panel am-panel-default" style="height: -webkit-fill-available;">
+                            <div class="am-cf am-padding am-padding-bottom-0">
+                                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">Book Location</strong></div>
+                            </div>
+                            <hr>
+                            <div class="am-u-sm-12 am-u-md-6">
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                        <button id="addlocation" type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span>
+                                            Add Location
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12">
+                                <form class="am-form">
+                                    <table id="location-table" class="am-table am-table-striped am-table-hover table-main">
+                                        <thead>
+                                        <tr>
+                                            <th th:text="#{ID}">ID</th>
+                                            <th th:text="#{Location}">Location</th>
+                                            <th th:text="#{Operation}">Operation</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        <tr>
+                                            <td>Serial ID</td>
+                                            <td>Book Location</td>
+                                            <td>
+                                                <div class="am-btn-toolbar">
+                                                    <div class="am-btn-group am-btn-group-xs">
+                                                        <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span>
+                                                            Edit</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--category prompt-->
+                <div class="am-modal am-modal-prompt" tabindex="-1" id="category-prompt">
+                    <div class="am-modal-dialog">
+                        <div class="am-modal-hd">
+                            <h4 id="category-title"></h4>
+                        </div>
+                        <div class="am-modal-bd">
+                            <form class="am-form am-form-horizontal" id="category-form">
+                                <div class="am-form-group">
+                                    <label for="doc-bookImg" class="am-u-sm-2 am-form-label"></label>
+                                    <div class="am-u-sm-10">
+                                        <input id="category-input" class="am-modal-prompt-input" type="text" placeholder="Enter Book Category">
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <div class="am-modal-footer">
+                            <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
+                            <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--location prompt-->
+                <div class="am-modal am-modal-prompt" tabindex="-1" id="location-prompt">
+                    <div class="am-modal-dialog">
+                        <div class="am-modal-hd">
+                            <h4 id="location-title"></h4>
+                        </div>
+                        <div class="am-modal-bd">
+                            <form class="am-form am-form-horizontal">
+                                <div class="am-form-group">
+                                    <label for="doc-bookImg" class="am-u-sm-2 am-form-label"></label>
+                                    <div class="am-u-sm-10">
+                                        <input id="location-input" class="am-modal-prompt-input" type="text" id="doc2" placeholder="Enter Book Location">
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <div class="am-modal-footer">
+                            <span class="am-modal-btn" data-am-modal-cancel="">cancel</span>
+                            <span class="am-modal-btn" data-am-modal-confirm="">confirm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!--reader accounts origin:readerlist.html-->
         <div class="admin-content librarian-display" id="readerlist" style="display:none">
             <div class="admin-content-body">
@@ -537,13 +747,13 @@
                             <table id="reader-table" class="am-table am-table-striped am-table-hover table-main">
                                 <thead id="reader-thead">
                                     <tr>
-                                        <th class="table-check"><input type="checkbox" onclick="selAll(this);" /></th>
-                                        <th th:text="#{serialID}">Serial ID</th>
                                         <th th:text="#{readerID}">Reader ID</th>
                                         <th th:text="#{userName}">UserName</th>
                                         <th th:text="#{emails}">Email</th>
                                         <th th:text="#{phoneNumber}">PhoneNumber</th>
                                         <th th:text="#{passwords}">Password</th>
+                                        <th th:text="#{PaidFine}">PaidFine</th>
+                                        <th th:text="#{UnpaidFine}">UnpaidFine</th>
                                         <th th:text="#{operations}">Operations</th>
                                     </tr>
                                 </thead>
@@ -811,7 +1021,7 @@
                         <div class="am-btn-toolbar">
                             <div class="am-btn-group am-btn-group-xs">
                                 <button id="addAnnouncement" type="button" class="am-btn am-btn-default"><span class="am-icon-plus" th:text="#{add}"></span>
-                                    Add
+                                    <!--Add-->
                                 </button>
                                 <button id="delete" type="button" class="am-btn am-btn-default" onclick="delSel();" th:text="#{delete}">
                                     <span class="am-icon-trash"></span> Delete
@@ -868,6 +1078,102 @@
                     <div class="am-modal-footer">
                         <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
                         <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{confirm}">confirm</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="am-modal am-modal-prompt" tabindex="-1" id="editAnnouncementPrompt">
+                <div class="am-modal-dialog">
+                    <div class="am-modal-hd"><h4 id="edit-announcement-title" th:text="#{addAnnouncement}">Edit Announcement</h4></div>
+                    <div class="am-modal-bd">
+                        <form class="am-form am-form-horizontal" id="editAnnouncementForm">
+                            <div class="am-form-group">
+                                <label for="doc-email" class="am-u-sm-3 am-form-label" th:text="#{announcementID}">id</label>
+                                <div class="am-u-sm-9">
+                                    <input class="am-modal-prompt-input" type="text"
+                                           placeholder="Enter your id" disabled>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="doc-email" class="am-u-sm-3 am-form-label" th:text="#{title}">Title</label>
+                                <div class="am-u-sm-9">
+                                    <input class="am-modal-prompt-input" type="text"
+                                           placeholder="Enter your title">
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="doc-pwd" class="am-u-sm-3 am-form-label" th:text="#{content}">Content</label>
+                                <div class="am-u-sm-9">
+                                    <input class="am-modal-prompt-input" type="text"
+                                           placeholder="Enter your content">
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                    <div class="am-modal-footer">
+                        <span class="am-modal-btn" data-am-modal-cancel="" th:text="#{cancel}">cancel</span>
+                        <span class="am-modal-btn" data-am-modal-confirm="" th:text="#{confirm}">confirm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--income-->
+        <div class="admin-content librarian-display" id="income" style="display:none">
+            <div class="admin-content-body">
+                <div class="am-cf am-padding am-padding-bottom-0">
+                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg" th:text="#{viewIncome}">View Income</strong></div>
+                </div>
+                <hr>
+                <div class="am-g">
+                    <div class="am-u-lg-6">
+                        <div id="my-datepicker" class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'dd-mm-yyyy'}">
+                            <input id="date-input" type="text" class="am-form-field" placeholder="请选择日历" readonly>
+                            <span class="am-input-group-btn am-datepicker-add-on">
+                        <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-g">
+                    <div class="am-u-sm-12">
+                        <form class="am-form">
+                            <table id="income-table" class="am-table am-table-striped am-table-hover table-main">
+                                <thead id="income-thead">
+                                    <tr>
+
+                                        <th th:text="#{option}">Option</th>
+                                        <th th:text="#{depositIncome}">Deposit Income</th>
+                                        <th th:text="#{fineIncome}">Fine Income</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th th:text="#{Daily}">Daily</th>
+                                        <th ></th>
+                                        <th ></th>
+                                    </tr>
+                                </tbody>
+                                <tbody>
+                                    <tr>
+                                        <th th:text="#{Weekly}">Weekly</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tbody>
+                                <tbody>
+                                    <tr>
+                                        <th th:text="#{Monthly}">Monthly</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                 </div>
             </div>
