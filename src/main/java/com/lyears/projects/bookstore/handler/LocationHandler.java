@@ -4,11 +4,9 @@ import com.lyears.projects.bookstore.entity.Location;
 import com.lyears.projects.bookstore.service.LocationService;
 import com.lyears.projects.bookstore.util.ResponseMessage;
 import com.lyears.projects.bookstore.util.ResultUtil;
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import sun.plugin2.main.server.ResultID;
 
 import javax.servlet.http.HttpServletRequest;
 

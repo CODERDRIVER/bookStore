@@ -7,19 +7,19 @@
 
 Warning: Add the above command to the global environment path!!!
 ## 二、Download source code
-git clone https://github.com/CODERDRIVER/bookStore.git
+`git clone https://github.com/CODERDRIVER/bookStore.git`
 ## 三、Configuration database environment
-1. Import the bookstore.sql file under src/resources into the local mysql server。
-2. Modify the value of jdbc.url in local.db.properties under src/resources
-jdbc:mysql://localhost:3306/bookstore?&useUnicode=true&characterEncoding=UTF8&useSSL=false
+1. Import the bookstore.sql file under `src/main/resources` into the local mysql server。
+2. Modify the value of `jdbc.url` in local.db.properties under src/main/resources
+`jdbc:mysql://localhost:3306/bookstore?&useUnicode=true&characterEncoding=UTF8&useSSL=false`
 ## 四、Server deployment & run (require networking)
 0. Open the console and go to the project root directory，which is /bookStore.
-1. input mvn install,Installation dependence.
-2. input mvn package,package this project.
-3. Go into the target directory，input java -jar {the name of project jar}.jar,Do not close the console.
+1. input `mvn install`,Installation dependence.
+2. input `mvn package`,package this project.
+3. Go into the target directory，input `java -jar {the name of project jar}.jar`,Do not close the console.
 ## 五、Visiting
-Open a browser, Visit localhost:8080.
-if you want go to the admin page,you should visit localhost:8080/admin/login
+Open a browser, Visit `localhost:8080`.
+if you want go to the admin page,you should visit `localhost:8080/admin/login`
 
 
 # Chinese and English conversion plan
