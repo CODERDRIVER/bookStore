@@ -205,6 +205,9 @@ public class Book {
         cloneBook.setLocation(book.getLocation());
         cloneBook.setQuantity(book.getQuantity());
         cloneBook.setBookName(book.getBookName());
+        cloneBook.setBookIsbn(book.getBookIsbn());
+        cloneBook.setPrice(book.getPrice());
+        cloneBook.setPublisher(book.getPublisher());
         return cloneBook;
     }
 }

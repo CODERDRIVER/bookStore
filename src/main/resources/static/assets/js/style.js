@@ -298,7 +298,8 @@ function loadBookPage(pageNo, pageSize, keyStr) {
 function reserve(e)
 {
     var li  = e.parentNode.parentNode;
-    var bookName = li.getElementsByTagName("h2")[0].childNodes[1].innerHTML;
+    console.log(li.getElementsByTagName("h2")[0].childNodes[1].getElementsByTagName('strong')[0]);
+    var bookName = li.getElementsByTagName("h2")[0].childNodes[1].getElementsByTagName('strong')[0].innerHTML;
     $.ajax({
         type:'POST',
         dataType:'json',

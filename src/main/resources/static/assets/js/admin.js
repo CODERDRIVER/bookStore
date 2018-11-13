@@ -25,10 +25,7 @@ $('#addLibrarian').click(function () {
 			} 
 
 		    var password = getId("doc3").value;
-			if (password == '') {
-				alert('password can not be null！');
-				return false;
-			}
+
             var requestData = JSON.stringify({
                 "email": email,
                 "userName": name,
@@ -407,97 +404,30 @@ function loadData(librarianlist) {
 
 /* 删除所选 */
 var delSel = function() {
-	var flag = window.confirm("确定删除？");
-	var notDelete = numberRowsInTable;
-	if (flag) {
-		// 获得tbody对象
-		var tbody = getId("tb");
-		// 获得tbody下的input元素
-		var preDelete = 0;
-		var inputs = tbody.getElementsByTagName("input");
-		for (var i = inputs.length - 1; i >= 0; i--) {
-			if (inputs[i].type == "checkbox") {
-				if (inputs[i].checked) {
-					preDelete = i;
-				}
+    var flag = window.confirm("确定删除？");
+    var checkedList = new Array();
+    if (flag) {
+        tbodys = $("#table tbody");
+        for (var i = 0; i < tbodys.length; i++) {
+        	var check = tbodys[i].getElementsByTagName('td')[0].getElementsByTagName('input')[0].checked;
+        	if(check)
+			{
+                checkedList.push(tbodys[i].getElementsByTagName('td')[2].innerHTML);
 			}
-		}
+        }
+        $.ajax({
+            type: "DELETE",
+            url: "/admin/delete/librarian/id/",
+            data: {'ids':checkedList.join(",")},
+            success: function(data) {
+                location.reload();
+            },
+            error:function(data){
+                art.dialog.tips('删除失败!');
+            }
+        });
+    }
 
-		var checkedList = new Array();
-		for (var i = inputs.length - 1; i >= 0; i--) {
-			// 过滤出checkbox类型
-			if (inputs[i].type == "checkbox") {
-				var input = inputs[i];
-				// 找出checkbox的所选择的行
-				if (input.checked) {
-					checkedList.push(input.value);
-					// 删除已选择的行
-					tbody.removeChild(input.parentNode.parentNode);
-					// table长度减一
-					numberRowsInTable--;
-				}
-			}
-		}
-		$.ajax({                      
-			type: "DELETE",
-			url: "/admin/delete/librarian/id/",
-			data: {'ids':checkedList.join(",")},
-			success: function(data) {
-				    location.reload();
-				},
-			error:function(data){
-				 art.dialog.tips('删除失败!');
-			 }
-			});     
-
-		numRows.innerHTML = numberRowsInTable;
-		var rows = tbody.rows.length;
-		for (var i = 0; i < rows; i++) {
-			var tr = tbody.rows[i];
-			tr.cells[1].innerHTML = i + 1;
-		}
-		// 页数
-		totalPage.innerHTML = pageCount();
-
-		for (var i = 0; i < numberRowsInTable; i++) {
-			theTable.rows[i].style.display = 'none';
-		}
-
-		var locationPage = Math.floor(preDelete / (3 * pageSize));
-		if (preDelete % (3 * pageSize) == 0
-				&& preDelete / 3 == numberRowsInTable) {
-			locationPage--;
-		}
-
-		for (var j = locationPage * pageSize; j < locationPage * pageSize
-				+ pageSize
-				&& j < numberRowsInTable; j++) {
-			theTable.rows[j].style.display = '';
-		}
-
-		pageNum.innerHTML = locationPage + 1;
-		page = locationPage + 1;
-
-		if (numberRowsInTable == 0) {
-			pageNum.innerHTML = 0;
-		}
-		if (locationPage == 0) {
-			preText();
-			nextLink();
-		} else if (locationPage + 1 == pageCount()) {
-			nextText();
-		} else {
-			preLink();
-			nextLink();
-		}
-		if (numberRowsInTable <= pageSize) {
-			nextText();
-		}
-		changeColor();
-	}
-	if (notDelete == numberRowsInTable) {
-		alert("删除为空！请重新选择：");
-	}
 }
 
 /* 全选 */

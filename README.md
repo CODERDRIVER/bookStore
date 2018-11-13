@@ -1,4 +1,19 @@
-### A homework in Compulsory course
+# Install
+## 一、基础环境
+1. jdk 1.8.0_151
+2. git 2.14.3
+3. maven 3.3.9
+## 二、下载源代码
+git clone https://github.com/CODERDRIVER/bookStore.git
+## 三、本地运行
+运行BookStoreApplication.java 文件
+## 四、服务器部署运行
+1. mvn install 安装依赖
+2. mvn package 打包该项目
+3. Java -jar {打包生成的jar}.jar 
+## 五、访问
+打开浏览器 访问 localhost:8080 
+
 
 # 中英文转换方案
 https://blog.csdn.net/csdn_lqr/article/details/78026254
@@ -24,3 +39,7 @@ https://yq.aliyun.com/articles/43462
 
 # springboot 文件上传
 https://www.jianshu.com/p/6572888b2e23
+
+
+
+

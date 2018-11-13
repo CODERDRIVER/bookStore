@@ -37,21 +37,21 @@ public class BookService {
     public Page<Book> getAllBorrowBooks(int pageNo,int pageSize)
     {
         Pageable pageable = new PageRequest(pageNo - 1, pageSize, Sort.Direction.ASC, "bookId");
-        return bookRepository.findAllByInventoryGreaterThanEqual(1,pageable);
+        return bookRepository.findBooksByStatus(0,pageable);
     }
 
     /**
      * 添加书籍信息
      * @param book
      */
-    @Transactional(rollbackFor = RuntimeException.class)
     public void save(Book book){
         // 根据名称获得该书的库存量
-        List<Book> byBookName = bookRepository.findByBookName(book.getBookName());
+        Integer inventory = bookRepository.findInventoryByBookName(book.getBookName());
+        System.out.println(inventory);
         int counts = 0;
-        if (byBookName!=null&&byBookName.size()!=0)
+        if (inventory!=null)
         {
-           counts =  byBookName.get(0).getInventory()+1;
+           counts =  inventory+1;
         }else {
             counts = 1;
         }
@@ -74,7 +74,7 @@ public class BookService {
             String barCodeUrl = ZxingCodeUtil.createBarCode(barCode, 70, 25);
 
             book.setBarCodeUrl(barCodeUrl);
-            book.setInventory(1);
+            book.setInventory(inventory);
             bookRepository.save(book);
             bookRepository.updateInventoryByBookName(book.getBookName(),counts);
         }

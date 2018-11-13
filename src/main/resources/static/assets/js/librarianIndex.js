@@ -457,7 +457,7 @@ function loadBookData(message) {
             '<td><input type="checkbox" /></td>'+
             '<td>'+(i+1)+'</td>'+
             '<td>'+bookId+'</td>'+
-            '<td>'+inventory+'</td>'+
+            // '<td>'+inventory+'</td>'+
             '<td>'+author+'</td>'+
             '<td><a name="'+barCodeUrl+'" onclick="showBarCode(this)">'+barcode+'</a></td>'+
             '<td>'+bookName+'</td>'+
@@ -871,7 +871,7 @@ $("#book-search").keyup(function (e) {
 /**
  *  搜书
  */
-function searchBook(){
+function searchBorrowBook(){
     var key = document.getElementById("search-key").value;
     console.log(key);
     $("#tb").html("");
@@ -903,6 +903,38 @@ function searchBook(){
                 $("#borrow-table")[0].removeChild(tbodys[0]);
             }
             loadBorrowBooks(message);
+        }
+
+    });
+}
+
+function searchBook(){
+    var key = document.getElementById("book-search").value;
+    $("#tb").html("");
+    $.ajax({
+        type:'GET',
+        dataType:'json',
+        url:'/books?keyStr='+key,
+        contentType:'application/json;charset=UTF-8',
+        async: false,
+        success:function(data){//返回结果
+            //{"content":[{"bookId":1,"bookName":"四级词汇","price":999.0,"inventory":3,"location":"120201","author":"卢根","bookType":"英语类","barCode":"12345678","status":1,"bookUrl":"www.baidu.com","description":"ojsjfoiajosdifjoasjfo"}]
+            var books = []
+            books =data.data.content
+            console.log(data.data.content);
+            message = new Array();
+            for(var i=0; i<books.length;i++){
+                message.push(new book(books[i].bookId,books[i].bookUrl, books[i].author,
+                    books[i].barCode,books[i].bookName,books[i].bookType, books[i].price,
+                    books[i].description, books[i].location,books[i].inventory,books[i].barCodeUrl));
+            }
+            var tbodys = $("#book-table")[0].getElementsByTagName("tbody");
+            var len = tbodys.length;
+            for (var i=0;i<len;i++)
+            {
+                $("#book-table")[0].removeChild(tbodys[0]);
+            }
+            loadBookData(message);
         }
 
     });
@@ -1019,28 +1051,39 @@ function modReader(e)
 
 function balanceAccount(e)
 {
-   var tr =  e.parentNode.parentNode.parentNode.parentNode.childNodes;
-   var readerId = tr[0].innerHTML;
-   var unpaidFine = tr[6].innerHTML;
-   console.log(tr[6].innerHTML);
-    $.ajax({
-        type:'POST',
-        dataType:'json',
-        url:'/reader/'+readerId+'/unpaidFine',
-        contentType:'application/json;charset=UTF-8',
-        data:{
-            "unpaidFine":unpaidFine
+    var tr =  e.parentNode.parentNode.parentNode.parentNode.childNodes;
+    var readerId = tr[0].innerHTML;
+    var unpaidFine = tr[6].innerHTML;
+    $('#balance-input').val(unpaidFine);
+    $('#balance-title').text('Repayment')
+    $('#balance-prompt').modal({
+        relatedTarget: this,
+
+        onConfirm: function (e) {
+            var money = e.data;
+            console.log(tr[6].innerHTML);
+            $.ajax({
+                type:'POST',
+                dataType:'json',
+                url:'/reader/'+readerId+'/unpaidFine',
+                contentType:'application/json;charset=UTF-8',
+                data:{
+                    "unpaidFine":money
+                },
+                success:function(data){//返回结果
+                    if(data.code==0)
+                    {
+                        alert("success");
+                    }
+                    // location.reload();
+                    clickFun(3);
+                },
+                error:function(data){
+                    art.dialog.tips('更新修改数据失败!');
+                }
+            });
         },
-        success:function(data){//返回结果
-            if(data.code==0)
-            {
-                alert("success");
-            }
-            // location.reload();
-            clickFun(3);
-        },
-        error:function(data){
-            art.dialog.tips('更新修改数据失败!');
+        onCancel: function (e) {
         }
     });
 }
@@ -1125,7 +1168,7 @@ function complete(e)
             contentType: "application/json;charset=UTF-8",
             success: function (e) {
                 alert(e.message);
-                clickFun(4);
+                clickFun(6);
             }
         })
     }
