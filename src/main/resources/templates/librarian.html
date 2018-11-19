@@ -486,7 +486,8 @@
                                 <div class="am-g">
                                     <div class="am-u-md-8">
                                         <form class="am-form" id="bar-code-form" enctype="multipart/form-data">
-                                            <div class="am-form-group">
+                                            <div class="am-form-group am-form-file">
+                                                <i class="am-icon-cloud-upload"></i> select file
                                                 <input type="file" id="user-pic" name="file">
                                                 <p class="am-form-help" th:text="#{scanBarCode}">Scan the Bar Code...</p>
                                                 <p><button type="button" onclick="submitBarCode(this)" class="am-btn am-btn-default" th:text="#{confirm}">confirm</button></p>

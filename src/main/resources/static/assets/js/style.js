@@ -245,9 +245,9 @@ function loadBookPage(pageNo, pageSize, keyStr) {
             '                    <strong>' + author + '</strong>\n' +
             '                </p>\n' +
             '                <p class="book-info-p am-text-middle am-text-sm">\n' +
-            '                    Remain:\n' +
-            '                    <em>' + inventory + '</em>\n' +
-            '                <button class="reserve" onclick="reserve(this)" class="am-btn am-btn-default am-btn-xs am-text-secondary am-align-right" type="button" style="margin-left: 30px">\n' +
+            // '                    Remain:\n' +
+            // '                    <em>' + inventory + '</em>\n' +
+            '                <button onclick="reserve(this)" class="am-btn am-btn-default am-btn-xs am-text-secondary am-align-right reserve" type="button" style="margin-left: 30px">\n' +
             '                <span class="am-icon-clock-o"></span> Reserve</button>\n' +
             '                </p>\n' +
             '                <p class="book-info-p am-text-middle am-text-xs">' + bookType + '</p>\n' +
